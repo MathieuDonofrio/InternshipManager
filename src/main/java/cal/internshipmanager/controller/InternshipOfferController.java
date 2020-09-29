@@ -3,13 +3,11 @@ package cal.internshipmanager.controller;
 import cal.internshipmanager.request.InternshipOfferApproveRequest;
 import cal.internshipmanager.request.InternshipOfferCreationRequest;
 import cal.internshipmanager.request.InternshipOfferRejectRequest;
+import cal.internshipmanager.response.InternshipOfferListResponse;
 import cal.internshipmanager.service.InternshipOfferService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -33,7 +31,7 @@ public class InternshipOfferController {
     }
 
     //
-    // Services
+    // Post
     //
 
     @PreAuthorize("hasAuthority('EMPLOYER')")
@@ -52,6 +50,27 @@ public class InternshipOfferController {
     @PostMapping("reject")
     public void rejectInternshipOffer(@Valid @RequestBody InternshipOfferRejectRequest request){
         internshipOfferService.rejectInternshipOffer(request);
+    }
+
+    //
+    // Get
+    //
+
+    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
+    @GetMapping("pending-approval")
+    public InternshipOfferListResponse pendingApprovalInternshipOffers(){
+        return internshipOfferService.pendingApprovalInternshipOffers();
+    }
+
+    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
+    @GetMapping("rejected")
+    public InternshipOfferListResponse rejectedInternshipOffers(){
+        return internshipOfferService.pendingApprovalInternshipOffers();
+    }
+
+    @GetMapping("approved")
+    public InternshipOfferListResponse approvedInternshipOffers(){
+        return internshipOfferService.approvedInternshipOffers();
     }
 
 }

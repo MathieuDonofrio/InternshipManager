@@ -16,7 +16,7 @@ function headers() {
 class AuthenticationService {
 
     createInternshipOffer(request) {
-        return axios.post(Config.target + '/internshipoffer/create', request, headers());
+        return axios.post(Config.target + '/internship-offer/create', request, headers());
     }
 
 }

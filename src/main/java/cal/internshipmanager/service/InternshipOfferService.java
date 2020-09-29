@@ -5,6 +5,7 @@ import cal.internshipmanager.repository.InternshipOfferRepository;
 import cal.internshipmanager.request.InternshipOfferApproveRequest;
 import cal.internshipmanager.request.InternshipOfferCreationRequest;
 import cal.internshipmanager.request.InternshipOfferRejectRequest;
+import cal.internshipmanager.response.InternshipOfferListResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -13,7 +14,9 @@ import org.springframework.validation.annotation.Validated;
 
 import javax.validation.Valid;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @Validated
@@ -76,6 +79,45 @@ public class InternshipOfferService {
         internshipOffer.setStatus(InternshipOffer.Status.REJECTED);
 
         internshipOfferRepository.save(internshipOffer);
+    }
+
+    public InternshipOfferListResponse pendingApprovalInternshipOffers(){
+
+        List<InternshipOffer> internshipOffers = internshipOfferRepository.findAllByStatus(
+                InternshipOffer.Status.PENDING_APPROVAL);
+
+        InternshipOfferListResponse response = new InternshipOfferListResponse();
+
+        response.setInternshipOffers(internshipOffers.stream().map(x ->
+                InternshipOfferListResponse.map(x)).collect(Collectors.toList()));
+
+        return response;
+    }
+
+    public InternshipOfferListResponse approvedInternshipOffers(){
+
+        List<InternshipOffer> internshipOffers = internshipOfferRepository.findAllByStatus(
+                InternshipOffer.Status.APPROVED);
+
+        InternshipOfferListResponse response = new InternshipOfferListResponse();
+
+        response.setInternshipOffers(internshipOffers.stream().map(x ->
+                InternshipOfferListResponse.map(x)).collect(Collectors.toList()));
+
+        return response;
+    }
+
+    public InternshipOfferListResponse rejectedInternshipOffers(){
+
+        List<InternshipOffer> internshipOffers = internshipOfferRepository.findAllByStatus(
+                InternshipOffer.Status.PENDING_APPROVAL);
+
+        InternshipOfferListResponse response = new InternshipOfferListResponse();
+
+        response.setInternshipOffers(internshipOffers.stream().map(x ->
+                InternshipOfferListResponse.map(x)).collect(Collectors.toList()));
+
+        return response;
     }
 
 }

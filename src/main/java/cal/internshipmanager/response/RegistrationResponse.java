@@ -8,6 +8,10 @@ import java.util.UUID;
 @Data
 public class RegistrationResponse implements Serializable {
 
+    //
+    // Fields
+    //
+
     private UUID userUniqueId;
 
 }
