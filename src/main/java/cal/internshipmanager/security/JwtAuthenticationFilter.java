@@ -48,10 +48,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         try {
 
-            // Get encoded token
             final String token = request.getHeader("Authorization");
 
-            // Parse jwt token
             final DecodedJWT decodedToken = JwtProvider.verify(token);
 
             if (decodedToken != null) {
@@ -65,8 +63,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         } catch (JWTVerificationException e) {
 
             // failed to verify jwt token (No authentication set)
-
-            //e.printStackTrace();
+            // e.printStackTrace();
         }
 
         filterChain.doFilter(request, response);

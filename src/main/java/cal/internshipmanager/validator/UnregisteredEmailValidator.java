@@ -1,6 +1,7 @@
 package cal.internshipmanager.validator;
 
 import cal.internshipmanager.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.validation.ConstraintValidator;
@@ -19,6 +20,7 @@ public class UnregisteredEmailValidator implements ConstraintValidator<Unregiste
     // Constructors
     //
 
+    @Autowired
     public UnregisteredEmailValidator(UserRepository userRepository) {
         this.userRepository = userRepository;
     }

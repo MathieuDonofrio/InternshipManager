@@ -5,6 +5,7 @@ import cal.internshipmanager.repository.UserRepository;
 import cal.internshipmanager.request.AuthenticationRequest;
 import cal.internshipmanager.response.AuthenticationResponse;
 import cal.internshipmanager.security.JwtProvider;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -29,6 +30,7 @@ public class AuthenticationService {
     // Constructors
     //
 
+    @Autowired
     public AuthenticationService(
             UserRepository userRepository, JwtProvider jwtProvider, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;

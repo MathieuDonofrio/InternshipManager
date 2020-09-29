@@ -1,8 +1,10 @@
 package cal.internshipmanager.controller;
 
-import cal.internshipmanager.request.InternshipOfferValidateRequest;
+import cal.internshipmanager.request.InternshipOfferApproveRequest;
 import cal.internshipmanager.request.InternshipOfferCreationRequest;
+import cal.internshipmanager.request.InternshipOfferRejectRequest;
 import cal.internshipmanager.service.InternshipOfferService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/internshipoffer")
+@RequestMapping("/internship-offer")
 public class InternshipOfferController {
 
     //
@@ -25,6 +27,7 @@ public class InternshipOfferController {
     // Constructors
     //
 
+    @Autowired
     public InternshipOfferController(InternshipOfferService internshipOfferService) {
         this.internshipOfferService = internshipOfferService;
     }
@@ -40,11 +43,15 @@ public class InternshipOfferController {
     }
 
     @PreAuthorize("hasAuthority('ADMINISTRATOR')")
-    @PostMapping("validate")
-    public void InternshipOfferStatusRequest(@Valid @RequestBody InternshipOfferValidateRequest request){
-        internshipOfferService.validateInternshipOffer(request);
+    @PostMapping("approve")
+    public void approveInternshipOffer(@Valid @RequestBody InternshipOfferApproveRequest request){
+        internshipOfferService.approveInternshipOffer(request);
     }
 
-
+    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
+    @PostMapping("reject")
+    public void rejectInternshipOffer(@Valid @RequestBody InternshipOfferRejectRequest request){
+        internshipOfferService.rejectInternshipOffer(request);
+    }
 
 }

@@ -9,15 +9,9 @@ import java.io.Serializable;
 @Data
 public class AuthenticationRequest implements Serializable {
 
-    /**
-     * Email
-     */
     @Email(message = "Email is not valid")
     private String email;
 
-    /**
-     * Password
-     */
     @NotBlank(message = "Password is mandatory")
     private String password;
 

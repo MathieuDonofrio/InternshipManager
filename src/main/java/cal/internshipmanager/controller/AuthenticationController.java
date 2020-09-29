@@ -3,6 +3,7 @@ package cal.internshipmanager.controller;
 import cal.internshipmanager.request.AuthenticationRequest;
 import cal.internshipmanager.response.AuthenticationResponse;
 import cal.internshipmanager.service.AuthenticationService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,6 +25,7 @@ public class AuthenticationController {
     // Constructors
     //
 
+    @Autowired
     public AuthenticationController(AuthenticationService authenticationService){
         this.authenticationService = authenticationService;
     }

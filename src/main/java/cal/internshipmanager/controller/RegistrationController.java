@@ -4,6 +4,7 @@ import cal.internshipmanager.request.EmployerRegistrationRequest;
 import cal.internshipmanager.request.StudentRegistrationRequest;
 import cal.internshipmanager.response.RegistrationResponse;
 import cal.internshipmanager.service.RegistrationService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +26,7 @@ public class RegistrationController {
     // Constructors
     //
 
+    @Autowired
     public RegistrationController(RegistrationService registrationService){
         this.registrationService = registrationService;
     }

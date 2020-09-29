@@ -6,6 +6,7 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -44,11 +45,11 @@ public final class JwtProvider {
      */
     private final long duration;
 
-
     //
     // Constructors
     //
 
+    @Autowired
     public JwtProvider(@Value("${security.jwt.duration}") long durationHours) {
         algorithm = Algorithm.HMAC256(SecureRandom.getSeed(16));
         verifier = JWT.require(algorithm).build();

@@ -2,8 +2,10 @@ package cal.internshipmanager.service;
 
 import cal.internshipmanager.model.InternshipOffer;
 import cal.internshipmanager.repository.InternshipOfferRepository;
-import cal.internshipmanager.request.InternshipOfferValidateRequest;
+import cal.internshipmanager.request.InternshipOfferApproveRequest;
 import cal.internshipmanager.request.InternshipOfferCreationRequest;
+import cal.internshipmanager.request.InternshipOfferRejectRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -11,7 +13,6 @@ import org.springframework.validation.annotation.Validated;
 
 import javax.validation.Valid;
 import java.util.Date;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -28,16 +29,15 @@ public class InternshipOfferService {
     // Constructors
     //
 
+    @Autowired
     public InternshipOfferService(InternshipOfferRepository internshipOfferRepository) {
         this.internshipOfferRepository = internshipOfferRepository;
     }
 
-    /**
-     * Create an intership Offer as an employer if the request is valid.
-     *
-     * @param request internship offer creation request
-     * @return internship offer creation response
-     */
+    //
+    // Services
+    //
+
     public void createInternshipOffer(@Valid InternshipOfferCreationRequest request) {
 
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -48,7 +48,7 @@ public class InternshipOfferService {
 
         internshipOffer.setUniqueId(UUID.randomUUID());
         internshipOffer.setEmployer(user);
-        internshipOffer.setStatus(InternshipOffer.InternshipOfferStatus.PENDING_APPROVAL);
+        internshipOffer.setStatus(InternshipOffer.Status.PENDING_APPROVAL);
         internshipOffer.setCompany(request.getCompany());
         internshipOffer.setDuration(request.getDuration());
         internshipOffer.setHours(request.getHours());
@@ -60,23 +60,22 @@ public class InternshipOfferService {
         internshipOfferRepository.save(internshipOffer);
     }
 
-    /**
-     *
-     * @param request
-     */
-    public void validateInternshipOffer(@Valid InternshipOfferValidateRequest request){
+    public void approveInternshipOffer(@Valid InternshipOfferApproveRequest request){
 
-        Optional<InternshipOffer> internshipOffer = internshipOfferRepository.findById(request.getUniqueId());
+        InternshipOffer internshipOffer = internshipOfferRepository.findById(request.getUniqueId()).orElse(null);
 
-        internshipOffer.ifPresent(i -> {
+        internshipOffer.setStatus(InternshipOffer.Status.APPROVED);
 
-            i.setStatus(request.isApproved()
-                    ? InternshipOffer.InternshipOfferStatus.APPROVED
-                    : InternshipOffer.InternshipOfferStatus.REJECTED);
+        internshipOfferRepository.save(internshipOffer);
+    }
 
-            internshipOfferRepository.save(internshipOffer.get());
-        });
+    public void rejectInternshipOffer(@Valid InternshipOfferRejectRequest request){
 
+        InternshipOffer internshipOffer = internshipOfferRepository.findById(request.getUniqueId()).orElse(null);
+
+        internshipOffer.setStatus(InternshipOffer.Status.REJECTED);
+
+        internshipOfferRepository.save(internshipOffer);
     }
 
 }

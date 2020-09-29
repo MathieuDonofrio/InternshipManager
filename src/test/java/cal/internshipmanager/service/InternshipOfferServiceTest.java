@@ -4,7 +4,8 @@ import cal.internshipmanager.model.InternshipOffer;
 import cal.internshipmanager.model.User;
 import cal.internshipmanager.repository.InternshipOfferRepository;
 import cal.internshipmanager.request.InternshipOfferCreationRequest;
-import cal.internshipmanager.request.InternshipOfferValidateRequest;
+import cal.internshipmanager.request.InternshipOfferApproveRequest;
+import cal.internshipmanager.request.InternshipOfferRejectRequest;
 import cal.internshipmanager.security.JwtAuthentication;
 import cal.internshipmanager.security.JwtProvider;
 import com.auth0.jwt.interfaces.DecodedJWT;
@@ -67,7 +68,7 @@ public class InternshipOfferServiceTest {
 
             assertNotNull(internshipOffer.getUniqueId());
             assertEquals(user.getUniqueId(), internshipOffer.getEmployer());
-            assertEquals(InternshipOffer.InternshipOfferStatus.PENDING_APPROVAL, internshipOffer.getStatus());
+            assertEquals(InternshipOffer.Status.PENDING_APPROVAL, internshipOffer.getStatus());
             assertEquals(internshipOfferCreationRequest.getCompany(),internshipOffer.getCompany());
             assertEquals(internshipOfferCreationRequest.getDuration(),internshipOffer.getDuration());
             assertEquals(internshipOfferCreationRequest.getHours(),internshipOffer.getHours());
@@ -81,17 +82,16 @@ public class InternshipOfferServiceTest {
     }
 
     @Test
-    public void validateInternshipOffer_approve(){
+    public void approveInternshipOffer_validRequest(){
 
         // Arrange
 
-        InternshipOfferValidateRequest internshipOfferStatusRequest = new InternshipOfferValidateRequest();
+        InternshipOfferApproveRequest internshipOfferApproveRequest = new InternshipOfferApproveRequest();
 
-        internshipOfferStatusRequest.setUniqueId(UUID.randomUUID());
-        internshipOfferStatusRequest.setApproved(true);
+        internshipOfferApproveRequest.setUniqueId(UUID.randomUUID());
 
         InternshipOffer internshipOffer = new InternshipOffer();
-        internshipOffer.setStatus(InternshipOffer.InternshipOfferStatus.PENDING_APPROVAL);
+        internshipOffer.setStatus(InternshipOffer.Status.PENDING_APPROVAL);
 
         InternshipOfferService internshipOfferService = new InternshipOfferService(internshipOfferRepository);
 
@@ -103,26 +103,25 @@ public class InternshipOfferServiceTest {
 
                 InternshipOffer offer = (InternshipOffer) inv.getArgument(0);
 
-                assertEquals(InternshipOffer.InternshipOfferStatus.APPROVED, offer.getStatus());
+                assertEquals(InternshipOffer.Status.APPROVED, offer.getStatus());
 
                 return null;
         });
 
-        internshipOfferService.validateInternshipOffer(internshipOfferStatusRequest);
+        internshipOfferService.approveInternshipOffer(internshipOfferApproveRequest);
     }
 
     @Test
-    public void validateInternshipOffer_reject(){
+    public void rejectInternshipOffer_validRequest(){
 
         // Arrange
 
-        InternshipOfferValidateRequest internshipOfferStatusRequest = new InternshipOfferValidateRequest();
+        InternshipOfferRejectRequest internshipOfferRejectRequest = new InternshipOfferRejectRequest();
 
-        internshipOfferStatusRequest.setUniqueId(UUID.randomUUID());
-        internshipOfferStatusRequest.setApproved(false);
+        internshipOfferRejectRequest.setUniqueId(UUID.randomUUID());
 
         InternshipOffer internshipOffer = new InternshipOffer();
-        internshipOffer.setStatus(InternshipOffer.InternshipOfferStatus.PENDING_APPROVAL);
+        internshipOffer.setStatus(InternshipOffer.Status.PENDING_APPROVAL);
 
         InternshipOfferService internshipOfferService = new InternshipOfferService(internshipOfferRepository);
 
@@ -134,11 +133,12 @@ public class InternshipOfferServiceTest {
 
             InternshipOffer offer = (InternshipOffer) inv.getArgument(0);
 
-            assertEquals(InternshipOffer.InternshipOfferStatus.REJECTED, offer.getStatus());
+            assertEquals(InternshipOffer.Status.REJECTED, offer.getStatus());
 
             return null;
         });
 
-        internshipOfferService.validateInternshipOffer(internshipOfferStatusRequest);
+        internshipOfferService.rejectInternshipOffer(internshipOfferRejectRequest);
     }
+
 }

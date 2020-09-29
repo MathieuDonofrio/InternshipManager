@@ -5,6 +5,7 @@ import cal.internshipmanager.repository.UserRepository;
 import cal.internshipmanager.request.EmployerRegistrationRequest;
 import cal.internshipmanager.request.StudentRegistrationRequest;
 import cal.internshipmanager.response.RegistrationResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -28,6 +29,7 @@ public class RegistrationService {
     // Constructors
     //
 
+    @Autowired
     public RegistrationService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
@@ -37,13 +39,6 @@ public class RegistrationService {
     // Services
     //
 
-    /**
-     * Registers a student if the request is valid.
-     *
-     * @param request student registration request
-     *
-     * @return registration response
-     */
     public RegistrationResponse registerStudent(@Valid StudentRegistrationRequest request) {
 
         User user = new User();
@@ -64,13 +59,6 @@ public class RegistrationService {
         return response;
     }
 
-    /**
-     * Registers a employer if the request is valid.
-     *
-     * @param request employer registration request
-     *
-     * @return registration response
-     */
     public RegistrationResponse registerEmployer(@Valid EmployerRegistrationRequest request) {
 
         User user = new User();
