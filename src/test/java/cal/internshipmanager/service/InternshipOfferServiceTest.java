@@ -6,6 +6,7 @@ import cal.internshipmanager.repository.InternshipOfferRepository;
 import cal.internshipmanager.request.InternshipOfferCreationRequest;
 import cal.internshipmanager.request.InternshipOfferApproveRequest;
 import cal.internshipmanager.request.InternshipOfferRejectRequest;
+import cal.internshipmanager.response.InternshipOfferListResponse;
 import cal.internshipmanager.security.JwtAuthentication;
 import cal.internshipmanager.security.JwtProvider;
 import com.auth0.jwt.interfaces.DecodedJWT;
@@ -16,10 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import java.util.Arrays;
-import java.util.Date;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -93,13 +91,14 @@ public class InternshipOfferServiceTest {
         internshipOfferApproveRequest.setUniqueId(UUID.randomUUID());
 
         InternshipOffer internshipOffer = new InternshipOffer();
+
         internshipOffer.setStatus(InternshipOffer.Status.PENDING_APPROVAL);
 
         InternshipOfferService internshipOfferService = new InternshipOfferService(internshipOfferRepository);
 
-        // Act & Assert
-
         Mockito.when(internshipOfferRepository.findById(Mockito.any())).thenReturn(Optional.of(internshipOffer));
+
+        // Act & Assert
 
         Mockito.when(internshipOfferRepository.save(Mockito.any())).then(inv ->{
 
@@ -123,13 +122,14 @@ public class InternshipOfferServiceTest {
         internshipOfferRejectRequest.setUniqueId(UUID.randomUUID());
 
         InternshipOffer internshipOffer = new InternshipOffer();
+
         internshipOffer.setStatus(InternshipOffer.Status.PENDING_APPROVAL);
 
         InternshipOfferService internshipOfferService = new InternshipOfferService(internshipOfferRepository);
 
-        // Act & Assert
-
         Mockito.when(internshipOfferRepository.findById(Mockito.any())).thenReturn(Optional.of(internshipOffer));
+
+        // Act & Assert
 
         Mockito.when(internshipOfferRepository.save(Mockito.any())).then(inv ->{
 
@@ -141,6 +141,144 @@ public class InternshipOfferServiceTest {
         });
 
         internshipOfferService.rejectInternshipOffer(internshipOfferRejectRequest);
+    }
+
+    @Test
+    public void pendingApprovalInternshipOffers_validRequest(){
+
+        // Arrange
+
+        InternshipOffer internshipOffer = new InternshipOffer();
+
+        internshipOffer.setUniqueId(UUID.randomUUID());
+        internshipOffer.setEmployer(UUID.randomUUID());
+        internshipOffer.setStatus(InternshipOffer.Status.PENDING_APPROVAL);
+        internshipOffer.setCompany("Test Company");
+        internshipOffer.setJobTitle("Test Job Title");
+        internshipOffer.setStartDate(new Date());
+        internshipOffer.setDuration(12);
+        internshipOffer.setSalary(20);
+        internshipOffer.setHours(40);
+
+        InternshipOfferService internshipOfferService = new InternshipOfferService(internshipOfferRepository);
+
+        Mockito.when(internshipOfferRepository.findAllByStatus(InternshipOffer.Status.PENDING_APPROVAL))
+                .thenReturn(List.of(internshipOffer));
+
+        // Act
+
+        InternshipOfferListResponse response = internshipOfferService.pendingApprovalInternshipOffers();
+
+        // Assert
+
+        assertEquals(1, response.getInternshipOffers().size());
+
+        for(InternshipOfferListResponse.InternshipOffer offer : response.getInternshipOffers()){
+
+            assertEquals(internshipOffer.getUniqueId(), offer.getUniqueId());
+            assertEquals(internshipOffer.getEmployer(), offer.getEmployer());
+            assertEquals(InternshipOffer.Status.PENDING_APPROVAL.toString(), offer.getStatus());
+            assertEquals(internshipOffer.getCompany(), offer.getCompany());
+            assertEquals(internshipOffer.getJobTitle(), offer.getJobTitle());
+            assertEquals(internshipOffer.getStartDate().getTime(), offer.getStartDate());
+            assertEquals(internshipOffer.getDuration(), offer.getDuration());
+            assertEquals(internshipOffer.getSalary(), offer.getSalary());
+            assertEquals(internshipOffer.getHours(), offer.getHours());
+
+        }
+
+    }
+
+    @Test
+    public void approvedInternshipOffers_validRequest(){
+
+        // Arrange
+
+        InternshipOffer internshipOffer = new InternshipOffer();
+
+        internshipOffer.setUniqueId(UUID.randomUUID());
+        internshipOffer.setEmployer(UUID.randomUUID());
+        internshipOffer.setStatus(InternshipOffer.Status.APPROVED);
+        internshipOffer.setCompany("Test Company");
+        internshipOffer.setJobTitle("Test Job Title");
+        internshipOffer.setStartDate(new Date());
+        internshipOffer.setDuration(12);
+        internshipOffer.setSalary(20);
+        internshipOffer.setHours(40);
+
+        InternshipOfferService internshipOfferService = new InternshipOfferService(internshipOfferRepository);
+
+        Mockito.when(internshipOfferRepository.findAllByStatus(InternshipOffer.Status.APPROVED))
+                .thenReturn(List.of(internshipOffer));
+
+        // Act
+
+        InternshipOfferListResponse response = internshipOfferService.approvedInternshipOffers();
+
+        // Assert
+
+        assertEquals(1, response.getInternshipOffers().size());
+
+        for(InternshipOfferListResponse.InternshipOffer offer : response.getInternshipOffers()){
+
+            assertEquals(internshipOffer.getUniqueId(), offer.getUniqueId());
+            assertEquals(internshipOffer.getEmployer(), offer.getEmployer());
+            assertEquals(InternshipOffer.Status.APPROVED.toString(), offer.getStatus());
+            assertEquals(internshipOffer.getCompany(), offer.getCompany());
+            assertEquals(internshipOffer.getJobTitle(), offer.getJobTitle());
+            assertEquals(internshipOffer.getStartDate().getTime(), offer.getStartDate());
+            assertEquals(internshipOffer.getDuration(), offer.getDuration());
+            assertEquals(internshipOffer.getSalary(), offer.getSalary());
+            assertEquals(internshipOffer.getHours(), offer.getHours());
+
+        }
+
+    }
+
+    @Test
+    public void rejectedInternshipOffers_validRequest(){
+
+        // Arrange
+
+        InternshipOffer internshipOffer = new InternshipOffer();
+
+        internshipOffer.setUniqueId(UUID.randomUUID());
+        internshipOffer.setEmployer(UUID.randomUUID());
+        internshipOffer.setStatus(InternshipOffer.Status.REJECTED);
+        internshipOffer.setCompany("Test Company");
+        internshipOffer.setJobTitle("Test Job Title");
+        internshipOffer.setStartDate(new Date());
+        internshipOffer.setDuration(12);
+        internshipOffer.setSalary(20);
+        internshipOffer.setHours(40);
+
+        InternshipOfferService internshipOfferService = new InternshipOfferService(internshipOfferRepository);
+
+        Mockito.when(internshipOfferRepository.findAllByStatus(InternshipOffer.Status.REJECTED))
+                .thenReturn(List.of(internshipOffer));
+
+        // Act
+
+        InternshipOfferListResponse response = internshipOfferService.rejectedInternshipOffers();
+
+        // Assert
+
+        assertEquals(1, response.getInternshipOffers().size());
+
+        for(InternshipOfferListResponse.InternshipOffer offer : response.getInternshipOffers()){
+
+            assertEquals(internshipOffer.getUniqueId(), offer.getUniqueId());
+            assertEquals(internshipOffer.getEmployer(), offer.getEmployer());
+            assertEquals(InternshipOffer.Status.REJECTED.toString(), offer.getStatus());
+            assertEquals(internshipOffer.getCompany(), offer.getCompany());
+            assertEquals(internshipOffer.getJobTitle(), offer.getJobTitle());
+            assertEquals(internshipOffer.getStartDate().getTime(), offer.getStartDate());
+            assertEquals(internshipOffer.getDuration(), offer.getDuration());
+            assertEquals(internshipOffer.getSalary(), offer.getSalary());
+            assertEquals(internshipOffer.getHours(), offer.getHours());
+
+        }
+
     }
 
 }

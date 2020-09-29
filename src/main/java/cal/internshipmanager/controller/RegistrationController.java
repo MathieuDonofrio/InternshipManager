@@ -32,7 +32,7 @@ public class RegistrationController {
     }
 
     //
-    // Services
+    // Post
     //
 
     @PostMapping("student")

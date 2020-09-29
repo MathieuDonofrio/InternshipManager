@@ -31,7 +31,7 @@ public class AuthenticationController {
     }
 
     //
-    // Services
+    // Post
     //
 
     @PostMapping("authenticate")

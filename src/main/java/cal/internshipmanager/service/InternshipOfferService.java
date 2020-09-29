@@ -110,7 +110,7 @@ public class InternshipOfferService {
     public InternshipOfferListResponse rejectedInternshipOffers(){
 
         List<InternshipOffer> internshipOffers = internshipOfferRepository.findAllByStatus(
-                InternshipOffer.Status.PENDING_APPROVAL);
+                InternshipOffer.Status.REJECTED);
 
         InternshipOfferListResponse response = new InternshipOfferListResponse();
 
