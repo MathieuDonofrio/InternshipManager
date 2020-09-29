@@ -75,10 +75,12 @@ public class InternshipOfferServiceTest {
             assertEquals(internshipOfferCreationRequest.getJobScope(),internshipOffer.getJobScope());
             assertEquals(internshipOfferCreationRequest.getJobTitle(),internshipOffer.getJobTitle());
             assertEquals(internshipOfferCreationRequest.getSalary(),internshipOffer.getSalary());
-            assertEquals(internshipOfferCreationRequest.getStartDate(),internshipOffer.getStartDate());
+            assertEquals(internshipOfferCreationRequest.getStartDate(),internshipOffer.getStartDate().getTime());
 
             return null;
         });
+
+        internshipOfferService.createInternshipOffer(internshipOfferCreationRequest);
     }
 
     @Test
