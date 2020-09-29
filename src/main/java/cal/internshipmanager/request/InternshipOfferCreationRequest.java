@@ -17,10 +17,11 @@ public class InternshipOfferCreationRequest implements Serializable {
     @NotBlank(message = "Job title is mandatory")
     private String jobTitle;
 
-    @NotNull
+    @NotNull(message = "Job scope is mandatory")
     private List<String> jobScope;
 
-    private long startDate;
+    @NotNull(message = "Start date is mandatory")
+    private Long startDate;
 
     @Min(value = 1, message = "Duration must be at least 1 hour")
     private int duration;
