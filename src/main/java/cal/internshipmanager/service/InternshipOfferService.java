@@ -2,9 +2,7 @@ package cal.internshipmanager.service;
 
 import cal.internshipmanager.model.InternshipOffer;
 import cal.internshipmanager.repository.InternshipOfferRepository;
-import cal.internshipmanager.request.InternshipOfferApproveRequest;
-import cal.internshipmanager.request.InternshipOfferCreationRequest;
-import cal.internshipmanager.request.InternshipOfferRejectRequest;
+import cal.internshipmanager.request.*;
 import cal.internshipmanager.response.InternshipOfferListResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -13,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -59,6 +58,7 @@ public class InternshipOfferService {
         internshipOffer.setJobTitle(request.getJobTitle());
         internshipOffer.setSalary(request.getSalary());
         internshipOffer.setStartDate(new Date(request.getStartDate()));
+        internshipOffer.setVisibility(new ArrayList<>());
 
         internshipOfferRepository.save(internshipOffer);
     }
@@ -118,6 +118,32 @@ public class InternshipOfferService {
                 InternshipOfferListResponse.map(x)).collect(Collectors.toList()));
 
         return response;
+    }
+
+    public void addUserToInternshipOffer(@Valid InternshipOfferAddUserRequest request){
+
+        InternshipOffer internshipOffer = internshipOfferRepository.findById(request.getOfferUniqueId()).orElse(null);
+
+        UUID userUniqueId = request.getUserUniqueId();
+
+        if(!internshipOffer.getVisibility().contains(userUniqueId)){
+
+            internshipOffer.getVisibility().add(userUniqueId);
+        }
+
+    }
+
+    public void removeUserToInternshipOffer(@Valid InternshipOfferRemoveUserRequest request){
+
+        InternshipOffer internshipOffer = internshipOfferRepository.findById(request.getOfferUniqueId()).orElse(null);
+
+        UUID userUniqueId = request.getUserUniqueId();
+
+        if(internshipOffer.getVisibility().contains(userUniqueId)){
+
+            internshipOffer.getVisibility().remove(userUniqueId);
+        }
+
     }
 
 }

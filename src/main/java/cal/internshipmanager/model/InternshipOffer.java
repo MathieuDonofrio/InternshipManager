@@ -38,6 +38,8 @@ public class InternshipOffer implements Serializable {
 
     private float hours;
 
+    private List<UUID> visibility;
+
     //
     // Inner classes & Enums
     //

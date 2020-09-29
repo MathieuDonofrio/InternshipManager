@@ -1,8 +1,6 @@
 package cal.internshipmanager.controller;
 
-import cal.internshipmanager.request.InternshipOfferApproveRequest;
-import cal.internshipmanager.request.InternshipOfferCreationRequest;
-import cal.internshipmanager.request.InternshipOfferRejectRequest;
+import cal.internshipmanager.request.*;
 import cal.internshipmanager.response.InternshipOfferListResponse;
 import cal.internshipmanager.service.InternshipOfferService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +48,18 @@ public class InternshipOfferController {
     @PostMapping("reject")
     public void rejectInternshipOffer(@Valid @RequestBody InternshipOfferRejectRequest request){
         internshipOfferService.rejectInternshipOffer(request);
+    }
+
+    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
+    @PostMapping("add-user")
+    public void addUserInternshipOffer(@Valid @RequestBody InternshipOfferAddUserRequest request){
+        internshipOfferService.addUserToInternshipOffer(request);
+    }
+
+    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
+    @PostMapping("remove-user")
+    public void addUserInternshipOffer(@Valid @RequestBody InternshipOfferRemoveUserRequest request){
+        internshipOfferService.removeUserToInternshipOffer(request);
     }
 
     //
