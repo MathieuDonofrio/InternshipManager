@@ -6,6 +6,7 @@ import cal.internshipmanager.repository.InternshipOfferRepository;
 import cal.internshipmanager.repository.UserRepository;
 import cal.internshipmanager.request.*;
 import cal.internshipmanager.response.InternshipOfferListResponse;
+import cal.internshipmanager.response.UserListReponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -63,7 +64,7 @@ public class InternshipOfferService {
         internshipOffer.setJobTitle(request.getJobTitle());
         internshipOffer.setSalary(request.getSalary());
         internshipOffer.setStartDate(new Date(request.getStartDate()));
-        internshipOffer.setVisibility(new ArrayList<>());
+        internshipOffer.setUsers(new ArrayList<>());
 
         internshipOfferRepository.save(internshipOffer);
     }
@@ -125,6 +126,18 @@ public class InternshipOfferService {
         return response;
     }
 
+    public UserListReponse internshipOfferUsers(@Valid InternshipOfferUserListRequest request){
+
+        InternshipOffer internshipOffer = internshipOfferRepository.findById(request.getUniqueId()).orElse(null);
+
+        UserListReponse response = new UserListReponse();
+
+        response.setUsers(internshipOffer.getUsers().stream().map(x ->
+                UserListReponse.map(x)).collect(Collectors.toList()));
+
+        return response;
+    }
+
     public void addUserToInternshipOffer(@Valid InternshipOfferAddUserRequest request){
 
         InternshipOffer internshipOffer = internshipOfferRepository.findById(
@@ -132,18 +145,18 @@ public class InternshipOfferService {
 
         User user = userRepository.findById(request.getUserUniqueId()).orElse(null);
 
-        internshipOffer.getVisibility().add(user);
+        internshipOffer.getUsers().add(user);
 
     }
 
-    public void removeUserToInternshipOffer(@Valid InternshipOfferRemoveUserRequest request){
+    public void removeUserFromInternshipOffer(@Valid InternshipOfferRemoveUserRequest request){
 
         InternshipOffer internshipOffer = internshipOfferRepository.findById(
                 request.getOfferUniqueId()).orElse(null);
 
         User user = userRepository.findById(request.getUserUniqueId()).orElse(null);
 
-        internshipOffer.getVisibility().remove(user);
+        internshipOffer.getUsers().remove(user);
 
     }
 

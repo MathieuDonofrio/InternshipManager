@@ -2,6 +2,7 @@ package cal.internshipmanager.controller;
 
 import cal.internshipmanager.request.*;
 import cal.internshipmanager.response.InternshipOfferListResponse;
+import cal.internshipmanager.response.UserListReponse;
 import cal.internshipmanager.service.InternshipOfferService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -52,14 +53,14 @@ public class InternshipOfferController {
 
     @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     @PostMapping("add-user")
-    public void addUserInternshipOffer(@Valid @RequestBody InternshipOfferAddUserRequest request){
+    public void addUserToInternshipOffer(@Valid @RequestBody InternshipOfferAddUserRequest request){
         internshipOfferService.addUserToInternshipOffer(request);
     }
 
     @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     @PostMapping("remove-user")
-    public void addUserInternshipOffer(@Valid @RequestBody InternshipOfferRemoveUserRequest request){
-        internshipOfferService.removeUserToInternshipOffer(request);
+    public void addUserFromInternshipOffer(@Valid @RequestBody InternshipOfferRemoveUserRequest request){
+        internshipOfferService.removeUserFromInternshipOffer(request);
     }
 
     //
@@ -81,6 +82,11 @@ public class InternshipOfferController {
     @GetMapping("approved")
     public InternshipOfferListResponse approvedInternshipOffers(){
         return internshipOfferService.approvedInternshipOffers();
+    }
+
+    @GetMapping("users")
+    public UserListReponse internshipOfferUsers(InternshipOfferUserListRequest request){
+        return internshipOfferService.internshipOfferUsers(request);
     }
 
 }

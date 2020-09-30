@@ -6,6 +6,7 @@ import cal.internshipmanager.repository.InternshipOfferRepository;
 import cal.internshipmanager.repository.UserRepository;
 import cal.internshipmanager.request.*;
 import cal.internshipmanager.response.InternshipOfferListResponse;
+import cal.internshipmanager.response.UserListReponse;
 import cal.internshipmanager.security.JwtAuthentication;
 import cal.internshipmanager.security.JwtProvider;
 import com.auth0.jwt.interfaces.DecodedJWT;
@@ -298,7 +299,7 @@ public class InternshipOfferServiceTest {
         internshipOffer.setDuration(12);
         internshipOffer.setSalary(20);
         internshipOffer.setHours(40);
-        internshipOffer.setVisibility(new ArrayList<>());
+        internshipOffer.setUsers(new ArrayList<>());
 
         User user = new User();
 
@@ -330,7 +331,7 @@ public class InternshipOfferServiceTest {
 
             InternshipOffer offer = (InternshipOffer) inv.getArgument(0);
 
-            User user1 = offer.getVisibility().get(0);
+            User user1 = offer.getUsers().get(0);
 
             assertEquals(user.getUniqueId(), user1.getUniqueId());
 
@@ -355,7 +356,7 @@ public class InternshipOfferServiceTest {
         internshipOffer.setDuration(12);
         internshipOffer.setSalary(20);
         internshipOffer.setHours(40);
-        internshipOffer.setVisibility(new ArrayList<>());
+        internshipOffer.setUsers(new ArrayList<>());
 
         User user = new User();
 
@@ -365,7 +366,7 @@ public class InternshipOfferServiceTest {
         user.setFirstName("Toto");
         user.setLastName("Tata");
 
-        internshipOffer.getVisibility().add(user);
+        internshipOffer.getUsers().add(user);
 
         InternshipOfferService internshipOfferService = new InternshipOfferService(internshipOfferRepository, userRepository);
 
@@ -383,16 +384,72 @@ public class InternshipOfferServiceTest {
 
         // Act & Assert
 
-        internshipOfferService.removeUserToInternshipOffer(request);
+        internshipOfferService.removeUserFromInternshipOffer(request);
 
         Mockito.when(internshipOfferRepository.save(Mockito.any())).then(inv ->{
 
             InternshipOffer offer = (InternshipOffer) inv.getArgument(0);
 
-            assertTrue(offer.getVisibility().isEmpty());
+            assertTrue(offer.getUsers().isEmpty());
 
             return null;
         });
+
+    }
+
+    @Test
+    public void internshipOfferUsers_validRequest(){
+
+        // Arrange
+
+        InternshipOffer internshipOffer = new InternshipOffer();
+
+        internshipOffer.setUniqueId(UUID.randomUUID());
+        internshipOffer.setEmployer(UUID.randomUUID());
+        internshipOffer.setStatus(InternshipOffer.Status.REJECTED);
+        internshipOffer.setCompany("Test Company");
+        internshipOffer.setJobTitle("Test Job Title");
+        internshipOffer.setStartDate(new Date());
+        internshipOffer.setDuration(12);
+        internshipOffer.setSalary(20);
+        internshipOffer.setHours(40);
+        internshipOffer.setUsers(new ArrayList<>());
+
+        User user = new User();
+
+        user.setUniqueId(UUID.randomUUID());
+        user.setType("STUDENT");
+        user.setEmail("toto@gmail.com");
+        user.setFirstName("Toto");
+        user.setLastName("Tata");
+
+        internshipOffer.getUsers().add(user);
+
+        InternshipOfferService internshipOfferService = new InternshipOfferService(internshipOfferRepository, userRepository);
+
+        InternshipOfferUserListRequest request = new InternshipOfferUserListRequest();
+
+        request.setUniqueId(internshipOffer.getUniqueId());
+
+        Mockito.when(internshipOfferRepository.findById(internshipOffer.getUniqueId()))
+                .thenReturn(Optional.of(internshipOffer));
+
+        // Act
+
+        UserListReponse response = internshipOfferService.internshipOfferUsers(request);
+
+        // Assert
+
+        for(UserListReponse.User user1 : response.getUsers()){
+
+            assertEquals(user.getUniqueId(), user1.getUniqueId());
+            assertEquals(user.getType(), user1.getType());
+            assertEquals(user.getEmail(), user1.getEmail());
+            assertEquals(user.getFirstName(), user1.getFirstName());
+            assertEquals(user.getLastName(), user1.getLastName());
+
+        }
+
 
     }
 
