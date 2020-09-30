@@ -217,6 +217,13 @@ export default function AppDrawer(props) {
         {
           isAdministrator() &&
           <List>
+            <ListItem
+              button
+              key={"Pending Approval"}
+              onClick={() => history.push("/pending-approval")}>
+              <ListItemIcon><CreateIcon /> </ListItemIcon>
+              <ListItemText primary={"Pending Approval"} />
+            </ListItem>
 
           </List>
         }

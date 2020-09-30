@@ -19,6 +19,19 @@ class AuthenticationService {
         return axios.post(Config.target + '/internship-offer/create', request, headers());
     }
 
+    pendingApproval(){
+        return axios.get(Config.target + '/internship-offer/pending-approval', headers());
+    }
+
+    approve(request){
+        return axios.post(Config.target + '/internship-offer/approve', request ,headers());
+    }
+
+    reject(request){
+        return axios.post(Config.target + '/internship-offer/reject', request ,headers());
+    }
+
+
 }
 
 export default new AuthenticationService();
