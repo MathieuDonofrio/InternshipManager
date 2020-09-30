@@ -1,7 +1,9 @@
 package cal.internshipmanager.service;
 
 import cal.internshipmanager.model.InternshipOffer;
+import cal.internshipmanager.model.User;
 import cal.internshipmanager.repository.InternshipOfferRepository;
+import cal.internshipmanager.repository.UserRepository;
 import cal.internshipmanager.request.*;
 import cal.internshipmanager.response.InternshipOfferListResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,13 +29,16 @@ public class InternshipOfferService {
 
     private final InternshipOfferRepository internshipOfferRepository;
 
+    private final UserRepository userRepository;
+
     //
     // Constructors
     //
 
     @Autowired
-    public InternshipOfferService(InternshipOfferRepository internshipOfferRepository) {
+    public InternshipOfferService(InternshipOfferRepository internshipOfferRepository, UserRepository userRepository) {
         this.internshipOfferRepository = internshipOfferRepository;
+        this.userRepository = userRepository;
     }
 
     //
@@ -122,27 +127,23 @@ public class InternshipOfferService {
 
     public void addUserToInternshipOffer(@Valid InternshipOfferAddUserRequest request){
 
-        InternshipOffer internshipOffer = internshipOfferRepository.findById(request.getOfferUniqueId()).orElse(null);
+        InternshipOffer internshipOffer = internshipOfferRepository.findById(
+                request.getOfferUniqueId()).orElse(null);
 
-        UUID userUniqueId = request.getUserUniqueId();
+        User user = userRepository.findById(request.getUserUniqueId()).orElse(null);
 
-        if(!internshipOffer.getVisibility().contains(userUniqueId)){
-
-            internshipOffer.getVisibility().add(userUniqueId);
-        }
+        internshipOffer.getVisibility().add(user);
 
     }
 
     public void removeUserToInternshipOffer(@Valid InternshipOfferRemoveUserRequest request){
 
-        InternshipOffer internshipOffer = internshipOfferRepository.findById(request.getOfferUniqueId()).orElse(null);
+        InternshipOffer internshipOffer = internshipOfferRepository.findById(
+                request.getOfferUniqueId()).orElse(null);
 
-        UUID userUniqueId = request.getUserUniqueId();
+        User user = userRepository.findById(request.getUserUniqueId()).orElse(null);
 
-        if(internshipOffer.getVisibility().contains(userUniqueId)){
-
-            internshipOffer.getVisibility().remove(userUniqueId);
-        }
+        internshipOffer.getVisibility().remove(user);
 
     }
 
