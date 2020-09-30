@@ -40,7 +40,7 @@ public class UserServiceTest {
 
         // Act
 
-        UserListReponse response = userService.studentUsers();
+        UserListReponse response = userService.students();
 
         // Assert
 

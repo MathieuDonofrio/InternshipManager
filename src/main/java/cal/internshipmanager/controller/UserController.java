@@ -1,14 +1,9 @@
 package cal.internshipmanager.controller;
 
-import cal.internshipmanager.request.InternshipOfferCreationRequest;
 import cal.internshipmanager.response.UserListReponse;
-import cal.internshipmanager.service.InternshipOfferService;
 import cal.internshipmanager.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/user")
@@ -34,8 +29,8 @@ public class UserController {
     //
 
     @GetMapping("students")
-    public UserListReponse studentUsers() {
-        return userService.studentUsers();
+    public UserListReponse students() {
+        return userService.students();
     }
 
 }

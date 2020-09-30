@@ -36,13 +36,13 @@ public class RegistrationController {
     //
 
     @PostMapping("student")
-    public RegistrationResponse registerStudent(@Valid @RequestBody StudentRegistrationRequest request) {
-        return registrationService.registerStudent(request);
+    public RegistrationResponse student(@Valid @RequestBody StudentRegistrationRequest request) {
+        return registrationService.student(request);
     }
 
     @PostMapping("employer")
-    public RegistrationResponse registerEmployer(@Valid @RequestBody EmployerRegistrationRequest request) {
-        return registrationService.registerEmployer(request);
+    public RegistrationResponse employer(@Valid @RequestBody EmployerRegistrationRequest request) {
+        return registrationService.employer(request);
     }
 
 }

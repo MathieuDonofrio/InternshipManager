@@ -38,6 +38,7 @@ public class AdministratorLoader implements CommandLineRunner {
     public void run(String... args) throws Exception {
 
         LoadIfAbsent("admin@admin.com", "Admin", "Admin", "123456");
+
     }
 
     //

@@ -34,7 +34,7 @@ public class InternshipOfferServiceTest {
     private UserRepository userRepository;
 
     @Test
-    public void createInternshipOffer_validRequest(){
+    public void create_validRequest(){
 
         // Arrange
 
@@ -80,11 +80,11 @@ public class InternshipOfferServiceTest {
             return null;
         });
 
-        internshipOfferService.createInternshipOffer(internshipOfferCreationRequest);
+        internshipOfferService.create(internshipOfferCreationRequest);
     }
 
     @Test
-    public void approveInternshipOffer_validRequest(){
+    public void approve_validRequest(){
 
         // Arrange
 
@@ -111,11 +111,11 @@ public class InternshipOfferServiceTest {
                 return null;
         });
 
-        internshipOfferService.approveInternshipOffer(internshipOfferApproveRequest);
+        internshipOfferService.approve(internshipOfferApproveRequest);
     }
 
     @Test
-    public void rejectInternshipOffer_validRequest(){
+    public void reject_validRequest(){
 
         // Arrange
 
@@ -142,11 +142,11 @@ public class InternshipOfferServiceTest {
             return null;
         });
 
-        internshipOfferService.rejectInternshipOffer(internshipOfferRejectRequest);
+        internshipOfferService.reject(internshipOfferRejectRequest);
     }
 
     @Test
-    public void pendingApprovalInternshipOffers_validRequest(){
+    public void pendingApproval_validRequest(){
 
         // Arrange
 
@@ -169,7 +169,7 @@ public class InternshipOfferServiceTest {
 
         // Act
 
-        InternshipOfferListResponse response = internshipOfferService.pendingApprovalInternshipOffers();
+        InternshipOfferListResponse response = internshipOfferService.pendingApproval();
 
         // Assert
 
@@ -192,7 +192,7 @@ public class InternshipOfferServiceTest {
     }
 
     @Test
-    public void approvedInternshipOffers_validRequest(){
+    public void approved_validRequest(){
 
         // Arrange
 
@@ -215,7 +215,7 @@ public class InternshipOfferServiceTest {
 
         // Act
 
-        InternshipOfferListResponse response = internshipOfferService.approvedInternshipOffers();
+        InternshipOfferListResponse response = internshipOfferService.approved();
 
         // Assert
 
@@ -238,7 +238,7 @@ public class InternshipOfferServiceTest {
     }
 
     @Test
-    public void rejectedInternshipOffers_validRequest(){
+    public void rejected_validRequest(){
 
         // Arrange
 
@@ -261,7 +261,7 @@ public class InternshipOfferServiceTest {
 
         // Act
 
-        InternshipOfferListResponse response = internshipOfferService.rejectedInternshipOffers();
+        InternshipOfferListResponse response = internshipOfferService.rejected();
 
         // Assert
 
@@ -284,7 +284,7 @@ public class InternshipOfferServiceTest {
     }
 
     @Test
-    public void addUserToInternshipOffer_validRequest(){
+    public void addUser_validRequest(){
 
         // Arrange
 
@@ -325,7 +325,7 @@ public class InternshipOfferServiceTest {
 
         // Act & Assert
 
-        internshipOfferService.addUserToInternshipOffer(request);
+        internshipOfferService.addUser(request);
 
         Mockito.when(internshipOfferRepository.save(Mockito.any())).then(inv ->{
 
@@ -341,7 +341,7 @@ public class InternshipOfferServiceTest {
     }
 
     @Test
-    public void removeUserToInternshipOffer_validRequest(){
+    public void removeUser_validRequest(){
 
         // Arrange
 
@@ -384,7 +384,7 @@ public class InternshipOfferServiceTest {
 
         // Act & Assert
 
-        internshipOfferService.removeUserFromInternshipOffer(request);
+        internshipOfferService.removeUser(request);
 
         Mockito.when(internshipOfferRepository.save(Mockito.any())).then(inv ->{
 
@@ -398,7 +398,7 @@ public class InternshipOfferServiceTest {
     }
 
     @Test
-    public void internshipOfferUsers_validRequest(){
+    public void users_validRequest(){
 
         // Arrange
 
@@ -436,7 +436,7 @@ public class InternshipOfferServiceTest {
 
         // Act
 
-        UserListReponse response = internshipOfferService.internshipOfferUsers(request);
+        UserListReponse response = internshipOfferService.users(request);
 
         // Assert
 
@@ -449,7 +449,6 @@ public class InternshipOfferServiceTest {
             assertEquals(user.getLastName(), user1.getLastName());
 
         }
-
 
     }
 

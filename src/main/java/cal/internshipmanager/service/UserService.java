@@ -1,12 +1,9 @@
 package cal.internshipmanager.service;
 
-import cal.internshipmanager.model.InternshipOffer;
 import cal.internshipmanager.model.User;
 import cal.internshipmanager.repository.UserRepository;
-import cal.internshipmanager.response.InternshipOfferListResponse;
 import cal.internshipmanager.response.UserListReponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -37,7 +34,7 @@ public class UserService {
     // Services
     //
 
-    public UserListReponse studentUsers(){
+    public UserListReponse students(){
 
         List<User> internshipOffers = userRepository.findAllByType("STUDENT");
 
