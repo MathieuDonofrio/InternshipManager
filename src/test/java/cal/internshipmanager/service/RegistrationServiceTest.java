@@ -24,7 +24,7 @@ public class RegistrationServiceTest {
     private PasswordEncoder passwordEncoder;
 
     @Test
-    public void registerStudent_validRequest() {
+    public void student_validRequest() {
 
         // Arrange
 
@@ -53,7 +53,7 @@ public class RegistrationServiceTest {
             return null;
         });
 
-        RegistrationResponse response = service.registerStudent(request);
+        RegistrationResponse response = service.student(request);
 
         assertNotNull(response);
 
@@ -61,7 +61,7 @@ public class RegistrationServiceTest {
     }
 
     @Test
-    public void registerEmployer_validRequest() {
+    public void employer_validRequest() {
 
         // Arrange
 
@@ -91,7 +91,7 @@ public class RegistrationServiceTest {
             return null;
         });
 
-        RegistrationResponse response = service.registerEmployer(request);
+        RegistrationResponse response = service.employer(request);
 
         assertNotNull(response);
 

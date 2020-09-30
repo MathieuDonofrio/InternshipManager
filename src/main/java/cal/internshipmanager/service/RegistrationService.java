@@ -39,7 +39,7 @@ public class RegistrationService {
     // Services
     //
 
-    public RegistrationResponse registerStudent(@Valid StudentRegistrationRequest request) {
+    public RegistrationResponse student(@Valid StudentRegistrationRequest request) {
 
         User user = new User();
 
@@ -59,7 +59,7 @@ public class RegistrationService {
         return response;
     }
 
-    public RegistrationResponse registerEmployer(@Valid EmployerRegistrationRequest request) {
+    public RegistrationResponse employer(@Valid EmployerRegistrationRequest request) {
 
         User user = new User();
 

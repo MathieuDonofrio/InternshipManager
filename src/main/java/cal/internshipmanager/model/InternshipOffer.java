@@ -38,6 +38,8 @@ public class InternshipOffer implements Serializable {
 
     private float hours;
 
+    private List<User> users;
+
     //
     // Inner classes & Enums
     //
