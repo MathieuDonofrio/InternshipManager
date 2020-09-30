@@ -1,6 +1,5 @@
 package cal.internshipmanager.response;
 
-import cal.internshipmanager.model.InternshipOffer;
 import lombok.Data;
 
 import java.util.List;
