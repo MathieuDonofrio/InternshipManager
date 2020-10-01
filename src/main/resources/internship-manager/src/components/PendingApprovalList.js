@@ -25,6 +25,16 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import * as ReactBootStrap from "react-bootstrap";
+import { makeStyles } from '@material-ui/core/styles';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
+import ThumbUpAltOutlinedIcon from '@material-ui/icons/ThumbUpAltOutlined';
+import ThumbDownAltOutlinedIcon from '@material-ui/icons/ThumbDownAltOutlined';
 
 //
 // Data
@@ -33,6 +43,7 @@ import * as ReactBootStrap from "react-bootstrap";
 const state = {
     internshipOffers : []
 }
+
 
 
 class PendingApprovalList extends Component {
@@ -47,6 +58,7 @@ class PendingApprovalList extends Component {
     this.onUpdateInternshipOffers();
 
     this.submitLock = new Lock();
+
 
   }
 
@@ -84,53 +96,85 @@ class PendingApprovalList extends Component {
   //
 
 
-  renderTableData(){
-      return this.state.internshipOffers.map((internshipOffer, index) => {
-          const {company, jobTitle, startDate, duration, salary, hours} = internshipOffer
-          return(
-            <tr key={index}>
-                  <td>{company}</td>
-                  <td>{jobTitle}</td>
-                  <td>{startDate}</td>
-                  <td>{duration}</td>
-                  <td>{salary}</td>
-                  <td>{hours}</td>
-                  <td>
-                      <Button type="button" class="btn btn-success" onClick={() => this.onApprovedClicked(internshipOffer)}>
-                          Approve
-                      </Button>
-                      <Button type="button" class="btn btn-danger" onClick={() => this.onRejectedClicked(internshipOffer)}>
-                          Reject
-                      </Button>
-                  </td>
-            </tr>
 
-          )
-      })
-  }
+renderTableData(){
+    return this.state.internshipOffers.map((internshipOffer, index) => {
+        const {company, jobTitle, startDate, duration, salary, hours} = internshipOffer
+        return(
+          <TableRow key={index}>
+                <TableCell component="th" scope="row" align="center">{company}</TableCell>
+                <TableCell component="th" scope="row" align="center">{jobTitle}</TableCell>
+                <TableCell component="th" scope="row" align="center">{new Date(startDate).toLocaleDateString()}</TableCell>
+                <TableCell component="th" scope="row" align="center">{duration}</TableCell>
+                <TableCell component="th" scope="row" align="center">{salary}</TableCell>
+                <TableCell component="th" scope="row" align="center">{hours}</TableCell>
+                <TableCell omponent="th" scope="row" >
+                    <Box margin={1}>
+
+                        <Button 
+                            variant="contained" color="primary"
+                            size="small" startIcon={<ThumbUpAltOutlinedIcon/>}
+                            onClick={() => this.onApprovedClicked(internshipOffer)}
+                        >
+                            Approve
+                        </Button>
+
+                   
+                    </Box>
+
+                    <Box margin={1}>
+                        <Button 
+                                variant="contained" color="secondary" 
+                                size="small"
+                                startIcon={<ThumbDownAltOutlinedIcon />} onClick={() => this.onRejectedClicked(internshipOffer)}
+                            >
+                                Reject
+                        </Button>
+                    </Box>
+
+                </TableCell>
+          </TableRow>
+
+        )
+    })
+}
+
+    
 
   render() {
     return (
-            <div>
-                <h1 id='title' class="text-center">Pending Internship Offers</h1>
-                <ReactBootStrap.Table striped bordered hover>
-                    <thead>
-                        <tr>
-                            <th>Company</th>
-                            <th>Job Title</th>
-                            <th>Start Date</th>
-                            <th>Duration</th>
-                            <th>Salary</th>
-                            <th>Hours</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {this.renderTableData()}
-                    </tbody>
-                </ReactBootStrap.Table>
-            </div>
-       
+        <div>
+            <Container>
+                <Box
+                    mb={2}
+                    paddingTop={2}
+                    textAlign="left"
+                >
+                    <Typography component="h1" variant="h4" align="center">Pending Approval</Typography>
+                </Box>
+            </Container>
+
+        <TableContainer component={Paper}>
+            <Table size="small" aria-label="a dense table">
+                <TableHead>
+                <TableRow>
+                    <TableCell align="center"><strong>Company</strong></TableCell>
+                    <TableCell align="center"><strong>Job Title</strong></TableCell>
+                    <TableCell align="center"><strong>Start Date</strong></TableCell>
+                    <TableCell align="center"><strong>Duration</strong></TableCell>
+                    <TableCell align="center"><strong>Salary</strong></TableCell>
+                    <TableCell align="center"><strong>Hours</strong></TableCell>
+                    <TableCell align="center"><strong>Action</strong></TableCell>
+                </TableRow>
+                </TableHead>
+                <TableBody>
+                    {this.renderTableData()}
+                </TableBody>
+            </Table>
+        </TableContainer>
+        </div>
+        
+
     )
   }
 }
