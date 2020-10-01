@@ -7,6 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 @Document
@@ -45,7 +46,13 @@ public class InternshipOffer implements Serializable {
     //
 
     public enum Status {
-        PENDING_APPROVAL, APPROVED, REJECTED
+        PENDING_APPROVAL, APPROVED, REJECTED;
+
+        public static Status getRandom(){
+            int max = values().length - 1;
+            int min = 0;
+            return values()[(int)Math.floor(Math.random() * (max - min + 1)) + min];
+        }
     }
 
 }
