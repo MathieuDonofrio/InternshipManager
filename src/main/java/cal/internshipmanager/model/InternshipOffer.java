@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Document
 @Data
@@ -49,9 +50,7 @@ public class InternshipOffer implements Serializable {
         PENDING_APPROVAL, APPROVED, REJECTED;
 
         public static Status getRandom(){
-            int max = values().length - 1;
-            int min = 0;
-            return values()[(int)Math.floor(Math.random() * (max - min + 1)) + min];
+            return values()[ThreadLocalRandom.current().nextInt(values().length)];
         }
     }
 

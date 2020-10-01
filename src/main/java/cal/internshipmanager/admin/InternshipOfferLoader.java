@@ -11,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -100,7 +101,7 @@ public class InternshipOfferLoader implements CommandLineRunner {
     }
 
     private int RandomBetween(int min, int max) {
-        return (int) Math.floor(Math.random() * (max - min + 1)) + min;
+        return ThreadLocalRandom.current().nextInt(min, max + 1);
     }
 
 }
