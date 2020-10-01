@@ -217,7 +217,13 @@ export default function AppDrawer(props) {
         {
           isAdministrator() &&
           <List>
-
+            <ListItem
+            button
+            key={"Student Offer Validation"}
+            onClick={() => history.push("/studentoffervalidation")}>
+            <ListItemIcon><CreateIcon /> </ListItemIcon>
+            <ListItemText primary={"Student Offer Validation"} />
+          </ListItem>
           </List>
         }
 

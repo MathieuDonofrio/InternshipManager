@@ -76,7 +76,7 @@ public class InternshipOfferController {
     @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     @GetMapping("rejected")
     public InternshipOfferListResponse rejected(){
-        return internshipOfferService.pendingApproval();
+        return internshipOfferService.rejected();
     }
 
     @GetMapping("approved")
@@ -85,7 +85,7 @@ public class InternshipOfferController {
     }
 
     @GetMapping("users")
-    public UserListReponse users(InternshipOfferUserListRequest request){
+    public UserListReponse users(@Valid @RequestBody InternshipOfferUserListRequest request){
         return internshipOfferService.users(request);
     }
 
