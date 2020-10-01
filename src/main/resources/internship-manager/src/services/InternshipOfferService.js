@@ -34,6 +34,18 @@ class InternshipOfferService {
     addUser(request){
         return axios.post(Config.target + '/internship-offer/add-user', request, headers());
     }
+    pendingApproval(){
+        return axios.get(Config.target + '/internship-offer/pending-approval', headers());
+    }
+
+    approve(request){
+        return axios.post(Config.target + '/internship-offer/approve', request ,headers());
+    }
+
+    reject(request){
+        return axios.post(Config.target + '/internship-offer/reject', request ,headers());
+    }
+
 
 }
 

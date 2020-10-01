@@ -25,6 +25,7 @@ import MailIcon from '@material-ui/icons/Mail';
 import HomeIcon from '@material-ui/icons/Home';
 import CreateIcon from '@material-ui/icons/Create';
 import { useHistory } from 'react-router-dom';
+import GavelOutlinedIcon from '@material-ui/icons/GavelOutlined';
 
 const drawerWidth = 240;
 
@@ -224,6 +225,14 @@ export default function AppDrawer(props) {
             <ListItemIcon><CreateIcon /> </ListItemIcon>
             <ListItemText primary={"Student Offer Validation"} />
           </ListItem>
+          <ListItem
+              button
+              key={"Pending Approval"}
+              onClick={() => history.push("/pending-approval")}>
+              <ListItemIcon><GavelOutlinedIcon /> </ListItemIcon>
+              <ListItemText primary={"Pending Approval"} />
+            </ListItem>
+
           </List>
         }
 
