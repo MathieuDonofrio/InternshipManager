@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -40,9 +40,7 @@ const rows = [
     createData('Data analysis', 'Gouvernement', '13/12/20', 15),
 ];
 
-InternshipOfferService.getApprovedOffers().then(response =>{
-  console.log(response.data);
-})
+
 //dialogs
 
 
@@ -71,6 +69,7 @@ ValidateStudentTableDialog.propTypes = {
 
 export default function StudentInternshipValidationTable() {
     const [open, setOpen] = React.useState(false);
+    const [rowss,setRows] = useState([]);
     const classes = useStyles();
   
     const handleClickOpen = () => {
@@ -80,7 +79,17 @@ export default function StudentInternshipValidationTable() {
     const handleClose = (value) => {
       setOpen(false);
     };
-  
+
+    const fetchInternshipOffers = async () => {
+      const response = await InternshipOfferService.getApprovedOffers();
+      setRows({rowss:response.data});
+    }
+
+    useEffect(() => {
+      console.log('hello');
+      fetchInternshipOffers();
+    },[rowss])
+
     return (
         <Container>
         <Box

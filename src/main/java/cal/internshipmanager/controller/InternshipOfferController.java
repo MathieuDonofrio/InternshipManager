@@ -79,11 +79,13 @@ public class InternshipOfferController {
         return internshipOfferService.rejected();
     }
 
+    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     @GetMapping("approved")
     public InternshipOfferListResponse approved(){
         return internshipOfferService.approved();
     }
 
+    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     @GetMapping("users")
     public UserListReponse users(@Valid @RequestBody InternshipOfferUserListRequest request){
         return internshipOfferService.users(request);
