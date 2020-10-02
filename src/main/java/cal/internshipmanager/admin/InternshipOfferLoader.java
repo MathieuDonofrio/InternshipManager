@@ -90,7 +90,8 @@ public class InternshipOfferLoader implements CommandLineRunner {
     //
 
     private UUID GetRandomEmployerUUID() {
-        return userRepository.findAllByType("EMPLOYER").get(RandomBetween(0, EMPLOYER_COUNT)).getUniqueId();
+        List<User> employers = userRepository.findAllByType("EMPLOYER");
+        return employers.get(ThreadLocalRandom.current().nextInt(employers.size())).getUniqueId();
     }
 
     private List<User> GetRandomStudentAmount() {
@@ -101,7 +102,7 @@ public class InternshipOfferLoader implements CommandLineRunner {
     }
 
     private int RandomBetween(int min, int max) {
-        return ThreadLocalRandom.current().nextInt(min, max + 1);
+        return ThreadLocalRandom.current().nextInt(min, max);
     }
 
 }

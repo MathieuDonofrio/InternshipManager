@@ -49,7 +49,7 @@ public class EmployerLoader implements CommandLineRunner {
 
     private void LoadEveryoneIfAbsent() {
         if (userRepository.findAllByType("EMPLOYER").isEmpty()) {
-            for (int i = 0; i <= EMPLOYER_COUNT; i++) {
+            for (int i = 0; i < EMPLOYER_COUNT; i++) {
                 Load("employer" + i + "@employer.com", "employer", "employer", "123456");
             }
         }

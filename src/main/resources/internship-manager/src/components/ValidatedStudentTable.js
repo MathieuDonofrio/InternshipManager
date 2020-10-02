@@ -15,94 +15,93 @@ import InternshipOfferService from '../services/InternshipOfferService';
 //dialogs
 
 function ValidableStudentTableDialog(props) {
-    const { onClose, selectedValue, open } = props;
-  
-    const handleClose = () => {
-      onClose(selectedValue);
-    };
-  
-    return (
-      <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
-        <DialogTitle id="simple-dialog-title">VALIDABLE STUDENT</DialogTitle>
-        <ValidableStudentTable onClose={handleClose}/>
-      </Dialog>
-    );
-  }
-  
-  ValidableStudentTableDialog.propTypes = {
-    onClose: PropTypes.func.isRequired,
-    open: PropTypes.bool.isRequired,
-    selectedValue: PropTypes.string.isRequired,
+
+  const { onClose, selectedValue, open } = props;
+
+  const handleClose = () => {
+    onClose(selectedValue);
   };
+
+  return (
+    <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
+      <DialogTitle id="simple-dialog-title">VALIDABLE STUDENT</DialogTitle>
+      <ValidableStudentTable onClose={handleClose} />
+    </Dialog>
+  );
+}
+
+ValidableStudentTableDialog.propTypes = {
+  onClose: PropTypes.func.isRequired,
+  open: PropTypes.bool.isRequired,
+  selectedValue: PropTypes.string.isRequired,
+};
 
 
 //styles and data
 
 const useStyles = makeStyles({
-    table: {
-        minWidth: 500,
-    },
+  table: {
+    minWidth: 500,
+  },
 });
 
 function createData(fistName, lastName) {
-    return { fistName, lastName };
+  return { fistName, lastName };
 }
 
 const rows = [
-    createData('Mathieu', 'Donofrio'),
-    createData('Hichem', 'Fredj'),
-    createData('Steve', 'Henegar'),
+  createData('Mathieu', 'Donofrio'),
+  createData('Hichem', 'Fredj'),
+  createData('Steve', 'Henegar'),
 ];
 
-
-
 export default function ValidatedStudentTable(props) {
-    const [open, setOpen] = React.useState(false);
-    const classes = useStyles();
-    
-    const handleClose = () =>{
-        props.onClose();
-    }
-    
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
+  const [open, setOpen] = React.useState(false);
+  const classes = useStyles();
 
-    const removeStudent = (request) => {
-        InternshipOfferService.removeUser(request).then(() =>{
-            //find a way to force update
-            console.log('fuck the world');
+  const handleClose = () => {
+    props.onClose();
+  }
 
-        });
-    }
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
 
-    /*you should initiate row here
-    InternshipOfferService.getValidatedStudent(props.internshipId).then(response =>{
-        console.log(response.data);
-    })*/
+  const removeStudent = (request) => {
+    InternshipOfferService.removeUser(request).then(() => {
+      //find a way to force update
+      console.log('fuck the world');
 
-    return (
-        <Container>
-            <Button variant="contained" color="primary" fullWidth onClick={handleClickOpen}>add student</Button>
-            <TableContainer component={Paper}>
-                <Table className={classes.table} aria-label="simple table">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Students name</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {rows.map((row) => (
-                            <TableRow key={row.fistName}>
-                                <TableCell component="th" scope="row">{row.fistName + ' ' + row.lastName}</TableCell>
-                                <TableCell align="right"> <Button variant="contained" color="primary" onClick={() => removeStudent(row)}>remove student</Button></TableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
-            <Button variant="contained" onClick={handleClose} color="primary" fullWidth>close</Button>
-            <ValidableStudentTableDialog internshipId={props.internshipId}  open={open} onClose={handleClose}  selectedValue='' />
-        </Container>
-    );
+    });
+  }
+
+  /*you should initiate row here
+  InternshipOfferService.getValidatedStudent(props.internshipId).then(response =>{
+      console.log(response.data);
+  })*/
+
+  return (
+    <Container>
+      <Button variant="contained" color="primary" fullWidth onClick={handleClickOpen}>add student</Button>
+      <TableContainer component={Paper}>
+        <Table className={classes.table} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Students name</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {rows.map((row) => (
+              <TableRow key={row.fistName}>
+                <TableCell component="th" scope="row">{row.fistName + ' ' + row.lastName}</TableCell>
+                <TableCell align="right"> <Button variant="contained" color="primary" onClick={() => removeStudent(row)}>remove student</Button></TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <Button variant="contained" onClick={handleClose} color="primary" fullWidth>close</Button>
+      <ValidableStudentTableDialog internshipId={props.internshipId} open={open} onClose={handleClose} selectedValue='' />
+    </Container>
+  );
 }

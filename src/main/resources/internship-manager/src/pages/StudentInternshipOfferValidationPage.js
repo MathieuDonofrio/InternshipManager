@@ -4,30 +4,30 @@ import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
 import StudentInternshipOfferValidationTable from '../components/StudentInternshipValidationTable'
 
-export default class StudentInternshipOfferValidationPage extends Component{
-    //
-    // Constructor
-    //
+export default class StudentInternshipOfferValidationPage extends Component {
+  
+  //
+  // Constructor
+  //
 
-    constructor(props) {
-        super();
-      }
-    
-      //
-      // Rendering
-      //
-//      <StudentInternshipOfferValidationTable/>
-    
-      render() {
-        return (
-          <div>
-              <CssBaseline />
-              <Container>
-                  <Paper elevation={3}>
-                    <StudentInternshipOfferValidationTable/>
-                  </Paper>
-              </Container>
-          </div>
-        )
-      }
+  constructor(props) {
+    super();
+  }
+
+  //
+  // Rendering
+  //
+
+  render() {
+    return (
+      <div>
+        <CssBaseline />
+        <Container>
+          <Paper elevation={3}>
+            <StudentInternshipOfferValidationTable />
+          </Paper>
+        </Container>
+      </div>
+    )
+  }
 }

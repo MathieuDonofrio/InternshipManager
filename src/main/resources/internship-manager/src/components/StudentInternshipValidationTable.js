@@ -16,30 +16,18 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import {Box} from "@material-ui/core";
+import { Box } from "@material-ui/core";
 import ValidatedStudentTable from "./ValidatedStudentTable";
 import InternshipOfferService from '../services/InternshipOfferService';
+import { RowingSharp } from '@material-ui/icons';
 
 
 //tables values
 const useStyles = makeStyles({
-    table: {
-        minWidth: 600,
-    },
+  table: {
+    minWidth: 600,
+  },
 });
-
-function createData(jobTitle, name, date, duration) {
-    return { jobTitle, name, date, duration };
-}
-
-const rows = [
-    createData('Developper', 'Desjardin', '01/10/20', 12),
-    createData('It support', 'Hydro-Québec', '11/10/20', 16),
-    createData('Developper', 'Desjardins', '05/11/20', 14),
-    createData('Data analysis', 'Gouvernement', '13/12/20', 15),
-];
-
 
 //dialogs
 
@@ -54,7 +42,7 @@ function ValidateStudentTableDialog(props) {
   return (
     <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
       <DialogTitle id="simple-dialog-title">VALIDATED STUDENT</DialogTitle>
-        <ValidatedStudentTable onClose={handleClose}/>
+      <ValidatedStudentTable onClose={handleClose} />
     </Dialog>
   );
 }
@@ -68,67 +56,74 @@ ValidateStudentTableDialog.propTypes = {
 //other class
 
 export default function StudentInternshipValidationTable() {
-    const [open, setOpen] = React.useState(false);
-    const [rowss,setRows] = useState([]);
-    const classes = useStyles();
-  
-    const handleClickOpen = () => {
-      setOpen(true);
-    };
-  
-    const handleClose = (value) => {
-      setOpen(false);
-    };
 
-    const fetchInternshipOffers = async () => {
-      const response = await InternshipOfferService.getApprovedOffers();
-      setRows({rowss:response.data});
-    }
+  const [open, setOpen] = React.useState(false);
+  const [rows, setRows] = useState([]);
 
-    useEffect(() => {
-      console.log('hello');
-      fetchInternshipOffers();
-    },[rowss])
+  const classes = useStyles();
 
-    return (
-        <Container>
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (value) => {
+    setOpen(false);
+  };
+
+  const fetchInternshipOffers = async () => {
+    const response = await InternshipOfferService.getApprovedOffers();
+    setRows(response.data.internshipOffers);
+  }
+
+  useEffect(() => {
+    //console.log(rowss);
+    fetchInternshipOffers();
+  }, [])
+
+  return (
+    <div>
+      <Container>
         <Box
-            mt={12}
-            mb={2}
-            textAlign="center">
+          mb={2}
+          paddingTop={2}
+          textAlign="center">
 
-            <Typography component="h1" variant="h4">Student offer validation</Typography>
+          <Typography component="h1" variant="h4">Offer Visibility</Typography>
         </Box>
-        <TableContainer component={Paper}>
-            <Table className={classes.table} aria-label="simple table">
-                <TableHead>
-                    <TableRow>
-                        <TableCell>Job Title</TableCell>
-                        <TableCell align="center">Company Name</TableCell>
-                        <TableCell align="right">Start Date</TableCell>
-                        <TableCell align="right">Duration</TableCell>
-                        <TableCell align="right">Edit Students</TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {rows.map((row) => (
-                        <TableRow key={row.name}>
-                            <TableCell component="th" scope="row">{row.jobTitle}</TableCell>
-                            <TableCell align="center">{row.name}</TableCell>
-                            <TableCell align="right">{row.date}</TableCell>
-                            <TableCell align="right">{row.duration}</TableCell>
-                            <TableCell align="right"> <Button variant="contained" color="primary" onClick={handleClickOpen}>Edit student</Button></TableCell>
-                            <ValidateStudentTableDialog internshipId={row.uniqueId}  open={open} onClose={handleClose} selectedValue='' />
-                        </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
-        </TableContainer>
-    </Container>
-    );
+      </Container>
+
+      <TableContainer>
+        <Table className={classes.table} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell align="center"><strong>Company</strong></TableCell>
+              <TableCell align="center"><strong>Job Title</strong></TableCell>
+              <TableCell align="center"><strong>Start Date</strong></TableCell>
+              <TableCell align="center"><strong>Duration</strong></TableCell>
+              <TableCell align="center"><strong>Hours</strong></TableCell>
+              <TableCell align="center"><strong>Edit Students</strong></TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {rows.map((offer) => (
+              <TableRow key={offer.company}>
+                <TableCell align="center">{offer.company}</TableCell>
+                <TableCell align="center">{offer.jobTitle}</TableCell>
+                <TableCell align="center">{new Date(offer.startDate).toLocaleDateString()}</TableCell>
+                <TableCell align="center">{offer.duration}</TableCell>
+                <TableCell align="center">{offer.hours}</TableCell>
+                <TableCell align="center"> <Button variant="contained" color="primary" onClick={handleClickOpen}>Edit student</Button></TableCell>
+                <ValidateStudentTableDialog internshipId={offer.uniqueId} open={open} onClose={handleClose} selectedValue='' />
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </div>
+  );
 }
       /*
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-                  Open simple dialog
-                </Button>
-    */
+<Button variant="outlined" color="primary" onClick={handleClickOpen}>
+Open simple dialog
+</Button>
+*/

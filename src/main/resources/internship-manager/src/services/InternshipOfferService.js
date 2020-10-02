@@ -20,11 +20,11 @@ class InternshipOfferService {
     }
 
     getApprovedOffers(){
-        return axios.get(Config.target + '/internship-offer/approved',headers());
+        return axios.get(Config.target + '/internship-offer/approved', headers());
     }
 
     getValidatedStudent(request){
-        return axios.get(Config.target + '/internship-offer/users',request,headers())
+        return axios.get(Config.target + '/internship-offer/users',request, headers())
     }
 
     removeUser(request){
@@ -43,7 +43,7 @@ class InternshipOfferService {
     }
 
     reject(request){
-        return axios.post(Config.target + '/internship-offer/reject', request ,headers());
+        return axios.post(Config.target + '/internship-offer/reject', request, headers());
     }
 
 

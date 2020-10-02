@@ -26,6 +26,7 @@ import HomeIcon from '@material-ui/icons/Home';
 import CreateIcon from '@material-ui/icons/Create';
 import { useHistory } from 'react-router-dom';
 import GavelOutlinedIcon from '@material-ui/icons/GavelOutlined';
+import VisibilityIcon from '@material-ui/icons/Visibility';
 
 const drawerWidth = 240;
 
@@ -222,8 +223,8 @@ export default function AppDrawer(props) {
             button
             key={"Student Offer Validation"}
             onClick={() => history.push("/studentoffervalidation")}>
-            <ListItemIcon><CreateIcon /> </ListItemIcon>
-            <ListItemText primary={"Student Offer Validation"} />
+            <ListItemIcon><VisibilityIcon /> </ListItemIcon>
+            <ListItemText primary={"Offer Visibility"} />
           </ListItem>
           <ListItem
               button
