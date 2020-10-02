@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 
 @Repository
-public interface InternshipApplicationRepository extends MongoRepository<cal.internshipmanager.model.InternshipApplication, UUID> {
+public interface InternshipApplicationRepository extends MongoRepository<InternshipApplication, UUID> {
 }

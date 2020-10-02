@@ -46,9 +46,9 @@ public class InternshipApplicationRepositoryServiceTest {
 
         ApplicationOfferService applicationOfferService = new ApplicationOfferService(internshipApplicationRepository);
 
-        InternshipApplicationCreationRequest internshipApplicationCreationRequest = new InternshipApplicationCreationRequest();
+        InternshipApplicationCreationRequest request = new InternshipApplicationCreationRequest();
 
-        internshipApplicationCreationRequest.setOfferUniqueId(UUID.randomUUID());
+        request.setOfferUniqueId(UUID.randomUUID());
 
         // Act & Assert
 
@@ -57,10 +57,11 @@ public class InternshipApplicationRepositoryServiceTest {
             InternshipApplication internshipApplication = (InternshipApplication) inv.getArgument(0);
 
             assertNotNull(internshipApplication.getUniqueId());
-            assertEquals(internshipApplicationCreationRequest.getOfferUniqueId(), internshipApplication.getOfferUniqueId());
+            assertEquals(request.getOfferUniqueId(), internshipApplication.getOfferUniqueId());
             assertEquals(user.getUniqueId(), internshipApplication.getStudentUniqueId());
             assertNotNull(internshipApplication.getDate());
             return null;
         });
+        applicationOfferService.createApplicationOffer(request);
     }
 }

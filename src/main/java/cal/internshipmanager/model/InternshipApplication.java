@@ -12,7 +12,6 @@ import java.util.UUID;
 @Data
 public class InternshipApplication implements Serializable {
 
-
     @Id
     private UUID uniqueId;
 
