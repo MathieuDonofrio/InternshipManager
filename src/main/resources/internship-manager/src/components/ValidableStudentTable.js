@@ -1,5 +1,5 @@
 import { Button, Container, makeStyles, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core';
-import React from 'react';
+import React, { useState } from 'react';
 import InternshipOfferService from '../services/InternshipOfferService';
 
 function createData(fistName, lastName) {
@@ -15,6 +15,7 @@ const rows = [
 
 
 export default function ValidableStudentTable(props) {
+  const [rowss, setRows] = useState([]);
 
   const handleClose = () => {
     props.onClose();
@@ -26,9 +27,10 @@ export default function ValidableStudentTable(props) {
     });
   }
 
-  InternshipOfferService.getValidatedStudent(props.internshipId).then(() => {
-    //find a way to refresh
-  })
+  const fetchValidableStudents = async () => {
+    const response = await InternshipOfferService.getValidatedStudent(props.selectedValue);
+    setRows(response.data.users)
+  }
 
   return (
     <div>

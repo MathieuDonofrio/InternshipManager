@@ -24,7 +24,7 @@ class InternshipOfferService {
     }
 
     getValidatedStudent(request){
-        return axios.get(Config.target + '/internship-offer/users',request, headers())
+        return axios.get(Config.target + `/internship-offer/users/${request}`, headers())
     }
 
     removeUser(request){

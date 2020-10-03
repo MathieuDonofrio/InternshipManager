@@ -126,9 +126,9 @@ public class InternshipOfferService {
         return response;
     }
 
-    public UserListReponse users(@Valid InternshipOfferUserListRequest request){
+    public UserListReponse users(UUID uniqueId){
 
-        InternshipOffer internshipOffer = internshipOfferRepository.findById(request.getUniqueId()).orElse(null);
+        InternshipOffer internshipOffer = internshipOfferRepository.findById(uniqueId).orElse(null);
 
         UserListReponse response = new UserListReponse();
 
@@ -147,6 +147,8 @@ public class InternshipOfferService {
 
         internshipOffer.getUsers().add(user);
 
+        internshipOfferRepository.save(internshipOffer);
+
     }
 
     public void removeUser(@Valid InternshipOfferRemoveUserRequest request){
@@ -155,9 +157,11 @@ public class InternshipOfferService {
                 request.getOfferUniqueId()).orElse(null);
 
         User user = userRepository.findById(request.getUserUniqueId()).orElse(null);
-
+        System.out.println("internship offer size: " + internshipOffer.getUsers().size());
         internshipOffer.getUsers().remove(user);
+        System.out.println("internship offer new size: " + internshipOffer.getUsers().size());
 
+        internshipOfferRepository.save(internshipOffer);
     }
 
 }

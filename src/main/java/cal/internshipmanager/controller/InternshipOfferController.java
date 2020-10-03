@@ -9,6 +9,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/internship-offer")
@@ -86,9 +87,9 @@ public class InternshipOfferController {
     }
 
     @PreAuthorize("hasAuthority('ADMINISTRATOR')")
-    @GetMapping("users")
-    public UserListReponse users(@Valid @RequestBody InternshipOfferUserListRequest request){
-        return internshipOfferService.users(request);
+    @GetMapping("users/{uniqueId}")
+    public UserListReponse users(@PathVariable UUID uniqueId){
+        return internshipOfferService.users(uniqueId);
     }
 
 }

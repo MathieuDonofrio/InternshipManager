@@ -42,7 +42,7 @@ function ValidateStudentTableDialog(props) {
   return (
     <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
       <DialogTitle id="simple-dialog-title">VALIDATED STUDENT</DialogTitle>
-      <ValidatedStudentTable onClose={handleClose} />
+      <ValidatedStudentTable onClose={handleClose} selectedValue={selectedValue} />
     </Dialog>
   );
 }
@@ -59,10 +59,13 @@ export default function StudentInternshipValidationTable() {
 
   const [open, setOpen] = React.useState(false);
   const [rows, setRows] = useState([]);
+  const [selectedValue, setSelectedValue] = useState([]);
+  const [currentInternshipId, setCurrentInternshipId] = useState('');
 
   const classes = useStyles();
 
-  const handleClickOpen = () => {
+  const handleClickOpen = (internshipId) => {
+    setCurrentInternshipId(internshipId)
     setOpen(true);
   };
 
@@ -73,10 +76,10 @@ export default function StudentInternshipValidationTable() {
   const fetchInternshipOffers = async () => {
     const response = await InternshipOfferService.getApprovedOffers();
     setRows(response.data.internshipOffers);
+    console.log(response.data);
   }
 
   useEffect(() => {
-    //console.log(rowss);
     fetchInternshipOffers();
   }, [])
 
@@ -105,25 +108,20 @@ export default function StudentInternshipValidationTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((offer) => (
-              <TableRow key={offer.company}>
+            {rows.map((offer,index) => (
+              <TableRow key={index}>
                 <TableCell align="center">{offer.company}</TableCell>
                 <TableCell align="center">{offer.jobTitle}</TableCell>
                 <TableCell align="center">{new Date(offer.startDate).toLocaleDateString()}</TableCell>
                 <TableCell align="center">{offer.duration}</TableCell>
                 <TableCell align="center">{offer.hours}</TableCell>
-                <TableCell align="center"> <Button variant="contained" color="primary" onClick={handleClickOpen}>Edit student</Button></TableCell>
-                <ValidateStudentTableDialog internshipId={offer.uniqueId} open={open} onClose={handleClose} selectedValue='' />
+                <TableCell align="center"> <Button variant="contained" color="primary" onClick={() => handleClickOpen(offer.uniqueId)}>Edit student</Button></TableCell>
               </TableRow>
             ))}
+            <ValidateStudentTableDialog open={open} onClose={handleClose} selectedValue={currentInternshipId} />
           </TableBody>
         </Table>
       </TableContainer>
     </div>
   );
 }
-      /*
-<Button variant="outlined" color="primary" onClick={handleClickOpen}>
-Open simple dialog
-</Button>
-*/
