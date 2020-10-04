@@ -1,10 +1,8 @@
 package cal.internshipmanager.service;
 
-import cal.internshipmanager.model.InternshipOffer;
 import cal.internshipmanager.model.PortfolioDocument;
 import cal.internshipmanager.model.User;
 import cal.internshipmanager.repository.PortfolioDocumentRepository;
-import cal.internshipmanager.request.InternshipOfferRemoveUserRequest;
 import cal.internshipmanager.response.PortfolioDocumentListResponse;
 import cal.internshipmanager.security.JwtAuthentication;
 import cal.internshipmanager.security.JwtProvider;
@@ -34,7 +32,7 @@ public class PortfolioServiceTest {
     private PortfolioDocumentRepository portfolioDocumentRepository;
 
     @Test
-    public void portfolioDocuments_validRequest(){
+    public void portfolioDocuments_validRequest() {
 
         // Arrange
 
@@ -46,30 +44,29 @@ public class PortfolioServiceTest {
         portfolioDocument.setUserUniqueId(userUniqueId);
         portfolioDocument.setFileName("Test1");
         portfolioDocument.setType("Test2");
-        portfolioDocument.setData(new byte[1]);
+        portfolioDocument.setData(new byte[]{1, 2, 3});
 
         PortfolioService portfolioService = new PortfolioService(portfolioDocumentRepository);
+
+        Mockito.when(portfolioDocumentRepository.findAllByUserUniqueId(userUniqueId))
+                .thenReturn(List.of(portfolioDocument));
 
         // Act
 
         PortfolioDocumentListResponse response = portfolioService.portfolioDocuments(userUniqueId);
 
+        PortfolioDocumentListResponse.PortfolioDocument document = response.getPortfolioDocuments().get(0);
+
         // Assert
 
-        for(PortfolioDocumentListResponse.PortfolioDocument document : response.getPortfolioDocuments()){
-
-            assertEquals(portfolioDocument.getUniqueId(), document.getUniqueId());
-            assertEquals(portfolioDocument.getFileName(), document.getFileName());
-            assertEquals(portfolioDocument.getType(), document.getType());
-            assertEquals(portfolioDocument.getData(), document.getData());
-
-        }
-
-        portfolioService.portfolioDocuments(userUniqueId);
+        assertEquals(portfolioDocument.getUniqueId(), document.getUniqueId());
+        assertEquals(portfolioDocument.getFileName(), document.getFileName());
+        assertEquals(portfolioDocument.getType(), document.getType());
+        assertTrue(Arrays.equals(portfolioDocument.getData(), document.getData()));
     }
 
     @Test
-    public void upload_validRequest(){
+    public void upload_validRequest() {
 
         // Arrange
 
@@ -94,7 +91,7 @@ public class PortfolioServiceTest {
 
         // Act & Assert
 
-        Mockito.when(portfolioDocumentRepository.save(Mockito.any())).then(inv ->{
+        Mockito.when(portfolioDocumentRepository.save(Mockito.any())).then(inv -> {
 
             PortfolioDocument portfolioDocument = (PortfolioDocument) inv.getArgument(0);
 
@@ -110,7 +107,7 @@ public class PortfolioServiceTest {
         portfolioService.upload(type, multipartFile);
     }
 
-    private static class MultipartFileMock implements MultipartFile{
+    private static class MultipartFileMock implements MultipartFile {
 
         @Override
         public String getName() {
