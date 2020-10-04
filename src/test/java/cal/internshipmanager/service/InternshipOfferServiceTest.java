@@ -323,11 +323,10 @@ public class InternshipOfferServiceTest {
                 .thenReturn(Optional.of(user));
 
         // Act & Assert
+
         Mockito.when(internshipOfferRepository.save(Mockito.any())).then(inv ->{
 
             InternshipOffer offer = (InternshipOffer) inv.getArgument(0);
-
-            System.out.println(offer.getUniqueId());
 
             User user1 = offer.getUsers().get(0);
 

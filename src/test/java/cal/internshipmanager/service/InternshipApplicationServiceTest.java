@@ -23,7 +23,7 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-public class InternshipApplicationRepositoryServiceTest {
+public class InternshipApplicationServiceTest {
 
     @Autowired
     private JwtProvider jwtProvider;
