@@ -15,5 +15,5 @@ public class InternshipApplicationCreationRequest implements Serializable {
     private UUID offerUniqueId;
 
     @NotNull
-    private List<MultipartFile> files;
+    private List<UUID> documents;
 }

@@ -26,4 +26,6 @@ public class InternshipApplication implements Serializable {
 
     private Date date;
 
+    private List<PortfolioDocument> documents;
+
 }

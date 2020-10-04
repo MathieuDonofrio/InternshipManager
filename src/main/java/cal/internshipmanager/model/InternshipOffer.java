@@ -48,10 +48,6 @@ public class InternshipOffer implements Serializable {
 
     public enum Status {
         PENDING_APPROVAL, APPROVED, REJECTED;
-
-        public static Status getRandom(){
-            return values()[ThreadLocalRandom.current().nextInt(values().length)];
-        }
     }
 
 }

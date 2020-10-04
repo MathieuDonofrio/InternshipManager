@@ -71,7 +71,7 @@ public class InternshipOfferLoader implements CommandLineRunner {
 
         internshipOffer.setUniqueId(UUID.randomUUID());
         internshipOffer.setEmployer(GetRandomEmployerUUID());
-        internshipOffer.setStatus(InternshipOffer.Status.getRandom());
+        internshipOffer.setStatus(getRandomStatus());
         internshipOffer.setCompany("Hydro-Québec");
         internshipOffer.setJobTitle("Developper");
         internshipOffer.setJobScope(Arrays.asList("You must be as good as Mathieu", "You must be as good as Mathieu", "You must be as good as Mathieu", "You must be as good as Mathieu", "You must be as good as Mathieu"));
@@ -88,6 +88,11 @@ public class InternshipOfferLoader implements CommandLineRunner {
     //
     //  Utilities
     //
+
+    public static InternshipOffer.Status getRandomStatus(){
+        return InternshipOffer.Status.values()[
+                ThreadLocalRandom.current().nextInt(InternshipOffer.Status.values().length)];
+    }
 
     private UUID GetRandomEmployerUUID() {
         List<User> employers = userRepository.findAllByType("EMPLOYER");
