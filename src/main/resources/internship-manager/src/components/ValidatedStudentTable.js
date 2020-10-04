@@ -62,8 +62,7 @@ export default function ValidatedStudentTable(props) {
 
   const removeStudent = (student) => {
     const request = {offerUniqueId: props.selectedValue,userUniqueId: student.uniqueId};
-    console.log(request);
-    InternshipOfferService.removeUser(request);
+    InternshipOfferService.removeUser(request).then(() => fetchValidatedStudents());
   }
 
   const fetchValidatedStudents = async () => {
@@ -74,8 +73,6 @@ export default function ValidatedStudentTable(props) {
   useEffect(() => {
     fetchValidatedStudents();
   }, [])
-
-  
 
   return (
     <Container>
@@ -98,7 +95,7 @@ export default function ValidatedStudentTable(props) {
         </Table>
       </TableContainer>
       <Button variant="contained" onClick={handleClose} color="primary" fullWidth>close</Button>
-      <ValidableStudentTableDialog selectedValue={props.internshipId} open={open} onClose={handleClose} selectedValue='' />
+      <ValidableStudentTableDialog selectedValue={props.selectedValue} open={open} onClose={handleClose}/>
     </Container>
   );
 }

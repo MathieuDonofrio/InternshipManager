@@ -59,7 +59,6 @@ export default function StudentInternshipValidationTable() {
 
   const [open, setOpen] = React.useState(false);
   const [rows, setRows] = useState([]);
-  const [selectedValue, setSelectedValue] = useState([]);
   const [currentInternshipId, setCurrentInternshipId] = useState('');
 
   const classes = useStyles();
@@ -76,7 +75,6 @@ export default function StudentInternshipValidationTable() {
   const fetchInternshipOffers = async () => {
     const response = await InternshipOfferService.getApprovedOffers();
     setRows(response.data.internshipOffers);
-    console.log(response.data);
   }
 
   useEffect(() => {
