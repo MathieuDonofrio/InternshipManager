@@ -70,7 +70,6 @@ class PendingApprovalList extends Component {
 
     InternshipOfferService.pendingApproval().then(response => {
       this.setState(response.data);
-      console.log(this.state);
     });
 
   }

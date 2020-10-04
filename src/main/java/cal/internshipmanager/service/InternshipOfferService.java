@@ -157,9 +157,7 @@ public class InternshipOfferService {
                 request.getOfferUniqueId()).orElse(null);
 
         User user = userRepository.findById(request.getUserUniqueId()).orElse(null);
-        System.out.println("internship offer size: " + internshipOffer.getUsers().size());
         internshipOffer.getUsers().remove(user);
-        System.out.println("internship offer new size: " + internshipOffer.getUsers().size());
 
         internshipOfferRepository.save(internshipOffer);
     }
