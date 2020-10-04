@@ -1,9 +1,7 @@
 package cal.internshipmanager.controller;
 
 import cal.internshipmanager.request.InternshipApplicationCreationRequest;
-import cal.internshipmanager.request.InternshipOfferCreationRequest;
-import cal.internshipmanager.service.ApplicationOfferService;
-import cal.internshipmanager.service.InternshipOfferService;
+import cal.internshipmanager.service.InternshipApplicationService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,14 +18,14 @@ public class InternshipApplicationController {
     // Dependencies
     //
 
-    private final ApplicationOfferService applicationOfferService;
+    private final InternshipApplicationService internshipApplicationService;
 
     //
     // Constructors
     //
 
-    public InternshipApplicationController(ApplicationOfferService applicationOfferService) {
-        this.applicationOfferService = applicationOfferService;
+    public InternshipApplicationController(InternshipApplicationService internshipApplicationService) {
+        this.internshipApplicationService = internshipApplicationService;
     }
 
     //
@@ -36,7 +34,7 @@ public class InternshipApplicationController {
 
     @PreAuthorize("hasAuthority('STUDENT')")
     @PostMapping("create")
-    public void createApplicationOffer(@Valid @RequestBody InternshipApplicationCreationRequest internshipApplicationCreationRequest) {
-        applicationOfferService.createApplicationOffer(internshipApplicationCreationRequest);
+    public void createApplicationOffer(@Valid @RequestBody InternshipApplicationCreationRequest request) {
+        internshipApplicationService.createApplicationOffer(request);
     }
 }

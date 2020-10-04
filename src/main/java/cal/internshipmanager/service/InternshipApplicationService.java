@@ -14,7 +14,7 @@ import java.util.UUID;
 
 @Service
 @Validated
-public class ApplicationOfferService {
+public class InternshipApplicationService {
 
     //
     // Dependencies
@@ -26,7 +26,7 @@ public class ApplicationOfferService {
     // Constructors
     //
 
-    public ApplicationOfferService(InternshipApplicationRepository internshipApplicationRepository) {
+    public InternshipApplicationService(InternshipApplicationRepository internshipApplicationRepository) {
         this.internshipApplicationRepository = internshipApplicationRepository;
     }
 

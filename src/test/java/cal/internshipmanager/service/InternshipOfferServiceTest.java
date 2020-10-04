@@ -319,14 +319,15 @@ public class InternshipOfferServiceTest {
         Mockito.when(internshipOfferRepository.findById(internshipOffer.getUniqueId()))
                 .thenReturn(Optional.of(internshipOffer));
 
-        Mockito.when(userRepository.findById(internshipOffer.getUniqueId()))
+        Mockito.when(userRepository.findById(user.getUniqueId()))
                 .thenReturn(Optional.of(user));
-
 
         // Act & Assert
         Mockito.when(internshipOfferRepository.save(Mockito.any())).then(inv ->{
 
             InternshipOffer offer = (InternshipOffer) inv.getArgument(0);
+
+            System.out.println(offer.getUniqueId());
 
             User user1 = offer.getUsers().get(0);
 
@@ -377,7 +378,7 @@ public class InternshipOfferServiceTest {
         Mockito.when(internshipOfferRepository.findById(internshipOffer.getUniqueId()))
                 .thenReturn(Optional.of(internshipOffer));
 
-        Mockito.when(userRepository.findById(internshipOffer.getUniqueId()))
+        Mockito.when(userRepository.findById(user.getUniqueId()))
                 .thenReturn(Optional.of(user));
 
 

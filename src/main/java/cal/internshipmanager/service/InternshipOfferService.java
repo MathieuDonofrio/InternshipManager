@@ -50,12 +50,12 @@ public class InternshipOfferService {
 
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        UUID user = UUID.fromString((String) authentication.getPrincipal());
+        UUID userUniqueId = UUID.fromString((String) authentication.getPrincipal());
 
         InternshipOffer internshipOffer = new InternshipOffer();
 
         internshipOffer.setUniqueId(UUID.randomUUID());
-        internshipOffer.setEmployer(user);
+        internshipOffer.setEmployer(userUniqueId);
         internshipOffer.setStatus(InternshipOffer.Status.PENDING_APPROVAL);
         internshipOffer.setCompany(request.getCompany());
         internshipOffer.setDuration(request.getDuration());
@@ -148,7 +148,6 @@ public class InternshipOfferService {
         internshipOffer.getUsers().add(user);
 
         internshipOfferRepository.save(internshipOffer);
-
     }
 
     public void removeUser(@Valid InternshipOfferRemoveUserRequest request){

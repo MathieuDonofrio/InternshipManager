@@ -44,7 +44,7 @@ public class InternshipApplicationRepositoryServiceTest {
         JwtAuthentication authentication = new JwtAuthentication(decodedToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        ApplicationOfferService applicationOfferService = new ApplicationOfferService(internshipApplicationRepository);
+        InternshipApplicationService internshipApplicationService = new InternshipApplicationService(internshipApplicationRepository);
 
         InternshipApplicationCreationRequest request = new InternshipApplicationCreationRequest();
 
@@ -62,6 +62,6 @@ public class InternshipApplicationRepositoryServiceTest {
             assertNotNull(internshipApplication.getDate());
             return null;
         });
-        applicationOfferService.createApplicationOffer(request);
+        internshipApplicationService.createApplicationOffer(request);
     }
 }

@@ -9,6 +9,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
 @RestController
@@ -36,8 +37,8 @@ public class InternshipOfferController {
 
     @PreAuthorize("hasAuthority('EMPLOYER')")
     @PostMapping("create")
-    public void create(@Valid @RequestBody InternshipOfferCreationRequest internshipOfferCreationRequest) {
-        internshipOfferService.create(internshipOfferCreationRequest);
+    public void create(@Valid @RequestBody InternshipOfferCreationRequest request) {
+        internshipOfferService.create(request);
     }
 
     @PreAuthorize("hasAuthority('ADMINISTRATOR')")
@@ -88,7 +89,7 @@ public class InternshipOfferController {
 
     @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     @GetMapping("users/{uniqueId}")
-    public UserListReponse users(@PathVariable UUID uniqueId){
+    public UserListReponse users(@NotNull @PathVariable UUID uniqueId){
         return internshipOfferService.users(uniqueId);
     }
 
