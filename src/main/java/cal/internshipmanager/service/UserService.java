@@ -34,7 +34,7 @@ public class UserService {
     // Services
     //
 
-    public UserListReponse students(){
+    public UserListReponse students() {
 
         List<User> internshipOffers = userRepository.findAllByType("STUDENT");
 

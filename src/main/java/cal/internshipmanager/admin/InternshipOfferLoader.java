@@ -57,7 +57,7 @@ public class InternshipOfferLoader implements CommandLineRunner {
     //
 
     private void LoadAllInternshipsIfAbsent() {
-        
+
         if (internshipOfferRepository.findAll().isEmpty()) {
             for (int i = 0; i < 20; i++) {
                 Load();
@@ -82,14 +82,14 @@ public class InternshipOfferLoader implements CommandLineRunner {
         internshipOffer.setUsers(GetRandomStudentAmount());
 
         internshipOfferRepository.save(internshipOffer);
-        
+
     }
 
     //
     //  Utilities
     //
 
-    public static InternshipOffer.Status getRandomStatus(){
+    public static InternshipOffer.Status getRandomStatus() {
         return InternshipOffer.Status.values()[
                 ThreadLocalRandom.current().nextInt(InternshipOffer.Status.values().length)];
     }

@@ -50,7 +50,7 @@ public class InternshipApplicationService {
 
         List<PortfolioDocument> documents = new ArrayList<>();
 
-        for(UUID portfolioDocumentUniqueId : request.getDocuments())
+        for (UUID portfolioDocumentUniqueId : request.getDocuments())
             portfolioDocumentRepository.findById(portfolioDocumentUniqueId)
                     .ifPresent(x -> documents.add(x));
 

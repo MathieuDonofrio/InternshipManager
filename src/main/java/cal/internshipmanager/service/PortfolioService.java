@@ -12,6 +12,8 @@ import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -40,7 +42,7 @@ public class PortfolioService {
     //
 
     @SneakyThrows
-    public void upload(String type, MultipartFile file) {
+    public void upload(@NotBlank String type, @NotNull MultipartFile file) {
 
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
@@ -57,7 +59,7 @@ public class PortfolioService {
         portfolioDocumentRepository.save(portfolioDocument);
     }
 
-    public PortfolioDocumentListResponse portfolioDocuments(UUID userUniqueId) {
+    public PortfolioDocumentListResponse portfolioDocuments(@NotNull UUID userUniqueId) {
 
         List<PortfolioDocument> portfolioDocuments = portfolioDocumentRepository.findAllByUserUniqueId(userUniqueId);
 

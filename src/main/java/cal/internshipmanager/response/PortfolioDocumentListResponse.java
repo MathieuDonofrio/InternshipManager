@@ -36,8 +36,7 @@ public class PortfolioDocumentListResponse {
     // Mapping
     //
 
-    public static PortfolioDocument map(cal.internshipmanager.model.PortfolioDocument from)
-    {
+    public static PortfolioDocument map(cal.internshipmanager.model.PortfolioDocument from) {
         PortfolioDocument portfolioDocument = new PortfolioDocument();
 
         portfolioDocument.uniqueId = from.getUniqueId();

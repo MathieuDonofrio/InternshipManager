@@ -27,7 +27,7 @@ public class RegistrationController {
     //
 
     @Autowired
-    public RegistrationController(RegistrationService registrationService){
+    public RegistrationController(RegistrationService registrationService) {
         this.registrationService = registrationService;
     }
 

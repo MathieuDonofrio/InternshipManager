@@ -32,9 +32,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     // Dependencies
     //
 
-    /**
-     * Json web token provider
-     */
     @Autowired
     private JwtProvider JwtProvider;
 

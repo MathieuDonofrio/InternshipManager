@@ -27,7 +27,7 @@ public class AdministratorLoader implements CommandLineRunner {
     //
 
     @Autowired
-    public AdministratorLoader(UserRepository userRepository, PasswordEncoder passwordEncoder){
+    public AdministratorLoader(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
@@ -47,9 +47,8 @@ public class AdministratorLoader implements CommandLineRunner {
     // Private Methods
     //
 
-    private void LoadIfAbsent(String email, String firstName, String lastName, String password)
-    {
-        if(userRepository.findByEmail(email).isEmpty()){
+    private void LoadIfAbsent(String email, String firstName, String lastName, String password) {
+        if (userRepository.findByEmail(email).isEmpty()) {
 
             User user = new User();
 

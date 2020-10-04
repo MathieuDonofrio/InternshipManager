@@ -43,25 +43,25 @@ public class InternshipOfferController {
 
     @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     @PostMapping("approve")
-    public void approve(@Valid @RequestBody InternshipOfferApproveRequest request){
+    public void approve(@Valid @RequestBody InternshipOfferApproveRequest request) {
         internshipOfferService.approve(request);
     }
 
     @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     @PostMapping("reject")
-    public void reject(@Valid @RequestBody InternshipOfferRejectRequest request){
+    public void reject(@Valid @RequestBody InternshipOfferRejectRequest request) {
         internshipOfferService.reject(request);
     }
 
     @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     @PostMapping("add-user")
-    public void addUser(@Valid @RequestBody InternshipOfferAddUserRequest request){
+    public void addUser(@Valid @RequestBody InternshipOfferAddUserRequest request) {
         internshipOfferService.addUser(request);
     }
 
     @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     @PostMapping("remove-user")
-    public void removeUser(@Valid @RequestBody InternshipOfferRemoveUserRequest request){
+    public void removeUser(@Valid @RequestBody InternshipOfferRemoveUserRequest request) {
         internshipOfferService.removeUser(request);
     }
 
@@ -71,25 +71,25 @@ public class InternshipOfferController {
 
     @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     @GetMapping("pending-approval")
-    public InternshipOfferListResponse pendingApproval(){
+    public InternshipOfferListResponse pendingApproval() {
         return internshipOfferService.pendingApproval();
     }
 
     @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     @GetMapping("rejected")
-    public InternshipOfferListResponse rejected(){
+    public InternshipOfferListResponse rejected() {
         return internshipOfferService.rejected();
     }
 
     @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     @GetMapping("approved")
-    public InternshipOfferListResponse approved(){
+    public InternshipOfferListResponse approved() {
         return internshipOfferService.approved();
     }
 
     @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     @GetMapping("users/{uniqueId}")
-    public UserListReponse users(@NotNull @PathVariable UUID uniqueId){
+    public UserListReponse users(@NotNull @PathVariable UUID uniqueId) {
         return internshipOfferService.users(uniqueId);
     }
 

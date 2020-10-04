@@ -8,7 +8,7 @@ import java.util.UUID;
 
 @Document
 @Data
-public class PortfolioDocument{
+public class PortfolioDocument {
 
     //
     // Fields
