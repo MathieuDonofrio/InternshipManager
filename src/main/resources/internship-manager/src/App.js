@@ -10,6 +10,7 @@ import LoginPage from './pages/LoginPage';
 import RegistrationPage from './pages/RegistrationPage';
 import InternshipOfferCreationPage from './pages/InternshipOfferCreationPage';
 import HomePage from './pages/HomePage';
+import StudentInternshipOfferValidationPage from './pages/StudentInternshipOfferValidationPage';
 import PendingApprovalPage from './pages/PendingApprovalPage';
 
 function App() {
@@ -40,6 +41,8 @@ function App() {
               <Route exact path="/home" component={HomePage}></Route>
 
               <Route exact path="/internshipoffercreation" component={InternshipOfferCreationPage}></Route>
+              
+              <Route exact path="/studentoffervalidation" component={StudentInternshipOfferValidationPage}></Route>
               <Route exact path="/pending-approval" component={PendingApprovalPage}></Route>
 
             </AppDrawer>

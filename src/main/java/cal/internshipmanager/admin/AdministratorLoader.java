@@ -4,11 +4,13 @@ import cal.internshipmanager.model.User;
 import cal.internshipmanager.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
+@Order(1)
 @Component
 public class AdministratorLoader implements CommandLineRunner {
 

@@ -48,7 +48,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         try {
 
-            final String token = request.getHeader("Authorization");
+            final String token = getJwt(request);
 
             final DecodedJWT decodedToken = JwtProvider.verify(token);
 
@@ -67,6 +67,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
         filterChain.doFilter(request, response);
+    }
+
+    private String getJwt(HttpServletRequest request) {
+        String authHeader = request.getHeader("Authorization");
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+            return authHeader.replace("Bearer ","");
+        }
+        return authHeader;
     }
 
 }
