@@ -57,7 +57,7 @@ public class InternshipOfferLoader implements CommandLineRunner {
     //
 
     private void LoadAllInternshipsIfAbsent() {
-        
+
         if (internshipOfferRepository.findAll().isEmpty()) {
             for (int i = 0; i < 20; i++) {
                 Load();
@@ -71,7 +71,7 @@ public class InternshipOfferLoader implements CommandLineRunner {
 
         internshipOffer.setUniqueId(UUID.randomUUID());
         internshipOffer.setEmployer(GetRandomEmployerUUID());
-        internshipOffer.setStatus(InternshipOffer.Status.getRandom());
+        internshipOffer.setStatus(getRandomStatus());
         internshipOffer.setCompany("Hydro-Québec");
         internshipOffer.setJobTitle("Developper");
         internshipOffer.setJobScope(Arrays.asList("You must be as good as Mathieu", "You must be as good as Mathieu", "You must be as good as Mathieu", "You must be as good as Mathieu", "You must be as good as Mathieu"));
@@ -82,12 +82,17 @@ public class InternshipOfferLoader implements CommandLineRunner {
         internshipOffer.setUsers(GetRandomStudentAmount());
 
         internshipOfferRepository.save(internshipOffer);
-        
+
     }
 
     //
     //  Utilities
     //
+
+    public static InternshipOffer.Status getRandomStatus() {
+        return InternshipOffer.Status.values()[
+                ThreadLocalRandom.current().nextInt(InternshipOffer.Status.values().length)];
+    }
 
     private UUID GetRandomEmployerUUID() {
         List<User> employers = userRepository.findAllByType("EMPLOYER");

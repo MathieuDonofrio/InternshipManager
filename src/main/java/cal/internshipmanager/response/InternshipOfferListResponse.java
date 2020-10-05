@@ -46,8 +46,7 @@ public class InternshipOfferListResponse {
     // Mapping
     //
 
-    public static InternshipOffer map(cal.internshipmanager.model.InternshipOffer from)
-    {
+    public static InternshipOffer map(cal.internshipmanager.model.InternshipOffer from) {
         InternshipOffer internshipOffer = new InternshipOffer();
 
         internshipOffer.uniqueId = from.getUniqueId();

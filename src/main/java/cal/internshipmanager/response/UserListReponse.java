@@ -9,7 +9,6 @@ import java.util.UUID;
 @Data
 public class UserListReponse {
 
-
     //
     // Fields
     //
@@ -43,8 +42,7 @@ public class UserListReponse {
     // Mapping
     //
 
-    public static UserListReponse.User map(cal.internshipmanager.model.User from)
-    {
+    public static UserListReponse.User map(cal.internshipmanager.model.User from) {
         UserListReponse.User user = new UserListReponse.User();
 
         user.uniqueId = from.getUniqueId();

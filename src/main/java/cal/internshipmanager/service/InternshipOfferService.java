@@ -50,12 +50,12 @@ public class InternshipOfferService {
 
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        UUID user = UUID.fromString((String) authentication.getPrincipal());
+        UUID userUniqueId = UUID.fromString((String) authentication.getPrincipal());
 
         InternshipOffer internshipOffer = new InternshipOffer();
 
         internshipOffer.setUniqueId(UUID.randomUUID());
-        internshipOffer.setEmployer(user);
+        internshipOffer.setEmployer(userUniqueId);
         internshipOffer.setStatus(InternshipOffer.Status.PENDING_APPROVAL);
         internshipOffer.setCompany(request.getCompany());
         internshipOffer.setDuration(request.getDuration());
@@ -69,7 +69,7 @@ public class InternshipOfferService {
         internshipOfferRepository.save(internshipOffer);
     }
 
-    public void approve(@Valid InternshipOfferApproveRequest request){
+    public void approve(@Valid InternshipOfferApproveRequest request) {
 
         InternshipOffer internshipOffer = internshipOfferRepository.findById(request.getUniqueId()).orElse(null);
 
@@ -78,7 +78,7 @@ public class InternshipOfferService {
         internshipOfferRepository.save(internshipOffer);
     }
 
-    public void reject(@Valid InternshipOfferRejectRequest request){
+    public void reject(@Valid InternshipOfferRejectRequest request) {
 
         InternshipOffer internshipOffer = internshipOfferRepository.findById(request.getUniqueId()).orElse(null);
 
@@ -87,7 +87,7 @@ public class InternshipOfferService {
         internshipOfferRepository.save(internshipOffer);
     }
 
-    public InternshipOfferListResponse pendingApproval(){
+    public InternshipOfferListResponse pendingApproval() {
 
         List<InternshipOffer> internshipOffers = internshipOfferRepository.findAllByStatus(
                 InternshipOffer.Status.PENDING_APPROVAL);
@@ -100,7 +100,7 @@ public class InternshipOfferService {
         return response;
     }
 
-    public InternshipOfferListResponse approved(){
+    public InternshipOfferListResponse approved() {
 
         List<InternshipOffer> internshipOffers = internshipOfferRepository.findAllByStatus(
                 InternshipOffer.Status.APPROVED);
@@ -113,7 +113,7 @@ public class InternshipOfferService {
         return response;
     }
 
-    public InternshipOfferListResponse rejected(){
+    public InternshipOfferListResponse rejected() {
 
         List<InternshipOffer> internshipOffers = internshipOfferRepository.findAllByStatus(
                 InternshipOffer.Status.REJECTED);
@@ -126,7 +126,7 @@ public class InternshipOfferService {
         return response;
     }
 
-    public UserListReponse users(UUID uniqueId){
+    public UserListReponse users(UUID uniqueId) {
 
         InternshipOffer internshipOffer = internshipOfferRepository.findById(uniqueId).orElse(null);
 
@@ -138,7 +138,7 @@ public class InternshipOfferService {
         return response;
     }
 
-    public void addUser(@Valid InternshipOfferAddUserRequest request){
+    public void addUser(@Valid InternshipOfferAddUserRequest request) {
 
         InternshipOffer internshipOffer = internshipOfferRepository.findById(
                 request.getOfferUniqueId()).orElse(null);
@@ -148,10 +148,9 @@ public class InternshipOfferService {
         internshipOffer.getUsers().add(user);
 
         internshipOfferRepository.save(internshipOffer);
-
     }
 
-    public void removeUser(@Valid InternshipOfferRemoveUserRequest request){
+    public void removeUser(@Valid InternshipOfferRemoveUserRequest request) {
 
         InternshipOffer internshipOffer = internshipOfferRepository.findById(
                 request.getOfferUniqueId()).orElse(null);

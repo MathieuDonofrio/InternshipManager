@@ -4,14 +4,12 @@ import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import java.util.UUID;
 
 @Document
 @Data
-public class InternshipApplication implements Serializable {
+public class PortfolioDocument {
 
     //
     // Fields
@@ -20,12 +18,14 @@ public class InternshipApplication implements Serializable {
     @Id
     private UUID uniqueId;
 
-    private UUID studentUniqueId;
+    private UUID userUniqueId;
 
-    private UUID offerUniqueId;
+    private String fileName;
 
-    private Date date;
+    private String type;
 
-    private List<PortfolioDocument> documents;
+    private Date uploadDate;
+
+    private byte[] data;
 
 }

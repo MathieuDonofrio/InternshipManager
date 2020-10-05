@@ -18,5 +18,5 @@ public class InternshipOfferRemoveUserRequest implements Serializable {
     @NotNull(message = "User unique id is mandatory")
     @ExistingUser(message = "User does not exist")
     private UUID userUniqueId;
-    
+
 }
