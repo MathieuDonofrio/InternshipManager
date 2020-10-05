@@ -44,6 +44,7 @@ public class PortfolioServiceTest {
         portfolioDocument.setUserUniqueId(userUniqueId);
         portfolioDocument.setFileName("Test1");
         portfolioDocument.setType("Test2");
+        portfolioDocument.setUploadDate(new Date());
         portfolioDocument.setData(new byte[]{1, 2, 3});
 
         PortfolioService portfolioService = new PortfolioService(portfolioDocumentRepository);
@@ -62,6 +63,7 @@ public class PortfolioServiceTest {
         assertEquals(portfolioDocument.getUniqueId(), document.getUniqueId());
         assertEquals(portfolioDocument.getFileName(), document.getFileName());
         assertEquals(portfolioDocument.getType(), document.getType());
+        assertEquals(portfolioDocument.getUploadDate().getTime(), document.getUploadDate());
         assertTrue(Arrays.equals(portfolioDocument.getData(), document.getData()));
     }
 
@@ -99,6 +101,7 @@ public class PortfolioServiceTest {
             assertEquals(user.getUniqueId(), portfolioDocument.getUserUniqueId());
             assertEquals(type, portfolioDocument.getType());
             assertEquals(multipartFile.getOriginalFilename(), portfolioDocument.getFileName());
+            assertNotNull(portfolioDocument.getUploadDate());
             assertTrue(Arrays.equals(portfolioDocument.getData(), multipartFile.getBytes()));
 
             return null;

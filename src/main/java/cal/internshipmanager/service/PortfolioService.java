@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -54,6 +55,7 @@ public class PortfolioService {
         portfolioDocument.setUserUniqueId(userUniqueId);
         portfolioDocument.setFileName(StringUtils.cleanPath(file.getOriginalFilename()));
         portfolioDocument.setType(type);
+        portfolioDocument.setUploadDate(new Date());
         portfolioDocument.setData(file.getBytes());
 
         portfolioDocumentRepository.save(portfolioDocument);

@@ -4,6 +4,7 @@ import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.Date;
 import java.util.UUID;
 
 @Document
@@ -22,6 +23,8 @@ public class PortfolioDocument {
     private String fileName;
 
     private String type;
+
+    private Date uploadDate;
 
     private byte[] data;
 
