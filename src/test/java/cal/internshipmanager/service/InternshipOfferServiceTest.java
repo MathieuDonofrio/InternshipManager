@@ -34,7 +34,7 @@ public class InternshipOfferServiceTest {
     private UserRepository userRepository;
 
     @Test
-    public void create_validRequest(){
+    public void create_validRequest() {
 
         // Arrange
 
@@ -55,7 +55,7 @@ public class InternshipOfferServiceTest {
         internshipOfferCreationRequest.setCompany("test");
         internshipOfferCreationRequest.setDuration(25);
         internshipOfferCreationRequest.setHours(20);
-        internshipOfferCreationRequest.setJobScope(Arrays.asList("test","test","test","test"));
+        internshipOfferCreationRequest.setJobScope(Arrays.asList("test", "test", "test", "test"));
         internshipOfferCreationRequest.setJobTitle("test");
         internshipOfferCreationRequest.setSalary(69.25f);
         internshipOfferCreationRequest.setStartDate(new Date().getTime());
@@ -69,13 +69,13 @@ public class InternshipOfferServiceTest {
             assertNotNull(internshipOffer.getUniqueId());
             assertEquals(user.getUniqueId(), internshipOffer.getEmployer());
             assertEquals(InternshipOffer.Status.PENDING_APPROVAL, internshipOffer.getStatus());
-            assertEquals(internshipOfferCreationRequest.getCompany(),internshipOffer.getCompany());
-            assertEquals(internshipOfferCreationRequest.getDuration(),internshipOffer.getDuration());
-            assertEquals(internshipOfferCreationRequest.getHours(),internshipOffer.getHours());
-            assertEquals(internshipOfferCreationRequest.getJobScope(),internshipOffer.getJobScope());
-            assertEquals(internshipOfferCreationRequest.getJobTitle(),internshipOffer.getJobTitle());
-            assertEquals(internshipOfferCreationRequest.getSalary(),internshipOffer.getSalary());
-            assertEquals(internshipOfferCreationRequest.getStartDate(),internshipOffer.getStartDate().getTime());
+            assertEquals(internshipOfferCreationRequest.getCompany(), internshipOffer.getCompany());
+            assertEquals(internshipOfferCreationRequest.getDuration(), internshipOffer.getDuration());
+            assertEquals(internshipOfferCreationRequest.getHours(), internshipOffer.getHours());
+            assertEquals(internshipOfferCreationRequest.getJobScope(), internshipOffer.getJobScope());
+            assertEquals(internshipOfferCreationRequest.getJobTitle(), internshipOffer.getJobTitle());
+            assertEquals(internshipOfferCreationRequest.getSalary(), internshipOffer.getSalary());
+            assertEquals(internshipOfferCreationRequest.getStartDate(), internshipOffer.getStartDate().getTime());
 
             return null;
         });
@@ -84,7 +84,7 @@ public class InternshipOfferServiceTest {
     }
 
     @Test
-    public void approve_validRequest(){
+    public void approve_validRequest() {
 
         // Arrange
 
@@ -102,20 +102,20 @@ public class InternshipOfferServiceTest {
 
         // Act & Assert
 
-        Mockito.when(internshipOfferRepository.save(Mockito.any())).then(inv ->{
+        Mockito.when(internshipOfferRepository.save(Mockito.any())).then(inv -> {
 
-                InternshipOffer offer = (InternshipOffer) inv.getArgument(0);
+            InternshipOffer offer = (InternshipOffer) inv.getArgument(0);
 
-                assertEquals(InternshipOffer.Status.APPROVED, offer.getStatus());
+            assertEquals(InternshipOffer.Status.APPROVED, offer.getStatus());
 
-                return null;
+            return null;
         });
 
         internshipOfferService.approve(internshipOfferApproveRequest);
     }
 
     @Test
-    public void reject_validRequest(){
+    public void reject_validRequest() {
 
         // Arrange
 
@@ -133,7 +133,7 @@ public class InternshipOfferServiceTest {
 
         // Act & Assert
 
-        Mockito.when(internshipOfferRepository.save(Mockito.any())).then(inv ->{
+        Mockito.when(internshipOfferRepository.save(Mockito.any())).then(inv -> {
 
             InternshipOffer offer = (InternshipOffer) inv.getArgument(0);
 
@@ -146,7 +146,7 @@ public class InternshipOfferServiceTest {
     }
 
     @Test
-    public void pendingApproval_validRequest(){
+    public void pendingApproval_validRequest() {
 
         // Arrange
 
@@ -175,7 +175,7 @@ public class InternshipOfferServiceTest {
 
         assertEquals(1, response.getInternshipOffers().size());
 
-        for(InternshipOfferListResponse.InternshipOffer offer : response.getInternshipOffers()){
+        for (InternshipOfferListResponse.InternshipOffer offer : response.getInternshipOffers()) {
 
             assertEquals(internshipOffer.getUniqueId(), offer.getUniqueId());
             assertEquals(internshipOffer.getEmployer(), offer.getEmployer());
@@ -192,7 +192,7 @@ public class InternshipOfferServiceTest {
     }
 
     @Test
-    public void approved_validRequest(){
+    public void approved_validRequest() {
 
         // Arrange
 
@@ -221,7 +221,7 @@ public class InternshipOfferServiceTest {
 
         assertEquals(1, response.getInternshipOffers().size());
 
-        for(InternshipOfferListResponse.InternshipOffer offer : response.getInternshipOffers()){
+        for (InternshipOfferListResponse.InternshipOffer offer : response.getInternshipOffers()) {
 
             assertEquals(internshipOffer.getUniqueId(), offer.getUniqueId());
             assertEquals(internshipOffer.getEmployer(), offer.getEmployer());
@@ -238,7 +238,7 @@ public class InternshipOfferServiceTest {
     }
 
     @Test
-    public void rejected_validRequest(){
+    public void rejected_validRequest() {
 
         // Arrange
 
@@ -267,7 +267,7 @@ public class InternshipOfferServiceTest {
 
         assertEquals(1, response.getInternshipOffers().size());
 
-        for(InternshipOfferListResponse.InternshipOffer offer : response.getInternshipOffers()){
+        for (InternshipOfferListResponse.InternshipOffer offer : response.getInternshipOffers()) {
 
             assertEquals(internshipOffer.getUniqueId(), offer.getUniqueId());
             assertEquals(internshipOffer.getEmployer(), offer.getEmployer());
@@ -284,7 +284,7 @@ public class InternshipOfferServiceTest {
     }
 
     @Test
-    public void addUser_validRequest(){
+    public void addUser_validRequest() {
 
         // Arrange
 
@@ -319,15 +319,12 @@ public class InternshipOfferServiceTest {
         Mockito.when(internshipOfferRepository.findById(internshipOffer.getUniqueId()))
                 .thenReturn(Optional.of(internshipOffer));
 
-        Mockito.when(userRepository.findById(internshipOffer.getUniqueId()))
+        Mockito.when(userRepository.findById(user.getUniqueId()))
                 .thenReturn(Optional.of(user));
-
 
         // Act & Assert
 
-        internshipOfferService.addUser(request);
-
-        Mockito.when(internshipOfferRepository.save(Mockito.any())).then(inv ->{
+        Mockito.when(internshipOfferRepository.save(Mockito.any())).then(inv -> {
 
             InternshipOffer offer = (InternshipOffer) inv.getArgument(0);
 
@@ -338,10 +335,12 @@ public class InternshipOfferServiceTest {
             return null;
         });
 
+        internshipOfferService.addUser(request);
+
     }
 
     @Test
-    public void removeUser_validRequest(){
+    public void removeUser_validRequest() {
 
         // Arrange
 
@@ -378,27 +377,22 @@ public class InternshipOfferServiceTest {
         Mockito.when(internshipOfferRepository.findById(internshipOffer.getUniqueId()))
                 .thenReturn(Optional.of(internshipOffer));
 
-        Mockito.when(userRepository.findById(internshipOffer.getUniqueId()))
+        Mockito.when(userRepository.findById(user.getUniqueId()))
                 .thenReturn(Optional.of(user));
 
 
         // Act & Assert
-
-        internshipOfferService.removeUser(request);
-
-        Mockito.when(internshipOfferRepository.save(Mockito.any())).then(inv ->{
-
+        Mockito.when(internshipOfferRepository.save(Mockito.any())).then(inv -> {
             InternshipOffer offer = (InternshipOffer) inv.getArgument(0);
-
             assertTrue(offer.getUsers().isEmpty());
-
             return null;
         });
 
+        internshipOfferService.removeUser(request);
     }
 
     @Test
-    public void users_validRequest(){
+    public void users_validRequest() {
 
         // Arrange
 
@@ -427,20 +421,16 @@ public class InternshipOfferServiceTest {
 
         InternshipOfferService internshipOfferService = new InternshipOfferService(internshipOfferRepository, userRepository);
 
-        InternshipOfferUserListRequest request = new InternshipOfferUserListRequest();
-
-        request.setUniqueId(internshipOffer.getUniqueId());
-
         Mockito.when(internshipOfferRepository.findById(internshipOffer.getUniqueId()))
                 .thenReturn(Optional.of(internshipOffer));
 
         // Act
 
-        UserListReponse response = internshipOfferService.users(request);
+        UserListReponse response = internshipOfferService.users(internshipOffer.getUniqueId());
 
         // Assert
 
-        for(UserListReponse.User user1 : response.getUsers()){
+        for (UserListReponse.User user1 : response.getUsers()) {
 
             assertEquals(user.getUniqueId(), user1.getUniqueId());
             assertEquals(user.getType(), user1.getType());

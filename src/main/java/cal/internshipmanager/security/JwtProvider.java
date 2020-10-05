@@ -82,14 +82,12 @@ public final class JwtProvider {
      * Decodes and verifies the jwt token
      *
      * @param token encoded json web token
-     *
      * @return verified decoded jwt token
-     *
      * @throws JWTVerificationException if the verification failed
      */
     public DecodedJWT verify(String token) throws JWTVerificationException {
 
-        if(token == null)
+        if (token == null)
             throw new JWTVerificationException("Token cannot be null");
 
         return verifier.verify(token);

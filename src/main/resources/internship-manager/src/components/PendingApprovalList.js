@@ -41,7 +41,7 @@ import ThumbDownAltOutlinedIcon from '@material-ui/icons/ThumbDownAltOutlined';
 //
 
 const state = {
-    internshipOffers : []
+  internshipOffers: []
 }
 
 
@@ -66,26 +66,25 @@ class PendingApprovalList extends Component {
   // Event Handlers
   //
 
-  onUpdateInternshipOffers(){
+  onUpdateInternshipOffers() {
 
-    InternshipOfferService.pendingApproval().then(response =>{
-        this.setState(response.data);
-        console.log(this.state);
+    InternshipOfferService.pendingApproval().then(response => {
+      this.setState(response.data);
     });
 
   }
 
-    onApprovedClicked(internshipOffer){
-      InternshipOfferService.approve(internshipOffer).then(response =>{
-          this.onUpdateInternshipOffers();
-      });
-    }
+  onApprovedClicked(internshipOffer) {
+    InternshipOfferService.approve(internshipOffer).then(response => {
+      this.onUpdateInternshipOffers();
+    });
+  }
 
-    onRejectedClicked(internshipOffer){
-        InternshipOfferService.reject(internshipOffer).then(response =>{
-            this.onUpdateInternshipOffers();
-        });
-    }
+  onRejectedClicked(internshipOffer) {
+    InternshipOfferService.reject(internshipOffer).then(response => {
+      this.onUpdateInternshipOffers();
+    });
+  }
 
 
 
@@ -97,83 +96,83 @@ class PendingApprovalList extends Component {
 
 
 
-renderTableData(){
+  renderTableData() {
     return this.state.internshipOffers.map((internshipOffer, index) => {
-        const {company, jobTitle, startDate, duration, salary, hours} = internshipOffer
-        return(
-          <TableRow key={index}>
-                <TableCell component="th" scope="row" align="center">{company}</TableCell>
-                <TableCell component="th" scope="row" align="center">{jobTitle}</TableCell>
-                <TableCell component="th" scope="row" align="center">{new Date(startDate).toLocaleDateString()}</TableCell>
-                <TableCell component="th" scope="row" align="center">{duration}</TableCell>
-                <TableCell component="th" scope="row" align="center">{salary}</TableCell>
-                <TableCell component="th" scope="row" align="center">{hours}</TableCell>
-                <TableCell omponent="th" scope="row" >
-                    <Box margin={1}>
+      const { company, jobTitle, startDate, duration, salary, hours } = internshipOffer
+      return (
+        <TableRow key={index}>
+          <TableCell component="th" scope="row" align="center">{company}</TableCell>
+          <TableCell component="th" scope="row" align="center">{jobTitle}</TableCell>
+          <TableCell component="th" scope="row" align="center">{new Date(startDate).toLocaleDateString()}</TableCell>
+          <TableCell component="th" scope="row" align="center">{duration}</TableCell>
+          <TableCell component="th" scope="row" align="center">{salary}</TableCell>
+          <TableCell component="th" scope="row" align="center">{hours}</TableCell>
+          <TableCell omponent="th" scope="row" >
+            <Box margin={1}>
 
-                        <Button 
-                            variant="contained" color="primary"
-                            size="small" startIcon={<ThumbUpAltOutlinedIcon/>}
-                            onClick={() => this.onApprovedClicked(internshipOffer)}
-                        >
-                            Approve
+              <Button
+                variant="contained" color="primary"
+                size="small" startIcon={<ThumbUpAltOutlinedIcon />}
+                onClick={() => this.onApprovedClicked(internshipOffer)}
+              >
+                Approve
                         </Button>
 
-                   
-                    </Box>
 
-                    <Box margin={1}>
-                        <Button 
-                                variant="contained" color="secondary" 
-                                size="small"
-                                startIcon={<ThumbDownAltOutlinedIcon />} onClick={() => this.onRejectedClicked(internshipOffer)}
-                            >
-                                Reject
+            </Box>
+
+            <Box margin={1}>
+              <Button
+                variant="contained" color="secondary"
+                size="small"
+                startIcon={<ThumbDownAltOutlinedIcon />} onClick={() => this.onRejectedClicked(internshipOffer)}
+              >
+                Reject
                         </Button>
-                    </Box>
+            </Box>
 
-                </TableCell>
-          </TableRow>
+          </TableCell>
+        </TableRow>
 
-        )
+      )
     })
-}
+  }
 
-    
+
 
   render() {
     return (
-        <div>
-            <Container>
-                <Box
-                    mb={2}
-                    paddingTop={2}
-                    textAlign="left"
-                >
-                    <Typography component="h1" variant="h4" align="center">Pending Approval</Typography>
-                </Box>
-            </Container>
+      <div>
+        <Container>
+          <Box
+            mb={2}
+            paddingTop={2}
+            textAlign="left"
+          >
+            <Typography component="h1" variant="h4" align="center">Pending Approval</Typography>
+          </Box>
+        </Container>
 
-        <TableContainer component={Paper}>
-            <Table size="small" aria-label="a dense table">
-                <TableHead>
-                <TableRow>
-                    <TableCell align="center"><strong>Company</strong></TableCell>
-                    <TableCell align="center"><strong>Job Title</strong></TableCell>
-                    <TableCell align="center"><strong>Start Date</strong></TableCell>
-                    <TableCell align="center"><strong>Duration</strong></TableCell>
-                    <TableCell align="center"><strong>Salary</strong></TableCell>
-                    <TableCell align="center"><strong>Hours</strong></TableCell>
-                    <TableCell align="center"><strong>Action</strong></TableCell>
-                </TableRow>
-                </TableHead>
-                <TableBody>
-                    {this.renderTableData()}
-                </TableBody>
-            </Table>
+        <TableContainer>
+          <Table size="small" aria-label="a dense table">
+            <TableHead>
+              <TableRow>
+                <TableCell align="center"><strong>Company</strong></TableCell>
+                <TableCell align="center"><strong>Job Title</strong></TableCell>
+                <TableCell align="center"><strong>Start Date</strong></TableCell>
+                <TableCell align="center"><strong>Duration</strong></TableCell>
+                <TableCell align="center"><strong>Salary</strong></TableCell>
+                <TableCell align="center"><strong>Hours</strong></TableCell>
+                <TableCell align="center"><strong>Action</strong></TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {this.renderTableData()}
+            </TableBody>
+          </Table>
         </TableContainer>
-        </div>
-        
+      </div>
+
 
     )
   }

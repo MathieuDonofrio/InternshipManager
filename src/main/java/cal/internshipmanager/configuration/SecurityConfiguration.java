@@ -30,7 +30,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
      * Registration and authentication requests are permitted without authentication.
      *
      * @param http builder object for configuration
-     *
      * @throws Exception configuration failed
      */
     @Override
@@ -98,7 +97,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
      * Bean for BCrypt password encoder
      * <p>
      * Intended use for encrypting passwords before persisting.
-     *
+     * <p>
      * return password encoder
      */
     @Bean

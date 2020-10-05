@@ -11,7 +11,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
 public class UserServiceTest {
@@ -44,7 +43,7 @@ public class UserServiceTest {
 
         // Assert
 
-        for(UserListReponse.User user1 : response.getUsers()){
+        for (UserListReponse.User user1 : response.getUsers()) {
 
             assertEquals(user.getUniqueId(), user1.getUniqueId());
             assertEquals(user.getType(), user1.getType());

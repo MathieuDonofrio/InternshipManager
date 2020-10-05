@@ -45,7 +45,7 @@ public class InternshipOffer implements Serializable {
     //
 
     public enum Status {
-        PENDING_APPROVAL, APPROVED, REJECTED
+        PENDING_APPROVAL, APPROVED, REJECTED;
     }
 
 }

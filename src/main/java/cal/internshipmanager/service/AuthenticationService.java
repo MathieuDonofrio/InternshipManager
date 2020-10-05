@@ -50,7 +50,6 @@ public class AuthenticationService {
      * If the authentication failed, a unsuccessful authentication response will be sent.
      *
      * @param request authentication request
-     *
      * @return authentication response
      */
     public AuthenticationResponse authenticate(@Valid AuthenticationRequest request) {
@@ -59,7 +58,7 @@ public class AuthenticationService {
 
         User user = userRepository.findByEmail(request.getEmail()).orElse(null);
 
-        if (user != null && passwordEncoder.matches(request.getPassword(), user.getPasswordHash())){
+        if (user != null && passwordEncoder.matches(request.getPassword(), user.getPasswordHash())) {
 
             String token = jwtProvider.generate(user);
 
