@@ -31,7 +31,6 @@ class InternshipOfferService {
         return axios.get(Config.target + `/user/students`, headers())
     }
 
-
     removeUser(request){
         return axios.post(Config.target + '/internship-offer/remove-user', request, headers());
     }
@@ -39,6 +38,7 @@ class InternshipOfferService {
     addUser(request){
         return axios.post(Config.target + '/internship-offer/add-user', request, headers());
     }
+
     pendingApproval(){
         return axios.get(Config.target + '/internship-offer/pending-approval', headers());
     }

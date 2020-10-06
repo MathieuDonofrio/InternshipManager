@@ -45,7 +45,7 @@ public class PortfolioController {
     // Get
     //
 
-    @PreAuthorize("hasAuthority('STUDENT') or hasAuthority('ADMINISTRATOR')")
+    @PreAuthorize("hasAuthority('STUDENT')")
     @GetMapping("portfolio-documents/{userUniqueId}")
     public PortfolioDocumentListResponse portfolioDocuments(@PathVariable UUID userUniqueId) {
         return portfolioService.portfolioDocuments(userUniqueId);

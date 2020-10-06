@@ -1,28 +1,28 @@
 export default class Lock {
 
-    //
-    // Constructors
-    //
+  //
+  // Constructors
+  //
 
-    constructor() {
-        this.locked = false;
-    }
+  constructor() {
+    this.locked = false;
+  }
 
-    //
-    // Services
-    //
+  //
+  // Services
+  //
 
-    change(locked) {
-        let last = this.locked;
-        this.locked = locked;
-        return last;
-    }
+  change(locked) {
+    let last = this.locked;
+    this.locked = locked;
+    return last;
+  }
 
-    lock() {
-        return this.change(true);
-    }
+  lock() {
+    return this.change(true);
+  }
 
-    unlock() {
-        return this.change(false);
-    }
+  unlock() {
+    return this.change(false);
+  }
 }

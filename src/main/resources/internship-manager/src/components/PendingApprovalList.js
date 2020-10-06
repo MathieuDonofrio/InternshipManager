@@ -44,8 +44,6 @@ const state = {
   internshipOffers: []
 }
 
-
-
 class PendingApprovalList extends Component {
 
   //

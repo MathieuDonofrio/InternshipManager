@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import InternshipOfferCreationForm from '../components/InternshipOfferCreationForm'
+import Portfolio from '../components/Portfolio'
 
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Box from '@material-ui/core/Box';
@@ -10,7 +10,7 @@ import Paper from '@material-ui/core/Paper';
 import Divider from '@material-ui/core/Divider';
 import PendingApprovalList from "../components/PendingApprovalList";
 
-export default class PendingApprovalPage extends Component {
+export default class PortfolioPage extends Component {
 
   //
   // Constructors
@@ -33,7 +33,7 @@ export default class PendingApprovalPage extends Component {
 
           <Paper elevation={3}>
 
-              <PendingApprovalList/>
+              <Portfolio></Portfolio>
 
           </Paper>
 
