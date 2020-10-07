@@ -81,7 +81,7 @@ public class InternshipOfferController {
         return internshipOfferService.rejected();
     }
 
-    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
+    @PreAuthorize("hasAuthority('STUDENT') or hasAuthority('ADMINISTRATOR')")
     @GetMapping("approved")
     public InternshipOfferListResponse approved() {
         return internshipOfferService.approved();

@@ -1,17 +1,16 @@
 package cal.internshipmanager.controller;
 
 import cal.internshipmanager.request.InternshipApplicationCreationRequest;
+import cal.internshipmanager.response.InternshipApplicationListResponse;
 import cal.internshipmanager.service.InternshipApplicationService;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.UUID;
 
 @RestController
-@RequestMapping("/internshipapplication")
+@RequestMapping("/internship-application")
 public class InternshipApplicationController {
 
     //
@@ -34,7 +33,12 @@ public class InternshipApplicationController {
 
     @PreAuthorize("hasAuthority('STUDENT')")
     @PostMapping("create")
-    public void createApplicationOffer(@Valid @RequestBody InternshipApplicationCreationRequest request) {
-        internshipApplicationService.createApplicationOffer(request);
+    public void create(@Valid @RequestBody InternshipApplicationCreationRequest request) {
+        internshipApplicationService.create(request);
+    }
+
+    @GetMapping("internship-applications/{userUniqueId}")
+    public InternshipApplicationListResponse internshipApplications(@PathVariable UUID userUniqueId) {
+        return internshipApplicationService.internshipApplications(userUniqueId);
     }
 }

@@ -5,16 +5,19 @@ import cal.internshipmanager.model.PortfolioDocument;
 import cal.internshipmanager.repository.InternshipApplicationRepository;
 import cal.internshipmanager.repository.PortfolioDocumentRepository;
 import cal.internshipmanager.request.InternshipApplicationCreationRequest;
+import cal.internshipmanager.response.InternshipApplicationListResponse;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @Validated
@@ -42,7 +45,7 @@ public class InternshipApplicationService {
     // Services
     //
 
-    public void createApplicationOffer(@Valid InternshipApplicationCreationRequest request) {
+    public void create(@Valid InternshipApplicationCreationRequest request) {
 
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
@@ -63,5 +66,17 @@ public class InternshipApplicationService {
         internshipApplication.setDocuments(documents);
 
         internshipApplicationRepository.save(internshipApplication);
+    }
+
+    public InternshipApplicationListResponse internshipApplications(@NotNull UUID userUniqueId) {
+
+        List<InternshipApplication> userApplications = internshipApplicationRepository.findAllByStudentUniqueId(userUniqueId);
+
+        InternshipApplicationListResponse response = new InternshipApplicationListResponse();
+
+        response.setApplications(userApplications.stream()
+                .map(x -> InternshipApplicationListResponse.map(x)).collect(Collectors.toList()));
+
+        return response;
     }
 }

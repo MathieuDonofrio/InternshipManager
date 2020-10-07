@@ -31,7 +31,6 @@ class InternshipOfferService {
         return axios.get(Config.target + `/user/students`, headers())
     }
 
-
     removeUser(request){
         return axios.post(Config.target + '/internship-offer/remove-user', request, headers());
     }

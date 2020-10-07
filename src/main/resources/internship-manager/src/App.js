@@ -12,6 +12,7 @@ import InternshipOfferCreationPage from './pages/InternshipOfferCreationPage';
 import HomePage from './pages/HomePage';
 import StudentInternshipOfferValidationPage from './pages/StudentInternshipOfferValidationPage';
 import PendingApprovalPage from './pages/PendingApprovalPage';
+import StudentInternshipApplicationPage from './pages/StudentInternshipApplicationPage';
 
 function App() {
   
@@ -44,7 +45,7 @@ function App() {
               
               <Route exact path="/studentoffervalidation" component={StudentInternshipOfferValidationPage}></Route>
               <Route exact path="/pending-approval" component={PendingApprovalPage}></Route>
-
+              <Route exact path="/internshipapplicationcreation" component={StudentInternshipApplicationPage}></Route>
             </AppDrawer>
 
 

@@ -199,7 +199,13 @@ export default function AppDrawer(props) {
         {
           isStudent() &&
           <List>
-
+            <ListItem
+            button
+            key={"Application Creation"}
+            onClick={() => history.push("/internshipapplicationcreation")}>
+              <ListItemIcon><CreateIcon /> </ListItemIcon>
+              <ListItemText primary={"Application Creation"} />
+              </ListItem>
           </List>
         }
 
