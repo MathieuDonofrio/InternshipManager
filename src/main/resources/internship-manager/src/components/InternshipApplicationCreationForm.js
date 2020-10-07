@@ -78,7 +78,8 @@ export default function InternshipApplicationCreationForm() {
   };
 
   const fetchInternshipOffers = async () => {
-    const response = await InternshipOfferService.getApprovedOffers();
+    const response  = await InternshipOfferService.getApprovedOffers();
+    //const response1 = await InternshipApplicationService.getStudentApplications(request);
     setRows(response.data.internshipOffers);
   }
 
