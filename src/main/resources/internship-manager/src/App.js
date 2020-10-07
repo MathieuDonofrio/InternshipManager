@@ -14,6 +14,7 @@ import StudentInternshipOfferValidationPage from './pages/StudentInternshipOffer
 import PendingApprovalPage from './pages/PendingApprovalPage';
 import Portfolio from './components/Portfolio';
 import PortfolioPage from './pages/PortfolioPage';
+import StudentInternshipApplicationPage from './pages/StudentInternshipApplicationPage';
 
 function App() {
   
@@ -47,6 +48,7 @@ function App() {
               <Route exact path="/studentoffervalidation" component={StudentInternshipOfferValidationPage}></Route>
               <Route exact path="/pending-approval" component={PendingApprovalPage}></Route>
 
+              <Route exact path="/internship-application-creation" component={StudentInternshipApplicationPage}></Route>
               <Route exact path="/portfolio" component={PortfolioPage}></Route>
 
             </AppDrawer>

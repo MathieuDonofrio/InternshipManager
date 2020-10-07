@@ -207,6 +207,13 @@ export default function AppDrawer(props) {
               <ListItemIcon><CloudUploadIcon /> </ListItemIcon>
               <ListItemText primary={"Portfolio"} />
             </ListItem>
+            <ListItem
+              button
+              key={"Application Creation"}
+              onClick={() => history.push("/internship-application-creation")}>
+              <ListItemIcon><CreateIcon /> </ListItemIcon>
+              <ListItemText primary={"Application Creation"} />
+            </ListItem>
           </List>
         }
 

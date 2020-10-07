@@ -20,7 +20,16 @@ import { Box, ListItem } from "@material-ui/core";
 import ValidatedStudentTable from "./ValidatedStudentTable";
 import InternshipOfferService from '../services/InternshipOfferService';
 import InternshipApplicationService from '../services/InternshipApplicationService';
+import PortfolioService from '../services/PortfolioService';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import Paper from '@material-ui/core/Paper';
 import { RowingSharp, Send } from '@material-ui/icons';
+import List from '@material-ui/core/List';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import Checkbox from '@material-ui/core/Checkbox';
 
 //tables values
 const useStyles = makeStyles({
@@ -29,48 +38,58 @@ const useStyles = makeStyles({
   }
 });
 
-//dialogs
-
-
-function ValidateStudentTableDialog(props) {
-  const { onClose, selectedValue, open } = props;
-
-  const handleClose = () => {
-    onClose(selectedValue);
-  };
-//<ValidatedStudentTable onClose={handleClose} selectedValue={selectedValue} />
-  return (
-    <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
-      <DialogTitle id="simple-dialog-title">Application enovye</DialogTitle>
-    </Dialog>
-  );
-}
-
-ValidateStudentTableDialog.propTypes = {
-  onClose: PropTypes.func.isRequired,
-  open: PropTypes.bool.isRequired,
-  selectedValue: PropTypes.string.isRequired,
-};
-
 //other class
 
 export default function InternshipApplicationCreationForm() {
 
   const [open, setOpen] = React.useState(false);
   const [rows, setRows] = useState([]);
-  const [currentInternshipId, setCurrentInternshipId] = useState('');
+  const [checked, setChecked] = React.useState([]);
+  const [documents, setDocuments] = React.useState([]);
+  const [offerUniqueId, setOfferUniqueId] = React.useState();
 
   const classes = useStyles();
 
-  const handleClickOpen = (internshipId,index) => {
-    setCurrentInternshipId(internshipId)
+  const onApply = () => {
+
+    let docs = checked.map(doc => doc.uniqueId);
+
     const request = {
-      offerUniqueId: currentInternshipId,
-      documents: new Array()
+      offerUniqueId: offerUniqueId,
+      documents: docs,
     }
-    console.log(request.offerUniqueId);
-    InternshipApplicationService.createInternshipApplication(request);
-    setOpen(true);
+
+    InternshipApplicationService.createInternshipApplication(request).then(response =>
+      {
+        fetchInternshipOffers();
+      })
+
+    setOpen(false);
+  }
+
+  const handleClickOpen = (internshipId, index) => {
+
+    setOfferUniqueId(internshipId);
+
+    let uuid = localStorage.getItem("UserUniqueId");
+
+    PortfolioService.portfolioDocuments(uuid).then(response => {
+      setDocuments(response.data.portfolioDocuments);
+      setOpen(true);
+    });
+  };
+
+  const handleToggle = (value) => () => {
+    const currentIndex = checked.indexOf(value);
+    const newChecked = [...checked];
+
+    if (currentIndex === -1) {
+      newChecked.push(value);
+    } else {
+      newChecked.splice(currentIndex, 1);
+    }
+
+    setChecked(newChecked);
   };
 
   const handleClose = (value) => {
@@ -78,9 +97,16 @@ export default function InternshipApplicationCreationForm() {
   };
 
   const fetchInternshipOffers = async () => {
-    const response  = await InternshipOfferService.getApprovedOffers();
-    //const response1 = await InternshipApplicationService.getStudentApplications(request);
-    setRows(response.data.internshipOffers);
+
+    let uuid = localStorage.getItem("UserUniqueId");
+
+    const response1 = await InternshipOfferService.getApprovedOffers();
+    const response2 = await InternshipApplicationService.internshipApplications(uuid);
+
+    const offers = response1.data.internshipOffers.filter(offer =>
+      !response2.data.applications.some(app => app.offerUniqueId == offer.uniqueId));
+
+    setRows(offers);
   }
 
   useEffect(() => {
@@ -112,20 +138,65 @@ export default function InternshipApplicationCreationForm() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((offer,index) => (
+            {rows.map((offer, index) => (
               <TableRow key={index}>
                 <TableCell align="center">{offer.company}</TableCell>
                 <TableCell align="center">{offer.jobTitle}</TableCell>
                 <TableCell align="center">{new Date(offer.startDate).toLocaleDateString()}</TableCell>
                 <TableCell align="center">{offer.duration}</TableCell>
                 <TableCell align="center">{offer.hours}</TableCell>
-                <TableCell align="center"> <Button variant="contained" color="primary" onClick={() => handleClickOpen(offer.uniqueId,index)}>Appliquer</Button></TableCell>
+                <TableCell align="center">
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => handleClickOpen(offer.uniqueId, index)}>
+                    Appliquer
+                    </Button>
+                </TableCell>
               </TableRow>
             ))}
-            <ValidateStudentTableDialog open={open} onClose={handleClose} selectedValue={currentInternshipId} />
           </TableBody>
         </Table>
       </TableContainer>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+      >
+        <DialogTitle>
+          Select documents to send
+        </DialogTitle>
+        <DialogContent>
+          <List className={classes.root}>
+            {documents.map((value) => {
+
+              const labelId = `checkbox-list-label-${value}`;
+
+              return (
+                <ListItem key={value} role={undefined} dense button onClick={handleToggle(value)}>
+                  <ListItemIcon>
+                    <Checkbox
+                      edge="start"
+                      checked={checked.indexOf(value) !== -1}
+                      tabIndex={-1}
+                      disableRipple
+                      inputProps={{ 'aria-labelledby': labelId }}
+                    />
+                  </ListItemIcon>
+                  <ListItemText id={labelId} primary={value.fileName} />
+                </ListItem>
+              );
+            })}
+          </List>
+        </DialogContent>
+        <DialogActions>
+          <Button autoFocus onClick={handleClose} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={onApply} color="primary">
+            Apply
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }
