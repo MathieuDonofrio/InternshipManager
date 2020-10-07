@@ -1,5 +1,6 @@
 package cal.internshipmanager.controller;
 
+import cal.internshipmanager.request.PortfolioDocumentDeleteRequest;
 import cal.internshipmanager.response.PortfolioDocumentListResponse;
 import cal.internshipmanager.service.PortfolioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.UUID;
@@ -41,15 +43,20 @@ public class PortfolioController {
         portfolioService.upload(type, file);
     }
 
+    @PreAuthorize("hasAuthority('STUDENT')")
+    @PostMapping("delete")
+    public void delete(@Valid @RequestBody PortfolioDocumentDeleteRequest request) {
+        portfolioService.delete(request);
+    }
+
     //
     // Get
     //
 
-    @PreAuthorize("hasAuthority('STUDENT') or hasAuthority('ADMINISTRATOR')")
+    @PreAuthorize("hasAuthority('STUDENT')")
     @GetMapping("portfolio-documents/{userUniqueId}")
     public PortfolioDocumentListResponse portfolioDocuments(@PathVariable UUID userUniqueId) {
         return portfolioService.portfolioDocuments(userUniqueId);
     }
-
 
 }

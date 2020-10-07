@@ -44,8 +44,6 @@ const state = {
   internshipOffers: []
 }
 
-
-
 class PendingApprovalList extends Component {
 
   //
@@ -58,8 +56,6 @@ class PendingApprovalList extends Component {
     this.onUpdateInternshipOffers();
 
     this.submitLock = new Lock();
-
-
   }
 
   //
@@ -86,15 +82,9 @@ class PendingApprovalList extends Component {
     });
   }
 
-
-
-
-
   //
   // Rendering
   //
-
-
 
   renderTableData() {
     return this.state.internshipOffers.map((internshipOffer, index) => {
@@ -137,8 +127,6 @@ class PendingApprovalList extends Component {
       )
     })
   }
-
-
 
   render() {
     return (
