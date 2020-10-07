@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -25,7 +25,7 @@ function ValidableStudentTableDialog(props) {
   return (
     <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
       <DialogTitle id="simple-dialog-title">VALIDABLE STUDENT</DialogTitle>
-      <ValidableStudentTable internshipId={selectedValue} onClose={handleClose} />
+      <ValidableStudentTable onClose={handleClose} />
     </Dialog>
   );
 }
@@ -45,11 +45,18 @@ const useStyles = makeStyles({
   },
 });
 
+function createData(fistName, lastName) {
+  return { fistName, lastName };
+}
+
+const rows = [
+  createData('Mathieu', 'Donofrio'),
+  createData('Hichem', 'Fredj'),
+  createData('Steve', 'Henegar'),
+];
 
 export default function ValidatedStudentTable(props) {
   const [open, setOpen] = React.useState(false);
-  const [rows, setRows] = useState([]);
-
   const classes = useStyles();
 
   const handleClose = () => {
@@ -60,19 +67,18 @@ export default function ValidatedStudentTable(props) {
     setOpen(true);
   };
 
-  const removeStudent = (student) => {
-    const request = {offerUniqueId: props.selectedValue,userUniqueId: student.uniqueId};
-    InternshipOfferService.removeUser(request).then(() => fetchValidatedStudents());
+  const removeStudent = (request) => {
+    InternshipOfferService.removeUser(request).then(() => {
+      //find a way to force update
+      console.log('fuck the world');
+
+    });
   }
 
-  const fetchValidatedStudents = async () => {
-    const response = await InternshipOfferService.getValidatedStudent(props.selectedValue);
-    setRows(response.data.users)
-  }
-
-  useEffect(() => {
-    fetchValidatedStudents();
-  }, [])
+  /*you should initiate row here
+  InternshipOfferService.getValidatedStudent(props.internshipId).then(response =>{
+      console.log(response.data);
+  })*/
 
   return (
     <Container>
@@ -85,9 +91,9 @@ export default function ValidatedStudentTable(props) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row,index) => (
-              <TableRow key={index}>
-                <TableCell component="th" scope="row">{row.firstName + ' ' + row.lastName}</TableCell>
+            {rows.map((row) => (
+              <TableRow key={row.fistName}>
+                <TableCell component="th" scope="row">{row.fistName + ' ' + row.lastName}</TableCell>
                 <TableCell align="right"> <Button variant="contained" color="primary" onClick={() => removeStudent(row)}>remove student</Button></TableCell>
               </TableRow>
             ))}
@@ -95,7 +101,7 @@ export default function ValidatedStudentTable(props) {
         </Table>
       </TableContainer>
       <Button variant="contained" onClick={handleClose} color="primary" fullWidth>close</Button>
-      <ValidableStudentTableDialog selectedValue={props.selectedValue} open={open} onClose={handleClose}/>
+      <ValidableStudentTableDialog internshipId={props.internshipId} open={open} onClose={handleClose} selectedValue='' />
     </Container>
   );
 }

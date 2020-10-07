@@ -35,13 +35,27 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
+import AddIcon from '@material-ui/icons/Add';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import { DropzoneArea} from 'material-ui-dropzone'
 
 //
 // Data
 //
 
 const state = {
-  portfolioDocuments: []
+  portfolioDocuments: [],
+  open: false,
+  files: [],
+  type: "Resume",
 }
 
 class Portfolio extends Component {
@@ -68,19 +82,46 @@ class Portfolio extends Component {
 
     let uuid = localStorage.getItem("UserUniqueId");
 
-    const request = {
-      userUniqueId: localStorage.getItem("UserUniqueId"),
-    }
-
     PortfolioService.portfolioDocuments(uuid).then(response => {
       this.setState(response.data);
     });
 
   }
 
-  onDelete(document) {
+  onDelete = (document) => {
+
+    const request = {
+      uniqueId: document.uniqueId
+    }
+
+    PortfolioService.delete(request).then(() => {
+      this.onUpdatePortfolio();
+    })
 
   }
+
+  onSend = () => {
+
+    const request = {
+      type: this.state.type,
+      file: this.state.files[0]
+    }
+
+    PortfolioService.upload(request).then(() => {
+      this.onUpdatePortfolio();
+    })
+
+    this.onDialogClose();
+
+  }
+
+  onFileUpload = (files) => this.setState({files: files});
+
+  onDialogOpen = () => this.setState({ open: true });
+
+  onDialogClose = () => this.setState({ open: false });
+
+  onChange = event => this.setState({ [event.target.name]: event.target.value });
 
   //
   // Rendering
@@ -98,6 +139,16 @@ class Portfolio extends Component {
             <Typography component="h1" variant="h4" align="center">Portfolio</Typography>
           </Box>
         </Container>
+
+        <Box margin={1}>
+          <Button
+            variant="contained" color="primary"
+            size="small" startIcon={<AddIcon />}
+            onClick={this.onDialogOpen}
+          >
+            Add Document
+          </Button>
+        </Box>
 
         <TableContainer>
           <Table size="small" aria-label="a dense table">
@@ -133,6 +184,47 @@ class Portfolio extends Component {
             </TableBody>
           </Table>
         </TableContainer>
+
+          <Dialog open={this.state.open} onClose={this.onDialogClose} aria-labelledby="form-dialog-title">
+          <DialogTitle id="form-dialog-title">Add Document</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              To add a document please select the type and upload the document.
+          </DialogContentText>
+            <FormControl>
+              <InputLabel>Type</InputLabel>
+              <Select
+                name="type"
+                value={this.state.type}
+                onChange={this.onChange}
+              >
+                <MenuItem value={"Resume"}>Resume</MenuItem>
+                <MenuItem value={"Cover Letter"}>Cover Letter</MenuItem>
+                <MenuItem value={"Grades"}>Grades</MenuItem>
+                <MenuItem value={"Other"}>Other</MenuItem>
+              </Select>
+            </FormControl>
+            <Box marginTop={2}>
+              <DropzoneArea
+                name="files"
+                dropzoneText={"Drag and drop or click to upload " + this.state.type.toLowerCase()}
+                filesLimit={1}
+                onChange={this.onFileUpload}
+                >
+
+              </DropzoneArea>
+            </Box>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.onDialogClose} color="primary">
+              Cancel
+          </Button>
+            <Button onClick={this.onSend} color="primary">
+              Add
+          </Button>
+          </DialogActions>
+        </Dialog>
+
       </div>
     )
   }

@@ -78,5 +78,4 @@ export default function ValidableStudentTable(props) {
       <Button variant="contained" onClick={handleClose} color="primary" fullWidth>close</Button>
     </div>
   );
-
 }

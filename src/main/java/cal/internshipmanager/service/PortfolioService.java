@@ -2,6 +2,7 @@ package cal.internshipmanager.service;
 
 import cal.internshipmanager.model.PortfolioDocument;
 import cal.internshipmanager.repository.PortfolioDocumentRepository;
+import cal.internshipmanager.request.PortfolioDocumentDeleteRequest;
 import cal.internshipmanager.response.PortfolioDocumentListResponse;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,6 +72,10 @@ public class PortfolioService {
                 .map(x -> PortfolioDocumentListResponse.map(x)).collect(Collectors.toList()));
 
         return response;
+    }
+
+    public void delete(PortfolioDocumentDeleteRequest request) {
+        portfolioDocumentRepository.deleteById(request.getUniqueId());
     }
 
 }
