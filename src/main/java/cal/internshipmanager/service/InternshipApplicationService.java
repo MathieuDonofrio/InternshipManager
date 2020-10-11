@@ -1,6 +1,7 @@
 package cal.internshipmanager.service;
 
 import cal.internshipmanager.model.InternshipApplication;
+import cal.internshipmanager.model.InternshipOffer;
 import cal.internshipmanager.model.PortfolioDocument;
 import cal.internshipmanager.repository.InternshipApplicationRepository;
 import cal.internshipmanager.repository.PortfolioDocumentRepository;
@@ -12,11 +13,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -79,4 +78,27 @@ public class InternshipApplicationService {
 
         return response;
     }
+
+    public InternshipApplicationListResponse findByStatus(@NotBlank InternshipApplication.Status status) {
+        List<InternshipApplication> allApplications = internshipApplicationRepository.findAllByStatus();
+
+        InternshipApplicationListResponse response = new InternshipApplicationListResponse();
+
+        response.setApplications(allApplications.stream()
+                .map(internshipApplication -> InternshipApplicationListResponse.map(internshipApplication))
+                .collect(Collectors.toList()));
+
+        return response;
+    }
+
+    public void editStatus(@NotNull UUID applicationId, @NotBlank InternshipApplication.Status status) {
+        Optional<InternshipApplication> application = internshipApplicationRepository.findById(applicationId);
+
+        application.ifPresent(a -> {
+            a.setStatus(status);
+            internshipApplicationRepository.save(a);
+        });
+    }
+
+
 }

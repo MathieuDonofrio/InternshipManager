@@ -12,5 +12,8 @@ import java.util.UUID;
 public interface InternshipApplicationRepository extends MongoRepository<InternshipApplication, UUID> {
 
     List<InternshipApplication> findAllByStudentUniqueId(UUID studentUniqueId);
+    List<InternshipApplication> findAllByStatus();
+
+
 
 }

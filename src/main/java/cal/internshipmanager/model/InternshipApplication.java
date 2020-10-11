@@ -28,4 +28,11 @@ public class InternshipApplication implements Serializable {
 
     private List<PortfolioDocument> documents;
 
+    private Status status;
+
+    public enum Status {
+        PENDING_APPROVAL, APPROVED, REJECTED;
+    }
+
+
 }
