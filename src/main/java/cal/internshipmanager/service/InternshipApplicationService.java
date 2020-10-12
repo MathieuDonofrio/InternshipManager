@@ -80,12 +80,13 @@ public class InternshipApplicationService {
     }
 
     public InternshipApplicationListResponse findByStatus(@NotBlank InternshipApplication.Status status) {
-        List<InternshipApplication> allApplications = internshipApplicationRepository.findAllByStatus();
+
+        List<InternshipApplication> applications = internshipApplicationRepository.findAllByStatus(status);
 
         InternshipApplicationListResponse response = new InternshipApplicationListResponse();
 
-        response.setApplications(allApplications.stream()
-                .map(internshipApplication -> InternshipApplicationListResponse.map(internshipApplication))
+        response.setApplications(applications.stream()
+                .map(application -> InternshipApplicationListResponse.map(application))
                 .collect(Collectors.toList()));
 
         return response;

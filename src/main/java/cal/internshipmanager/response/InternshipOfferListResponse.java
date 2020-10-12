@@ -32,6 +32,8 @@ public class InternshipOfferListResponse {
 
         private String jobTitle;
 
+        private List<String> jobScope;
+
         private Long startDate;
 
         private int duration;
@@ -54,6 +56,7 @@ public class InternshipOfferListResponse {
         internshipOffer.status = from.getStatus().toString();
         internshipOffer.company = from.getCompany();
         internshipOffer.jobTitle = from.getJobTitle();
+        internshipOffer.jobScope = from.getJobScope();
         internshipOffer.startDate = from.getStartDate().getTime();
         internshipOffer.duration = from.getDuration();
         internshipOffer.salary = from.getSalary();
