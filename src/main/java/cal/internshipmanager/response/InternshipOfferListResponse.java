@@ -32,6 +32,8 @@ public class InternshipOfferListResponse {
 
         private String jobTitle;
 
+        private List<String> jobScope;
+
         private Long startDate;
 
         private int duration;
@@ -46,8 +48,7 @@ public class InternshipOfferListResponse {
     // Mapping
     //
 
-    public static InternshipOffer map(cal.internshipmanager.model.InternshipOffer from)
-    {
+    public static InternshipOffer map(cal.internshipmanager.model.InternshipOffer from) {
         InternshipOffer internshipOffer = new InternshipOffer();
 
         internshipOffer.uniqueId = from.getUniqueId();
@@ -55,6 +56,7 @@ public class InternshipOfferListResponse {
         internshipOffer.status = from.getStatus().toString();
         internshipOffer.company = from.getCompany();
         internshipOffer.jobTitle = from.getJobTitle();
+        internshipOffer.jobScope = from.getJobScope();
         internshipOffer.startDate = from.getStartDate().getTime();
         internshipOffer.duration = from.getDuration();
         internshipOffer.salary = from.getSalary();

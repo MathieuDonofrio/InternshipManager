@@ -4,11 +4,13 @@ import cal.internshipmanager.model.User;
 import cal.internshipmanager.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
+@Order(1)
 @Component
 public class AdministratorLoader implements CommandLineRunner {
 
@@ -25,7 +27,7 @@ public class AdministratorLoader implements CommandLineRunner {
     //
 
     @Autowired
-    public AdministratorLoader(UserRepository userRepository, PasswordEncoder passwordEncoder){
+    public AdministratorLoader(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
@@ -45,9 +47,8 @@ public class AdministratorLoader implements CommandLineRunner {
     // Private Methods
     //
 
-    private void LoadIfAbsent(String email, String firstName, String lastName, String password)
-    {
-        if(userRepository.findByEmail(email).isEmpty()){
+    private void LoadIfAbsent(String email, String firstName, String lastName, String password) {
+        if (userRepository.findByEmail(email).isEmpty()) {
 
             User user = new User();
 

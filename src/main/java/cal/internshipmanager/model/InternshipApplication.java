@@ -6,11 +6,16 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Document
 @Data
 public class InternshipApplication implements Serializable {
+
+    //
+    // Fields
+    //
 
     @Id
     private UUID uniqueId;
@@ -20,4 +25,14 @@ public class InternshipApplication implements Serializable {
     private UUID offerUniqueId;
 
     private Date date;
+
+    private List<PortfolioDocument> documents;
+
+    private Status status;
+
+    public enum Status {
+        PENDING_APPROVAL, APPROVED, REJECTED;
+    }
+
+
 }

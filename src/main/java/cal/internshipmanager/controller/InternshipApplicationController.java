@@ -1,33 +1,30 @@
 package cal.internshipmanager.controller;
 
 import cal.internshipmanager.request.InternshipApplicationCreationRequest;
-import cal.internshipmanager.request.InternshipOfferCreationRequest;
-import cal.internshipmanager.service.ApplicationOfferService;
-import cal.internshipmanager.service.InternshipOfferService;
+import cal.internshipmanager.response.InternshipApplicationListResponse;
+import cal.internshipmanager.service.InternshipApplicationService;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.UUID;
 
 @RestController
-@RequestMapping("/internshipapplication")
+@RequestMapping("/internship-application")
 public class InternshipApplicationController {
 
     //
     // Dependencies
     //
 
-    private final ApplicationOfferService applicationOfferService;
+    private final InternshipApplicationService internshipApplicationService;
 
     //
     // Constructors
     //
 
-    public InternshipApplicationController(ApplicationOfferService applicationOfferService) {
-        this.applicationOfferService = applicationOfferService;
+    public InternshipApplicationController(InternshipApplicationService internshipApplicationService) {
+        this.internshipApplicationService = internshipApplicationService;
     }
 
     //
@@ -36,7 +33,12 @@ public class InternshipApplicationController {
 
     @PreAuthorize("hasAuthority('STUDENT')")
     @PostMapping("create")
-    public void createApplicationOffer(@Valid @RequestBody InternshipApplicationCreationRequest internshipApplicationCreationRequest) {
-        applicationOfferService.createApplicationOffer(internshipApplicationCreationRequest);
+    public void create(@Valid @RequestBody InternshipApplicationCreationRequest request) {
+        internshipApplicationService.create(request);
+    }
+
+    @GetMapping("internship-applications/{userUniqueId}")
+    public InternshipApplicationListResponse internshipApplications(@PathVariable UUID userUniqueId) {
+        return internshipApplicationService.internshipApplications(userUniqueId);
     }
 }

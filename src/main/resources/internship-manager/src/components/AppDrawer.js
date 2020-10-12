@@ -26,6 +26,8 @@ import HomeIcon from '@material-ui/icons/Home';
 import CreateIcon from '@material-ui/icons/Create';
 import { useHistory } from 'react-router-dom';
 import GavelOutlinedIcon from '@material-ui/icons/GavelOutlined';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 
 const drawerWidth = 240;
 
@@ -41,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
     }),
     flexGrow: 1,
   },
-  panelTitle:{
+  panelTitle: {
     flexGrow: 1,
   },
   appBarShift: {
@@ -153,13 +155,13 @@ export default function AppDrawer(props) {
             {userType() + " Panel"}
           </Typography>
 
-          <Button 
+          <Button
             color="inherit"
             onClick={() => {
               AuthenticationService.logout();
               history.push("/login");
             }}>Logout</Button>
-          
+
         </Toolbar>
       </AppBar>
       <Drawer
@@ -198,7 +200,20 @@ export default function AppDrawer(props) {
         {
           isStudent() &&
           <List>
-
+            <ListItem
+              button
+              key={"Portfolio"}
+              onClick={() => history.push("/portfolio")}>
+              <ListItemIcon><CloudUploadIcon /> </ListItemIcon>
+              <ListItemText primary={"Portfolio"} />
+            </ListItem>
+            <ListItem
+              button
+              key={"Application Creation"}
+              onClick={() => history.push("/internship-application-creation")}>
+              <ListItemIcon><CreateIcon /> </ListItemIcon>
+              <ListItemText primary={"Application Creation"} />
+            </ListItem>
           </List>
         }
 
@@ -218,6 +233,13 @@ export default function AppDrawer(props) {
         {
           isAdministrator() &&
           <List>
+            <ListItem
+              button
+              key={"Student Offer Validation"}
+              onClick={() => history.push("/studentoffervalidation")}>
+              <ListItemIcon><VisibilityIcon /> </ListItemIcon>
+              <ListItemText primary={"Offer Visibility"} />
+            </ListItem>
             <ListItem
               button
               key={"Pending Approval"}

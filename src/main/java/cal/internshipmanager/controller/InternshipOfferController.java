@@ -9,6 +9,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/internship-offer")
@@ -35,31 +37,31 @@ public class InternshipOfferController {
 
     @PreAuthorize("hasAuthority('EMPLOYER')")
     @PostMapping("create")
-    public void create(@Valid @RequestBody InternshipOfferCreationRequest internshipOfferCreationRequest) {
-        internshipOfferService.create(internshipOfferCreationRequest);
+    public void create(@Valid @RequestBody InternshipOfferCreationRequest request) {
+        internshipOfferService.create(request);
     }
 
     @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     @PostMapping("approve")
-    public void approve(@Valid @RequestBody InternshipOfferApproveRequest request){
+    public void approve(@Valid @RequestBody InternshipOfferApproveRequest request) {
         internshipOfferService.approve(request);
     }
 
     @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     @PostMapping("reject")
-    public void reject(@Valid @RequestBody InternshipOfferRejectRequest request){
+    public void reject(@Valid @RequestBody InternshipOfferRejectRequest request) {
         internshipOfferService.reject(request);
     }
 
     @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     @PostMapping("add-user")
-    public void addUser(@Valid @RequestBody InternshipOfferAddUserRequest request){
+    public void addUser(@Valid @RequestBody InternshipOfferAddUserRequest request) {
         internshipOfferService.addUser(request);
     }
 
     @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     @PostMapping("remove-user")
-    public void removeUser(@Valid @RequestBody InternshipOfferRemoveUserRequest request){
+    public void removeUser(@Valid @RequestBody InternshipOfferRemoveUserRequest request) {
         internshipOfferService.removeUser(request);
     }
 
@@ -69,24 +71,26 @@ public class InternshipOfferController {
 
     @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     @GetMapping("pending-approval")
-    public InternshipOfferListResponse pendingApproval(){
+    public InternshipOfferListResponse pendingApproval() {
         return internshipOfferService.pendingApproval();
     }
 
     @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     @GetMapping("rejected")
-    public InternshipOfferListResponse rejected(){
-        return internshipOfferService.pendingApproval();
+    public InternshipOfferListResponse rejected() {
+        return internshipOfferService.rejected();
     }
 
+    @PreAuthorize("hasAuthority('STUDENT') or hasAuthority('ADMINISTRATOR')")
     @GetMapping("approved")
-    public InternshipOfferListResponse approved(){
+    public InternshipOfferListResponse approved() {
         return internshipOfferService.approved();
     }
 
-    @GetMapping("users")
-    public UserListReponse users(InternshipOfferUserListRequest request){
-        return internshipOfferService.users(request);
+    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
+    @GetMapping("users/{uniqueId}")
+    public UserListReponse users(@NotNull @PathVariable UUID uniqueId) {
+        return internshipOfferService.users(uniqueId);
     }
 
 }
