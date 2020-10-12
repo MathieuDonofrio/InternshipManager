@@ -1,11 +1,12 @@
 package cal.internshipmanager.service;
 
 import cal.internshipmanager.model.InternshipApplication;
-import cal.internshipmanager.model.InternshipOffer;
 import cal.internshipmanager.model.PortfolioDocument;
 import cal.internshipmanager.repository.InternshipApplicationRepository;
 import cal.internshipmanager.repository.PortfolioDocumentRepository;
 import cal.internshipmanager.request.InternshipApplicationCreationRequest;
+import cal.internshipmanager.request.InternshipApplicationEditRequest;
+import cal.internshipmanager.request.InternshipApplicationFindByStatusRequest;
 import cal.internshipmanager.response.InternshipApplicationListResponse;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -79,8 +80,8 @@ public class InternshipApplicationService {
         return response;
     }
 
-    public InternshipApplicationListResponse findByStatus(@NotBlank InternshipApplication.Status status) {
-        List<InternshipApplication> allApplications = internshipApplicationRepository.findAllByStatus();
+    public InternshipApplicationListResponse findByStatus(@Valid InternshipApplicationFindByStatusRequest request) {
+        List<InternshipApplication> allApplications = internshipApplicationRepository.findAllByStatus(request.getStatus());
 
         InternshipApplicationListResponse response = new InternshipApplicationListResponse();
 
@@ -91,11 +92,11 @@ public class InternshipApplicationService {
         return response;
     }
 
-    public void editStatus(@NotNull UUID applicationId, @NotBlank InternshipApplication.Status status) {
-        Optional<InternshipApplication> application = internshipApplicationRepository.findById(applicationId);
+    public void editStatus(InternshipApplicationEditRequest request) {
+        Optional<InternshipApplication> application = internshipApplicationRepository.findById(request.getApplicationId());
 
         application.ifPresent(a -> {
-            a.setStatus(status);
+            a.setStatus(request.getStatus());
             internshipApplicationRepository.save(a);
         });
     }

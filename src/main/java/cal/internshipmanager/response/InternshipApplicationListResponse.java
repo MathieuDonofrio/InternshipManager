@@ -32,6 +32,8 @@ public class InternshipApplicationListResponse {
 
         private Long date;
 
+        private String status;
+
     }
 
     //
@@ -45,6 +47,7 @@ public class InternshipApplicationListResponse {
         application.studentUniqueId = from.getStudentUniqueId();
         application.offerUniqueId = from.getOfferUniqueId();
         application.date = from.getDate().getTime();
+        application.status = from.getStatus().toString();
 
         return application;
     }
