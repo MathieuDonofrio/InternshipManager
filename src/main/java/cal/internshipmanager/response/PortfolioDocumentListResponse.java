@@ -26,6 +26,8 @@ public class PortfolioDocumentListResponse {
 
         private String fileName;
 
+        private String fileType;
+
         private String type;
 
         private long uploadDate;
@@ -43,6 +45,7 @@ public class PortfolioDocumentListResponse {
 
         portfolioDocument.uniqueId = from.getUniqueId();
         portfolioDocument.fileName = from.getFileName();
+        portfolioDocument.fileType = from.getFileType();
         portfolioDocument.type = from.getType();
         portfolioDocument.uploadDate = from.getUploadDate().getTime();
         portfolioDocument.data = from.getData();

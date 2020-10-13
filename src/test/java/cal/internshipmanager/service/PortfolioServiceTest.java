@@ -3,6 +3,7 @@ package cal.internshipmanager.service;
 import cal.internshipmanager.model.PortfolioDocument;
 import cal.internshipmanager.model.User;
 import cal.internshipmanager.repository.PortfolioDocumentRepository;
+import cal.internshipmanager.request.PortfolioDocumentDeleteRequest;
 import cal.internshipmanager.response.PortfolioDocumentListResponse;
 import cal.internshipmanager.security.JwtAuthentication;
 import cal.internshipmanager.security.JwtProvider;
@@ -44,6 +45,7 @@ public class PortfolioServiceTest {
         portfolioDocument.setUserUniqueId(userUniqueId);
         portfolioDocument.setFileName("Test1");
         portfolioDocument.setType("Test2");
+        portfolioDocument.setFileType("pdf");
         portfolioDocument.setUploadDate(new Date());
         portfolioDocument.setData(new byte[]{1, 2, 3});
 
@@ -62,6 +64,7 @@ public class PortfolioServiceTest {
 
         assertEquals(portfolioDocument.getUniqueId(), document.getUniqueId());
         assertEquals(portfolioDocument.getFileName(), document.getFileName());
+        assertEquals(portfolioDocument.getFileType(), document.getFileType());
         assertEquals(portfolioDocument.getType(), document.getType());
         assertEquals(portfolioDocument.getUploadDate().getTime(), document.getUploadDate());
         assertTrue(Arrays.equals(portfolioDocument.getData(), document.getData()));
@@ -101,6 +104,7 @@ public class PortfolioServiceTest {
             assertEquals(user.getUniqueId(), portfolioDocument.getUserUniqueId());
             assertEquals(type, portfolioDocument.getType());
             assertEquals(multipartFile.getOriginalFilename(), portfolioDocument.getFileName());
+            assertEquals(multipartFile.getContentType(), portfolioDocument.getFileType());
             assertNotNull(portfolioDocument.getUploadDate());
             assertTrue(Arrays.equals(portfolioDocument.getData(), multipartFile.getBytes()));
 
@@ -108,6 +112,60 @@ public class PortfolioServiceTest {
         });
 
         portfolioService.upload(type, multipartFile);
+    }
+
+    @Test
+    public void download_validRequest() {
+
+        // Arrange
+
+        PortfolioDocument portfolioDocument = new PortfolioDocument();
+
+        portfolioDocument.setUniqueId(UUID.randomUUID());
+        portfolioDocument.setUserUniqueId(UUID.randomUUID());
+        portfolioDocument.setFileName("Test1");
+        portfolioDocument.setType("Test2");
+        portfolioDocument.setFileType("pdf");
+        portfolioDocument.setUploadDate(new Date());
+        portfolioDocument.setData(new byte[]{1, 2, 3});
+
+        PortfolioService portfolioService = new PortfolioService(portfolioDocumentRepository);
+
+        Mockito.when(portfolioDocumentRepository.findById(portfolioDocument.getUniqueId()))
+                .thenReturn(Optional.of(portfolioDocument));
+
+        // Act
+
+        PortfolioDocument response = portfolioService.download(portfolioDocument.getUniqueId());
+
+        // Assert
+
+        assertEquals(portfolioDocument.getUniqueId(), response.getUniqueId());
+        assertEquals(portfolioDocument.getFileName(), response.getFileName());
+        assertEquals(portfolioDocument.getFileType(), response.getFileType());
+        assertEquals(portfolioDocument.getType(), response.getType());
+        assertEquals(portfolioDocument.getUploadDate(), response.getUploadDate());
+        assertTrue(Arrays.equals(portfolioDocument.getData(), response.getData()));
+    }
+
+    @Test
+    public void delete_validRequest() {
+
+        // Arrange
+
+        PortfolioDocument portfolioDocument = new PortfolioDocument();
+
+        portfolioDocument.setUniqueId(UUID.randomUUID());
+
+        PortfolioDocumentDeleteRequest request = new PortfolioDocumentDeleteRequest();
+
+        request.setUniqueId(portfolioDocument.getUniqueId());
+
+        PortfolioService portfolioService = new PortfolioService(portfolioDocumentRepository);
+
+        // Act
+
+        portfolioService.delete(request);
     }
 
     private static class MultipartFileMock implements MultipartFile {
@@ -124,7 +182,7 @@ public class PortfolioServiceTest {
 
         @Override
         public String getContentType() {
-            return null;
+            return "pdf";
         }
 
         @Override

@@ -158,6 +158,7 @@ public class InternshipOfferServiceTest {
         internshipOffer.setCompany("Test Company");
         internshipOffer.setJobTitle("Test Job Title");
         internshipOffer.setStartDate(new Date());
+        internshipOffer.setJobScope(List.of("Test 1", "Test 2"));
         internshipOffer.setDuration(12);
         internshipOffer.setSalary(20);
         internshipOffer.setHours(40);
@@ -182,6 +183,7 @@ public class InternshipOfferServiceTest {
             assertEquals(InternshipOffer.Status.PENDING_APPROVAL.toString(), offer.getStatus());
             assertEquals(internshipOffer.getCompany(), offer.getCompany());
             assertEquals(internshipOffer.getJobTitle(), offer.getJobTitle());
+            assertEquals(internshipOffer.getJobScope(), offer.getJobScope());
             assertEquals(internshipOffer.getStartDate().getTime(), offer.getStartDate());
             assertEquals(internshipOffer.getDuration(), offer.getDuration());
             assertEquals(internshipOffer.getSalary(), offer.getSalary());

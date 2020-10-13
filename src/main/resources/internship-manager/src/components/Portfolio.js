@@ -155,7 +155,7 @@ class Portfolio extends Component {
             <TableHead>
               <TableRow>
                 <TableCell align="center"><strong>Type</strong></TableCell>
-                <TableCell align="center"><strong>File Name</strong></TableCell>
+                <TableCell align="center"><strong>File</strong></TableCell>
                 <TableCell align="center"><strong>Upload Date</strong></TableCell>
                 <TableCell align="center"><strong>Delete</strong></TableCell>
               </TableRow>
