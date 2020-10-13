@@ -55,5 +55,31 @@ public class UserServiceTest {
         }
     }
 
+    @Test
+    public void findUserById_validRequest(){
+        //ARRANGE
+        User user = new User();
+
+        user.setUniqueId(UUID.randomUUID());
+        user.setType("STUDENT");
+        user.setEmail("toto@gmail.com");
+        user.setFirstName("Toto");
+        user.setLastName("Tata");
+        user.setCompany("Test");
+
+        UserListReponse.User userToFind = UserListReponse.map(user);
+
+        UserService userService = new UserService(userRepository);
+
+        //ACT
+        Mockito.when(userRepository.findById(Mockito.any()))
+                .thenReturn(Optional.of(user));
+
+
+        //ASSERT
+        assertEquals(userToFind,userService.find(user.getUniqueId()));
+
+    }
+
 
 }

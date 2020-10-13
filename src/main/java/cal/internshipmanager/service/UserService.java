@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,15 +37,21 @@ public class UserService {
     //
 
     public UserListReponse students() {
-
-        List<User> internshipOffers = userRepository.findAllByType("STUDENT");
+        //todo why is it called internshipoffers?
+        List<User> students = userRepository.findAllByType("STUDENT");
 
         UserListReponse response = new UserListReponse();
 
-        response.setUsers(internshipOffers.stream().map(x ->
+        response.setUsers(students.stream().map(x ->
                 UserListReponse.map(x)).collect(Collectors.toList()));
 
         return response;
     }
+
+    public UserListReponse.User find(@NotNull UUID userId){
+        return UserListReponse.map(userRepository.findById(userId).get());
+    }
+
+
 
 }
