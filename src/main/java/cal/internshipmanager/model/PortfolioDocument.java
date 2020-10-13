@@ -22,6 +22,8 @@ public class PortfolioDocument {
 
     private String fileName;
 
+    private String fileType;
+
     private String type;
 
     private Date uploadDate;
