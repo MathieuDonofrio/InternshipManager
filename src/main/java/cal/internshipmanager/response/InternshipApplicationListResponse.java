@@ -32,6 +32,8 @@ public class InternshipApplicationListResponse {
 
         private Long date;
 
+
+
     }
 
     //
