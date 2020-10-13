@@ -85,8 +85,8 @@ public class InternshipApplicationService {
 
         InternshipApplicationListResponse response = new InternshipApplicationListResponse();
 
-        response.setApplications(allApplications.stream()
-                .map(internshipApplication -> InternshipApplicationListResponse.map(internshipApplication))
+        response.setApplications(applications.stream()
+                .map(application -> InternshipApplicationListResponse.map(application))
                 .collect(Collectors.toList()));
 
         return response;

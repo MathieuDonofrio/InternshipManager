@@ -59,10 +59,9 @@ export default function InternshipApplicationCreationForm() {
       documents: docs,
     }
 
-    InternshipApplicationService.createInternshipApplication(request).then(response =>
-      {
-        fetchInternshipOffers();
-      })
+    InternshipApplicationService.createInternshipApplication(request).then(response => {
+      fetchInternshipOffers();
+    })
 
     setOpen(false);
   }
@@ -121,7 +120,7 @@ export default function InternshipApplicationCreationForm() {
           paddingTop={2}
           textAlign="center">
 
-          <Typography component="h1" variant="h4">Offer Visibility</Typography>
+          <Typography component="h1" variant="h4">Internship Offers</Typography>
         </Box>
       </Container>
 
@@ -134,7 +133,7 @@ export default function InternshipApplicationCreationForm() {
               <TableCell align="center"><strong>Start Date</strong></TableCell>
               <TableCell align="center"><strong>Duration</strong></TableCell>
               <TableCell align="center"><strong>Hours</strong></TableCell>
-              <TableCell align="center"><strong>Edit Students</strong></TableCell>
+              <TableCell align="center"><strong>Apply</strong></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -151,7 +150,7 @@ export default function InternshipApplicationCreationForm() {
                     color="primary"
                     onClick={() => handleClickOpen(offer.uniqueId, index)}>
                     Appliquer
-                    </Button>
+                  </Button>
                 </TableCell>
               </TableRow>
             ))}
