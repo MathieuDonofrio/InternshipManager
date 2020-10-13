@@ -6,7 +6,6 @@ import cal.internshipmanager.repository.InternshipApplicationRepository;
 import cal.internshipmanager.repository.PortfolioDocumentRepository;
 import cal.internshipmanager.request.InternshipApplicationCreationRequest;
 import cal.internshipmanager.request.InternshipApplicationEditRequest;
-import cal.internshipmanager.request.InternshipApplicationFindByStatusRequest;
 import cal.internshipmanager.response.InternshipApplicationListResponse;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -64,6 +62,7 @@ public class InternshipApplicationService {
         internshipApplication.setOfferUniqueId(request.getOfferUniqueId());
         internshipApplication.setDate(new Date());
         internshipApplication.setDocuments(documents);
+        internshipApplication.setStatus(InternshipApplication.Status.PENDING_APPROVAL);
 
         internshipApplicationRepository.save(internshipApplication);
     }
@@ -80,12 +79,12 @@ public class InternshipApplicationService {
         return response;
     }
 
-    public InternshipApplicationListResponse findByStatus(@Valid InternshipApplicationFindByStatusRequest request) {
-        List<InternshipApplication> allApplications = internshipApplicationRepository.findAllByStatus(request.getStatus());
+    public InternshipApplicationListResponse findByStatus(@Valid InternshipApplication.Status status) {
+        List<InternshipApplication> allApplications = internshipApplicationRepository.findAllByStatus(status);
 
         InternshipApplicationListResponse response = new InternshipApplicationListResponse();
 
-        response.setApplications(applications.stream()
+        response.setApplications(allApplications.stream()
                 .map(application -> InternshipApplicationListResponse.map(application))
                 .collect(Collectors.toList()));
 

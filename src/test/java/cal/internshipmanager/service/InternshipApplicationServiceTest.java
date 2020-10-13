@@ -7,9 +7,7 @@ import cal.internshipmanager.repository.InternshipApplicationRepository;
 import cal.internshipmanager.repository.PortfolioDocumentRepository;
 import cal.internshipmanager.request.InternshipApplicationCreationRequest;
 import cal.internshipmanager.request.InternshipApplicationEditRequest;
-import cal.internshipmanager.request.InternshipApplicationFindByStatusRequest;
 import cal.internshipmanager.response.InternshipApplicationListResponse;
-import cal.internshipmanager.response.PortfolioDocumentListResponse;
 import cal.internshipmanager.security.JwtAuthentication;
 import cal.internshipmanager.security.JwtProvider;
 import com.auth0.jwt.interfaces.DecodedJWT;
@@ -141,12 +139,10 @@ public class InternshipApplicationServiceTest {
         responseExpected.setApplications(internshipApplications.stream()
                 .map(x -> InternshipApplicationListResponse.map(x)).collect(Collectors.toList()));
 
-        InternshipApplicationFindByStatusRequest request = new InternshipApplicationFindByStatusRequest();
-        request.setStatus(InternshipApplication.Status.APPROVED);
 
         //ACT
         Mockito.when(internshipApplicationRepository.findAllByStatus(Mockito.any())).thenReturn(internshipApplications);
-        InternshipApplicationListResponse responseActual = internshipApplicationService.findByStatus(request);
+        InternshipApplicationListResponse responseActual = internshipApplicationService.findByStatus(InternshipApplication.Status.APPROVED);
 
         //ASSERT
         assertEquals(responseExpected,responseActual);

@@ -38,11 +38,11 @@ public class UserService {
 
     public UserListReponse students() {
         //todo why is it called internshipoffers?
-        List<User> internshipOffers = userRepository.findAllByType("STUDENT");
+        List<User> students = userRepository.findAllByType("STUDENT");
 
         UserListReponse response = new UserListReponse();
 
-        response.setUsers(internshipOffers.stream().map(x ->
+        response.setUsers(students.stream().map(x ->
                 UserListReponse.map(x)).collect(Collectors.toList()));
 
         return response;
