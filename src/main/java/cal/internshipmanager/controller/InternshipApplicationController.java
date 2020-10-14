@@ -1,6 +1,8 @@
 package cal.internshipmanager.controller;
 
+import cal.internshipmanager.request.InternshipApplicationApproveRequest;
 import cal.internshipmanager.request.InternshipApplicationCreationRequest;
+import cal.internshipmanager.request.InternshipOfferCreationRequest;
 import cal.internshipmanager.response.InternshipApplicationListResponse;
 import cal.internshipmanager.service.InternshipApplicationService;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -40,5 +42,9 @@ public class InternshipApplicationController {
     @GetMapping("internship-applications/{userUniqueId}")
     public InternshipApplicationListResponse internshipApplications(@PathVariable UUID userUniqueId) {
         return internshipApplicationService.internshipApplications(userUniqueId);
+    }
+
+    @PostMapping("validate")
+    public void resultValidation(@Valid @RequestBody InternshipApplicationApproveRequest request){internshipApplicationService.editStatus(request.getUniqueId(),request.getStatus());
     }
 }

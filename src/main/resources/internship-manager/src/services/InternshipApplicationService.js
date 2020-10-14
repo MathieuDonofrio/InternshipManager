@@ -26,6 +26,14 @@ class InternshipApplicationService {
         return axios.get(Config.target + `/internship-application/internship-applications/${request}`, headers());
     }
 
+    approve(request){
+        return axios.post(Config.target + '/internship-application/approve', request ,headers());
+    }
+
+    reject(request){
+        return axios.post(Config.target + '/internship-application/reject', request, headers());
+    }
+
 }
 
 export default new InternshipApplicationService();
