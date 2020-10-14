@@ -3,7 +3,9 @@ package cal.internshipmanager.service;
 import cal.internshipmanager.model.InternshipApplication;
 import cal.internshipmanager.model.PortfolioDocument;
 import cal.internshipmanager.repository.InternshipApplicationRepository;
+import cal.internshipmanager.repository.InternshipOfferRepository;
 import cal.internshipmanager.repository.PortfolioDocumentRepository;
+import cal.internshipmanager.repository.UserRepository;
 import cal.internshipmanager.request.InternshipApplicationCreationRequest;
 import cal.internshipmanager.request.InternshipApplicationEditRequest;
 import cal.internshipmanager.response.InternshipApplicationListResponse;
@@ -29,14 +31,22 @@ public class InternshipApplicationService {
 
     private final PortfolioDocumentRepository portfolioDocumentRepository;
 
+    private final UserRepository userRepository;
+
+    private final InternshipOfferRepository internshipOfferRepository;
+
     //
     // Constructors
     //
 
     public InternshipApplicationService(InternshipApplicationRepository internshipApplicationRepository,
-                                        PortfolioDocumentRepository portfolioDocumentRepository) {
+                                        PortfolioDocumentRepository portfolioDocumentRepository,
+                                        UserRepository userRepository,
+                                        InternshipOfferRepository internshipOfferRepository) {
         this.internshipApplicationRepository = internshipApplicationRepository;
         this.portfolioDocumentRepository = portfolioDocumentRepository;
+        this.userRepository = userRepository;
+        this.internshipOfferRepository = internshipOfferRepository;
     }
 
     //
@@ -74,7 +84,8 @@ public class InternshipApplicationService {
         InternshipApplicationListResponse response = new InternshipApplicationListResponse();
 
         response.setApplications(userApplications.stream()
-                .map(x -> InternshipApplicationListResponse.map(x)).collect(Collectors.toList()));
+                .map(x -> InternshipApplicationListResponse.map(userRepository, internshipOfferRepository, x))
+                .collect(Collectors.toList()));
 
         return response;
     }
@@ -86,7 +97,7 @@ public class InternshipApplicationService {
         InternshipApplicationListResponse response = new InternshipApplicationListResponse();
 
         response.setApplications(allApplications.stream()
-                .map(application -> InternshipApplicationListResponse.map(application))
+                .map(x -> InternshipApplicationListResponse.map(userRepository, internshipOfferRepository, x))
                 .collect(Collectors.toList()));
 
         return response;
