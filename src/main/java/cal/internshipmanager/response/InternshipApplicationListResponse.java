@@ -32,11 +32,8 @@ public class InternshipApplicationListResponse {
 
         private Long date;
 
-<<<<<<< HEAD
-
-=======
         private String status;
->>>>>>> 28093cf6bcc48b4392a516b33a15d65c63f69e3e
+
 
     }
 

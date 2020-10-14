@@ -1,14 +1,26 @@
+import React, { Component } from "react";
 import InternshipApplicationService from "../services/InternshipApplicationService";
+import { withRouter } from 'react-router';
+import Lock from '../utils/Lock'
+
+import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
+import Container from '@material-ui/core/Container';
+
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+
 
 //
 // Data
 //
 
-const { Component } = require("react");
-const { default: StudentInternshipApplicationStatus } = require("../pages/StudentInternshipApplicationStatus");
-
 const state = {
-    studentApplicationsList = []
+    applications : []
 }
 
  
@@ -30,8 +42,9 @@ class StudentApplicationStatusList extends Component{
     //
 
     onUpdateStudentApplicationsList(){
-        userId =localStorage.getItem("UserUniqueId");
+        let userId =localStorage.getItem("UserUniqueId");
         InternshipApplicationService.internshipApplications(userId).then(response =>{
+          console.log(response.data);
             this.setState(response.data);
         })
     }
@@ -41,7 +54,7 @@ class StudentApplicationStatusList extends Component{
     //
 
     renderTableData() {
-        return this.state.studentApplicationsList.map((studentAppList, index) => {
+        return this.state.applications.map((studentAppList, index) => {
           const { offerUniqueId, date, status} = studentAppList
           return (
             <TableRow key={index}>
@@ -91,3 +104,4 @@ class StudentApplicationStatusList extends Component{
 
 
 }
+export default withRouter(StudentApplicationStatusList);
