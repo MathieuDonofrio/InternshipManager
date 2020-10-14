@@ -1,11 +1,11 @@
 package cal.internshipmanager.service;
 
 import cal.internshipmanager.model.InternshipApplication;
-import cal.internshipmanager.model.InternshipOffer;
 import cal.internshipmanager.model.PortfolioDocument;
 import cal.internshipmanager.repository.InternshipApplicationRepository;
 import cal.internshipmanager.repository.PortfolioDocumentRepository;
 import cal.internshipmanager.request.InternshipApplicationCreationRequest;
+import cal.internshipmanager.request.InternshipApplicationEditRequest;
 import cal.internshipmanager.response.InternshipApplicationListResponse;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -63,6 +62,7 @@ public class InternshipApplicationService {
         internshipApplication.setOfferUniqueId(request.getOfferUniqueId());
         internshipApplication.setDate(new Date());
         internshipApplication.setDocuments(documents);
+        internshipApplication.setStatus(InternshipApplication.Status.PENDING_APPROVAL);
 
         internshipApplicationRepository.save(internshipApplication);
     }
@@ -79,24 +79,23 @@ public class InternshipApplicationService {
         return response;
     }
 
-    public InternshipApplicationListResponse findByStatus(@NotBlank InternshipApplication.Status status) {
-
-        List<InternshipApplication> applications = internshipApplicationRepository.findAllByStatus(status);
+    public InternshipApplicationListResponse findByStatus(@Valid InternshipApplication.Status status) {
+        List<InternshipApplication> allApplications = internshipApplicationRepository.findAllByStatus(status);
 
         InternshipApplicationListResponse response = new InternshipApplicationListResponse();
 
-        response.setApplications(applications.stream()
+        response.setApplications(allApplications.stream()
                 .map(application -> InternshipApplicationListResponse.map(application))
                 .collect(Collectors.toList()));
 
         return response;
     }
 
-    public void editStatus(@NotNull UUID applicationId, @NotBlank InternshipApplication.Status status) {
-        Optional<InternshipApplication> application = internshipApplicationRepository.findById(applicationId);
+    public void editStatus(InternshipApplicationEditRequest request) {
+        Optional<InternshipApplication> application = internshipApplicationRepository.findById(request.getApplicationId());
 
         application.ifPresent(a -> {
-            a.setStatus(status);
+            a.setStatus(request.getStatus());
             internshipApplicationRepository.save(a);
         });
     }
