@@ -4,6 +4,7 @@ import cal.internshipmanager.model.InternshipOffer;
 import cal.internshipmanager.model.User;
 import cal.internshipmanager.repository.InternshipOfferRepository;
 import cal.internshipmanager.repository.UserRepository;
+import com.github.javafaker.Faker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
@@ -13,14 +14,17 @@ import org.springframework.stereotype.Component;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import static cal.internshipmanager.admin.EmployerLoader.EMPLOYER_COUNT;
-import static cal.internshipmanager.admin.StudentLoader.STUDENT_COUNT;
+import java.util.stream.IntStream;
 
 @Order(4)
 @Component
 public class InternshipOfferLoader implements CommandLineRunner {
+
+    //
+    // Constants
+    //
+
+    public static final int MIN_INTERNSHIP_OFFER_AMOUNT = 10;
 
     //
     // Dependencies
@@ -49,65 +53,53 @@ public class InternshipOfferLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        LoadAllInternshipsIfAbsent();
+
+        if(userRepository.findAllByType("EMPLOYER").isEmpty())
+            return;
+
+        final int needed = MIN_INTERNSHIP_OFFER_AMOUNT - internshipOfferRepository.findAll().size();
+
+        for(int i = 0; i < needed; i++){
+
+            final InternshipOffer internshipOffer = generate();
+
+            internshipOfferRepository.save(internshipOffer);
+        }
+
     }
 
     //
     // Private Methods
     //
 
-    private void LoadAllInternshipsIfAbsent() {
+    private InternshipOffer generate() {
 
-        if (internshipOfferRepository.findAll().isEmpty()) {
-            for (int i = 0; i < 20; i++) {
-                Load();
-            }
-        }
-    }
+        final Faker faker = new Faker();
 
-    private void Load() {
+        List<User> employers = userRepository.findAllByType("EMPLOYER");
+
+        User employer = employers.get(ThreadLocalRandom.current().nextInt(employers.size()));
+
+        List<String> jobScope = IntStream.range(0,
+                ThreadLocalRandom.current().nextInt(4, 12)).mapToObj(x -> faker.job().keySkills())
+                .collect(Collectors.toList());
 
         InternshipOffer internshipOffer = new InternshipOffer();
 
         internshipOffer.setUniqueId(UUID.randomUUID());
-        internshipOffer.setEmployer(GetRandomEmployerUUID());
-        internshipOffer.setStatus(getRandomStatus());
-        internshipOffer.setCompany("Hydro-Québec");
-        internshipOffer.setJobTitle("Developper");
-        internshipOffer.setJobScope(Arrays.asList("You must be as good as Mathieu", "You must be as good as Mathieu", "You must be as good as Mathieu", "You must be as good as Mathieu", "You must be as good as Mathieu"));
+        internshipOffer.setEmployer(employer.getUniqueId());
+        internshipOffer.setStatus(InternshipOffer.Status.PENDING_APPROVAL);
+        internshipOffer.setCompany(faker.company().name());
+        internshipOffer.setJobTitle(faker.job().title());
+        internshipOffer.setJobScope(jobScope);
         internshipOffer.setStartDate(new Date());
-        internshipOffer.setDuration(RandomBetween(8, 16));
-        internshipOffer.setSalary(RandomBetween(15, 21));
-        internshipOffer.setHours(RandomBetween(33, 35));
-        internshipOffer.setUsers(GetRandomStudentAmount());
+        internshipOffer.setDuration(ThreadLocalRandom.current().nextInt(8, 14));
+        internshipOffer.setSalary(14 + ThreadLocalRandom.current().nextFloat() * 10);
+        internshipOffer.setHours(ThreadLocalRandom.current().nextInt(30, 45));
+        internshipOffer.setUsers(new ArrayList<>());
 
-        internshipOfferRepository.save(internshipOffer);
-
+        return internshipOffer;
     }
 
-    //
-    //  Utilities
-    //
-
-    public static InternshipOffer.Status getRandomStatus() {
-        return InternshipOffer.Status.values()[
-                ThreadLocalRandom.current().nextInt(InternshipOffer.Status.values().length)];
-    }
-
-    private UUID GetRandomEmployerUUID() {
-        List<User> employers = userRepository.findAllByType("EMPLOYER");
-        return employers.get(ThreadLocalRandom.current().nextInt(employers.size())).getUniqueId();
-    }
-
-    private List<User> GetRandomStudentAmount() {
-        return Optional.ofNullable(userRepository.findAllByType("STUDENT"))
-                .map(List::stream).orElseGet(Stream::empty)
-                .skip(RandomBetween(8, STUDENT_COUNT))
-                .collect(Collectors.toList());
-    }
-
-    private int RandomBetween(int min, int max) {
-        return ThreadLocalRandom.current().nextInt(min, max);
-    }
 
 }

@@ -50,7 +50,7 @@ public class InternshipApplicationController {
     }
 
     @PutMapping
-    public void editStatus(@RequestBody @Valid InternshipApplicationEditRequest request) {
+    public void edit(@RequestBody @Valid InternshipApplicationEditRequest request) {
         internshipApplicationService.editStatus(request);
     }
 
