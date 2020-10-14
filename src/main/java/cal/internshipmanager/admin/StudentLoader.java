@@ -2,6 +2,7 @@ package cal.internshipmanager.admin;
 
 import cal.internshipmanager.model.User;
 import cal.internshipmanager.repository.UserRepository;
+import com.github.javafaker.Faker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
@@ -15,14 +16,20 @@ import java.util.UUID;
 public class StudentLoader implements CommandLineRunner {
 
     //
+    // Constants
+    //
+
+    private static final int MIN_STUDENT_AMOUNT = 20;
+
+    private static final String PASSWORD = "123456";
+
+    //
     // Dependencies
     //
 
     private final UserRepository userRepository;
 
     private final PasswordEncoder passwordEncoder;
-
-    public static final int STUDENT_COUNT = 20;
 
     //
     // Constructors
@@ -40,23 +47,30 @@ public class StudentLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        LoadEveryoneIfAbsent();
+
+        final int needed = MIN_STUDENT_AMOUNT -  userRepository.findAllByType("STUDENT").size();
+
+        for(int i = 0; i < needed; i++){
+
+            final User user = generate();
+
+            userRepository.save(user);
+        }
+
     }
 
     //
     // Private Methods
     //
 
-    private void LoadEveryoneIfAbsent() {
-        if (userRepository.findAllByType("STUDENT").isEmpty()) {
-            for (int i = 0; i < STUDENT_COUNT; i++) {
-                Load("student" + i + "@student.com", "student", "student", "123456");
-            }
-        }
-    }
+    private User generate() {
 
+        final Faker faker = new Faker();
 
-    private void Load(String email, String firstName, String lastName, String password) {
+        String firstName = faker.name().firstName();
+        String lastName = faker.name().lastName();
+
+        String email = firstName + "_" + lastName + "@faker.com";
 
         User user = new User();
 
@@ -65,9 +79,9 @@ public class StudentLoader implements CommandLineRunner {
         user.setEmail(email);
         user.setFirstName(firstName);
         user.setLastName(lastName);
-        user.setPasswordHash(passwordEncoder.encode(password));
+        user.setPasswordHash(passwordEncoder.encode(PASSWORD));
 
-        userRepository.save(user);
+        return user;
     }
 
 }
