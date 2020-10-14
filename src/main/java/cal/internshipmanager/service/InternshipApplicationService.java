@@ -80,6 +80,7 @@ public class InternshipApplicationService {
     }
 
     public InternshipApplicationListResponse findByStatus(@Valid InternshipApplication.Status status) {
+
         List<InternshipApplication> allApplications = internshipApplicationRepository.findAllByStatus(status);
 
         InternshipApplicationListResponse response = new InternshipApplicationListResponse();
@@ -92,12 +93,13 @@ public class InternshipApplicationService {
     }
 
     public void editStatus(InternshipApplicationEditRequest request) {
-        Optional<InternshipApplication> application = internshipApplicationRepository.findById(request.getApplicationId());
 
-        application.ifPresent(a -> {
-            a.setStatus(request.getStatus());
-            internshipApplicationRepository.save(a);
-        });
+        InternshipApplication application = internshipApplicationRepository.findById(request.getApplicationId())
+                .orElse(null);
+
+        application.setStatus(request.getStatus());
+
+        internshipApplicationRepository.save(application);
     }
 
 

@@ -119,7 +119,8 @@ public class InternshipApplicationServiceTest {
 
     @Test
     public void findInternshipByStatus_validRequest(){
-        //ARRANGE
+
+        // Arrange
 
         InternshipApplicationService internshipApplicationService = new InternshipApplicationService(
                 internshipApplicationRepository, portfolioDocumentRepository);
@@ -140,39 +141,54 @@ public class InternshipApplicationServiceTest {
                 .map(x -> InternshipApplicationListResponse.map(x)).collect(Collectors.toList()));
 
 
-        //ACT
+        // Act
+
         Mockito.when(internshipApplicationRepository.findAllByStatus(Mockito.any())).thenReturn(internshipApplications);
+
         InternshipApplicationListResponse responseActual = internshipApplicationService.findByStatus(InternshipApplication.Status.APPROVED);
 
-        //ASSERT
+        // Arrange
+
         assertEquals(responseExpected,responseActual);
 
     }
 
     @Test
     public void editInternshipStatus_validRequest(){
-        //ARRANGE
+
+        // Arrange
+
+        InternshipApplication internshipApplication = new InternshipApplication();
+
+        internshipApplication.setUniqueId(UUID.randomUUID());
+        internshipApplication.setOfferUniqueId(UUID.randomUUID());
+        internshipApplication.setStudentUniqueId(UUID.randomUUID());
+        internshipApplication.setStatus(InternshipApplication.Status.PENDING_APPROVAL);
+        internshipApplication.setDate(new Date());
+        internshipApplication.setDocuments(List.of());
+
+        InternshipApplicationEditRequest request = new InternshipApplicationEditRequest();
+
+        request.setApplicationId(internshipApplication.getUniqueId());
+        request.setStatus(InternshipApplication.Status.APPROVED);
+
         InternshipApplicationService internshipApplicationService = new InternshipApplicationService(
                 internshipApplicationRepository, portfolioDocumentRepository);
 
-        InternshipApplication internshipApplicationToEdit = new InternshipApplication();
-        internshipApplicationToEdit.setUniqueId(UUID.randomUUID());
-        internshipApplicationToEdit.setStatus(InternshipApplication.Status.APPROVED);
-        internshipApplicationToEdit.setDate(new Date());
+        Mockito.when(internshipApplicationRepository.findById(internshipApplication.getUniqueId()))
+                .thenReturn(Optional.of(internshipApplication));
 
-        InternshipApplicationEditRequest request = new InternshipApplicationEditRequest();
-        request.setApplicationId(internshipApplicationToEdit.getUniqueId());
-        request.setStatus(internshipApplicationToEdit.getStatus());
-
-        //ACT & ASSERT
+        // Act & Assert
 
         Mockito.when(internshipApplicationRepository.save(Mockito.any())).then(inv -> {
 
-            InternshipApplication internshipApplication = (InternshipApplication) inv.getArgument(0);
+            InternshipApplication response = (InternshipApplication) inv.getArgument(0);
 
-            assertNotNull(internshipApplication.getUniqueId());
-            assertEquals(internshipApplication.getOfferUniqueId(), internshipApplicationToEdit.getOfferUniqueId());
-            assertNotNull(internshipApplication.getDate());
+            assertEquals(internshipApplication.getUniqueId(), response.getUniqueId());
+            assertEquals(internshipApplication.getOfferUniqueId(), response.getOfferUniqueId());
+            assertEquals(internshipApplication.getStudentUniqueId(), response.getStudentUniqueId());
+            assertEquals(request.getStatus(), internshipApplication.getStatus());
+            assertEquals(internshipApplication.getDate(), response.getDate());
             assertTrue(internshipApplication.getDocuments().isEmpty());
 
             return null;
