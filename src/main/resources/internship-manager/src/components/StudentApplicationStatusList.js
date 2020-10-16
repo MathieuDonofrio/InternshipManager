@@ -56,6 +56,13 @@ class StudentApplicationStatusList extends Component{
     renderTableData() {
         return this.state.applications.map((studentAppList, index) => {
           const {studentFirstName, studentLastName, company, jobTitle, date, status} = studentAppList
+          let newStatus = "";
+          if (status == "PENDING_APPROVAL"){
+            console.log("YESYESYES");
+            newStatus = "PENDING APPROVAL"
+          }else{
+            newStatus = status;
+          }
           return (
             <TableRow key={index}>
               <TableCell component="th" scope="row" align="center">{studentFirstName}</TableCell>
@@ -63,7 +70,7 @@ class StudentApplicationStatusList extends Component{
               <TableCell component="th" scope="row" align="center">{company}</TableCell>
               <TableCell component="th" scope="row" align="center">{jobTitle}</TableCell>
               <TableCell component="th" scope="row" align="center">{new Date(date).toLocaleDateString()}</TableCell>
-              <TableCell component="th" scope="row" align="center">{status}</TableCell>
+              <TableCell component="th" scope="row" align="center">{newStatus}</TableCell>
             </TableRow>
     
           )
