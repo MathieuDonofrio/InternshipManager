@@ -236,4 +236,39 @@ public class InternshipApplicationServiceTest {
 
         internshipApplicationService.editStatus(request);
     }
+
+  /*  @Test
+    public void findByOffer_validRequest(){
+        // Arrange
+
+        InternshipOffer internshipOffer = new InternshipOffer();
+
+        internshipOffer.setUniqueId(UUID.randomUUID());
+        internshipOffer.setCompany("TestCompany");
+        internshipOffer.setJobTitle("TestJobTitle");
+
+        InternshipApplication internshipApplication = new InternshipApplication();
+
+        internshipApplication.setUniqueId(UUID.randomUUID());
+        internshipApplication.setOfferUniqueId(internshipOffer.getUniqueId());
+        internshipApplication.setDate(new Date());
+        internshipApplication.setStatus(InternshipApplication.Status.PENDING_APPROVAL);
+
+        InternshipApplicationListResponse response = new InternshipApplicationListResponse();
+
+        response.
+
+
+        InternshipApplicationService internshipApplicationService = new InternshipApplicationService(
+                internshipApplicationRepository, portfolioDocumentRepository, userRepository, internshipOfferRepository);
+
+        Mockito.when(internshipApplicationRepository.findAllByOfferUniqueId(Mockito.any())).thenReturn(List.of(internshipApplication));
+
+        // Act
+
+        InternshipApplicationListResponse internshipApplicationToReturn = internshipApplicationService.findByOffer(internshipApplication.getOfferUniqueId());
+
+
+
+    }*/
 }

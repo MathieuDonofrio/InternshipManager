@@ -113,5 +113,18 @@ public class InternshipApplicationService {
         internshipApplicationRepository.save(application);
     }
 
+    public InternshipApplicationListResponse findByOffer(@Valid UUID offerUniqueId) {
+
+        List<InternshipApplication> allApplications = internshipApplicationRepository.findAllByOfferUniqueId(offerUniqueId);
+
+        InternshipApplicationListResponse response = new InternshipApplicationListResponse();
+
+        response.setApplications(allApplications.stream()
+                .map(x -> InternshipApplicationListResponse.map(userRepository, internshipOfferRepository, x))
+                .collect(Collectors.toList()));
+
+        return response;
+    }
+
 
 }

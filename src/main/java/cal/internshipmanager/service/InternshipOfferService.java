@@ -161,4 +161,15 @@ public class InternshipOfferService {
         internshipOfferRepository.save(internshipOffer);
     }
 
+    public InternshipOfferListResponse findAll(){
+        List<InternshipOffer> internshipOffers = internshipOfferRepository.findAll();
+
+        InternshipOfferListResponse response = new InternshipOfferListResponse();
+
+        response.setInternshipOffers(internshipOffers.stream().map(x ->
+                InternshipOfferListResponse.map(x)).collect(Collectors.toList()));
+
+        return response;
+    }
+
 }
