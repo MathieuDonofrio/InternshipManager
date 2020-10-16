@@ -5,12 +5,12 @@ import cal.internshipmanager.repository.UserRepository;
 import cal.internshipmanager.response.UserListReponse;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest
 public class UserServiceTest {
@@ -34,7 +34,7 @@ public class UserServiceTest {
 
         UserService userService = new UserService(userRepository);
 
-        Mockito.when(userRepository.findAllByType("STUDENT"))
+        when(userRepository.findAllByType("STUDENT"))
                 .thenReturn(List.of(user));
 
         // Act
@@ -57,7 +57,8 @@ public class UserServiceTest {
 
     @Test
     public void findUserById_validRequest(){
-        //ARRANGE
+
+        // Arrange
         User user = new User();
 
         user.setUniqueId(UUID.randomUUID());
@@ -71,12 +72,11 @@ public class UserServiceTest {
 
         UserService userService = new UserService(userRepository);
 
-        //ACT
-        Mockito.when(userRepository.findById(Mockito.any()))
-                .thenReturn(Optional.of(user));
+        // Act
+        when(userRepository.findById(any())).thenReturn(Optional.of(user));
 
 
-        //ASSERT
+        // Assert
         assertEquals(userToFind,userService.find(user.getUniqueId()));
 
     }

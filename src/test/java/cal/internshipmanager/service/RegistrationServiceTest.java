@@ -7,12 +7,12 @@ import cal.internshipmanager.request.StudentRegistrationRequest;
 import cal.internshipmanager.response.RegistrationResponse;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest
 public class RegistrationServiceTest {
@@ -39,7 +39,7 @@ public class RegistrationServiceTest {
 
         // Act & Assert
 
-        Mockito.when(userRepository.save(Mockito.any())).then(inv -> {
+        when(userRepository.save(any())).then(inv -> {
 
             User user = (User) inv.getArgument(0);
 
@@ -77,7 +77,7 @@ public class RegistrationServiceTest {
 
         // Act & Assert
 
-        Mockito.when(userRepository.save(Mockito.any())).then(inv -> {
+        when(userRepository.save(any())).then(inv -> {
 
             User user = (User) inv.getArgument(0);
 

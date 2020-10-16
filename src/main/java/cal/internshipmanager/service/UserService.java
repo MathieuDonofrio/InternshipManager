@@ -37,7 +37,7 @@ public class UserService {
     //
 
     public UserListReponse students() {
-        //todo why is it called internshipoffers?
+
         List<User> students = userRepository.findAllByType("STUDENT");
 
         UserListReponse response = new UserListReponse();

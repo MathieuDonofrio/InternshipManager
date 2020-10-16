@@ -12,7 +12,6 @@ import cal.internshipmanager.security.JwtProvider;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,6 +19,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest
 public class InternshipOfferServiceTest {
@@ -62,7 +62,7 @@ public class InternshipOfferServiceTest {
 
         // Act & Assert
 
-        Mockito.when(internshipOfferRepository.save(Mockito.any())).then(inv -> {
+        when(internshipOfferRepository.save(any())).then(inv -> {
 
             InternshipOffer internshipOffer = (InternshipOffer) inv.getArgument(0);
 
@@ -98,11 +98,11 @@ public class InternshipOfferServiceTest {
 
         InternshipOfferService internshipOfferService = new InternshipOfferService(internshipOfferRepository, null);
 
-        Mockito.when(internshipOfferRepository.findById(Mockito.any())).thenReturn(Optional.of(internshipOffer));
+        when(internshipOfferRepository.findById(any())).thenReturn(Optional.of(internshipOffer));
 
         // Act & Assert
 
-        Mockito.when(internshipOfferRepository.save(Mockito.any())).then(inv -> {
+        when(internshipOfferRepository.save(any())).then(inv -> {
 
             InternshipOffer offer = (InternshipOffer) inv.getArgument(0);
 
@@ -129,11 +129,11 @@ public class InternshipOfferServiceTest {
 
         InternshipOfferService internshipOfferService = new InternshipOfferService(internshipOfferRepository, null);
 
-        Mockito.when(internshipOfferRepository.findById(Mockito.any())).thenReturn(Optional.of(internshipOffer));
+        when(internshipOfferRepository.findById(any())).thenReturn(Optional.of(internshipOffer));
 
         // Act & Assert
 
-        Mockito.when(internshipOfferRepository.save(Mockito.any())).then(inv -> {
+        when(internshipOfferRepository.save(any())).then(inv -> {
 
             InternshipOffer offer = (InternshipOffer) inv.getArgument(0);
 
@@ -165,7 +165,7 @@ public class InternshipOfferServiceTest {
 
         InternshipOfferService internshipOfferService = new InternshipOfferService(internshipOfferRepository, null);
 
-        Mockito.when(internshipOfferRepository.findAllByStatus(InternshipOffer.Status.PENDING_APPROVAL))
+        when(internshipOfferRepository.findAllByStatus(InternshipOffer.Status.PENDING_APPROVAL))
                 .thenReturn(List.of(internshipOffer));
 
         // Act
@@ -212,7 +212,7 @@ public class InternshipOfferServiceTest {
 
         InternshipOfferService internshipOfferService = new InternshipOfferService(internshipOfferRepository, null);
 
-        Mockito.when(internshipOfferRepository.findAllByStatus(InternshipOffer.Status.APPROVED))
+        when(internshipOfferRepository.findAllByStatus(InternshipOffer.Status.APPROVED))
                 .thenReturn(List.of(internshipOffer));
 
         // Act
@@ -258,7 +258,7 @@ public class InternshipOfferServiceTest {
 
         InternshipOfferService internshipOfferService = new InternshipOfferService(internshipOfferRepository, null);
 
-        Mockito.when(internshipOfferRepository.findAllByStatus(InternshipOffer.Status.REJECTED))
+        when(internshipOfferRepository.findAllByStatus(InternshipOffer.Status.REJECTED))
                 .thenReturn(List.of(internshipOffer));
 
         // Act
@@ -318,15 +318,15 @@ public class InternshipOfferServiceTest {
         request.setOfferUniqueId(internshipOffer.getUniqueId());
         request.setUserUniqueId(user.getUniqueId());
 
-        Mockito.when(internshipOfferRepository.findById(internshipOffer.getUniqueId()))
+        when(internshipOfferRepository.findById(internshipOffer.getUniqueId()))
                 .thenReturn(Optional.of(internshipOffer));
 
-        Mockito.when(userRepository.findById(user.getUniqueId()))
+        when(userRepository.findById(user.getUniqueId()))
                 .thenReturn(Optional.of(user));
 
         // Act & Assert
 
-        Mockito.when(internshipOfferRepository.save(Mockito.any())).then(inv -> {
+        when(internshipOfferRepository.save(any())).then(inv -> {
 
             InternshipOffer offer = (InternshipOffer) inv.getArgument(0);
 
@@ -376,15 +376,15 @@ public class InternshipOfferServiceTest {
         request.setOfferUniqueId(internshipOffer.getUniqueId());
         request.setUserUniqueId(user.getUniqueId());
 
-        Mockito.when(internshipOfferRepository.findById(internshipOffer.getUniqueId()))
+        when(internshipOfferRepository.findById(internshipOffer.getUniqueId()))
                 .thenReturn(Optional.of(internshipOffer));
 
-        Mockito.when(userRepository.findById(user.getUniqueId()))
+        when(userRepository.findById(user.getUniqueId()))
                 .thenReturn(Optional.of(user));
 
 
         // Act & Assert
-        Mockito.when(internshipOfferRepository.save(Mockito.any())).then(inv -> {
+        when(internshipOfferRepository.save(any())).then(inv -> {
             InternshipOffer offer = (InternshipOffer) inv.getArgument(0);
             assertTrue(offer.getUsers().isEmpty());
             return null;
@@ -423,7 +423,7 @@ public class InternshipOfferServiceTest {
 
         InternshipOfferService internshipOfferService = new InternshipOfferService(internshipOfferRepository, userRepository);
 
-        Mockito.when(internshipOfferRepository.findById(internshipOffer.getUniqueId()))
+        when(internshipOfferRepository.findById(internshipOffer.getUniqueId()))
                 .thenReturn(Optional.of(internshipOffer));
 
         // Act

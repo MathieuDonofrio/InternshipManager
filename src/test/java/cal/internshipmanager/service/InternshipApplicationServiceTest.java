@@ -16,7 +16,6 @@ import cal.internshipmanager.security.JwtProvider;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -24,6 +23,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest
 public class InternshipApplicationServiceTest {
@@ -67,11 +67,11 @@ public class InternshipApplicationServiceTest {
         InternshipApplicationService internshipApplicationService = new InternshipApplicationService(
                 internshipApplicationRepository, portfolioDocumentRepository, userRepository, internshipOfferRepository);
 
-        Mockito.when(userRepository.findById(internshipApplication.getStudentUniqueId())).thenReturn(Optional.of(user));
+        when(userRepository.findById(internshipApplication.getStudentUniqueId())).thenReturn(Optional.of(user));
 
-        Mockito.when(internshipOfferRepository.findById(internshipApplication.getOfferUniqueId())).thenReturn(Optional.of(internshipOffer));
+        when(internshipOfferRepository.findById(internshipApplication.getOfferUniqueId())).thenReturn(Optional.of(internshipOffer));
 
-        Mockito.when(internshipApplicationRepository.findAllByStudentUniqueId(user.getUniqueId()))
+        when(internshipApplicationRepository.findAllByStudentUniqueId(user.getUniqueId()))
                 .thenReturn(List.of(internshipApplication));
 
         // Act
@@ -115,12 +115,12 @@ public class InternshipApplicationServiceTest {
 
         request.getDocuments().add(fakeDocumentUniqueId);
 
-        Mockito.when(portfolioDocumentRepository.findById(fakeDocumentUniqueId))
+        when(portfolioDocumentRepository.findById(fakeDocumentUniqueId))
                 .thenReturn(Optional.of(new PortfolioDocument()));
 
         // Act & Assert
 
-        Mockito.when(internshipApplicationRepository.save(Mockito.any())).then(inv -> {
+        when(internshipApplicationRepository.save(any())).then(inv -> {
 
             InternshipApplication internshipApplication = (InternshipApplication) inv.getArgument(0);
 
@@ -165,11 +165,11 @@ public class InternshipApplicationServiceTest {
         InternshipApplicationService internshipApplicationService = new InternshipApplicationService(
                 internshipApplicationRepository, portfolioDocumentRepository, userRepository, internshipOfferRepository);
 
-        Mockito.when(internshipApplicationRepository.findAllByStatus(Mockito.any())).thenReturn(List.of(internshipApplication));
+        when(internshipApplicationRepository.findAllByStatus(any())).thenReturn(List.of(internshipApplication));
 
-        Mockito.when(userRepository.findById(internshipApplication.getStudentUniqueId())).thenReturn(Optional.of(user));
+        when(userRepository.findById(internshipApplication.getStudentUniqueId())).thenReturn(Optional.of(user));
 
-        Mockito.when(internshipOfferRepository.findById(internshipApplication.getOfferUniqueId())).thenReturn(Optional.of(internshipOffer));
+        when(internshipOfferRepository.findById(internshipApplication.getOfferUniqueId())).thenReturn(Optional.of(internshipOffer));
 
         // Act
 
@@ -215,12 +215,12 @@ public class InternshipApplicationServiceTest {
                 internshipApplicationRepository, portfolioDocumentRepository, userRepository, internshipOfferRepository);
 
 
-        Mockito.when(internshipApplicationRepository.findById(internshipApplication.getUniqueId()))
+        when(internshipApplicationRepository.findById(internshipApplication.getUniqueId()))
                 .thenReturn(Optional.of(internshipApplication));
 
         // Act & Assert
 
-        Mockito.when(internshipApplicationRepository.save(Mockito.any())).then(inv -> {
+        when(internshipApplicationRepository.save(any())).then(inv -> {
 
             InternshipApplication response = (InternshipApplication) inv.getArgument(0);
 

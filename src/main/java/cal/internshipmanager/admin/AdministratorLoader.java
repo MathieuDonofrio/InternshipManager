@@ -37,7 +37,7 @@ public class AdministratorLoader implements CommandLineRunner {
     //
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
 
         LoadIfAbsent("admin@admin.com", "Admin", "Admin", "123456");
 

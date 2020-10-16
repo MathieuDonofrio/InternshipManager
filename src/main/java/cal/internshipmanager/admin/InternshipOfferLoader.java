@@ -52,7 +52,7 @@ public class InternshipOfferLoader implements CommandLineRunner {
     //
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
 
         if(userRepository.findAllByType("EMPLOYER").isEmpty())
             return;

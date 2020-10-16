@@ -46,7 +46,7 @@ public class EmployerLoader implements CommandLineRunner {
     //
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
 
         final int needed = MIN_EMPLOYER_AMOUNT -  userRepository.findAllByType("EMPLOYER").size();
 

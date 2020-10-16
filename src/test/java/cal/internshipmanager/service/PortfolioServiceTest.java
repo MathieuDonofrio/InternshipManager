@@ -10,7 +10,6 @@ import cal.internshipmanager.security.JwtProvider;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,6 +20,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
 
+import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -51,7 +51,7 @@ public class PortfolioServiceTest {
 
         PortfolioService portfolioService = new PortfolioService(portfolioDocumentRepository);
 
-        Mockito.when(portfolioDocumentRepository.findAllByUserUniqueId(userUniqueId))
+        when(portfolioDocumentRepository.findAllByUserUniqueId(userUniqueId))
                 .thenReturn(List.of(portfolioDocument));
 
         // Act
@@ -96,7 +96,7 @@ public class PortfolioServiceTest {
 
         // Act & Assert
 
-        Mockito.when(portfolioDocumentRepository.save(Mockito.any())).then(inv -> {
+        when(portfolioDocumentRepository.save(any())).then(inv -> {
 
             PortfolioDocument portfolioDocument = (PortfolioDocument) inv.getArgument(0);
 
@@ -131,7 +131,7 @@ public class PortfolioServiceTest {
 
         PortfolioService portfolioService = new PortfolioService(portfolioDocumentRepository);
 
-        Mockito.when(portfolioDocumentRepository.findById(portfolioDocument.getUniqueId()))
+        when(portfolioDocumentRepository.findById(portfolioDocument.getUniqueId()))
                 .thenReturn(Optional.of(portfolioDocument));
 
         // Act

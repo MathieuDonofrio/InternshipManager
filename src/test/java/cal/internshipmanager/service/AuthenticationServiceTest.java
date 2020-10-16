@@ -7,7 +7,6 @@ import cal.internshipmanager.response.AuthenticationResponse;
 import cal.internshipmanager.security.JwtProvider;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,6 +15,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest
 public class AuthenticationServiceTest {
@@ -47,7 +47,7 @@ public class AuthenticationServiceTest {
         user.setEmail(request.getEmail());
         user.setPasswordHash(passwordEncoder.encode(request.getPassword()));
 
-        Mockito.when(userRepository.findByEmail(Mockito.any())).thenReturn(Optional.of(user));
+        when(userRepository.findByEmail(any())).thenReturn(Optional.of(user));
 
         // Act
 
@@ -80,7 +80,7 @@ public class AuthenticationServiceTest {
         user.setType("STUDENT");
         user.setPasswordHash(passwordEncoder.encode("123456789"));
 
-        Mockito.when(userRepository.findByEmail(Mockito.any())).thenReturn(Optional.of(user));
+        when(userRepository.findByEmail(any())).thenReturn(Optional.of(user));
 
         // Act & Assert
 

@@ -4,6 +4,7 @@ import cal.internshipmanager.model.PortfolioDocument;
 import cal.internshipmanager.repository.PortfolioDocumentRepository;
 import cal.internshipmanager.request.PortfolioDocumentDeleteRequest;
 import cal.internshipmanager.response.PortfolioDocumentListResponse;
+import cal.internshipmanager.validator.ExistingUser;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -70,7 +71,7 @@ public class PortfolioService {
         return portfolioDocument;
     }
 
-    public PortfolioDocumentListResponse portfolioDocuments(@NotNull UUID userUniqueId) { //TODO: replace with better validator
+    public PortfolioDocumentListResponse portfolioDocuments(@ExistingUser UUID userUniqueId) {
 
         List<PortfolioDocument> portfolioDocuments = portfolioDocumentRepository.findAllByUserUniqueId(userUniqueId);
 

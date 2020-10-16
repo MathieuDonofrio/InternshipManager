@@ -46,7 +46,7 @@ public class StudentLoader implements CommandLineRunner {
     //
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
 
         final int needed = MIN_STUDENT_AMOUNT -  userRepository.findAllByType("STUDENT").size();
 
