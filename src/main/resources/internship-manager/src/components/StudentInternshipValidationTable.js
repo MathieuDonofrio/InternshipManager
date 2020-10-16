@@ -19,6 +19,8 @@ import TableRow from '@material-ui/core/TableRow';
 import { Box } from "@material-ui/core";
 import ValidatedStudentTable from "./ValidatedStudentTable";
 import InternshipOfferService from '../services/InternshipOfferService';
+import EditIcon from '@material-ui/icons/Edit';
+import IconButton from '@material-ui/core/IconButton';
 import { RowingSharp } from '@material-ui/icons';
 
 
@@ -41,7 +43,7 @@ function ValidateStudentTableDialog(props) {
 
   return (
     <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
-      <DialogTitle id="simple-dialog-title">VALIDATED STUDENT</DialogTitle>
+      <DialogTitle id="simple-dialog-title">Manage Access</DialogTitle>
       <ValidatedStudentTable onClose={handleClose} selectedValue={selectedValue} />
     </Dialog>
   );
@@ -89,7 +91,7 @@ export default function StudentInternshipValidationTable() {
           paddingTop={2}
           textAlign="center">
 
-          <Typography component="h1" variant="h4">Offer Visibility</Typography>
+          <Typography component="h1" variant="h4">Offer Student Access</Typography>
         </Box>
       </Container>
 
@@ -102,7 +104,7 @@ export default function StudentInternshipValidationTable() {
               <TableCell align="center"><strong>Start Date</strong></TableCell>
               <TableCell align="center"><strong>Duration</strong></TableCell>
               <TableCell align="center"><strong>Hours</strong></TableCell>
-              <TableCell align="center"><strong>Edit Students</strong></TableCell>
+              <TableCell align="center"><strong>Manage Access</strong></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -113,7 +115,11 @@ export default function StudentInternshipValidationTable() {
                 <TableCell align="center">{new Date(offer.startDate).toLocaleDateString()}</TableCell>
                 <TableCell align="center">{offer.duration}</TableCell>
                 <TableCell align="center">{offer.hours}</TableCell>
-                <TableCell align="center"> <Button variant="contained" color="primary" onClick={() => handleClickOpen(offer.uniqueId)}>Edit student</Button></TableCell>
+                <TableCell align="center"> 
+                  <IconButton edge="end" aria-label="edit">
+                    <EditIcon onClick={() => handleClickOpen(offer.uniqueId)}/>
+                  </IconButton>
+                </TableCell>
               </TableRow>
             ))}
             <ValidateStudentTableDialog open={open} onClose={handleClose} selectedValue={currentInternshipId} />

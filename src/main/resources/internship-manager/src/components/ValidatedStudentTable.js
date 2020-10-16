@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
 import PropTypes from 'prop-types';
 import { Button, Container, Dialog, DialogTitle } from '@material-ui/core';
 import ValidableStudentTable from './ValidableStudentTable';
 import InternshipOfferService from '../services/InternshipOfferService';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
+import { Row } from 'react-bootstrap';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import { Box, Divider } from '@material-ui/core';
 
 //dialogs
 
@@ -24,8 +24,8 @@ function ValidableStudentTableDialog(props) {
 
   return (
     <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
-      <DialogTitle id="simple-dialog-title">VALIDABLE STUDENT</DialogTitle>
-      <ValidableStudentTable onClose={handleClose} />
+      <DialogTitle id="simple-dialog-title">Grant Access</DialogTitle>
+      <ValidableStudentTable onClose={handleClose} internshipId={selectedValue} />
     </Dialog>
   );
 }
@@ -36,17 +36,19 @@ ValidableStudentTableDialog.propTypes = {
   selectedValue: PropTypes.string.isRequired,
 };
 
-
-//styles and data
-
-const useStyles = makeStyles({
-  table: {
-    minWidth: 500,
-  },
-});
-
+const useStyles = makeStyles((theme) => ({
+  root: {
+    width: '100%',
+    maxWidth: 360,
+    backgroundColor: 'white',
+    position: 'relative',
+    overflow: 'auto',
+    maxHeight: 300,
+  }
+}));
 
 export default function ValidatedStudentTable(props) {
+
   const [open, setOpen] = React.useState(false);
   const [rows, setRows] = useState([]);
 
@@ -61,7 +63,7 @@ export default function ValidatedStudentTable(props) {
   };
 
   const removeStudent = (student) => {
-    const request = {offerUniqueId: props.selectedValue,userUniqueId: student.uniqueId};
+    const request = { offerUniqueId: props.selectedValue, userUniqueId: student.uniqueId };
     InternshipOfferService.removeUser(request).then(() => fetchValidatedStudents());
   }
 
@@ -76,26 +78,30 @@ export default function ValidatedStudentTable(props) {
 
   return (
     <Container>
-      <Button variant="contained" color="primary" fullWidth onClick={handleClickOpen}>add student</Button>
-      <TableContainer component={Paper}>
-        <Table className={classes.table} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Students name</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map((row,index) => (
-              <TableRow key={index}>
-                <TableCell component="th" scope="row">{row.firstName + ' ' + row.lastName}</TableCell>
-                <TableCell align="right"> <Button variant="contained" color="primary" onClick={() => removeStudent(row)}>remove student</Button></TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <Button variant="contained" onClick={handleClose} color="primary" fullWidth>close</Button>
-      <ValidableStudentTableDialog selectedValue={props.selectedValue} open={open} onClose={handleClose}/>
+      <strong>Access List</strong>
+      <Divider />
+      <List className={classes.root}>
+        {rows.length > 0 && rows.map((row, index) => (
+          <ListItem key={index}>
+            <ListItemText primary={row.firstName + ' ' + row.lastName} />
+            <IconButton edge="end" aria-label="delete">
+              <IconButton edge="end" aria-label="delete">
+                <DeleteIcon onClick={() => removeStudent(row)} />
+              </IconButton>
+            </IconButton>
+          </ListItem>
+        ))}
+        {rows.length == 0 &&
+          <ListItem key={1}>
+            <ListItemText primary={'No students have access!'} />
+          </ListItem>
+        }
+      </List>
+      <Divider />
+      <Box margin={2}>
+        <Button variant="contained" color="primary" fullWidth onClick={handleClickOpen}>Add Students</Button>
+      </Box>
+      <ValidableStudentTableDialog selectedValue={props.selectedValue} open={open} onClose={handleClose} />
     </Container>
   );
 }

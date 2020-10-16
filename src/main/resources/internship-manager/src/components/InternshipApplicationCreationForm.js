@@ -166,7 +166,7 @@ export default function InternshipApplicationCreationForm() {
         </DialogTitle>
         <DialogContent>
           <List className={classes.root}>
-            {documents.map((value) => {
+            {documents.length > 0 && documents.map((value) => {
 
               const labelId = `checkbox-list-label-${value}`;
 
@@ -185,6 +185,11 @@ export default function InternshipApplicationCreationForm() {
                 </ListItem>
               );
             })}
+            {documents.length == 0 &&
+              <ListItem key={1}>
+                <ListItemText primary={'No documents!'} />
+              </ListItem>
+            }
           </List>
         </DialogContent>
         <DialogActions>

@@ -95,7 +95,7 @@ class PendingApprovalList extends Component {
           <TableCell component="th" scope="row" align="center">{jobTitle}</TableCell>
           <TableCell component="th" scope="row" align="center">{new Date(startDate).toLocaleDateString()}</TableCell>
           <TableCell component="th" scope="row" align="center">{duration}</TableCell>
-          <TableCell component="th" scope="row" align="center">{salary}</TableCell>
+          <TableCell component="th" scope="row" align="center">{salary.toFixed(2) + '$'}</TableCell>
           <TableCell component="th" scope="row" align="center">{hours}</TableCell>
           <TableCell omponent="th" scope="row" >
             <Box margin={1}>
