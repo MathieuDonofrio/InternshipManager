@@ -27,13 +27,20 @@ class InternshipApplicationService {
     }
 
     approve(request){
-        return axios.post(Config.target + '/internship-application/approve', request ,headers());
+        return axios.put(Config.target + '/internship-application', request ,headers());
     }
 
     reject(request){
-        return axios.post(Config.target + '/internship-application/reject', request, headers());
+        return axios.put(Config.target + '/internship-application', request, headers());
     }
 
+    getInternshipApplications(request){
+        return axios.get(Config.target + `/internship-application/${request}`, headers());
+    }
+    getInternshipPendingApplications(){
+        const request= "PENDING_APPROVAL";
+        return axios.get(Config.target + `/internship-application/${request}`, headers());
+    }
 }
 
 export default new InternshipApplicationService();

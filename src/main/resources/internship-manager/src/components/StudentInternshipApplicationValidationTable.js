@@ -32,35 +32,33 @@ const useStyles = makeStyles({
   },
 });
 
+const state = {
+  applications: []
+}
+
+
 //other class
 
 export default function StudentInternshipApplicationValidationTable() {
 
   //const [open, setOpen] = React.useState(false);
+
   const [rows, setRows] = useState([]);
   const [currentInternshipId, setCurrentInternshipId] = useState('');
 
   const classes = useStyles();
-
-  /*
-  onApprovedClicked(internshipOffer) {
-    InternshipOfferService.approve(internshipOffer).then(response => {
-      this.onUpdateInternshipOffers();
-    });
-  }
-
-  */
- const onApprovedClicked = (application) => {
+  
+ const onApprovedClicked = (appId) => {
      const request ={
-        uniqueId: '1001001',
+        applicationId: appId,
         status: 'APPROVED'
      }
      InternshipApplicationService.approve(request);
   };
 
-  const onRejectedClicked = (application) => {
+  const onRejectedClicked = (appId) => {
     const request ={
-        uniqueId: '1001001',
+        applicationId: appId,
         status: 'REJECTED'
      }
      InternshipApplicationService.reject(request);
@@ -74,7 +72,7 @@ export default function StudentInternshipApplicationValidationTable() {
     //setOpen(true);
   };
 
-  const fetchInternshipOffers = async () => {
+  const fetchApplications = async () => {
     const fakeData = {
         applications : [
             {
@@ -92,13 +90,15 @@ export default function StudentInternshipApplicationValidationTable() {
             }
         ]
     }
-    setRows(fakeData.applications);
+    //setRows(fakeData.applications);
+
+    const response = await InternshipApplicationService.getInternshipPendingApplications();
     //const response = await InternshipOfferService.getApprovedOffers();
-    //setRows(response.data.internshipOffers);
+    setRows(response.data.applications);
   }
 
   useEffect(() => {
-    fetchInternshipOffers();
+    fetchApplications();
   }, [])
 
   return (
@@ -136,7 +136,7 @@ export default function StudentInternshipApplicationValidationTable() {
                         <Button
                             variant="contained" color="primary"
                             size="small" startIcon={<ThumbUpAltOutlinedIcon />}
-                            onClick={() => onApprovedClicked(application)}
+                            onClick={() => onApprovedClicked(application.uniqueId)}
                         >
                             Approve
                         </Button>
@@ -146,7 +146,7 @@ export default function StudentInternshipApplicationValidationTable() {
                         <Button
                             variant="contained" color="secondary"
                             size="small"
-                            startIcon={<ThumbDownAltOutlinedIcon />} onClick={() => onRejectedClicked(application)}
+                            startIcon={<ThumbDownAltOutlinedIcon />} onClick={() => onRejectedClicked(application.uniqueId)}
                         >
                             Reject
                         </Button>
