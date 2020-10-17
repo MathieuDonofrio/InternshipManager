@@ -9,8 +9,8 @@ import java.lang.annotation.Target;
 
 @Target({ElementType.METHOD, ElementType.FIELD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = ExistingInternshipApplicationValidator.class)
-public @interface ExistingInternshipApplication {
+@Constraint(validatedBy = ExistingPortfolioDocumentValidator.class)
+public @interface ExistingPortfolioDocument {
 
     String message() default "";
 

@@ -4,6 +4,8 @@ import cal.internshipmanager.model.PortfolioDocument;
 import cal.internshipmanager.request.PortfolioDocumentDeleteRequest;
 import cal.internshipmanager.response.PortfolioDocumentListResponse;
 import cal.internshipmanager.service.PortfolioService;
+import cal.internshipmanager.validator.ExistingPortfolioDocument;
+import cal.internshipmanager.validator.ExistingUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
@@ -57,7 +59,7 @@ public class PortfolioController {
     //
 
     @GetMapping("{uniqueId}")
-    public ResponseEntity<Resource> download(@PathVariable UUID uniqueId) {
+    public ResponseEntity<Resource> download(@Valid @PathVariable @ExistingPortfolioDocument UUID uniqueId) {
         PortfolioDocument portfolioDocument = portfolioService.download(uniqueId);
 
         return ResponseEntity.ok()
@@ -68,7 +70,7 @@ public class PortfolioController {
     }
 
     @GetMapping("portfolio-documents/{userUniqueId}")
-    public PortfolioDocumentListResponse portfolioDocuments(@PathVariable UUID userUniqueId) {
+    public PortfolioDocumentListResponse portfolioDocuments(@Valid @PathVariable @ExistingUser UUID userUniqueId) {
         return portfolioService.portfolioDocuments(userUniqueId);
     }
 
