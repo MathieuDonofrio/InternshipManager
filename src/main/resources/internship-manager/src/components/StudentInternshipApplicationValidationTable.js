@@ -41,10 +41,7 @@ const state = {
 
 export default function StudentInternshipApplicationValidationTable() {
 
-  //const [open, setOpen] = React.useState(false);
-
   const [rows, setRows] = useState([]);
-  const [currentInternshipId, setCurrentInternshipId] = useState('');
 
   const classes = useStyles();
   
@@ -62,14 +59,6 @@ export default function StudentInternshipApplicationValidationTable() {
         status: 'REJECTED'
      }
      InternshipApplicationService.reject(request);
-  };
-
-
-  const handleClickOpen = (internshipId,button) => {
-    setCurrentInternshipId(internshipId)
-
-    //Probably determine the button then -> do something
-    //setOpen(true);
   };
 
   const fetchApplications = async () => {
@@ -91,9 +80,7 @@ export default function StudentInternshipApplicationValidationTable() {
         ]
     }
     //setRows(fakeData.applications);
-
     const response = await InternshipApplicationService.getInternshipPendingApplications();
-    //const response = await InternshipOfferService.getApprovedOffers();
     setRows(response.data.applications);
   }
 
