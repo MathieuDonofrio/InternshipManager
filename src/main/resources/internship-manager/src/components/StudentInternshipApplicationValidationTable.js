@@ -44,42 +44,25 @@ export default function StudentInternshipApplicationValidationTable() {
   const [rows, setRows] = useState([]);
 
   const classes = useStyles();
-  
- const onApprovedClicked = (appId) => {
-     const request ={
-        applicationId: appId,
-        status: 'APPROVED'
-     }
-     InternshipApplicationService.approve(request);
+
+  const onApprovedClicked = (appId) => {
+    const request = {
+      applicationId: appId,
+      status: 'APPROVED'
+    }
+    InternshipApplicationService.approve(request).then(response => fetchApplications());
   };
 
   const onRejectedClicked = (appId) => {
-    const request ={
-        applicationId: appId,
-        status: 'REJECTED'
-     }
-     InternshipApplicationService.reject(request);
+    const request = {
+      applicationId: appId,
+      status: 'REJECTED'
+    }
+    InternshipApplicationService.reject(request).then(response => fetchApplications());
+
   };
 
   const fetchApplications = async () => {
-    const fakeData = {
-        applications : [
-            {
-            uniqueId: '1001001',
-            studentUniqueId: '01010101',
-            offerUniqueId: '00001111',
-            date: '21'
-            }
-            ,
-            {
-                uniqueId: '10',
-                studentUniqueId: '011',
-                offerUniqueId: '00',
-                date: '1'
-            }
-        ]
-    }
-    //setRows(fakeData.applications);
     const response = await InternshipApplicationService.getInternshipPendingApplications();
     setRows(response.data.applications);
   }
@@ -99,51 +82,65 @@ export default function StudentInternshipApplicationValidationTable() {
           <Typography component="h1" variant="h4">Approbations</Typography>
         </Box>
       </Container>
+      {rows.length == 0 &&
+        <Container>
+        <Box
+          mb={2}
+          paddingTop={2}
+          paddingBottom={2}
+          textAlign="center">
 
-      <TableContainer>
-        <Table className={classes.table} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell align="center"><strong>Id</strong></TableCell>
-              <TableCell align="center"><strong>Student</strong></TableCell>
-              <TableCell align="center"><strong>Offer</strong></TableCell>
-              <TableCell align="center"><strong>Date</strong></TableCell>
-              <TableCell align="center"><strong>Decision</strong></TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map((application,index) => (
-              <TableRow key={index}>
-                <TableCell align="center">{application.uniqueId}</TableCell>
-                <TableCell align="center">{application.studentUniqueId}</TableCell>
-                <TableCell align="center">{application.offerUniqueId}</TableCell>
-                <TableCell align="center">{new Date().toLocaleDateString()}</TableCell>
-                <TableCell align="center"> 
-                    <Box margin={1}>
-                        <Button
-                            variant="contained" color="primary"
-                            size="small" startIcon={<ThumbUpAltOutlinedIcon />}
-                            onClick={() => onApprovedClicked(application.uniqueId)}
-                        >
-                            Approve
-                        </Button>
-                    </Box>
+          <Typography >Pas d'application pour vous</Typography>
+        </Box>
+      </Container>
+  }
+      {rows.length > 0 &&
 
-                    <Box margin={1}>
-                        <Button
-                            variant="contained" color="secondary"
-                            size="small"
-                            startIcon={<ThumbDownAltOutlinedIcon />} onClick={() => onRejectedClicked(application.uniqueId)}
-                        >
-                            Reject
-                        </Button>
-                    </Box>
-                </TableCell>
+        <TableContainer>
+          <Table className={classes.table} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell align="center"><strong>Student Name</strong></TableCell>
+                <TableCell align="center"><strong>Company</strong></TableCell>
+                <TableCell align="center"><strong>Job Title</strong></TableCell>
+                <TableCell align="center"><strong>Date</strong></TableCell>
+                <TableCell align="center"><strong>Decision</strong></TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+            </TableHead>
+            <TableBody>
+              {rows.map((application, index) => (
+                <TableRow key={index}>
+                  <TableCell align="center">{application.studentFirstName + " " + application.studentLastName}</TableCell>
+                  <TableCell align="center">{application.company}</TableCell>
+                  <TableCell align="center">{application.jobTitle}</TableCell>
+                  <TableCell align="center">{new Date().toLocaleDateString()}</TableCell>
+                  <TableCell align="center">
+                    <Box margin={1}>
+                      <Button
+                        variant="contained" color="primary"
+                        size="small" startIcon={<ThumbUpAltOutlinedIcon />}
+                        onClick={() => onApprovedClicked(application.uniqueId)}
+                      >
+                        Approve
+                        </Button>
+                    </Box>
+
+                    <Box margin={1}>
+                      <Button
+                        variant="contained" color="secondary"
+                        size="small"
+                        startIcon={<ThumbDownAltOutlinedIcon />} onClick={() => onRejectedClicked(application.uniqueId)}
+                      >
+                        Reject
+                        </Button>
+                    </Box>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      }
     </div>
   );
 }
