@@ -84,16 +84,16 @@ export default function StudentInternshipApplicationValidationTable() {
       </Container>
       {rows.length == 0 &&
         <Container>
-        <Box
-          mb={2}
-          paddingTop={2}
-          paddingBottom={2}
-          textAlign="center">
+          <Box
+            mb={2}
+            paddingTop={2}
+            paddingBottom={2}
+            textAlign="center">
 
-          <Typography >Pas d'application pour vous</Typography>
-        </Box>
-      </Container>
-  }
+            <Typography >Pas d'application pour vous</Typography>
+          </Box>
+        </Container>
+      }
       {rows.length > 0 &&
 
         <TableContainer>
