@@ -13,9 +13,6 @@ const theme = createMuiTheme({
     error: {
       main: '#ff1744',
     },
-    pending_approval:{
-      main: '#ffa000',
-    },
     background: {
       default: '#F0F1F2',
     },

@@ -44,7 +44,6 @@ class StudentApplicationStatusList extends Component {
   onUpdateStudentApplicationsList() {
     let userId = localStorage.getItem("UserUniqueId");
     InternshipApplicationService.internshipApplications(userId).then(response => {
-      console.log(response.data);
       this.setState(response.data);
     })
   }
