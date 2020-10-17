@@ -20,91 +20,96 @@ import TableRow from '@material-ui/core/TableRow';
 //
 
 const state = {
-    applications : []
+  applications: []
 }
 
- 
-class StudentApplicationStatusList extends Component{
 
-    //
-    // Constructors
-    //
+class StudentApplicationStatusList extends Component {
 
-    constructor(props){
-        super();
-        this.state = state;
-        this.onUpdateStudentApplicationsList();
-        this.submitLock = new Lock();
-    }
+  //
+  // Constructors
+  //
 
-    //
-    // Event Handlers
-    //
+  constructor(props) {
+    super();
+    this.state = state;
+    this.onUpdateStudentApplicationsList();
+    this.submitLock = new Lock();
+  }
 
-    onUpdateStudentApplicationsList(){
-        let userId =localStorage.getItem("UserUniqueId");
-        InternshipApplicationService.internshipApplications(userId).then(response =>{
-          console.log(response.data);
-            this.setState(response.data);
-        })
-    }
+  //
+  // Event Handlers
+  //
 
-    //
-    // Rendering
-    //
+  onUpdateStudentApplicationsList() {
+    let userId = localStorage.getItem("UserUniqueId");
+    InternshipApplicationService.internshipApplications(userId).then(response => {
+      console.log(response.data);
+      this.setState(response.data);
+    })
+  }
 
-    renderTableData() {
-        return this.state.applications.map((studentAppList, index) => {
-          const {studentFirstName, studentLastName, company, jobTitle, date, status} = studentAppList
-          return (
-            <TableRow key={index}>
-              <TableCell component="th" scope="row" align="center">{studentFirstName}</TableCell>
-              <TableCell component="th" scope="row" align="center">{studentLastName}</TableCell>
-              <TableCell component="th" scope="row" align="center">{company}</TableCell>
-              <TableCell component="th" scope="row" align="center">{jobTitle}</TableCell>
-              <TableCell component="th" scope="row" align="center">{new Date(date).toLocaleDateString()}</TableCell>
-              <TableCell component="th" scope="row" align="center">{status.replaceAll("_"," ")}</TableCell>
-            </TableRow>
-    
-          )
-        })
-    }
+  //
+  // Rendering
+  //
 
-    render() {
+  renderTableData() {
+    return this.state.applications.map((studentAppList, index) => {
+      const { studentFirstName, studentLastName, company, jobTitle, date, status } = studentAppList
       return (
-        <div>
-          <Container>
-            <Box
-              mb={2}
-              paddingTop={2}
-              textAlign="left"
-            >
-              <Typography component="h1" variant="h4" align="center">Applications Status</Typography>
-            </Box>
-          </Container>
-  
-          <TableContainer>
-            <Table size="small" aria-label="a dense table">
-              <TableHead>
-                <TableRow>
-                  <TableCell align="center"><strong>First Name</strong></TableCell>
-                  <TableCell align="center"><strong>Last Name</strong></TableCell>
-                  <TableCell align="center"><strong>Company</strong></TableCell>
-                  <TableCell align="center"><strong>Job Title</strong></TableCell>
-                  <TableCell align="center"><strong>Date</strong></TableCell>
-                  <TableCell align="center"><strong>Status</strong></TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {this.renderTableData()}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </div>
-  
-  
+        <TableRow key={index}>
+          <TableCell component="th" scope="row" align="center">{studentFirstName}</TableCell>
+          <TableCell component="th" scope="row" align="center">{studentLastName}</TableCell>
+          <TableCell component="th" scope="row" align="center">{company}</TableCell>
+          <TableCell component="th" scope="row" align="center">{jobTitle}</TableCell>
+          <TableCell component="th" scope="row" align="center">{new Date(date).toLocaleDateString()}</TableCell>
+
+          <TableCell component="th" scope="row" align="center" >
+            {status == "PENDING_APPROVAL" && <Typography color="primary">en attente</Typography>}
+            {status == "REJECTED" && <Typography color="error">rejeté</Typography>}
+            {status == "APPROVED" && <Typography color="secondary">approuvé</Typography>}
+          </TableCell>
+        </TableRow>
+
       )
-    }
+    })
+  }
+
+  render() {
+    return (
+      <div>
+        <Container>
+          <Box
+            mb={2}
+            paddingTop={2}
+            textAlign="left"
+          >
+            <Typography component="h1" variant="h4" align="center">Applications Status</Typography>
+          </Box>
+        </Container>
+
+        <TableContainer>
+          <Table size="small" aria-label="a dense table">
+            <TableHead>
+              <TableRow>
+                <TableCell align="center"><strong>First Name</strong></TableCell>
+                <TableCell align="center"><strong>Last Name</strong></TableCell>
+                <TableCell align="center"><strong>Company</strong></TableCell>
+                <TableCell align="center"><strong>Job Title</strong></TableCell>
+                <TableCell align="center"><strong>Date</strong></TableCell>
+                <TableCell align="center"><strong>Status</strong></TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {this.renderTableData()}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </div>
+
+
+    )
+  }
 
 
 
