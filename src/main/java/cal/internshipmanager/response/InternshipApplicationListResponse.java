@@ -46,6 +46,7 @@ public class InternshipApplicationListResponse {
 
         private String status;
 
+
     }
 
     //
