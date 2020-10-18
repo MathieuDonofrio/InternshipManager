@@ -15,32 +15,12 @@ function headers() {
 
 class InternshipOfferService {
 
-    createInternshipOffer(request) {
+    //
+    // Post
+    //
+
+    create(request) {
         return axios.post(Config.target + '/internship-offer/create', request, headers());
-    }
-
-    getApprovedOffers(){
-        return axios.get(Config.target + '/internship-offer/approved', headers());
-    }
-
-    getValidatedStudent(request){
-        return axios.get(Config.target + `/internship-offer/users/${request}`, headers())
-    }
-    
-    getAllStudent(){
-        return axios.get(Config.target + `/user/students`, headers())
-    }
-
-    removeUser(request){
-        return axios.post(Config.target + '/internship-offer/remove-user', request, headers());
-    }
-
-    addUser(request){
-        return axios.post(Config.target + '/internship-offer/add-user', request, headers());
-    }
-
-    pendingApproval(){
-        return axios.get(Config.target + '/internship-offer/pending-approval', headers());
     }
 
     approve(request){
@@ -51,6 +31,42 @@ class InternshipOfferService {
         return axios.post(Config.target + '/internship-offer/reject', request, headers());
     }
 
+    addUser(request){
+        return axios.post(Config.target + '/internship-offer/add-user', request, headers());
+    }
+
+    removeUser(request){
+        return axios.post(Config.target + '/internship-offer/remove-user', request, headers());
+    }
+
+    //
+    // Get
+    //
+
+    pendingApproval(){
+        return axios.get(Config.target + '/internship-offer/pending-approval', headers());
+    }
+
+    approved(){
+        return axios.get(Config.target + '/internship-offer/approved', headers());
+    }
+
+    rejected(){
+        return axios.get(Config.target + '/internship-offer/rejected', headers());
+    }
+
+    users(request){
+        return axios.get(Config.target + `/internship-offer/users/${request}`, headers())
+    }
+
+    accessible(request){
+        return axios.get(Config.target + `/internship-offer/accessible/${request}`, headers());
+    }
+    
+    // TODO: move to user service
+    getAllStudent(){ // WTF?
+        return axios.get(Config.target + `/user/students`, headers())
+    }
 
 }
 

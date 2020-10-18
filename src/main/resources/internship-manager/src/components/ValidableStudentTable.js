@@ -13,7 +13,7 @@ import { Box, Container, Divider } from '@material-ui/core';
 
 const filterValidableStudent = async (students, internshipId) => {
 
-  return InternshipOfferService.getValidatedStudent(internshipId)
+  return InternshipOfferService.users(internshipId)
     .then(response => students
       .filter(student => !response.data.users.some(x => student.uniqueId == x.uniqueId)));
 }

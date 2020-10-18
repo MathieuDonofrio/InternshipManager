@@ -4,12 +4,13 @@ import cal.internshipmanager.request.*;
 import cal.internshipmanager.response.InternshipOfferListResponse;
 import cal.internshipmanager.response.UserListReponse;
 import cal.internshipmanager.service.InternshipOfferService;
+import cal.internshipmanager.validator.ExistingInternshipOffer;
+import cal.internshipmanager.validator.ExistingUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
 @RestController
@@ -75,12 +76,6 @@ public class InternshipOfferController {
         return internshipOfferService.pendingApproval();
     }
 
-    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
-    @GetMapping("rejected")
-    public InternshipOfferListResponse rejected() {
-        return internshipOfferService.rejected();
-    }
-
     @PreAuthorize("hasAuthority('STUDENT') or hasAuthority('ADMINISTRATOR')")
     @GetMapping("approved")
     public InternshipOfferListResponse approved() {
@@ -88,8 +83,18 @@ public class InternshipOfferController {
     }
 
     @PreAuthorize("hasAuthority('ADMINISTRATOR')")
+    @GetMapping("rejected")
+    public InternshipOfferListResponse rejected() {
+        return internshipOfferService.rejected();
+    }
+
+    @GetMapping("accessible/{userUniqueId}")
+    public InternshipOfferListResponse accessible(@Valid @ExistingUser @PathVariable UUID userUniqueId) {
+        return internshipOfferService.accessible(userUniqueId);
+    }
+
     @GetMapping("users/{uniqueId}")
-    public UserListReponse users(@NotNull @PathVariable UUID uniqueId) {
+    public UserListReponse users(@Valid @ExistingInternshipOffer @PathVariable UUID uniqueId) {
         return internshipOfferService.users(uniqueId);
     }
 

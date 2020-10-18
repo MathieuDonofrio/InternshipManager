@@ -106,9 +106,7 @@ class PendingApprovalList extends Component {
                 onClick={() => this.onApprovedClicked(internshipOffer)}
               >
                 Approve
-                        </Button>
-
-
+              </Button>
             </Box>
 
             <Box margin={1}>
@@ -118,7 +116,7 @@ class PendingApprovalList extends Component {
                 startIcon={<ThumbDownAltOutlinedIcon />} onClick={() => this.onRejectedClicked(internshipOffer)}
               >
                 Reject
-                        </Button>
+              </Button>
             </Box>
 
           </TableCell>
@@ -160,8 +158,6 @@ class PendingApprovalList extends Component {
           </Table>
         </TableContainer>
       </div>
-
-
     )
   }
 }

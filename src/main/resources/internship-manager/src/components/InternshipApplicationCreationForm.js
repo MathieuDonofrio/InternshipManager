@@ -99,7 +99,7 @@ export default function InternshipApplicationCreationForm() {
 
     let uuid = localStorage.getItem("UserUniqueId");
 
-    const response1 = await InternshipOfferService.getApprovedOffers();
+    const response1 = await InternshipOfferService.accessible(uuid);
     const response2 = await InternshipApplicationService.internshipApplications(uuid);
 
     const offers = response1.data.internshipOffers.filter(offer =>

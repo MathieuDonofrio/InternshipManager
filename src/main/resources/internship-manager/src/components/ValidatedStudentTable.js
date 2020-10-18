@@ -68,7 +68,7 @@ export default function ValidatedStudentTable(props) {
   }
 
   const fetchValidatedStudents = async () => {
-    const response = await InternshipOfferService.getValidatedStudent(props.selectedValue);
+    const response = await InternshipOfferService.users(props.selectedValue);
     setRows(response.data.users)
   }
 

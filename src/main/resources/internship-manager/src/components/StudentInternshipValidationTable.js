@@ -21,10 +21,10 @@ import ValidatedStudentTable from "./ValidatedStudentTable";
 import InternshipOfferService from '../services/InternshipOfferService';
 import EditIcon from '@material-ui/icons/Edit';
 import IconButton from '@material-ui/core/IconButton';
-import { RowingSharp } from '@material-ui/icons';
 
 
 //tables values
+
 const useStyles = makeStyles({
   table: {
     minWidth: 600,
@@ -32,7 +32,6 @@ const useStyles = makeStyles({
 });
 
 //dialogs
-
 
 function ValidateStudentTableDialog(props) {
   const { onClose, selectedValue, open } = props;
@@ -75,7 +74,7 @@ export default function StudentInternshipValidationTable() {
   };
 
   const fetchInternshipOffers = async () => {
-    const response = await InternshipOfferService.getApprovedOffers();
+    const response = await InternshipOfferService.approved();
     setRows(response.data.internshipOffers);
   }
 
