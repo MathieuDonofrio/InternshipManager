@@ -22,6 +22,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -215,8 +216,8 @@ public class InternshipApplicationServiceTest {
                 internshipApplicationRepository, portfolioDocumentRepository, userRepository, internshipOfferRepository);
 
 
-        Mockito.when(internshipApplicationRepository.findById(internshipApplication.getUniqueId()))
-                .thenReturn(Optional.of(internshipApplication));
+        Mockito.when(internshipApplicationRepository.findById(internshipApplication.getUniqueId())).thenReturn(Optional.of(internshipApplication));
+
 
         // Act & Assert
 
@@ -235,5 +236,51 @@ public class InternshipApplicationServiceTest {
         });
 
         internshipApplicationService.editStatus(request);
+    }
+
+    @Test
+    public void findByOffer_validRequest() {
+        // Arrange
+
+        User user = new User();
+
+        user.setUniqueId(UUID.randomUUID());
+        user.setFirstName("TestFirstName");
+        user.setLastName("TestLastName");
+        user.setType("STUDENT");
+
+        InternshipOffer internshipOffer = new InternshipOffer();
+
+        internshipOffer.setUniqueId(UUID.randomUUID());
+        internshipOffer.setCompany("TestCompany");
+        internshipOffer.setJobTitle("TestJobTitle");
+
+        InternshipApplication internshipApplication = new InternshipApplication();
+
+        internshipApplication.setUniqueId(UUID.randomUUID());
+        internshipApplication.setOfferUniqueId(internshipOffer.getUniqueId());
+        internshipApplication.setStudentUniqueId(user.getUniqueId());
+        internshipApplication.setDate(new Date());
+        internshipApplication.setStatus(InternshipApplication.Status.PENDING_APPROVAL);
+
+        InternshipApplicationListResponse response = new InternshipApplicationListResponse();
+
+
+        InternshipApplicationService internshipApplicationService = new InternshipApplicationService(
+                internshipApplicationRepository, portfolioDocumentRepository, userRepository, internshipOfferRepository);
+
+        Mockito.when(internshipApplicationRepository.findAllByOfferUniqueId(Mockito.any())).thenReturn(List.of(internshipApplication));
+        Mockito.when(userRepository.findById(internshipApplication.getStudentUniqueId())).thenReturn(Optional.of(user));
+        Mockito.when(internshipOfferRepository.findById(internshipApplication.getOfferUniqueId())).thenReturn(Optional.of(internshipOffer));
+
+        response.setApplications(List.of(internshipApplication).stream()
+                .map(x -> InternshipApplicationListResponse.map(userRepository, internshipOfferRepository, x))
+                .collect(Collectors.toList()));
+
+        // Act
+        InternshipApplicationListResponse responseToExpect = internshipApplicationService.findByOffer(internshipApplication.getOfferUniqueId());
+
+        // Arrange
+        assertEquals(response,responseToExpect);
     }
 }
