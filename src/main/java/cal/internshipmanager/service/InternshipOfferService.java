@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -161,8 +162,8 @@ public class InternshipOfferService {
         internshipOfferRepository.save(internshipOffer);
     }
 
-    public InternshipOfferListResponse findAll(){
-        List<InternshipOffer> internshipOffers = internshipOfferRepository.findAll();
+    public InternshipOfferListResponse findAllByEmployer(@NotNull UUID uniqueId){
+        List<InternshipOffer> internshipOffers = internshipOfferRepository.findAllByEmployer(uniqueId);
 
         InternshipOfferListResponse response = new InternshipOfferListResponse();
 
