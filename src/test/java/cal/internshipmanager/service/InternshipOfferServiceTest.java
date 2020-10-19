@@ -467,10 +467,10 @@ public class InternshipOfferServiceTest {
 
         InternshipOfferService internshipOfferService = new InternshipOfferService(internshipOfferRepository, userRepository);
 
-        Mockito.when(internshipOfferRepository.findAll()).thenReturn(List.of(internshipOffer));
+        Mockito.when(internshipOfferRepository.findAllByEmployer(Mockito.any())).thenReturn(List.of(internshipOffer));
 
         // Act
-        InternshipOfferListResponse responeToExpect =  internshipOfferService.findAll();
+        InternshipOfferListResponse responeToExpect =  internshipOfferService.findAllByEmployer(Mockito.any());
 
         // Assert
         assertEquals(response,responeToExpect);
