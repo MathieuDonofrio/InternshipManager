@@ -1,12 +1,14 @@
-import React, { Component } from "react";
-import { withRouter } from 'react-router';
-import Lock from '../utils/Lock'
-
+import React, { useEffect, useState } from "react";
+import PropTypes from 'prop-types';
+import { makeStyles } from '@material-ui/core/styles';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Dialog from '@material-ui/core/Dialog';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import InternshipOfferService from "../services/InternshipOfferService";
+import StudentApplicationList from "./StudentApplicationList";
 
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -17,113 +19,110 @@ import TableRow from '@material-ui/core/TableRow';
 import ThumbUpAltOutlinedIcon from '@material-ui/icons/ThumbUpAltOutlined';
 import ThumbDownAltOutlinedIcon from '@material-ui/icons/ThumbDownAltOutlined';
 
-//
-// Data
-//
 
-const state = {
-  internshipOffers: []
+//tables values
+const useStyles = makeStyles({
+  table: {
+    minWidth: 600,
+  },
+});
+
+// Dialog
+
+
+function StudentApplicationDialogProps(props) {
+
+  const { onClose, selectedValue, open } = props;
+
+  const handleClose = () => {
+    onClose(selectedValue);
+  };
+
+  return (
+    <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
+      <StudentApplicationList onClose={handleClose} selectedValue={selectedValue} />
+    </Dialog>
+  );
+
 }
 
+StudentApplicationDialogProps.propTypes = {
+  onClose: PropTypes.func.isRequired,
+  open: PropTypes.bool.isRequired,
+  selectedValue: PropTypes.string.isRequired,
+};
 
-class StudentSelection extends Component {
+export default function StudentSelection() {
 
-  //
-  // Constructors
-  //
+  const [open, setOpen] = React.useState(false);
+  const [rows, setRows] = useState([]);
+  const [currentInternshipId, setCurrentInternshipId] = useState('');
 
-  constructor(props) {
-    super();
-    this.state = state;
-    this.onUpdateInternshipOffers();
+  const classes = useStyles();
 
-    this.submitLock = new Lock();
+  const uniqueId = localStorage.getItem('UserUniqueId');
+
+
+  const handleClickOpen = (internshipId) => {
+    setCurrentInternshipId(internshipId)
+    setOpen(true);
+  };
+
+  const handleClose = (value) => {
+    setOpen(false);
+  };
+
+  const fetchInternshipOffers = async () => {
+    const response = await InternshipOfferService.getInternshipOfferByEmployer(uniqueId);
+    setRows(response.data.internshipOffers);
   }
 
-  //
-  // Event Handlers
-  //
-
-  onUpdateInternshipOffers() {
-
-    const uniqueId = localStorage.getItem('UserUniqueId');
+  useEffect(() => {
+    fetchInternshipOffers();
+  }, [])
 
 
-    InternshipOfferService.getInternshipOfferByEmployer(uniqueId).then(response =>{
-        this.setState(response.data);
-    });
+  return (
+    <div>
+      <Container>
+        <Box
+          mb={2}
+          paddingTop={2}
+          textAlign="left"
+        >
+          <Typography component="h1" variant="h4" align="center">List Internship Offer</Typography>
+        </Box>
+      </Container>
 
-  }
-
-
-  //
-  // Rendering
-  //
-
-  renderTableData() {
-    return this.state.internshipOffers.map((internshipOffer, index) => {
-      const { company, jobTitle, startDate, duration, salary, hours } = internshipOffer
-      return (
-        <TableRow key={index}>
-          <TableCell component="th" scope="row" align="center">{company}</TableCell>
-          <TableCell component="th" scope="row" align="center">{jobTitle}</TableCell>
-          <TableCell component="th" scope="row" align="center">{new Date(startDate).toLocaleDateString()}</TableCell>
-          <TableCell component="th" scope="row" align="center">{duration}</TableCell>
-          <TableCell component="th" scope="row" align="center">{salary}</TableCell>
-          <TableCell component="th" scope="row" align="center">{hours}</TableCell>
-          <TableCell omponent="th" scope="row" >
-            <Box margin={1}>
-                <Button
-                    variant="contained" color="primary"
-                    size="small"
-                    // onClick={() => this.onApprovedClicked(internshipOffer)}
-                >
-                    Select
-                </Button>
-            </Box>
-          </TableCell>
-        </TableRow>
-
-      )
-    })
-  }
-
-  render() {
-    return (
-      <div>
-        <Container>
-          <Box
-            mb={2}
-            paddingTop={2}
-            textAlign="left"
-          >
-            <Typography component="h1" variant="h4" align="center">List Internship Offer</Typography>
-          </Box>
-        </Container>
-
-        <TableContainer>
-          <Table size="small" aria-label="a dense table">
-            <TableHead>
-              <TableRow>
-                <TableCell align="center"><strong>Company</strong></TableCell>
-                <TableCell align="center"><strong>Job Title</strong></TableCell>
-                <TableCell align="center"><strong>Start Date</strong></TableCell>
-                <TableCell align="center"><strong>Duration</strong></TableCell>
-                <TableCell align="center"><strong>Salary</strong></TableCell>
-                <TableCell align="center"><strong>Hours</strong></TableCell>
-                <TableCell align="center"><strong>Action</strong></TableCell>
+      <TableContainer>
+        <Table className={classes.table} aria-label="a dense table">
+          <TableHead>
+            <TableRow>
+              <TableCell align="center"><strong>Company</strong></TableCell>
+              <TableCell align="center"><strong>Job Title</strong></TableCell>
+              <TableCell align="center"><strong>Start Date</strong></TableCell>
+              <TableCell align="center"><strong>Duration</strong></TableCell>
+              <TableCell align="center"><strong>Salary</strong></TableCell>
+              <TableCell align="center"><strong>Hours</strong></TableCell>
+              <TableCell align="center"><strong>Action</strong></TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {rows.map((offer, index) => (
+              <TableRow key={index}>
+                <TableCell component="th" scope="row" align="center">{offer.company}</TableCell>
+                <TableCell component="th" scope="row" align="center">{offer.jobTitle}</TableCell>
+                <TableCell component="th" scope="row" align="center">{new Date(offer.startDate).toLocaleDateString()}</TableCell>
+                <TableCell component="th" scope="row" align="center">{offer.duration}</TableCell>
+                <TableCell component="th" scope="row" align="center">{offer.salary}</TableCell>
+                <TableCell component="th" scope="row" align="center">{offer.hours}</TableCell>
+                <TableCell omponent="th" scope="row" ><Button variant="contained" color="primary" onClick={() => handleClickOpen(offer.uniqueId)}>SELECT</Button></TableCell>
               </TableRow>
-            </TableHead>
-            <TableBody>
-              {this.renderTableData()}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </div>
-
-
-    )
-  }
+            ))}
+            <StudentApplicationDialogProps open={open} onClose={handleClose} selectedValue={currentInternshipId} />
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </div>
+  );
 }
-
-export default withRouter(StudentSelection);

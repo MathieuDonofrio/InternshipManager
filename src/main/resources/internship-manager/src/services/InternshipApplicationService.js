@@ -26,6 +26,10 @@ class InternshipApplicationService {
         return axios.get(Config.target + `/internship-application/internship-applications/${request}`, headers());
     }
 
+    getInternshipApplicationByOffer(request){
+        return axios.get(Config.target + `/internship-application/offer/${request}`, headers());
+    }
+
 }
 
 export default new InternshipApplicationService();

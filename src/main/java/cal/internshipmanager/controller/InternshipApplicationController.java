@@ -50,8 +50,8 @@ public class InternshipApplicationController {
 
     @PreAuthorize("hasAuthority('EMPLOYER')")
     @GetMapping("offer/{uniqueId}")
-    public InternshipApplicationListResponse findByOffer(@PathVariable UUID offerUniqueId) {
-        return internshipApplicationService.findByOffer(offerUniqueId);
+    public InternshipApplicationListResponse findByOffer(@PathVariable UUID uniqueId) {
+        return internshipApplicationService.findByOffer(uniqueId);
     }
 
     //PUT
