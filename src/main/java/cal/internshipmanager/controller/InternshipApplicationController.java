@@ -1,5 +1,6 @@
 package cal.internshipmanager.controller;
 
+import cal.internshipmanager.model.InternshipApplication;
 import cal.internshipmanager.request.InternshipApplicationCreationRequest;
 import cal.internshipmanager.response.InternshipApplicationListResponse;
 import cal.internshipmanager.service.InternshipApplicationService;
