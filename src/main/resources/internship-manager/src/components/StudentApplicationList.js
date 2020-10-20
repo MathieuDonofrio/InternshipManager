@@ -21,18 +21,42 @@ import TableRow from '@material-ui/core/TableRow';
 import InternshipApplicationService from "../services/InternshipApplicationService";
 import ThumbUpAltOutlinedIcon from '@material-ui/icons/ThumbUpAltOutlined';
 import ThumbDownAltOutlinedIcon from '@material-ui/icons/ThumbDownAltOutlined';
+import StudentDetailsList from "./StudentDetailsList";
 
 
 const useStyles = makeStyles({
   table: {
-    minWidth: 500,
+    minWidth: 800,
   },
 });
+
+function StudentPortfolioDetailsDialogProps(props) {
+
+  const { onClose, selectedValue, open } = props;
+
+  const handleClose = () => {
+    onClose(selectedValue);
+  };
+
+  return (
+    <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
+      <StudentDetailsList onClose={handleClose} selectedValue={selectedValue} />
+    </Dialog>
+  );
+
+}
+
+StudentPortfolioDetailsDialogProps.propTypes = {
+  onClose: PropTypes.func.isRequired,
+  open: PropTypes.bool.isRequired,
+  selectedValue: PropTypes.string.isRequired,
+};
 
 export default function StudentApplicationList (props) {
 
   const [open, setOpen] = React.useState(false);
   const [rows, setRows] = useState([]);
+  const [currentStudentId, setCurrentStudentId] = useState('');
 
   const classes = useStyles();
 
@@ -40,17 +64,18 @@ export default function StudentApplicationList (props) {
     props.onClose();
   };
 
-  const handleClickOpen = () => {
+  const handleClickOpen = (userId) => {
+    setCurrentStudentId(userId)
     setOpen(true);
   };
 
-  const fetchValidatedStudents = async () => {
+  const fetchStudentApplications = async () => {
     const response = await  InternshipApplicationService.getInternshipApplicationByOffer(props.selectedValue);
     setRows(response.data.applications)
   }
 
   useEffect(() => {
-    fetchValidatedStudents();
+    fetchStudentApplications();
   }, [])
 
   const onApprovedClicked = async (application) => {
@@ -62,7 +87,7 @@ export default function StudentApplicationList (props) {
 
   const onRejectedClicked = async (application) => {
 
-    InternshipApplicationService.rejectApplication(application).then(()=>fetchValidatedStudents());
+    InternshipApplicationService.rejectApplication(application).then(()=>fetchStudentApplications());
     
   }
 
@@ -101,6 +126,17 @@ export default function StudentApplicationList (props) {
                 <TableCell component="th" scope="row" align="center">{row.jobTitle}</TableCell>
                 <TableCell component="th" scope="row" align="center">{new Date(row.date).toLocaleDateString()}</TableCell>
                 <TableCell omponent="th" scope="row" >
+
+                  <Box margin={1}>
+                    <Button
+                      variant="contained" color="secondary"
+                      size="small"
+                      onClick={() => handleClickOpen(row.studentUniqueId)}
+                    >
+                      Details
+                    </Button>
+                  </Box>
+
                   <Box margin={1}>
 
                     <Button
@@ -125,9 +161,11 @@ export default function StudentApplicationList (props) {
                 </TableCell>
               </TableRow>
             ))}
+            <StudentPortfolioDetailsDialogProps open={open} onClose={handleClose} selectedValue={currentStudentId} />
           </TableBody>
         </Table>
       </TableContainer>
+      <Button variant="contained" onClick={handleClose} color="primary" fullWidth>close</Button>
     </div>
   );
 }

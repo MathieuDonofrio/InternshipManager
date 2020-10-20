@@ -56,12 +56,12 @@ public class InternshipApplicationController {
     //Put
     //
 
-    @PostMapping ("approve/{applicationId}")
+    @PutMapping ("approve/{applicationId}")
     public void approve(@PathVariable UUID applicationId){
         internshipApplicationService.approve(applicationId);
     }
 
-    @PostMapping ("reject/{applicationId}")
+    @PutMapping ("reject/{applicationId}")
     public void reject(@PathVariable UUID applicationId){
         internshipApplicationService.reject(applicationId);
     }

@@ -119,6 +119,7 @@ export default function StudentSelection() {
                 <TableCell omponent="th" scope="row" ><Button variant="contained" color="primary" onClick={() => handleClickOpen(offer.uniqueId)}>SELECT</Button></TableCell>
               </TableRow>
             ))}
+            
             <StudentApplicationDialogProps open={open} onClose={handleClose} selectedValue={currentInternshipId} />
           </TableBody>
         </Table>
