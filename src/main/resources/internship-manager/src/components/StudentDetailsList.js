@@ -23,6 +23,7 @@ import ThumbUpAltOutlinedIcon from '@material-ui/icons/ThumbUpAltOutlined';
 import ThumbDownAltOutlinedIcon from '@material-ui/icons/ThumbDownAltOutlined';
 import PortfolioService from "../services/PortfolioService";
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
+import { saveAs } from 'file-saver';
 
 
 const useStyles = makeStyles({
@@ -55,6 +56,14 @@ export default function StudentDetailsList (props) {
   useEffect(() => {
     fetchPortfolioDocuments();
   }, [])
+
+  const onDownloadClick = (data, fileName) =>{
+
+    console.log(data);
+
+    saveAs(new Blob([data], { type: 'application/pdf' }), fileName);
+    
+  }
 
 
 
@@ -94,6 +103,7 @@ export default function StudentDetailsList (props) {
                       variant="contained" color="secondary"
                       size="small"
                       startIcon={<CloudDownloadIcon />}
+                      onClick={() => onDownloadClick(row.data, row.fileName)}
                     >
                       Download
                     </Button>
