@@ -31,7 +31,7 @@ public class InternshipOffer implements Serializable {
     private List<String> jobScope;
 
     private Date startDate;
-
+    
     private int duration;
 
     private float salary;
