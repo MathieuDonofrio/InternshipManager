@@ -56,15 +56,12 @@ public class InternshipApplicationController {
     //Put
     //
 
-
-    @PreAuthorize("hasAuthority('EMPLOYER')")
-    @PutMapping("approve/{applicationId}")
+    @PostMapping ("approve/{applicationId}")
     public void approve(@PathVariable UUID applicationId){
         internshipApplicationService.approve(applicationId);
     }
 
-    @PreAuthorize("hasAuthority('EMPLOYER')")
-    @PutMapping("reject/{applicationId}")
+    @PostMapping ("reject/{applicationId}")
     public void reject(@PathVariable UUID applicationId){
         internshipApplicationService.reject(applicationId);
     }

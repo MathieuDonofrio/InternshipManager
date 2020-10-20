@@ -19,6 +19,8 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import InternshipApplicationService from "../services/InternshipApplicationService";
+import ThumbUpAltOutlinedIcon from '@material-ui/icons/ThumbUpAltOutlined';
+import ThumbDownAltOutlinedIcon from '@material-ui/icons/ThumbDownAltOutlined';
 
 
 const useStyles = makeStyles({
@@ -51,6 +53,19 @@ export default function StudentApplicationList (props) {
     fetchValidatedStudents();
   }, [])
 
+  const onApprovedClicked = async (application) => {
+
+    InternshipApplicationService.approveApplication(application);
+    console.log(application);
+
+  }
+
+  const onRejectedClicked = async (application) => {
+
+    InternshipApplicationService.rejectApplication(application).then(()=>fetchValidatedStudents());
+    
+  }
+
 
 
   return (
@@ -74,6 +89,7 @@ export default function StudentApplicationList (props) {
               <TableCell align="center"><strong>Company</strong></TableCell>
               <TableCell align="center"><strong>Job Title</strong></TableCell>
               <TableCell align="center"><strong>Date</strong></TableCell>
+              <TableCell align="center"><strong>Action</strong></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -84,6 +100,29 @@ export default function StudentApplicationList (props) {
                 <TableCell component="th" scope="row" align="center">{row.company}</TableCell>
                 <TableCell component="th" scope="row" align="center">{row.jobTitle}</TableCell>
                 <TableCell component="th" scope="row" align="center">{new Date(row.date).toLocaleDateString()}</TableCell>
+                <TableCell omponent="th" scope="row" >
+                  <Box margin={1}>
+
+                    <Button
+                      variant="contained" color="primary"
+                      size="small" startIcon={<ThumbUpAltOutlinedIcon />}
+                      onClick={() =>onApprovedClicked(row.uniqueId)}
+                    >
+                      Approve
+                    </Button>
+                  </Box>
+
+                  <Box margin={1}>
+                    <Button
+                      variant="contained" color="secondary"
+                      size="small"
+                      startIcon={<ThumbDownAltOutlinedIcon />} onClick={() =>onRejectedClicked(row.uniqueId)}
+                    >
+                      Reject
+                    </Button>
+                  </Box>
+
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
