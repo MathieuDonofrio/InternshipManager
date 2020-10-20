@@ -113,7 +113,7 @@ public class InternshipApplicationService {
         internshipApplicationRepository.save(application);
     }
 
-    public InternshipApplicationListResponse findByOffer(@Valid UUID offerUniqueId) {
+    public InternshipApplicationListResponse findByOffer(@NotNull UUID offerUniqueId) {
 
         List<InternshipApplication> allApplications = internshipApplicationRepository.findAllByOfferUniqueId(offerUniqueId);
 
