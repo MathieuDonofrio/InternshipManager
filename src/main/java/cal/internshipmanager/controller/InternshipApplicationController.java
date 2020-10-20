@@ -46,7 +46,6 @@ public class InternshipApplicationController {
         return internshipApplicationService.findByStatus(status);
     }
 
-    @PreAuthorize("hasAuthority('EMPLOYER')")
     @GetMapping("offer/{uniqueId}")
     public InternshipApplicationListResponse findByOffer(@PathVariable UUID uniqueId) {
         return internshipApplicationService.findByOffer(uniqueId);
@@ -57,16 +56,19 @@ public class InternshipApplicationController {
     //
 
 
-    @PreAuthorize("hasAuthority('EMPLOYER')")
     @PutMapping("approve/{applicationId}")
-    public void approve(@PathVariable UUID applicationId){
+    public void approve(@PathVariable UUID applicationId) {
         internshipApplicationService.approve(applicationId);
     }
 
-    @PreAuthorize("hasAuthority('EMPLOYER')")
     @PutMapping("reject/{applicationId}")
-    public void reject(@PathVariable UUID applicationId){
+    public void reject(@PathVariable UUID applicationId) {
         internshipApplicationService.reject(applicationId);
+    }
+
+    @PutMapping("select/{applicationId}")
+    public void select(@PathVariable UUID applicationId) {
+        internshipApplicationService.select(applicationId);
     }
 
     //
