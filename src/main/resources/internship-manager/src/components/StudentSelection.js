@@ -71,6 +71,17 @@ class StudentSelection extends Component {
           <TableCell component="th" scope="row" align="center">{duration}</TableCell>
           <TableCell component="th" scope="row" align="center">{salary}</TableCell>
           <TableCell component="th" scope="row" align="center">{hours}</TableCell>
+          <TableCell omponent="th" scope="row" >
+            <Box margin={1}>
+                <Button
+                    variant="contained" color="primary"
+                    size="small"
+                    // onClick={() => this.onApprovedClicked(internshipOffer)}
+                >
+                    Select
+                </Button>
+            </Box>
+          </TableCell>
         </TableRow>
 
       )
@@ -100,6 +111,7 @@ class StudentSelection extends Component {
                 <TableCell align="center"><strong>Duration</strong></TableCell>
                 <TableCell align="center"><strong>Salary</strong></TableCell>
                 <TableCell align="center"><strong>Hours</strong></TableCell>
+                <TableCell align="center"><strong>Action</strong></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
