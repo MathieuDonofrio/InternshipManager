@@ -2,17 +2,13 @@ package cal.internshipmanager.controller;
 
 import cal.internshipmanager.model.InternshipApplication;
 import cal.internshipmanager.request.InternshipApplicationCreationRequest;
-import cal.internshipmanager.request.InternshipApplicationEditRequest;
 import cal.internshipmanager.response.InternshipApplicationListResponse;
 import cal.internshipmanager.service.InternshipApplicationService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/internship-application")
@@ -36,7 +32,9 @@ public class InternshipApplicationController {
     // Services
     //
 
-    // GET
+    //
+    // Get
+    //
 
     @GetMapping("internship-applications/{userUniqueId}")
     public InternshipApplicationListResponse internshipApplications(@PathVariable UUID userUniqueId) {
@@ -50,18 +48,27 @@ public class InternshipApplicationController {
 
     @PreAuthorize("hasAuthority('EMPLOYER')")
     @GetMapping("offer/{uniqueId}")
-    public InternshipApplicationListResponse findByOffer(@PathVariable UUID offerUniqueId) {
-        return internshipApplicationService.findByOffer(offerUniqueId);
+    public InternshipApplicationListResponse findByOffer(@PathVariable UUID uniqueId) {
+        return internshipApplicationService.findByOffer(uniqueId);
     }
 
-    //PUT
+    //
+    //Put
+    //
 
-    @PutMapping
-    public void edit(@RequestBody @Valid InternshipApplicationEditRequest request) {
-        internshipApplicationService.editStatus(request);
+    @PutMapping("approve/{applicationId}")
+    public void approve(@PathVariable UUID applicationId){
+        internshipApplicationService.approve(applicationId);
     }
 
-    //POST
+    @PutMapping("reject/{applicationId}")
+    public void reject(@PathVariable UUID applicationId){
+        internshipApplicationService.reject(applicationId);
+    }
+
+    //
+    // Post
+    //
 
     @PreAuthorize("hasAuthority('STUDENT')")
     @PostMapping("create")
