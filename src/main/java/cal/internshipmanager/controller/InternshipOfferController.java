@@ -98,11 +98,8 @@ public class InternshipOfferController {
 
     @PreAuthorize("hasAuthority('EMPLOYER')")
     @GetMapping("employer/{uniqueId}")
-    public InternshipOfferListResponse findAllByEmployer(@NotNull UUID uniqueId){
+    public InternshipOfferListResponse findAllByEmployer(@PathVariable UUID uniqueId){
         return internshipOfferService.findAllByEmployer(uniqueId);
     }
-
-
-
 
 }

@@ -7,6 +7,7 @@ import cal.internshipmanager.repository.UserRepository;
 import cal.internshipmanager.request.*;
 import cal.internshipmanager.response.InternshipOfferListResponse;
 import cal.internshipmanager.response.UserListReponse;
+import cal.internshipmanager.validator.ExistingUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -163,7 +164,8 @@ public class InternshipOfferService {
     }
 
     public InternshipOfferListResponse findAllByEmployer(@NotNull UUID uniqueId){
-        List<InternshipOffer> internshipOffers = internshipOfferRepository.findAllByEmployer(uniqueId);
+
+        List<InternshipOffer> internshipOffers = internshipOfferRepository.findAllByEmployerAndStatus(uniqueId, InternshipOffer.Status.APPROVED);
 
         InternshipOfferListResponse response = new InternshipOfferListResponse();
 
