@@ -254,7 +254,6 @@ export default function AppDrawer(props) {
               <ListItemIcon><GavelOutlinedIcon /> </ListItemIcon>
               <ListItemText primary={"Applications en attente"} />
             </ListItem>
-
           </List>
         }
 

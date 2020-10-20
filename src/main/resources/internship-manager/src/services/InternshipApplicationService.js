@@ -16,9 +16,6 @@ function headers() {
 class InternshipApplicationService {
 
     createInternshipApplication(request) {
-
-        console.log(request);
-
         return axios.post(Config.target + '/internship-application/create', request, headers());
     }
 
@@ -37,6 +34,7 @@ class InternshipApplicationService {
     getInternshipApplications(request){
         return axios.get(Config.target + `/internship-application/${request}`, headers());
     }
+
     getInternshipPendingApplications(){
         const request= "PENDING_APPROVAL";
         return axios.get(Config.target + `/internship-application/${request}`, headers());

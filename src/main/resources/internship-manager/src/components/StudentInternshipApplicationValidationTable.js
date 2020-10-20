@@ -121,7 +121,7 @@ export default function StudentInternshipApplicationValidationTable() {
                         size="small" startIcon={<ThumbUpAltOutlinedIcon />}
                         onClick={() => onApprovedClicked(application.uniqueId)}
                       >
-                        Approve
+                        Approuver
                         </Button>
                     </Box>
 
@@ -131,7 +131,7 @@ export default function StudentInternshipApplicationValidationTable() {
                         size="small"
                         startIcon={<ThumbDownAltOutlinedIcon />} onClick={() => onRejectedClicked(application.uniqueId)}
                       >
-                        Reject
+                        Refuser
                         </Button>
                     </Box>
                   </TableCell>
