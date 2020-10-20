@@ -51,6 +51,12 @@ class InternshipOfferService {
         return axios.post(Config.target + '/internship-offer/reject', request, headers());
     }
 
+    getInternshipOfferByEmployer(request){
+        return axios.get(Config.target + '/internship-offer/employer/'+request, headers());
+    }
+
+
+
 
 }
 
