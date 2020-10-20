@@ -7,6 +7,7 @@ import cal.internshipmanager.repository.UserRepository;
 import cal.internshipmanager.request.*;
 import cal.internshipmanager.response.InternshipOfferListResponse;
 import cal.internshipmanager.response.UserListReponse;
+import cal.internshipmanager.validator.ExistingUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -159,6 +161,18 @@ public class InternshipOfferService {
         internshipOffer.getUsers().remove(user);
 
         internshipOfferRepository.save(internshipOffer);
+    }
+
+    public InternshipOfferListResponse findAllByEmployer(@NotNull UUID uniqueId){
+
+        List<InternshipOffer> internshipOffers = internshipOfferRepository.findAllByEmployerAndStatus(uniqueId, InternshipOffer.Status.APPROVED);
+
+        InternshipOfferListResponse response = new InternshipOfferListResponse();
+
+        response.setInternshipOffers(internshipOffers.stream().map(x ->
+                InternshipOfferListResponse.map(x)).collect(Collectors.toList()));
+
+        return response;
     }
 
 }

@@ -1,5 +1,6 @@
 package cal.internshipmanager.controller;
 
+import cal.internshipmanager.model.InternshipOffer;
 import cal.internshipmanager.request.*;
 import cal.internshipmanager.response.InternshipOfferListResponse;
 import cal.internshipmanager.response.UserListReponse;
@@ -10,7 +11,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/internship-offer")
@@ -91,6 +94,12 @@ public class InternshipOfferController {
     @GetMapping("users/{uniqueId}")
     public UserListReponse users(@NotNull @PathVariable UUID uniqueId) {
         return internshipOfferService.users(uniqueId);
+    }
+
+    @PreAuthorize("hasAuthority('EMPLOYER')")
+    @GetMapping("employer/{uniqueId}")
+    public InternshipOfferListResponse findAllByEmployer(@PathVariable UUID uniqueId){
+        return internshipOfferService.findAllByEmployer(uniqueId);
     }
 
 }

@@ -18,6 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -440,6 +441,39 @@ public class InternshipOfferServiceTest {
 
         }
 
+    }
+
+    @Test
+    public void findAll_validRequest(){
+        // Arrange
+        InternshipOffer internshipOffer = new InternshipOffer();
+
+        internshipOffer.setUniqueId(UUID.randomUUID());
+        internshipOffer.setEmployer(UUID.randomUUID());
+        internshipOffer.setStatus(InternshipOffer.Status.REJECTED);
+        internshipOffer.setCompany("Test Company");
+        internshipOffer.setJobTitle("Test Job Title");
+        internshipOffer.setStartDate(new Date());
+        internshipOffer.setDuration(12);
+        internshipOffer.setSalary(20);
+        internshipOffer.setHours(40);
+        internshipOffer.setUsers(new ArrayList<>());
+
+        InternshipOfferListResponse response = new InternshipOfferListResponse();
+
+        response.setInternshipOffers(List.of(internshipOffer).stream().map(x ->
+                InternshipOfferListResponse.map(x)).collect(Collectors.toList()));
+
+
+        InternshipOfferService internshipOfferService = new InternshipOfferService(internshipOfferRepository, userRepository);
+
+        Mockito.when(internshipOfferRepository.findAllByEmployerAndStatus(internshipOffer.getEmployer(), InternshipOffer.Status.APPROVED)).thenReturn(List.of(internshipOffer));
+
+        // Act
+        InternshipOfferListResponse responseToExpect =  internshipOfferService.findAllByEmployer(internshipOffer.getEmployer());
+
+        // Assert
+        assertEquals(response,responseToExpect);
     }
 
 }

@@ -31,7 +31,7 @@ public class InternshipApplication implements Serializable {
     private Status status;
 
     public enum Status {
-        PENDING_APPROVAL, APPROVED, REJECTED;
+        PENDING_APPROVAL, APPROVED, REJECTED, SELECTED;
     }
 
 
