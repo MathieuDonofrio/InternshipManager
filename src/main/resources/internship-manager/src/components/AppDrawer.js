@@ -254,7 +254,13 @@ export default function AppDrawer(props) {
               <ListItemIcon><GavelOutlinedIcon /> </ListItemIcon>
               <ListItemText primary={"Pending Approval"} />
             </ListItem>
-
+            <ListItem
+              button
+              key={"Applications en attente"}
+              onClick={() => history.push("/internship-application-validation")}>
+              <ListItemIcon><GavelOutlinedIcon /> </ListItemIcon>
+              <ListItemText primary={"Applications en attente"} />
+            </ListItem>
           </List>
         }
 
