@@ -7,7 +7,6 @@ import cal.internshipmanager.repository.InternshipOfferRepository;
 import cal.internshipmanager.repository.PortfolioDocumentRepository;
 import cal.internshipmanager.repository.UserRepository;
 import cal.internshipmanager.request.InternshipApplicationCreationRequest;
-import cal.internshipmanager.request.InternshipApplicationEditRequest;
 import cal.internshipmanager.response.InternshipApplicationListResponse;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -103,19 +102,28 @@ public class InternshipApplicationService {
         return response;
     }
 
-    public void editStatus(InternshipApplicationEditRequest request) {
+    public void approve(@NotNull UUID uniqueId){
 
-        InternshipApplication application = internshipApplicationRepository.findById(request.getApplicationId())
-                .orElse(null);
+        InternshipApplication application = internshipApplicationRepository.findById(uniqueId).orElse(null);
 
-        application.setStatus(request.getStatus());
+        application.setStatus(InternshipApplication.Status.APPROVED);
 
         internshipApplicationRepository.save(application);
     }
 
-    public InternshipApplicationListResponse findByOffer(@NotNull UUID offerUniqueId) {
+    public void reject(@NotNull UUID uniqueId){
 
-        List<InternshipApplication> allApplications = internshipApplicationRepository.findAllByOfferUniqueId(offerUniqueId);
+        InternshipApplication application = internshipApplicationRepository.findById(uniqueId).orElse(null);
+
+        application.setStatus(InternshipApplication.Status.REJECTED);
+
+        internshipApplicationRepository.save(application);
+    }
+
+
+    public InternshipApplicationListResponse findByOffer(@NotNull UUID uniqueId) {
+
+        List<InternshipApplication> allApplications = internshipApplicationRepository.findAllByOfferUniqueId(uniqueId);
 
         InternshipApplicationListResponse response = new InternshipApplicationListResponse();
 
