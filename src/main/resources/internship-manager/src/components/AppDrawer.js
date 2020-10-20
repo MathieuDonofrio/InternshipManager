@@ -214,6 +214,13 @@ export default function AppDrawer(props) {
               <ListItemIcon><CreateIcon /> </ListItemIcon>
               <ListItemText primary={"Application Creation"} />
             </ListItem>
+            <ListItem
+              button
+              key={"Application Status"}
+              onClick={() => history.push("/internship-application-status")}>
+              <ListItemIcon><VisibilityIcon /> </ListItemIcon>
+              <ListItemText primary={"Application Status"} />
+            </ListItem>
           </List>
         }
 
@@ -247,7 +254,13 @@ export default function AppDrawer(props) {
               <ListItemIcon><GavelOutlinedIcon /> </ListItemIcon>
               <ListItemText primary={"Pending Approval"} />
             </ListItem>
-
+            <ListItem
+              button
+              key={"Applications en attente"}
+              onClick={() => history.push("/internship-application-validation")}>
+              <ListItemIcon><GavelOutlinedIcon /> </ListItemIcon>
+              <ListItemText primary={"Applications en attente"} />
+            </ListItem>
           </List>
         }
 
