@@ -123,7 +123,7 @@ public class InternshipApplicationService {
 
     public InternshipApplicationListResponse findByOffer(@NotNull UUID uniqueId) {
 
-        List<InternshipApplication> allApplications = internshipApplicationRepository.findAllByOfferUniqueId(uniqueId);
+        List<InternshipApplication> allApplications = internshipApplicationRepository.findAllByOfferUniqueIdAndStatus(uniqueId, InternshipApplication.Status.PENDING_APPROVAL);
 
         InternshipApplicationListResponse response = new InternshipApplicationListResponse();
 
