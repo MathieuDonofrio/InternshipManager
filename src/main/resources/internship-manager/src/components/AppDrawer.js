@@ -26,6 +26,7 @@ import HomeIcon from '@material-ui/icons/Home';
 import CreateIcon from '@material-ui/icons/Create';
 import { useHistory } from 'react-router-dom';
 import GavelOutlinedIcon from '@material-ui/icons/GavelOutlined';
+import AssignmentLateIcon from '@material-ui/icons/AssignmentLate';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
@@ -266,7 +267,7 @@ export default function AppDrawer(props) {
               button
               key={"Applications en attente"}
               onClick={() => history.push("/internship-application-validation")}>
-              <ListItemIcon><GavelOutlinedIcon /> </ListItemIcon>
+              <ListItemIcon><AssignmentLateIcon /> </ListItemIcon>
               <ListItemText primary={"Applications en attente"} />
             </ListItem>
           </List>
