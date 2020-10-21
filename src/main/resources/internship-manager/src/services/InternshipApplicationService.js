@@ -28,15 +28,15 @@ class InternshipApplicationService {
     }
 
     approve(request){
-        return axios.put(Config.target + `/internship-application/approve/${request}`, headers());
+        return axios.put(Config.target + `/internship-application/approve/${request}`, {}, headers());
     }
 
     reject(request){
-        return axios.put(Config.target + `/internship-application/reject/${request}`, headers());
+        return axios.put(Config.target + `/internship-application/reject/${request}`, {}, headers());
     }
 
     select(request){
-        return axios.put(Config.target + `/internship-application/select/${request}`, headers());
+        return axios.put(Config.target + `/internship-application/select/${request}`, {}, headers());
     }
 
     getInternshipApplications(request){

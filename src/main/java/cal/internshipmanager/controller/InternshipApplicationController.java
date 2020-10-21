@@ -55,7 +55,6 @@ public class InternshipApplicationController {
     //Put
     //
 
-
     @PutMapping("approve/{applicationId}")
     public void approve(@PathVariable UUID applicationId) {
         internshipApplicationService.approve(applicationId);
