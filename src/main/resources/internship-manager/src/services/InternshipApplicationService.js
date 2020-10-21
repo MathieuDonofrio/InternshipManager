@@ -16,9 +16,6 @@ function headers() {
 class InternshipApplicationService {
 
     createInternshipApplication(request) {
-
-        console.log(request);
-
         return axios.post(Config.target + '/internship-application/create', request, headers());
     }
 
@@ -30,14 +27,26 @@ class InternshipApplicationService {
         return axios.get(Config.target + `/internship-application/offer/${request}`, headers());
     }
 
-    approveApplication(request){
-        return axios.put(Config.target +`/internship-application/approve/${request}`, headers());
+    approve(request){
+        return axios.put(Config.target + `/internship-application/approve/${request}`, headers());
     }
 
-    rejectApplication(request){
-        return axios.put(Config.target +`/internship-application/reject/${request}`, headers());
+    reject(request){
+        return axios.put(Config.target + `/internship-application/reject/${request}`, headers());
     }
 
+    select(request){
+        return axios.put(Config.target + `/internship-application/select/${request}`, headers());
+    }
+
+    getInternshipApplications(request){
+        return axios.get(Config.target + `/internship-application/${request}`, headers());
+    }
+
+    getInternshipPendingApplications(){
+        const request= "PENDING_APPROVAL";
+        return axios.get(Config.target + `/internship-application/${request}`, headers());
+    }
 }
 
 export default new InternshipApplicationService();

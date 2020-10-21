@@ -79,14 +79,13 @@ export default function StudentApplicationList (props) {
 
   const onApprovedClicked = async (application) => {
 
-    InternshipApplicationService.approveApplication(application);
-    console.log(application);
+    InternshipApplicationService.select(application).then(()=>fetchStudentApplications());
 
   }
 
   const onRejectedClicked = async (application) => {
 
-    InternshipApplicationService.rejectApplication(application).then(()=>fetchStudentApplications());
+    InternshipApplicationService.reject(application).then(()=>fetchStudentApplications());
     
   }
 
@@ -127,7 +126,7 @@ export default function StudentApplicationList (props) {
                       onClick={() => handleClickOpen(row.studentUniqueId)}
                       startIcon={<AttachmentIcon />}
                     >
-                      DOCUMENTS
+                      Documents
                     </Button>
                   </Box>
 
@@ -138,7 +137,7 @@ export default function StudentApplicationList (props) {
                       size="small" startIcon={<ThumbUpAltOutlinedIcon />}
                       onClick={() =>onApprovedClicked(row.uniqueId)}
                     >
-                      Approve
+                      Select
                     </Button>
                   </Box>
 

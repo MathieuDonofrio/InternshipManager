@@ -120,10 +120,18 @@ public class InternshipApplicationService {
         internshipApplicationRepository.save(application);
     }
 
+    public void select(@NotNull UUID uniqueId){
+        InternshipApplication application = internshipApplicationRepository.findById(uniqueId).orElse(null);
+
+        application.setStatus(InternshipApplication.Status.SELECTED);
+
+        internshipApplicationRepository.save(application);
+    }
+
 
     public InternshipApplicationListResponse findByOffer(@NotNull UUID uniqueId) {
 
-        List<InternshipApplication> allApplications = internshipApplicationRepository.findAllByOfferUniqueIdAndStatus(uniqueId, InternshipApplication.Status.PENDING_APPROVAL);
+        List<InternshipApplication> allApplications = internshipApplicationRepository.findAllByOfferUniqueIdAndStatus(uniqueId, InternshipApplication.Status.APPROVED);
 
         InternshipApplicationListResponse response = new InternshipApplicationListResponse();
 

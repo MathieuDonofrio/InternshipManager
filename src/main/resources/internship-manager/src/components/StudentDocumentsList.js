@@ -17,31 +17,15 @@ import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 import { saveAs } from 'file-saver';
 
 
-const useStyles = makeStyles({
-  table: {
-    minWidth: 800,
-  },
-});
-
 export default function StudentDocumentsList (props) {
 
-  const [open, setOpen] = React.useState(false);
   const [rows, setRows] = useState([]);
 
-  const classes = useStyles();
 
-  const handleClose = () => {
-    props.onClose();
-  };
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
 
   const fetchPortfolioDocuments = async () => {
     const response = await  PortfolioService.portfolioDocuments(props.selectedValue);
     setRows(response.data.portfolioDocuments)
-    console.log(response.data.portfolioDocuments);
   }
 
   useEffect(() => {
@@ -50,12 +34,9 @@ export default function StudentDocumentsList (props) {
 
   const onDownloadClick = (data, fileName) =>{
 
-    console.log(data);
-
     saveAs(new Blob([data], { type: 'application/pdf' }), fileName);
     
   }
-
 
 
   return (
@@ -76,7 +57,6 @@ export default function StudentDocumentsList (props) {
             <TableRow>
               <TableCell align="center"><strong>File Name</strong></TableCell>
               <TableCell align="center"><strong>Type</strong></TableCell>
-              <TableCell align="center"><strong>Upload Date</strong></TableCell>
               <TableCell align="center"><strong>Action</strong></TableCell>
             </TableRow>
           </TableHead>
@@ -85,7 +65,6 @@ export default function StudentDocumentsList (props) {
               <TableRow key={index}>
                 <TableCell component="th" scope="row" align="center">{row.fileName}</TableCell>
                 <TableCell component="th" scope="row" align="center">{row.type}</TableCell>
-                <TableCell component="th" scope="row" align="center">{new Date(row.uploadDate).toLocaleDateString()}</TableCell>
                 <TableCell omponent="th" scope="row" >
 
 

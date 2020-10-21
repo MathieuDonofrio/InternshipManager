@@ -216,7 +216,7 @@ public class InternshipApplicationServiceTest {
         internshipApplication.setOfferUniqueId(internshipOffer.getUniqueId());
         internshipApplication.setStudentUniqueId(user.getUniqueId());
         internshipApplication.setDate(new Date());
-        internshipApplication.setStatus(InternshipApplication.Status.PENDING_APPROVAL);
+        internshipApplication.setStatus(InternshipApplication.Status.APPROVED);
 
         InternshipApplicationListResponse response = new InternshipApplicationListResponse();
 
@@ -309,6 +309,43 @@ public class InternshipApplicationServiceTest {
         });
 
         internshipApplicationService.reject(internshipApplication.getUniqueId());
+
+    }
+
+    @Test
+    public void select_validRequest(){
+
+        // Arrange
+
+        InternshipOffer internshipOffer = new InternshipOffer();
+
+        internshipOffer.setUniqueId(UUID.randomUUID());
+        internshipOffer.setCompany("TestCompany");
+        internshipOffer.setJobTitle("TestJobTitle");
+
+        InternshipApplication internshipApplication = new InternshipApplication();
+
+        internshipApplication.setUniqueId(UUID.randomUUID());
+        internshipApplication.setOfferUniqueId(internshipOffer.getUniqueId());
+        internshipApplication.setDate(new Date());
+        internshipApplication.setStatus(InternshipApplication.Status.SELECTED);
+
+        InternshipApplicationService internshipApplicationService = new InternshipApplicationService(
+                internshipApplicationRepository, portfolioDocumentRepository, userRepository, internshipOfferRepository);
+
+        Mockito.when(internshipApplicationRepository.findById(Mockito.any())).thenReturn(Optional.of(internshipApplication));
+
+        // Act & Assert
+
+        Mockito.when(internshipApplicationRepository.save(Mockito.any())).then(inv -> {
+            InternshipApplication application = (InternshipApplication) inv.getArgument(0);
+
+            assertEquals(InternshipApplication.Status.SELECTED,application.getStatus());
+
+            return null;
+        });
+
+        internshipApplicationService.select(internshipApplication.getUniqueId());
 
     }
 }
