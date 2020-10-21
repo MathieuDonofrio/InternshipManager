@@ -20,8 +20,19 @@ import ThumbUpAltOutlinedIcon from '@material-ui/icons/ThumbUpAltOutlined';
 import ThumbDownAltOutlinedIcon from '@material-ui/icons/ThumbDownAltOutlined';
 import AttachmentIcon from '@material-ui/icons/Attachment';
 import StudentDocumentsList from "./StudentDocumentsList";
+import ContractService from "../services/ContractService";
+import { saveAs } from 'file-saver';
+import PageviewIcon from '@material-ui/icons/Pageview';
 
-
+function _base64ToArrayBuffer(base64) {
+  var binary_string = window.atob(base64);
+  var len = binary_string.length;
+  var bytes = new Uint8Array(len);
+  for (var i = 0; i < len; i++) {
+      bytes[i] = binary_string.charCodeAt(i);
+  }
+  return bytes.buffer;
+}
 
 const useStyles = makeStyles({
   table: {
@@ -51,7 +62,7 @@ StudentPortfolioDetailsDialogProps.propTypes = {
   selectedValue: PropTypes.string.isRequired,
 };
 
-export default function StudentApplicationList (props) {
+export default function StudentApplicationList(props) {
 
   const [open, setOpen] = React.useState(false);
   const [rows, setRows] = useState([]);
@@ -69,7 +80,7 @@ export default function StudentApplicationList (props) {
   };
 
   const fetchStudentApplications = async () => {
-    const response = await  InternshipApplicationService.getInternshipApplicationByOffer(props.selectedValue);
+    const response = await InternshipApplicationService.getInternshipApplicationByOffer(props.selectedValue);
     setRows(response.data.applications)
   }
 
@@ -77,16 +88,24 @@ export default function StudentApplicationList (props) {
     fetchStudentApplications();
   }, [])
 
-  const onApprovedClicked = async (application) => {
+  const onApprovedClicked = (application) => {
 
-    InternshipApplicationService.select(application).then(()=>fetchStudentApplications());
+    InternshipApplicationService.select(application).then(() => fetchStudentApplications());
 
   }
 
-  const onRejectedClicked = async (application) => {
+  const onRejectedClicked = (application) => {
 
-    InternshipApplicationService.reject(application).then(()=>fetchStudentApplications());
-    
+    InternshipApplicationService.reject(application).then(() => fetchStudentApplications());
+
+  }
+
+  const onDownloadContract = (application) => {
+
+    ContractService.generate(application.uniqueId).then(response =>{
+      saveAs(new Blob([_base64ToArrayBuffer(response.data)], { type: response.headers['content-type'] }), "Contrat");
+    });
+
   }
 
 
@@ -113,7 +132,7 @@ export default function StudentApplicationList (props) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row,index) => (
+            {rows.map((row, index) => (
               <TableRow key={index}>
                 <TableCell component="th" scope="row" align="center">{row.studentFirstName + ' ' + row.studentLastName}</TableCell>
                 <TableCell component="th" scope="row" align="center">{new Date(row.date).toLocaleDateString()}</TableCell>
@@ -135,7 +154,7 @@ export default function StudentApplicationList (props) {
                     <Button
                       variant="contained" color="primary"
                       size="small" startIcon={<ThumbUpAltOutlinedIcon />}
-                      onClick={() =>onApprovedClicked(row.uniqueId)}
+                      onClick={() => onApprovedClicked(row.uniqueId)}
                     >
                       Select
                     </Button>
@@ -145,9 +164,20 @@ export default function StudentApplicationList (props) {
                     <Button
                       variant="contained" color="secondary"
                       size="small"
-                      startIcon={<ThumbDownAltOutlinedIcon />} onClick={() =>onRejectedClicked(row.uniqueId)}
+                      startIcon={<ThumbDownAltOutlinedIcon />} onClick={() => onRejectedClicked(row.uniqueId)}
                     >
                       Reject
+                    </Button>
+                  </Box>
+
+                  <Box margin={1}>
+
+                    <Button
+                      variant="contained" color="primary"
+                      size="small" startIcon={<PageviewIcon />}
+                      onClick={() => onDownloadContract(row)}
+                    >
+                      View Contract
                     </Button>
                   </Box>
 

@@ -12,12 +12,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.Base64Utils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.util.UUID;
 
-@RestController("/contract")
+@RestController()
+@RequestMapping("/contract")
 public class ContractController {
 
     //
@@ -40,15 +42,15 @@ public class ContractController {
     //
 
     @GetMapping("internship-application/{uniqueId}")
-    public ResponseEntity<byte[]> download(@Valid @PathVariable @ExistingInternshipApplication UUID uniqueId) {
+    public ResponseEntity<byte[]> generate(@Valid @PathVariable @ExistingInternshipApplication UUID uniqueId) {
 
-        byte[] data = Base64Utils.encode(contractService.generateContract(uniqueId));
+        byte[] data = Base64Utils.encode(contractService.generate(uniqueId));
 
         HttpHeaders headers = new HttpHeaders();
 
-        headers.setContentType(MediaType.parseMediaType("pdf"));
+        headers.setContentType(MediaType.parseMediaType("application/pdf"));
         headers.setContentLength(data.length);
-        headers.set(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + "Contrat" + "\"");
+        headers.set(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"Contrat\"");
 
         return ResponseEntity.ok().headers(headers).body(data);
     }

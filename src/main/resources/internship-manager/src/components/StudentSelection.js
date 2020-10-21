@@ -115,7 +115,9 @@ export default function StudentSelection() {
                 <TableCell component="th" scope="row" align="center">{offer.duration}</TableCell>
                 <TableCell component="th" scope="row" align="center">{offer.salary.toFixed(2) + '$'}</TableCell>
                 <TableCell component="th" scope="row" align="center">{offer.hours}</TableCell>
-                <TableCell omponent="th" scope="row" ><Button variant="contained" color="primary" onClick={() => handleClickOpen(offer.uniqueId)}>SELECT</Button></TableCell>
+                <TableCell omponent="th" scope="row" >
+                  <Button variant="contained" color="primary" onClick={() => handleClickOpen(offer.uniqueId)}>SELECT</Button>
+                </TableCell>
               </TableRow>
             ))}
             
