@@ -85,7 +85,7 @@ export default class InternshipOfferCreationForm extends Component {
       hours: this.state.hours
     }
 
-    InternshipOfferService.createInternshipOffer(request)
+    InternshipOfferService.create(request)
       .catch(error => this.backendValidation(error))
       .finally(() => { this.submitLock.unlock(); this.forceUpdate() });
   }
