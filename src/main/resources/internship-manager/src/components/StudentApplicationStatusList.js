@@ -54,11 +54,9 @@ class StudentApplicationStatusList extends Component {
 
   renderTableData() {
     return this.state.applications.map((studentAppList, index) => {
-      const { studentFirstName, studentLastName, company, jobTitle, date, status } = studentAppList
+      const { company, jobTitle, date, status } = studentAppList
       return (
         <TableRow key={index}>
-          <TableCell component="th" scope="row" align="center">{studentFirstName}</TableCell>
-          <TableCell component="th" scope="row" align="center">{studentLastName}</TableCell>
           <TableCell component="th" scope="row" align="center">{company}</TableCell>
           <TableCell component="th" scope="row" align="center">{jobTitle}</TableCell>
           <TableCell component="th" scope="row" align="center">{new Date(date).toLocaleDateString()}</TableCell>
@@ -91,8 +89,6 @@ class StudentApplicationStatusList extends Component {
           <Table size="small" aria-label="a dense table">
             <TableHead>
               <TableRow>
-                <TableCell align="center"><strong>First Name</strong></TableCell>
-                <TableCell align="center"><strong>Last Name</strong></TableCell>
                 <TableCell align="center"><strong>Company</strong></TableCell>
                 <TableCell align="center"><strong>Job Title</strong></TableCell>
                 <TableCell align="center"><strong>Date</strong></TableCell>
