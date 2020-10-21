@@ -47,6 +47,10 @@ class InternshipApplicationService {
         const request= "PENDING_APPROVAL";
         return axios.get(Config.target + `/internship-application/${request}`, headers());
     }
+
+    applicationDocuments(request){
+        return axios.get(Config.target + `/internship-application/documents/${request}`, headers());
+    }
 }
 
 export default new InternshipApplicationService();

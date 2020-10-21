@@ -8,6 +8,7 @@ import cal.internshipmanager.repository.PortfolioDocumentRepository;
 import cal.internshipmanager.repository.UserRepository;
 import cal.internshipmanager.request.InternshipApplicationCreationRequest;
 import cal.internshipmanager.response.InternshipApplicationListResponse;
+import cal.internshipmanager.response.PortfolioDocumentListResponse;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -141,6 +142,20 @@ public class InternshipApplicationService {
 
         return response;
     }
+
+
+    public PortfolioDocumentListResponse applicationDocuments(@NotNull UUID uniqueId) {
+
+        InternshipApplication application = internshipApplicationRepository.findById(uniqueId).orElse(null);
+
+        PortfolioDocumentListResponse response = new PortfolioDocumentListResponse();
+
+        response.setPortfolioDocuments(application.getDocuments().stream()
+                .map(x -> PortfolioDocumentListResponse.map(x)).collect(Collectors.toList()));
+
+        return response;
+    }
+
 
 
 }
