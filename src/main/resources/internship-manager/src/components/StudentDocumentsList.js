@@ -16,6 +16,15 @@ import PortfolioService from "../services/PortfolioService";
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 import { saveAs } from 'file-saver';
 
+function _base64ToArrayBuffer(base64) {
+  var binary_string = window.atob(base64);
+  var len = binary_string.length;
+  var bytes = new Uint8Array(len);
+  for (var i = 0; i < len; i++) {
+      bytes[i] = binary_string.charCodeAt(i);
+  }
+  return bytes.buffer;
+}
 
 export default function StudentDocumentsList (props) {
 
@@ -32,12 +41,13 @@ export default function StudentDocumentsList (props) {
     fetchPortfolioDocuments();
   }, [])
 
-  const onDownloadClick = (data, fileName) =>{
+  const onDownloadClick = (document) =>{
 
-    saveAs(new Blob([data], { type: 'application/pdf' }), fileName);
+    PortfolioService.download(document.uniqueId).then(response =>{
+      saveAs(new Blob([_base64ToArrayBuffer(response.data)], { type: response.headers['content-type'] }), document.fileName);
+    })
     
   }
-
 
   return (
     <div>
@@ -73,7 +83,7 @@ export default function StudentDocumentsList (props) {
                       variant="contained" color="secondary"
                       size="small"
                       startIcon={<CloudDownloadIcon />}
-                      onClick={() => onDownloadClick(row.data, row.fileName)}
+                      onClick={() => onDownloadClick(row)}
                     >
                       Download
                     </Button>

@@ -37,6 +37,10 @@ class PortfolioService {
         return axios.post(Config.target + '/portfolio/upload', fd, uploadHeaders());
     }
 
+    download(request){
+        return axios.get(Config.target + `/portfolio/${request}`, headers());
+    }
+
     delete(request) {
         return axios.post(Config.target + '/portfolio/delete', request, headers());
     }
