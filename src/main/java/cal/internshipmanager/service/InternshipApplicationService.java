@@ -9,6 +9,7 @@ import cal.internshipmanager.repository.UserRepository;
 import cal.internshipmanager.request.InternshipApplicationCreationRequest;
 import cal.internshipmanager.response.InternshipApplicationListResponse;
 import cal.internshipmanager.response.PortfolioDocumentListResponse;
+import cal.internshipmanager.validator.ExistingInternshipApplication;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -143,8 +144,7 @@ public class InternshipApplicationService {
         return response;
     }
 
-
-    public PortfolioDocumentListResponse applicationDocuments(@NotNull UUID uniqueId) {
+    public PortfolioDocumentListResponse applicationDocuments(@ExistingInternshipApplication UUID uniqueId) {
 
         InternshipApplication application = internshipApplicationRepository.findById(uniqueId).orElse(null);
 

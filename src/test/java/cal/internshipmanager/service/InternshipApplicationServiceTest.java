@@ -82,7 +82,7 @@ public class InternshipApplicationServiceTest {
         InternshipApplicationService applicationService=new InternshipApplicationService(
                 internshipApplicationRepository, portfolioDocumentRepository, userRepository, internshipOfferRepository);
 
-        Mockito.when(internshipApplicationRepository.findById(internshipApplication.getUniqueId())).thenReturn(Optional.of(internshipApplication));
+        when(internshipApplicationRepository.findById(internshipApplication.getUniqueId())).thenReturn(Optional.of(internshipApplication));
 
         //Act
 

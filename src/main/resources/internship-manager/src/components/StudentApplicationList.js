@@ -123,7 +123,7 @@ export default function StudentApplicationList (props) {
                     <Button
                       variant="contained" color="secondary"
                       size="small"
-                      onClick={() => handleClickOpen(row.studentUniqueId)}
+                      onClick={() => handleClickOpen(row.uniqueId)}
                       startIcon={<AttachmentIcon />}
                     >
                       Documents

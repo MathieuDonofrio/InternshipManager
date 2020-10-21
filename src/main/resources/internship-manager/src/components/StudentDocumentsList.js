@@ -31,10 +31,9 @@ export default function StudentDocumentsList (props) {
 
   const [rows, setRows] = useState([]);
 
-
-
   const fetchPortfolioDocuments = async () => {
-    const response = await  InternshipApplicationService.applicationDocuments(props.selectedValue);
+    const response = await InternshipApplicationService.applicationDocuments(props.selectedValue);
+    console.log(response)
     setRows(response.data.portfolioDocuments)
   }
 
