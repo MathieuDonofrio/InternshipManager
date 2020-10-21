@@ -67,6 +67,10 @@ class InternshipOfferService {
     getAllStudent(){ // WTF?
         return axios.get(Config.target + `/user/students`, headers())
     }
+    
+    getInternshipOfferByEmployer(request){
+        return axios.get(Config.target + '/internship-offer/employer/'+request, headers());
+    }
 
 }
 

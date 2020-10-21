@@ -1,13 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
-import ListItemText from '@material-ui/core/ListItemText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Dialog from '@material-ui/core/Dialog';
-import PersonIcon from '@material-ui/icons/Person';
-import AddIcon from '@material-ui/icons/Add';
 import Typography from '@material-ui/core/Typography';
-import { blue } from '@material-ui/core/colors';
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -19,9 +12,6 @@ import TableRow from '@material-ui/core/TableRow';
 import { Box } from "@material-ui/core";
 import ThumbUpAltOutlinedIcon from '@material-ui/icons/ThumbUpAltOutlined';
 import ThumbDownAltOutlinedIcon from '@material-ui/icons/ThumbDownAltOutlined';
-import ValidatedStudentTable from "./ValidatedStudentTable";
-import InternshipOfferService from '../services/InternshipOfferService';
-import { RowingSharp } from '@material-ui/icons';
 import InternshipApplicationService from '../services/InternshipApplicationService';
 
 
@@ -32,11 +22,6 @@ const useStyles = makeStyles({
   },
 });
 
-const state = {
-  applications: []
-}
-
-
 //other class
 
 export default function StudentInternshipApplicationValidationTable() {
@@ -46,20 +31,11 @@ export default function StudentInternshipApplicationValidationTable() {
   const classes = useStyles();
 
   const onApprovedClicked = (appId) => {
-    const request = {
-      applicationId: appId,
-      status: 'APPROVED'
-    }
-    InternshipApplicationService.approve(request).then(response => fetchApplications());
+    InternshipApplicationService.approve(appId).then(response => fetchApplications());
   };
 
   const onRejectedClicked = (appId) => {
-    const request = {
-      applicationId: appId,
-      status: 'REJECTED'
-    }
-    InternshipApplicationService.reject(request).then(response => fetchApplications());
-
+    InternshipApplicationService.reject(appId).then(response => fetchApplications());
   };
 
   const fetchApplications = async () => {
@@ -101,7 +77,7 @@ export default function StudentInternshipApplicationValidationTable() {
             <TableHead>
               <TableRow>
                 <TableCell align="center"><strong>Student Name</strong></TableCell>
-                <TableCell align="center"><strong>Company</strong></TableCell>
+                <TableCell align="center"><strong>Compagnie</strong></TableCell>
                 <TableCell align="center"><strong>Job Title</strong></TableCell>
                 <TableCell align="center"><strong>Date</strong></TableCell>
                 <TableCell align="center"><strong>Decision</strong></TableCell>

@@ -12,6 +12,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.Base64Utils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -59,14 +60,19 @@ public class PortfolioController {
     //
 
     @GetMapping("{uniqueId}")
-    public ResponseEntity<Resource> download(@Valid @PathVariable @ExistingPortfolioDocument UUID uniqueId) {
+    public ResponseEntity<byte[]> download(@Valid @PathVariable @ExistingPortfolioDocument UUID uniqueId) {
+
         PortfolioDocument portfolioDocument = portfolioService.download(uniqueId);
 
-        return ResponseEntity.ok()
-                .contentType(MediaType.parseMediaType(portfolioDocument.getFileType()))
-                .header(HttpHeaders.CONTENT_DISPOSITION,
-                        "attachment; filename=\"" + portfolioDocument.getFileName() + "\"")
-                .body(new ByteArrayResource(portfolioDocument.getData()));
+        byte[] data = Base64Utils.encode(portfolioDocument.getData());
+
+        HttpHeaders headers = new HttpHeaders();
+
+        headers.setContentType(MediaType.parseMediaType(portfolioDocument.getFileType()));
+        headers.setContentLength(data.length);
+        headers.set(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + portfolioDocument.getFileName() + "\"");
+
+        return ResponseEntity.ok().headers(headers).body(data);
     }
 
     @GetMapping("portfolio-documents/{userUniqueId}")

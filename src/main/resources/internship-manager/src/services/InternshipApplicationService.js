@@ -23,12 +23,20 @@ class InternshipApplicationService {
         return axios.get(Config.target + `/internship-application/internship-applications/${request}`, headers());
     }
 
+    getInternshipApplicationByOffer(request){
+        return axios.get(Config.target + `/internship-application/offer/${request}`, headers());
+    }
+
     approve(request){
-        return axios.put(Config.target + '/internship-application', request ,headers());
+        return axios.put(Config.target + `/internship-application/approve/${request}`, {}, headers());
     }
 
     reject(request){
-        return axios.put(Config.target + '/internship-application', request, headers());
+        return axios.put(Config.target + `/internship-application/reject/${request}`, {}, headers());
+    }
+
+    select(request){
+        return axios.put(Config.target + `/internship-application/select/${request}`, {}, headers());
     }
 
     getInternshipApplications(request){
