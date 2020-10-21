@@ -15,6 +15,7 @@ import TableRow from '@material-ui/core/TableRow';
 import PortfolioService from "../services/PortfolioService";
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 import { saveAs } from 'file-saver';
+import InternshipApplicationService from "../services/InternshipApplicationService";
 
 function _base64ToArrayBuffer(base64) {
   var binary_string = window.atob(base64);
@@ -33,7 +34,7 @@ export default function StudentDocumentsList (props) {
 
 
   const fetchPortfolioDocuments = async () => {
-    const response = await  PortfolioService.portfolioDocuments(props.selectedValue);
+    const response = await  InternshipApplicationService.applicationDocuments(props.selectedValue);
     setRows(response.data.portfolioDocuments)
   }
 

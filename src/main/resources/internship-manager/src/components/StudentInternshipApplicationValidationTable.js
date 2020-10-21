@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import Button from '@material-ui/core/Button';
+import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
+import Dialog from '@material-ui/core/Dialog';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
@@ -12,7 +14,9 @@ import TableRow from '@material-ui/core/TableRow';
 import { Box } from "@material-ui/core";
 import ThumbUpAltOutlinedIcon from '@material-ui/icons/ThumbUpAltOutlined';
 import ThumbDownAltOutlinedIcon from '@material-ui/icons/ThumbDownAltOutlined';
+import AttachmentIcon from '@material-ui/icons/Attachment';
 import InternshipApplicationService from '../services/InternshipApplicationService';
+import StudentDocumentsList from "./StudentDocumentsList";
 
 
 //tables values
@@ -24,11 +28,44 @@ const useStyles = makeStyles({
 
 //other class
 
-export default function StudentInternshipApplicationValidationTable() {
+function StudentPortfolioDetailsDialogProps(props) {
 
+  const { onClose, selectedValue, open } = props;
+
+  const handleClose = () => {
+    onClose(selectedValue);
+  };
+
+  return (
+    <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
+      <StudentDocumentsList onClose={handleClose} selectedValue={selectedValue} />
+    </Dialog>
+  );
+
+}
+
+StudentPortfolioDetailsDialogProps.propTypes = {
+  onClose: PropTypes.func.isRequired,
+  open: PropTypes.bool.isRequired,
+  selectedValue: PropTypes.string.isRequired,
+};
+
+
+export default function StudentInternshipApplicationValidationTable(props) {
+  const [open, setOpen] = React.useState(false);
   const [rows, setRows] = useState([]);
+  const [currentApplicationId, setCurrentApplicationId] = useState('');
 
   const classes = useStyles();
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleClickOpen = (applicationId) => {
+    setCurrentApplicationId(applicationId)
+    setOpen(true);
+  };
 
   const onApprovedClicked = (appId) => {
     InternshipApplicationService.approve(appId).then(response => fetchApplications());
@@ -110,9 +147,21 @@ export default function StudentInternshipApplicationValidationTable() {
                         Refuser
                         </Button>
                     </Box>
+
+                    <Box margin={1}>
+                    <Button
+                      variant="contained" color="secondary"
+                      size="small"
+                      onClick={() => handleClickOpen(application.uniqueId)}
+                      startIcon={<AttachmentIcon />}
+                    >
+                      Documents
+                    </Button>
+                  </Box>
                   </TableCell>
                 </TableRow>
               ))}
+              <StudentPortfolioDetailsDialogProps open={open} onClose={handleClose} selectedValue={currentApplicationId} />
             </TableBody>
           </Table>
         </TableContainer>

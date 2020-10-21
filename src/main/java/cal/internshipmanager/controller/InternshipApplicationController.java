@@ -3,6 +3,7 @@ package cal.internshipmanager.controller;
 import cal.internshipmanager.model.InternshipApplication;
 import cal.internshipmanager.request.InternshipApplicationCreationRequest;
 import cal.internshipmanager.response.InternshipApplicationListResponse;
+import cal.internshipmanager.response.PortfolioDocumentListResponse;
 import cal.internshipmanager.service.InternshipApplicationService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -49,6 +50,11 @@ public class InternshipApplicationController {
     @GetMapping("offer/{uniqueId}")
     public InternshipApplicationListResponse findByOffer(@PathVariable UUID uniqueId) {
         return internshipApplicationService.findByOffer(uniqueId);
+    }
+
+    @GetMapping("documents/{uniqueId}")
+    public PortfolioDocumentListResponse applicationDocuments(@PathVariable UUID uniqueId) {
+        return internshipApplicationService.applicationDocuments(uniqueId);
     }
 
     //

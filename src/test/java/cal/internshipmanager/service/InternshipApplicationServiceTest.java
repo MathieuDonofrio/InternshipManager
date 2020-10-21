@@ -10,6 +10,7 @@ import cal.internshipmanager.repository.PortfolioDocumentRepository;
 import cal.internshipmanager.repository.UserRepository;
 import cal.internshipmanager.request.InternshipApplicationCreationRequest;
 import cal.internshipmanager.response.InternshipApplicationListResponse;
+import cal.internshipmanager.response.PortfolioDocumentListResponse;
 import cal.internshipmanager.security.JwtAuthentication;
 import cal.internshipmanager.security.JwtProvider;
 import com.auth0.jwt.interfaces.DecodedJWT;
@@ -42,6 +43,57 @@ public class InternshipApplicationServiceTest {
 
     @Mock
     private InternshipOfferRepository internshipOfferRepository;
+
+    @Test
+    public void portfolioDocuments_validRequest() {
+        //Arrange
+
+        User user = new User();
+
+        user.setUniqueId(UUID.randomUUID());
+
+
+        InternshipOffer internshipOffer = new InternshipOffer();
+
+        internshipOffer.setUniqueId(UUID.randomUUID());
+
+        List<PortfolioDocument> applicationDocuments = new ArrayList<>();
+        PortfolioDocument portfolioDocument = new PortfolioDocument();
+
+        portfolioDocument.setUniqueId(UUID.randomUUID());
+        portfolioDocument.setUserUniqueId(user.getUniqueId());
+        portfolioDocument.setFileName("Test1");
+        portfolioDocument.setType("Test2");
+        portfolioDocument.setUploadDate(new Date());
+        portfolioDocument.setData(new byte[]{1, 2, 3});
+
+        applicationDocuments.add(portfolioDocument);
+
+
+        InternshipApplication internshipApplication = new InternshipApplication();
+
+        internshipApplication.setUniqueId(UUID.randomUUID());
+        internshipApplication.setStudentUniqueId(user.getUniqueId());
+        internshipApplication.setOfferUniqueId(internshipOffer.getUniqueId());
+        internshipApplication.setStatus(InternshipApplication.Status.APPROVED);
+        internshipApplication.setDocuments(applicationDocuments);
+        internshipApplication.setDate(new Date());
+
+        InternshipApplicationService applicationService=new InternshipApplicationService(
+                internshipApplicationRepository, portfolioDocumentRepository, userRepository, internshipOfferRepository);
+
+        Mockito.when(internshipApplicationRepository.findById(internshipApplication.getUniqueId())).thenReturn(Optional.of(internshipApplication));
+
+        //Act
+
+        PortfolioDocumentListResponse response = applicationService.applicationDocuments(internshipApplication.getUniqueId());
+        PortfolioDocumentListResponse.PortfolioDocument document = response.getPortfolioDocuments().get(0);
+
+        //Assert
+
+        assertEquals(portfolioDocument.getUniqueId(),document.getUniqueId());
+        assertEquals(portfolioDocument.getType(),document.getType());
+    }
 
     @Test
     public void internshipApplications_validRequest() {
