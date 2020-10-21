@@ -24,11 +24,11 @@ class InternshipApplicationService {
     }
 
     approve(request){
-        return axios.put(Config.target + '/internship-application', request ,headers());
+        return axios.put(Config.target + `/internship-application/approve/${request}`, headers());
     }
 
     reject(request){
-        return axios.put(Config.target + '/internship-application', request, headers());
+        return axios.put(Config.target + `/internship-application/reject/${request}`, headers());
     }
 
     getInternshipApplications(request){
