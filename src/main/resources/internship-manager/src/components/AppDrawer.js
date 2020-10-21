@@ -28,6 +28,7 @@ import { useHistory } from 'react-router-dom';
 import GavelOutlinedIcon from '@material-ui/icons/GavelOutlined';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
 
 const drawerWidth = 240;
 
@@ -238,7 +239,7 @@ export default function AppDrawer(props) {
               button
               key={"Student Selection"}
               onClick={() => history.push("/student-selection-page")}>
-              <ListItemIcon><CreateIcon /> </ListItemIcon>
+              <ListItemIcon><AssignmentTurnedInIcon /> </ListItemIcon>
               <ListItemText primary={"Student Selection"} />
             </ListItem>
           </List>
