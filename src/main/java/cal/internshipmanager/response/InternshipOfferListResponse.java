@@ -2,11 +2,12 @@ package cal.internshipmanager.response;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
 
 @Data
-public class InternshipOfferListResponse {
+public class InternshipOfferListResponse implements Serializable {
 
     //
     // Fields
@@ -45,10 +46,11 @@ public class InternshipOfferListResponse {
     }
 
     //
-    // Mapping
+    // Utils
     //
 
     public static InternshipOffer map(cal.internshipmanager.model.InternshipOffer from) {
+
         InternshipOffer internshipOffer = new InternshipOffer();
 
         internshipOffer.uniqueId = from.getUniqueId();

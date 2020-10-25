@@ -55,20 +55,15 @@ class InternshipOfferService {
         return axios.get(Config.target + '/internship-offer/rejected', headers());
     }
 
-    users(request){
-        return axios.get(Config.target + `/internship-offer/users/${request}`, headers())
-    }
-
     accessible(request){
         return axios.get(Config.target + `/internship-offer/accessible/${request}`, headers());
     }
-    
-    // TODO: move to user service
-    getAllStudent(){ // WTF?
-        return axios.get(Config.target + `/user/students`, headers())
+
+    users(request){
+        return axios.get(Config.target + `/internship-offer/users/${request}`, headers())
     }
     
-    getInternshipOfferByEmployer(request){
+    findAllByEmployer(request){
         return axios.get(Config.target + '/internship-offer/employer/'+request, headers());
     }
 

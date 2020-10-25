@@ -1,10 +1,7 @@
 package cal.internshipmanager.controller;
 
-import cal.internshipmanager.model.PortfolioDocument;
-import cal.internshipmanager.service.AuthenticationService;
 import cal.internshipmanager.service.ContractService;
 import cal.internshipmanager.validator.ExistingInternshipApplication;
-import cal.internshipmanager.validator.ExistingPortfolioDocument;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -18,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 import java.util.UUID;
 
-@RestController()
+@RestController
 @RequestMapping("/contract")
 public class ContractController {
 

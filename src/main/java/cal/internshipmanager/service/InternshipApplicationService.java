@@ -1,7 +1,9 @@
 package cal.internshipmanager.service;
 
 import cal.internshipmanager.model.InternshipApplication;
+import cal.internshipmanager.model.InternshipOffer;
 import cal.internshipmanager.model.PortfolioDocument;
+import cal.internshipmanager.model.User;
 import cal.internshipmanager.repository.InternshipApplicationRepository;
 import cal.internshipmanager.repository.InternshipOfferRepository;
 import cal.internshipmanager.repository.PortfolioDocumentRepository;
@@ -9,19 +11,14 @@ import cal.internshipmanager.repository.UserRepository;
 import cal.internshipmanager.request.InternshipApplicationCreationRequest;
 import cal.internshipmanager.response.InternshipApplicationListResponse;
 import cal.internshipmanager.response.PortfolioDocumentListResponse;
-import cal.internshipmanager.validator.ExistingInternshipApplication;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
-@Validated
 public class InternshipApplicationService {
 
     //
@@ -54,23 +51,25 @@ public class InternshipApplicationService {
     // Services
     //
 
-    public void create(@Valid InternshipApplicationCreationRequest request) {
+    public void create(InternshipApplicationCreationRequest request) {
 
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         UUID userUniqueId = UUID.fromString((String) authentication.getPrincipal());
 
-        List<PortfolioDocument> documents = new ArrayList<>();
+        User student = userRepository.findById(userUniqueId).orElse(null);
 
-        for (UUID portfolioDocumentUniqueId : request.getDocuments())
-            portfolioDocumentRepository.findById(portfolioDocumentUniqueId)
-                    .ifPresent(x -> documents.add(x));
+        InternshipOffer offer = internshipOfferRepository.findById(request.getOfferUniqueId()).orElse(null);
+
+        List<PortfolioDocument> documents = request.getDocuments().stream()
+                .map(portfolioDocumentRepository::findById)
+                .map(Optional::get).collect(Collectors.toList());
 
         InternshipApplication internshipApplication = new InternshipApplication();
 
         internshipApplication.setUniqueId(UUID.randomUUID());
-        internshipApplication.setStudentUniqueId(userUniqueId);
-        internshipApplication.setOfferUniqueId(request.getOfferUniqueId());
+        internshipApplication.setStudent(student);
+        internshipApplication.setOffer(offer);
         internshipApplication.setDate(new Date());
         internshipApplication.setDocuments(documents);
         internshipApplication.setStatus(InternshipApplication.Status.PENDING_APPROVAL);
@@ -78,33 +77,33 @@ public class InternshipApplicationService {
         internshipApplicationRepository.save(internshipApplication);
     }
 
-    public InternshipApplicationListResponse internshipApplications(@NotNull UUID userUniqueId) {
+    public InternshipApplicationListResponse internshipApplications(UUID userUniqueId) {
 
         List<InternshipApplication> userApplications = internshipApplicationRepository.findAllByStudentUniqueId(userUniqueId);
 
         InternshipApplicationListResponse response = new InternshipApplicationListResponse();
 
         response.setApplications(userApplications.stream()
-                .map(x -> InternshipApplicationListResponse.map(userRepository, internshipOfferRepository, x))
+                .map(InternshipApplicationListResponse::map)
                 .collect(Collectors.toList()));
 
         return response;
     }
 
-    public InternshipApplicationListResponse findByStatus(@Valid InternshipApplication.Status status) {
+    public InternshipApplicationListResponse findByStatus(InternshipApplication.Status status) {
 
         List<InternshipApplication> allApplications = internshipApplicationRepository.findAllByStatus(status);
 
         InternshipApplicationListResponse response = new InternshipApplicationListResponse();
 
         response.setApplications(allApplications.stream()
-                .map(x -> InternshipApplicationListResponse.map(userRepository, internshipOfferRepository, x))
+                .map(InternshipApplicationListResponse::map)
                 .collect(Collectors.toList()));
 
         return response;
     }
 
-    public void approve(@NotNull UUID uniqueId){
+    public void approve(UUID uniqueId){
 
         InternshipApplication application = internshipApplicationRepository.findById(uniqueId).orElse(null);
 
@@ -113,7 +112,7 @@ public class InternshipApplicationService {
         internshipApplicationRepository.save(application);
     }
 
-    public void reject(@NotNull UUID uniqueId){
+    public void reject(UUID uniqueId){
 
         InternshipApplication application = internshipApplicationRepository.findById(uniqueId).orElse(null);
 
@@ -122,7 +121,7 @@ public class InternshipApplicationService {
         internshipApplicationRepository.save(application);
     }
 
-    public void select(@NotNull UUID uniqueId){
+    public void select(UUID uniqueId){
         InternshipApplication application = internshipApplicationRepository.findById(uniqueId).orElse(null);
 
         application.setStatus(InternshipApplication.Status.SELECTED);
@@ -130,32 +129,29 @@ public class InternshipApplicationService {
         internshipApplicationRepository.save(application);
     }
 
-
-    public InternshipApplicationListResponse findByOffer(@NotNull UUID uniqueId) {
+    public InternshipApplicationListResponse findByOffer(UUID uniqueId) {
 
         List<InternshipApplication> allApplications = internshipApplicationRepository.findAllByOfferUniqueIdAndStatus(uniqueId, InternshipApplication.Status.APPROVED);
 
         InternshipApplicationListResponse response = new InternshipApplicationListResponse();
 
         response.setApplications(allApplications.stream()
-                .map(x -> InternshipApplicationListResponse.map(userRepository, internshipOfferRepository, x))
+                .map(InternshipApplicationListResponse::map)
                 .collect(Collectors.toList()));
 
         return response;
     }
 
-    public PortfolioDocumentListResponse applicationDocuments(@ExistingInternshipApplication UUID uniqueId) {
+    public PortfolioDocumentListResponse applicationDocuments(UUID uniqueId) {
 
         InternshipApplication application = internshipApplicationRepository.findById(uniqueId).orElse(null);
 
         PortfolioDocumentListResponse response = new PortfolioDocumentListResponse();
 
         response.setPortfolioDocuments(application.getDocuments().stream()
-                .map(x -> PortfolioDocumentListResponse.map(x)).collect(Collectors.toList()));
+                .map(PortfolioDocumentListResponse::map).collect(Collectors.toList()));
 
         return response;
     }
-
-
 
 }

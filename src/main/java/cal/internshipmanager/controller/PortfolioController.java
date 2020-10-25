@@ -1,18 +1,14 @@
 package cal.internshipmanager.controller;
 
-import cal.internshipmanager.model.PortfolioDocument;
 import cal.internshipmanager.request.PortfolioDocumentDeleteRequest;
+import cal.internshipmanager.response.DownloadFileResponse;
 import cal.internshipmanager.response.PortfolioDocumentListResponse;
 import cal.internshipmanager.service.PortfolioService;
 import cal.internshipmanager.validator.ExistingPortfolioDocument;
 import cal.internshipmanager.validator.ExistingUser;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.Base64Utils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -45,8 +41,8 @@ public class PortfolioController {
     //
 
     @PostMapping("upload")
-    public void upload(@NotBlank @RequestParam("type") String type,
-                       @NotNull @RequestParam("file") MultipartFile file) {
+    public void upload(@Valid @NotBlank @RequestParam("type") String type,
+                       @Valid @NotNull @RequestParam("file") MultipartFile file) {
         portfolioService.upload(type, file);
     }
 
@@ -60,23 +56,12 @@ public class PortfolioController {
     //
 
     @GetMapping("{uniqueId}")
-    public ResponseEntity<byte[]> download(@Valid @PathVariable @ExistingPortfolioDocument UUID uniqueId) {
-
-        PortfolioDocument portfolioDocument = portfolioService.download(uniqueId);
-
-        byte[] data = Base64Utils.encode(portfolioDocument.getData());
-
-        HttpHeaders headers = new HttpHeaders();
-
-        headers.setContentType(MediaType.parseMediaType(portfolioDocument.getFileType()));
-        headers.setContentLength(data.length);
-        headers.set(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + portfolioDocument.getFileName() + "\"");
-
-        return ResponseEntity.ok().headers(headers).body(data);
+    public ResponseEntity<Resource> download(@Valid @ExistingPortfolioDocument @PathVariable UUID uniqueId) {
+        return DownloadFileResponse.ResponseEntity(portfolioService.download(uniqueId));
     }
 
     @GetMapping("portfolio-documents/{userUniqueId}")
-    public PortfolioDocumentListResponse portfolioDocuments(@Valid @PathVariable @ExistingUser UUID userUniqueId) {
+    public PortfolioDocumentListResponse portfolioDocuments(@Valid @ExistingUser @PathVariable UUID userUniqueId) {
         return portfolioService.portfolioDocuments(userUniqueId);
     }
 

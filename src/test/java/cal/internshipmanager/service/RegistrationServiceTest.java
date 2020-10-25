@@ -4,7 +4,6 @@ import cal.internshipmanager.model.User;
 import cal.internshipmanager.repository.UserRepository;
 import cal.internshipmanager.request.EmployerRegistrationRequest;
 import cal.internshipmanager.request.StudentRegistrationRequest;
-import cal.internshipmanager.response.RegistrationResponse;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,23 +40,19 @@ public class RegistrationServiceTest {
 
         when(userRepository.save(any())).then(inv -> {
 
-            User user = (User) inv.getArgument(0);
+            User user = inv.getArgument(0);
 
             assertNotNull(user.getUniqueId());
             assertEquals(request.getEmail(), user.getEmail());
             assertEquals(request.getFirstName(), user.getFirstName());
             assertEquals(request.getLastName(), user.getLastName());
-            assertEquals("STUDENT", user.getType());
+            assertEquals(User.Type.STUDENT, user.getType());
             assertTrue(passwordEncoder.matches(request.getPassword(), user.getPasswordHash()));
 
             return null;
         });
 
-        RegistrationResponse response = service.student(request);
-
-        assertNotNull(response);
-
-        assertNotNull(response.getUserUniqueId());
+        service.student(request);
     }
 
     @Test
@@ -79,23 +74,19 @@ public class RegistrationServiceTest {
 
         when(userRepository.save(any())).then(inv -> {
 
-            User user = (User) inv.getArgument(0);
+            User user = inv.getArgument(0);
 
             assertEquals(request.getEmail(), user.getEmail());
             assertEquals(request.getFirstName(), user.getFirstName());
             assertEquals(request.getLastName(), user.getLastName());
-            assertEquals("EMPLOYER", user.getType());
+            assertEquals(User.Type.EMPLOYER, user.getType());
             assertEquals(request.getCompany(), user.getCompany());
             assertTrue(passwordEncoder.matches(request.getPassword(), user.getPasswordHash()));
 
             return null;
         });
 
-        RegistrationResponse response = service.employer(request);
-
-        assertNotNull(response);
-
-        assertNotNull(response.getUserUniqueId());
+        service.employer(request);
     }
 
 }

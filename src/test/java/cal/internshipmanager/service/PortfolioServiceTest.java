@@ -4,6 +4,7 @@ import cal.internshipmanager.model.PortfolioDocument;
 import cal.internshipmanager.model.User;
 import cal.internshipmanager.repository.PortfolioDocumentRepository;
 import cal.internshipmanager.request.PortfolioDocumentDeleteRequest;
+import cal.internshipmanager.response.DownloadFileResponse;
 import cal.internshipmanager.response.PortfolioDocumentListResponse;
 import cal.internshipmanager.security.JwtAuthentication;
 import cal.internshipmanager.security.JwtProvider;
@@ -12,11 +13,11 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
 
@@ -67,7 +68,6 @@ public class PortfolioServiceTest {
         assertEquals(portfolioDocument.getFileType(), document.getFileType());
         assertEquals(portfolioDocument.getType(), document.getType());
         assertEquals(portfolioDocument.getUploadDate().getTime(), document.getUploadDate());
-        assertTrue(Arrays.equals(portfolioDocument.getData(), document.getData()));
     }
 
     @Test
@@ -78,7 +78,7 @@ public class PortfolioServiceTest {
         User user = new User();
 
         user.setUniqueId(UUID.randomUUID());
-        user.setType("STUDENT");
+        user.setType(User.Type.STUDENT);
         user.setEmail("toto@gmail.com");
         user.setFirstName("Toto");
         user.setLastName("Tata");
@@ -98,7 +98,7 @@ public class PortfolioServiceTest {
 
         when(portfolioDocumentRepository.save(any())).then(inv -> {
 
-            PortfolioDocument portfolioDocument = (PortfolioDocument) inv.getArgument(0);
+            PortfolioDocument portfolioDocument = inv.getArgument(0);
 
             assertNotNull(portfolioDocument.getUniqueId());
             assertEquals(user.getUniqueId(), portfolioDocument.getUserUniqueId());
@@ -136,16 +136,14 @@ public class PortfolioServiceTest {
 
         // Act
 
-        PortfolioDocument response = portfolioService.download(portfolioDocument.getUniqueId());
+        DownloadFileResponse response = portfolioService.download(portfolioDocument.getUniqueId());
 
         // Assert
 
-        assertEquals(portfolioDocument.getUniqueId(), response.getUniqueId());
-        assertEquals(portfolioDocument.getFileName(), response.getFileName());
-        assertEquals(portfolioDocument.getFileType(), response.getFileType());
-        assertEquals(portfolioDocument.getType(), response.getType());
-        assertEquals(portfolioDocument.getUploadDate(), response.getUploadDate());
-        assertTrue(Arrays.equals(portfolioDocument.getData(), response.getData()));
+        assertEquals(portfolioDocument.getFileName(), response.getName());
+        assertEquals(portfolioDocument.getFileType(), response.getType());
+        assertEquals(portfolioDocument.getData().length, response.getLength());
+        assertEquals(new ByteArrayResource(portfolioDocument.getData()), response.getResource());
     }
 
     @Test
@@ -196,17 +194,17 @@ public class PortfolioServiceTest {
         }
 
         @Override
-        public byte[] getBytes() throws IOException {
+        public byte[] getBytes() {
             return new byte[]{1, 2, 3};
         }
 
         @Override
-        public InputStream getInputStream() throws IOException {
+        public InputStream getInputStream() {
             return null;
         }
 
         @Override
-        public void transferTo(File file) throws IOException, IllegalStateException {
+        public void transferTo(File file) throws IllegalStateException {
 
         }
     }

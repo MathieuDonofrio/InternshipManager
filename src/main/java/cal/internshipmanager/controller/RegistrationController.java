@@ -2,7 +2,6 @@ package cal.internshipmanager.controller;
 
 import cal.internshipmanager.request.EmployerRegistrationRequest;
 import cal.internshipmanager.request.StudentRegistrationRequest;
-import cal.internshipmanager.response.RegistrationResponse;
 import cal.internshipmanager.service.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,13 +35,13 @@ public class RegistrationController {
     //
 
     @PostMapping("student")
-    public RegistrationResponse student(@Valid @RequestBody StudentRegistrationRequest request) {
-        return registrationService.student(request);
+    public void student(@Valid @RequestBody StudentRegistrationRequest request) {
+        registrationService.student(request);
     }
 
     @PostMapping("employer")
-    public RegistrationResponse employer(@Valid @RequestBody EmployerRegistrationRequest request) {
-        return registrationService.employer(request);
+    public void employer(@Valid @RequestBody EmployerRegistrationRequest request) {
+        registrationService.employer(request);
     }
 
 }

@@ -72,7 +72,7 @@ public final class JwtProvider {
 
         return JWT.create()
                 .withSubject(user.getUniqueId().toString())
-                .withClaim("Type", user.getType())
+                .withClaim("Type", user.getType().toString())
                 .withIssuedAt(new Date(time))
                 .withExpiresAt(new Date(time + duration))
                 .sign(algorithm);

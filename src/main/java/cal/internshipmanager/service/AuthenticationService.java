@@ -8,12 +8,8 @@ import cal.internshipmanager.security.JwtProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
-
-import javax.validation.Valid;
 
 @Service
-@Validated
 public class AuthenticationService {
 
     //
@@ -52,7 +48,7 @@ public class AuthenticationService {
      * @param request authentication request
      * @return authentication response
      */
-    public AuthenticationResponse authenticate(@Valid AuthenticationRequest request) {
+    public AuthenticationResponse authenticate(AuthenticationRequest request) {
 
         AuthenticationResponse response = new AuthenticationResponse();
 
@@ -63,7 +59,7 @@ public class AuthenticationService {
             String token = jwtProvider.generate(user);
 
             response.setUserUniqueId(user.getUniqueId());
-            response.setUserType(user.getType());
+            response.setUserType(user.getType().toString());
             response.setToken(token);
         }
 

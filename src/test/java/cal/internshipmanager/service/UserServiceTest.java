@@ -26,7 +26,7 @@ public class UserServiceTest {
         User user = new User();
 
         user.setUniqueId(UUID.randomUUID());
-        user.setType("STUDENT");
+        user.setType(User.Type.STUDENT);
         user.setEmail("toto@gmail.com");
         user.setFirstName("Toto");
         user.setLastName("Tata");
@@ -46,7 +46,7 @@ public class UserServiceTest {
         for (UserListReponse.User user1 : response.getUsers()) {
 
             assertEquals(user.getUniqueId(), user1.getUniqueId());
-            assertEquals(user.getType(), user1.getType());
+            assertEquals(user.getType().toString(), user1.getType());
             assertEquals(user.getEmail(), user1.getEmail());
             assertEquals(user.getFirstName(), user1.getFirstName());
             assertEquals(user.getLastName(), user1.getLastName());
@@ -62,7 +62,7 @@ public class UserServiceTest {
         User user = new User();
 
         user.setUniqueId(UUID.randomUUID());
-        user.setType("STUDENT");
+        user.setType(User.Type.STUDENT);
         user.setEmail("toto@gmail.com");
         user.setFirstName("Toto");
         user.setLastName("Tata");

@@ -15,17 +15,29 @@ function headers() {
 
 class InternshipApplicationService {
 
-    createInternshipApplication(request) {
-        return axios.post(Config.target + '/internship-application/create', request, headers());
-    }
+    //
+    // Get
+    //
 
     internshipApplications(request){
         return axios.get(Config.target + `/internship-application/internship-applications/${request}`, headers());
     }
 
-    getInternshipApplicationByOffer(request){
+    pendingApproval(){
+        return axios.get(Config.target + `/internship-application/PENDING_APPROVAL`, headers());
+    }
+
+    findByOffer(request){
         return axios.get(Config.target + `/internship-application/offer/${request}`, headers());
     }
+
+    applicationDocuments(request){
+        return axios.get(Config.target + `/internship-application/documents/${request}`, headers());
+    }
+
+    //
+    // Put
+    //
 
     approve(request){
         return axios.put(Config.target + `/internship-application/approve/${request}`, {}, headers());
@@ -39,18 +51,14 @@ class InternshipApplicationService {
         return axios.put(Config.target + `/internship-application/select/${request}`, {}, headers());
     }
 
-    getInternshipApplications(request){
-        return axios.get(Config.target + `/internship-application/${request}`, headers());
-    }
+    //
+    // Post
+    //
 
-    getInternshipPendingApplications(){
-        const request= "PENDING_APPROVAL";
-        return axios.get(Config.target + `/internship-application/${request}`, headers());
+    createInternshipApplication(request) {
+        return axios.post(Config.target + '/internship-application/create', request, headers());
     }
-
-    applicationDocuments(request){
-        return axios.get(Config.target + `/internship-application/documents/${request}`, headers());
-    }
+    
 }
 
 export default new InternshipApplicationService();

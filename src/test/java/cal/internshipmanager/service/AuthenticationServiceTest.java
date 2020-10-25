@@ -45,6 +45,7 @@ public class AuthenticationServiceTest {
 
         user.setUniqueId(UUID.randomUUID());
         user.setEmail(request.getEmail());
+        user.setType(User.Type.STUDENT);
         user.setPasswordHash(passwordEncoder.encode(request.getPassword()));
 
         when(userRepository.findByEmail(any())).thenReturn(Optional.of(user));
@@ -77,7 +78,7 @@ public class AuthenticationServiceTest {
 
         user.setUniqueId(UUID.randomUUID());
         user.setEmail(request.getEmail());
-        user.setType("STUDENT");
+        user.setType(User.Type.STUDENT);
         user.setPasswordHash(passwordEncoder.encode("123456789"));
 
         when(userRepository.findByEmail(any())).thenReturn(Optional.of(user));
@@ -89,7 +90,7 @@ public class AuthenticationServiceTest {
         assertNotNull(response);
 
         assertEquals(user.getUniqueId(), response.getUserUniqueId());
-        assertEquals(user.getType(), response.getUserType());
+        assertEquals(user.getType().toString(), response.getUserType());
         assertNotNull(response.getToken());
     }
 

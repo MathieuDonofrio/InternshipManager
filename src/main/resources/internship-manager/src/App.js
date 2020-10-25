@@ -12,12 +12,11 @@ import InternshipOfferCreationPage from './pages/InternshipOfferCreationPage';
 import HomePage from './pages/HomePage';
 import StudentInternshipOfferValidationPage from './pages/StudentInternshipOfferValidationPage';
 import PendingApprovalPage from './pages/PendingApprovalPage';
-import Portfolio from './components/Portfolio';
 import PortfolioPage from './pages/PortfolioPage';
 import StudentInternshipApplicationPage from './pages/StudentInternshipApplicationPage';
 import StudentInternshipApplicationValidationPage from './pages/StudentInternshipApplicationValidationPage';
-import StudentInternshipApplicationStatus from './pages/StudentInternshipApplicationStatus';
 import StudentSelectionPage from './pages/StudentSelectionPage';
+import StudentInternshipApplicationStatusPage from './pages/StudentInternshipApplicationStatusPage';
 
 function App() {
   
@@ -55,7 +54,7 @@ function App() {
               <Route exact path="/portfolio" component={PortfolioPage}></Route>
 
               <Route exact path="/internship-application-validation" component={StudentInternshipApplicationValidationPage}></Route>
-              <Route exact path="/internship-application-status" component={StudentInternshipApplicationStatus}></Route>
+              <Route exact path="/internship-application-status" component={StudentInternshipApplicationStatusPage}></Route>
               <Route exact path="/student-selection-page" component={StudentSelectionPage}></Route>
 
 

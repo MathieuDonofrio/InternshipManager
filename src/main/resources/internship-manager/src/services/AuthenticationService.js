@@ -7,6 +7,10 @@ const headers = {
 
 class AuthenticationService {
 
+  //
+  // Post
+  //
+
   authenticate(request) {
     return axios.post(Config.target + '/authenticate', request, headers)
       .then(response => {
@@ -16,6 +20,10 @@ class AuthenticationService {
         localStorage.setItem('LastAuthenticationDate', new Date().getTime())
       });
   }
+
+  //
+  // Non-HTTP
+  //
 
   logout(){
     localStorage.setItem('UserUniqueId', '');

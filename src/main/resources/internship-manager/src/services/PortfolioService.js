@@ -14,6 +14,18 @@ function uploadHeaders() {
     }
 }
 
+function downloadHeaders() {
+
+    let token = localStorage.getItem("AccessToken");
+
+    return {
+        headers: {
+            'Authorization': token
+        },
+        responseType: 'blob'
+    }
+}
+
 function headers() {
 
     let token = localStorage.getItem("AccessToken");
@@ -21,12 +33,16 @@ function headers() {
     return {
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': token
+            'Authorization': token,
         }
     }
 }
 
 class PortfolioService {
+
+    //
+    // Post
+    //
 
     upload(request){
         let fd = new FormData();
@@ -37,12 +53,16 @@ class PortfolioService {
         return axios.post(Config.target + '/portfolio/upload', fd, uploadHeaders());
     }
 
-    download(request){
-        return axios.get(Config.target + `/portfolio/${request}`, headers());
-    }
-
     delete(request) {
         return axios.post(Config.target + '/portfolio/delete', request, headers());
+    }
+
+    //
+    // Get
+    //
+
+    download(request){
+        return axios.get(Config.target + `/portfolio/${request}`, downloadHeaders());
     }
     
     portfolioDocuments(request) {

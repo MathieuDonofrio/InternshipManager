@@ -75,7 +75,7 @@ public class StudentLoader implements CommandLineRunner {
         User user = new User();
 
         user.setUniqueId(UUID.randomUUID());
-        user.setType("STUDENT");
+        user.setType(User.Type.STUDENT);
         user.setEmail(email);
         user.setFirstName(firstName);
         user.setLastName(lastName);

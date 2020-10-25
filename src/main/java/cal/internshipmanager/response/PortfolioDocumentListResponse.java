@@ -2,11 +2,12 @@ package cal.internshipmanager.response;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
 
 @Data
-public class PortfolioDocumentListResponse {
+public class PortfolioDocumentListResponse implements Serializable {
 
     //
     // Fields
@@ -32,15 +33,14 @@ public class PortfolioDocumentListResponse {
 
         private long uploadDate;
 
-        private byte[] data;
-
     }
 
     //
-    // Mapping
+    // Utils
     //
 
     public static PortfolioDocument map(cal.internshipmanager.model.PortfolioDocument from) {
+
         PortfolioDocument portfolioDocument = new PortfolioDocument();
 
         portfolioDocument.uniqueId = from.getUniqueId();
@@ -48,7 +48,6 @@ public class PortfolioDocumentListResponse {
         portfolioDocument.fileType = from.getFileType();
         portfolioDocument.type = from.getType();
         portfolioDocument.uploadDate = from.getUploadDate().getTime();
-        portfolioDocument.data = from.getData();
 
         return portfolioDocument;
     }

@@ -19,7 +19,7 @@ public class User implements Serializable {
     @Id
     private UUID uniqueId;
 
-    private String type;
+    private Type type;
 
     private String email;
 
@@ -30,5 +30,13 @@ public class User implements Serializable {
     private String lastName;
 
     private String company;
+
+    //
+    // Inner classes & Enums
+    //
+
+    public enum Type {
+        STUDENT, EMPLOYER, ADMINISTRATOR;
+    }
 
 }

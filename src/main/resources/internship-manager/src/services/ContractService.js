@@ -1,6 +1,18 @@
 import axios from 'axios'
 import { Config } from "../environment";
 
+function downloadHeaders() {
+
+    let token = localStorage.getItem("AccessToken");
+
+    return {
+        headers: {
+            'Authorization': token
+        },
+        responseType: 'blob'
+    }
+}
+
 function headers() {
 
     let token = localStorage.getItem("AccessToken");
@@ -15,8 +27,12 @@ function headers() {
 
 class ContractService {
 
+    //
+    // Get
+    //
+
     generate(request){
-        return axios.get(Config.target + `/contract/internship-application/${request}`, headers());
+        return axios.get(Config.target + `/contract/internship-application/${request}`, downloadHeaders());
     }
 
 }

@@ -74,7 +74,7 @@ public class EmployerLoader implements CommandLineRunner {
         User user = new User();
 
         user.setUniqueId(UUID.randomUUID());
-        user.setType("EMPLOYER");
+        user.setType(User.Type.EMPLOYER);
         user.setEmail(email);
         user.setFirstName(firstName);
         user.setLastName(lastName);

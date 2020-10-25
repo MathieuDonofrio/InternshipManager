@@ -42,7 +42,7 @@ public class InternshipOfferServiceTest {
         User user = new User();
 
         user.setUniqueId(UUID.randomUUID());
-        user.setType("EMPLOYER");
+        user.setType(User.Type.EMPLOYER);
 
         String token = jwtProvider.generate(user);
         DecodedJWT decodedToken = jwtProvider.verify(token);
@@ -65,7 +65,7 @@ public class InternshipOfferServiceTest {
 
         when(internshipOfferRepository.save(any())).then(inv -> {
 
-            InternshipOffer internshipOffer = (InternshipOffer) inv.getArgument(0);
+            InternshipOffer internshipOffer = inv.getArgument(0);
 
             assertNotNull(internshipOffer.getUniqueId());
             assertEquals(user.getUniqueId(), internshipOffer.getEmployer());
@@ -105,7 +105,7 @@ public class InternshipOfferServiceTest {
 
         when(internshipOfferRepository.save(any())).then(inv -> {
 
-            InternshipOffer offer = (InternshipOffer) inv.getArgument(0);
+            InternshipOffer offer = inv.getArgument(0);
 
             assertEquals(InternshipOffer.Status.APPROVED, offer.getStatus());
 
@@ -136,7 +136,7 @@ public class InternshipOfferServiceTest {
 
         when(internshipOfferRepository.save(any())).then(inv -> {
 
-            InternshipOffer offer = (InternshipOffer) inv.getArgument(0);
+            InternshipOffer offer = inv.getArgument(0);
 
             assertEquals(InternshipOffer.Status.REJECTED, offer.getStatus());
 
@@ -307,7 +307,7 @@ public class InternshipOfferServiceTest {
         User user = new User();
 
         user.setUniqueId(UUID.randomUUID());
-        user.setType("STUDENT");
+        user.setType(User.Type.STUDENT);
         user.setEmail("toto@gmail.com");
         user.setFirstName("Toto");
         user.setLastName("Tata");
@@ -329,7 +329,7 @@ public class InternshipOfferServiceTest {
 
         when(internshipOfferRepository.save(any())).then(inv -> {
 
-            InternshipOffer offer = (InternshipOffer) inv.getArgument(0);
+            InternshipOffer offer = inv.getArgument(0);
 
             User user1 = offer.getUsers().get(0);
 
@@ -363,7 +363,7 @@ public class InternshipOfferServiceTest {
         User user = new User();
 
         user.setUniqueId(UUID.randomUUID());
-        user.setType("STUDENT");
+        user.setType(User.Type.STUDENT);
         user.setEmail("toto@gmail.com");
         user.setFirstName("Toto");
         user.setLastName("Tata");
@@ -385,9 +385,13 @@ public class InternshipOfferServiceTest {
 
 
         // Act & Assert
+
         when(internshipOfferRepository.save(any())).then(inv -> {
-            InternshipOffer offer = (InternshipOffer) inv.getArgument(0);
+
+            InternshipOffer offer = inv.getArgument(0);
+
             assertTrue(offer.getUsers().isEmpty());
+
             return null;
         });
 
@@ -415,7 +419,7 @@ public class InternshipOfferServiceTest {
         User user = new User();
 
         user.setUniqueId(UUID.randomUUID());
-        user.setType("STUDENT");
+        user.setType(User.Type.STUDENT);
         user.setEmail("toto@gmail.com");
         user.setFirstName("Toto");
         user.setLastName("Tata");
@@ -436,7 +440,7 @@ public class InternshipOfferServiceTest {
         for (UserListReponse.User user1 : response.getUsers()) {
 
             assertEquals(user.getUniqueId(), user1.getUniqueId());
-            assertEquals(user.getType(), user1.getType());
+            assertEquals(user.getType().toString(), user1.getType());
             assertEquals(user.getEmail(), user1.getEmail());
             assertEquals(user.getFirstName(), user1.getFirstName());
             assertEquals(user.getLastName(), user1.getLastName());
@@ -447,7 +451,9 @@ public class InternshipOfferServiceTest {
 
     @Test
     public void findAll_validRequest(){
+
         // Arrange
+
         InternshipOffer internshipOffer = new InternshipOffer();
 
         internshipOffer.setUniqueId(UUID.randomUUID());
@@ -463,8 +469,8 @@ public class InternshipOfferServiceTest {
 
         InternshipOfferListResponse response = new InternshipOfferListResponse();
 
-        response.setInternshipOffers(List.of(internshipOffer).stream().map(x ->
-                InternshipOfferListResponse.map(x)).collect(Collectors.toList()));
+        response.setInternshipOffers(List.of(internshipOffer).stream().map(InternshipOfferListResponse::map)
+                .collect(Collectors.toList()));
 
 
         InternshipOfferService internshipOfferService = new InternshipOfferService(internshipOfferRepository, userRepository);
@@ -473,10 +479,53 @@ public class InternshipOfferServiceTest {
                 InternshipOffer.Status.APPROVED)).thenReturn(List.of(internshipOffer));
 
         // Act
+
         InternshipOfferListResponse responseToExpect =  internshipOfferService.findAllByEmployer(internshipOffer.getEmployer());
 
         // Assert
+
         assertEquals(response,responseToExpect);
+    }
+
+    @Test
+    public void accessible_validRequest(){
+
+        // Arrange
+
+        User user = new User();
+
+        user.setUniqueId(UUID.randomUUID());
+
+        InternshipOffer internshipOffer = new InternshipOffer();
+
+        internshipOffer.setUniqueId(UUID.randomUUID());
+        internshipOffer.setEmployer(UUID.randomUUID());
+        internshipOffer.setStatus(InternshipOffer.Status.APPROVED);
+        internshipOffer.setCompany("Test Company");
+        internshipOffer.setJobTitle("Test Job Title");
+        internshipOffer.setStartDate(new Date());
+        internshipOffer.setDuration(12);
+        internshipOffer.setSalary(20);
+        internshipOffer.setHours(40);
+        internshipOffer.setUsers(List.of(user));
+
+        InternshipOfferService internshipOfferService = new InternshipOfferService(internshipOfferRepository, userRepository);
+
+        when(internshipOfferRepository.findAllByStatus(InternshipOffer.Status.APPROVED))
+                .thenReturn(List.of(internshipOffer));
+
+        // Act
+
+        InternshipOfferListResponse response = internshipOfferService.accessible(user.getUniqueId());
+
+        // Assert
+
+        assertEquals(1, response.getInternshipOffers().size());
+
+        InternshipOfferListResponse.InternshipOffer internshipOfferResponse = response.getInternshipOffers().get(0);
+
+        assertEquals(internshipOffer.getUniqueId(), internshipOfferResponse.getUniqueId());
+        assertEquals(internshipOffer.getStatus().toString(), internshipOfferResponse.getStatus());
     }
 
 }

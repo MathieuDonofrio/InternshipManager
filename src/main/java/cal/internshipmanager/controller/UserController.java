@@ -2,12 +2,14 @@ package cal.internshipmanager.controller;
 
 import cal.internshipmanager.response.UserListReponse;
 import cal.internshipmanager.service.UserService;
+import cal.internshipmanager.validator.ExistingUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.UUID;
 
 @RestController
@@ -39,7 +41,7 @@ public class UserController {
     }
 
     @GetMapping("{userId}")
-    public UserListReponse.User find(@PathVariable final UUID userId) {
+    public UserListReponse.User find(@Valid @ExistingUser @PathVariable UUID userId) {
         return userService.find(userId);
     }
 }

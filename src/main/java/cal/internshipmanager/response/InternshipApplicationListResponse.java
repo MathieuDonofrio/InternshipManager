@@ -1,19 +1,13 @@
 package cal.internshipmanager.response;
 
-import cal.internshipmanager.model.InternshipApplication;
-import cal.internshipmanager.model.InternshipOffer;
-import cal.internshipmanager.model.User;
-import cal.internshipmanager.repository.InternshipOfferRepository;
-import cal.internshipmanager.repository.UserRepository;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
 
-import java.util.Date;
+import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
 
 @Data
-public class InternshipApplicationListResponse {
+public class InternshipApplicationListResponse implements Serializable {
 
     //
     // Fields
@@ -46,30 +40,23 @@ public class InternshipApplicationListResponse {
 
         private String status;
 
-
     }
 
     //
-    // Mapping
+    // Utils
     //
 
-    public static InternshipApplication map(UserRepository userRepository,
-                                            InternshipOfferRepository internshipOfferRepository,
-                                            cal.internshipmanager.model.InternshipApplication from) {
-
-        User student = userRepository.findById(from.getStudentUniqueId()).orElse(null);
-
-        InternshipOffer internshipOffer = internshipOfferRepository.findById(from.getOfferUniqueId()).orElse(null);
+    public static InternshipApplication map(cal.internshipmanager.model.InternshipApplication from) {
 
         InternshipApplication application = new InternshipApplication();
 
         application.uniqueId = from.getUniqueId();
-        application.studentUniqueId = from.getStudentUniqueId();
-        application.studentFirstName = student.getFirstName();
-        application.studentLastName = student.getLastName();
-        application.offerUniqueId = from.getOfferUniqueId();
-        application.company = internshipOffer.getCompany();
-        application.jobTitle = internshipOffer.getJobTitle();
+        application.studentUniqueId = from.getStudent().getUniqueId();
+        application.studentFirstName = from.getStudent().getFirstName();
+        application.studentLastName = from.getStudent().getLastName();
+        application.offerUniqueId = from.getOffer().getUniqueId();
+        application.company = from.getOffer().getCompany();
+        application.jobTitle = from.getOffer().getJobTitle();
         application.date = from.getDate().getTime();
         application.status = from.getStatus().toString();
 

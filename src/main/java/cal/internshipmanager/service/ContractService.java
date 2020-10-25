@@ -5,30 +5,18 @@ import cal.internshipmanager.model.InternshipOffer;
 import cal.internshipmanager.model.User;
 import cal.internshipmanager.repository.InternshipApplicationRepository;
 import cal.internshipmanager.repository.InternshipOfferRepository;
-import cal.internshipmanager.repository.PortfolioDocumentRepository;
 import cal.internshipmanager.repository.UserRepository;
-import cal.internshipmanager.security.JwtProvider;
-import cal.internshipmanager.validator.ExistingInternshipApplication;
 import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Header;
 import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.PdfDocument;
 import com.itextpdf.text.pdf.PdfWriter;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.parameters.P;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
 
-import javax.validation.Valid;
 import java.io.ByteArrayOutputStream;
 import java.util.UUID;
 
 @Service
-@Validated
 public class ContractService {
 
     //
@@ -59,13 +47,15 @@ public class ContractService {
     //
 
     @SneakyThrows
-    public byte[] generate(@Valid @ExistingInternshipApplication UUID uniqueId) {
+    public byte[] generate(UUID uniqueId) {
+
+        // TODO will be changed compleatly
 
         InternshipApplication application = internshipApplicationRepository.findById(uniqueId).orElse(null);
 
-        User student = userRepository.findById(application.getStudentUniqueId()).orElse(null);
+        User student = application.getStudent();
 
-        InternshipOffer offer = internshipOfferRepository.findById(application.getOfferUniqueId()).orElse(null);
+        InternshipOffer offer = application.getOffer();
 
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
 
@@ -80,7 +70,6 @@ public class ContractService {
         document.add(new Paragraph("Student: " + student.getFirstName() + ", " + student.getLastName()));
         document.add(new Paragraph("Company: " + offer.getCompany()));
         document.add(new Paragraph("Job Title: " + offer.getJobTitle()));
-
 
         document.close();
 

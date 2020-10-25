@@ -72,7 +72,7 @@ export default function StudentSelection() {
   };
 
   const fetchInternshipOffers = async () => {
-    const response = await InternshipOfferService.getInternshipOfferByEmployer(uniqueId);
+    const response = await InternshipOfferService.findAllByEmployer(uniqueId);
     setRows(response.data.internshipOffers);
   }
 

@@ -74,7 +74,7 @@ class EmployerRegistrationForm extends Component {
       company: this.state.company
     }
 
-    RegistrationService.registerEmployer(request)
+    RegistrationService.employer(request)
       .then(() => this.props.history.push('/login'))
       .catch(error => this.backendValidation(error))
       .finally(() => { this.submitLock.unlock(); this.forceUpdate() });

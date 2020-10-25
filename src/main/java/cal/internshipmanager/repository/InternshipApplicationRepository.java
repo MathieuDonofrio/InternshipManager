@@ -1,7 +1,6 @@
 package cal.internshipmanager.repository;
 
 import cal.internshipmanager.model.InternshipApplication;
-import cal.internshipmanager.model.InternshipOffer;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 

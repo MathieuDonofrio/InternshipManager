@@ -17,16 +17,6 @@ import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 import { saveAs } from 'file-saver';
 import InternshipApplicationService from "../services/InternshipApplicationService";
 
-function _base64ToArrayBuffer(base64) {
-  var binary_string = window.atob(base64);
-  var len = binary_string.length;
-  var bytes = new Uint8Array(len);
-  for (var i = 0; i < len; i++) {
-      bytes[i] = binary_string.charCodeAt(i);
-  }
-  return bytes.buffer;
-}
-
 export default function StudentDocumentsList (props) {
 
   const [rows, setRows] = useState([]);
@@ -43,7 +33,7 @@ export default function StudentDocumentsList (props) {
   const onDownloadClick = (document) =>{
 
     PortfolioService.download(document.uniqueId).then(response =>{
-      saveAs(new Blob([_base64ToArrayBuffer(response.data)], { type: response.headers['content-type'] }), document.fileName);
+      saveAs(new Blob([response.data], { type: response.headers['content-type'] }), document.fileName);
     })
     
   }

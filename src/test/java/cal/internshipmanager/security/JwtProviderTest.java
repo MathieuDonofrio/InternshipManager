@@ -26,7 +26,7 @@ public class JwtProviderTest {
         User user = new User();
 
         user.setUniqueId(UUID.randomUUID());
-        user.setType("STUDENT");
+        user.setType(User.Type.STUDENT);
 
         // Act
 
@@ -47,7 +47,7 @@ public class JwtProviderTest {
         User user = new User();
 
         user.setUniqueId(UUID.randomUUID());
-        user.setType("STUDENT");
+        user.setType(User.Type.STUDENT);
 
         // Act
 
@@ -58,7 +58,7 @@ public class JwtProviderTest {
         // Assert
 
         assertEquals(user.getUniqueId().toString(), decodedToken.getSubject());
-        assertEquals(user.getType(), decodedToken.getClaim("Type").asString());
+        assertEquals(user.getType().toString(), decodedToken.getClaim("Type").asString());
     }
 
     @Test
@@ -69,7 +69,7 @@ public class JwtProviderTest {
         User user = new User();
 
         user.setUniqueId(UUID.randomUUID());
-        user.setType("STUDENT");
+        user.setType(User.Type.STUDENT);
 
         // Act & Assert
 

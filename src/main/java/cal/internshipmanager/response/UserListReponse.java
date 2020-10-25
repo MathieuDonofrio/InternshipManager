@@ -3,11 +3,12 @@ package cal.internshipmanager.response;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
 
 @Data
-public class UserListReponse {
+public class UserListReponse implements Serializable {
 
     //
     // Fields
@@ -39,14 +40,14 @@ public class UserListReponse {
     }
 
     //
-    // Mapping
+    // Utils
     //
 
     public static UserListReponse.User map(cal.internshipmanager.model.User from) {
         UserListReponse.User user = new UserListReponse.User();
 
         user.uniqueId = from.getUniqueId();
-        user.type = from.getType();
+        user.type = from.getType().toString();
         user.email = from.getEmail();
         user.firstName = from.getFirstName();
         user.lastName = from.getLastName();

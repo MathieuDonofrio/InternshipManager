@@ -24,16 +24,6 @@ import ContractService from "../services/ContractService";
 import { saveAs } from 'file-saver';
 import PageviewIcon from '@material-ui/icons/Pageview';
 
-function _base64ToArrayBuffer(base64) {
-  var binary_string = window.atob(base64);
-  var len = binary_string.length;
-  var bytes = new Uint8Array(len);
-  for (var i = 0; i < len; i++) {
-      bytes[i] = binary_string.charCodeAt(i);
-  }
-  return bytes.buffer;
-}
-
 const useStyles = makeStyles({
   table: {
     minWidth: 800,
@@ -80,7 +70,7 @@ export default function StudentApplicationList(props) {
   };
 
   const fetchStudentApplications = async () => {
-    const response = await InternshipApplicationService.getInternshipApplicationByOffer(props.selectedValue);
+    const response = await InternshipApplicationService.findByOffer(props.selectedValue);
     setRows(response.data.applications)
   }
 
@@ -103,7 +93,7 @@ export default function StudentApplicationList(props) {
   const onDownloadContract = (application) => {
 
     ContractService.generate(application.uniqueId).then(response =>{
-      saveAs(new Blob([_base64ToArrayBuffer(response.data)], { type: response.headers['content-type'] }), "Contrat");
+      saveAs(new Blob([response.data], { type: response.headers['content-type'] }), "Contrat");
     });
 
   }

@@ -2,10 +2,11 @@ package cal.internshipmanager.response;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 @Data
-public class AuthenticationResponse {
+public class AuthenticationResponse implements Serializable {
 
     //
     // Fields

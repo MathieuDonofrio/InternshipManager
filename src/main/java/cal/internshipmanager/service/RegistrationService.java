@@ -4,17 +4,13 @@ import cal.internshipmanager.model.User;
 import cal.internshipmanager.repository.UserRepository;
 import cal.internshipmanager.request.EmployerRegistrationRequest;
 import cal.internshipmanager.request.StudentRegistrationRequest;
-import cal.internshipmanager.response.RegistrationResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
 
-import javax.validation.Valid;
 import java.util.UUID;
 
 @Service
-@Validated
 public class RegistrationService {
 
     //
@@ -39,32 +35,26 @@ public class RegistrationService {
     // Services
     //
 
-    public RegistrationResponse student(@Valid StudentRegistrationRequest request) {
+    public void student(StudentRegistrationRequest request) {
 
         User user = new User();
 
         user.setUniqueId(UUID.randomUUID());
-        user.setType("STUDENT");
+        user.setType(User.Type.STUDENT);
         user.setEmail(request.getEmail());
         user.setPasswordHash(passwordEncoder.encode(request.getPassword()));
         user.setFirstName(request.getFirstName());
         user.setLastName(request.getLastName());
 
         userRepository.save(user);
-
-        RegistrationResponse response = new RegistrationResponse();
-
-        response.setUserUniqueId(user.getUniqueId());
-
-        return response;
     }
 
-    public RegistrationResponse employer(@Valid EmployerRegistrationRequest request) {
+    public void employer(EmployerRegistrationRequest request) {
 
         User user = new User();
 
         user.setUniqueId(UUID.randomUUID());
-        user.setType("EMPLOYER");
+        user.setType(User.Type.EMPLOYER);
         user.setEmail(request.getEmail());
         user.setPasswordHash(passwordEncoder.encode(request.getPassword()));
         user.setFirstName(request.getFirstName());
@@ -72,12 +62,6 @@ public class RegistrationService {
         user.setCompany(request.getCompany());
 
         userRepository.save(user);
-
-        RegistrationResponse response = new RegistrationResponse();
-
-        response.setUserUniqueId(user.getUniqueId());
-
-        return response;
     }
 
 }
