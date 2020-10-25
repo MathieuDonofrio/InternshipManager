@@ -232,7 +232,7 @@ export default function AppDrawer(props) {
             <ListItem
               button
               key={"Offer Creation"}
-              onClick={() => history.push("/internshipoffercreation")}>
+              onClick={() => history.push("/internship-offer-creation")}>
               <ListItemIcon><CreateIcon /> </ListItemIcon>
               <ListItemText primary={"Offer Creation"} />
             </ListItem>
@@ -252,7 +252,7 @@ export default function AppDrawer(props) {
             <ListItem
               button
               key={"Student Offer Validation"}
-              onClick={() => history.push("/studentoffervalidation")}>
+              onClick={() => history.push("/student-offer-validation")}>
               <ListItemIcon><VisibilityIcon /> </ListItemIcon>
               <ListItemText primary={"Offer Visibility"} />
             </ListItem>

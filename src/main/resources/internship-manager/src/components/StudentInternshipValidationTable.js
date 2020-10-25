@@ -1,13 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import Button from '@material-ui/core/Button';
-import ListItemText from '@material-ui/core/ListItemText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Dialog from '@material-ui/core/Dialog';
-import PersonIcon from '@material-ui/icons/Person';
-import AddIcon from '@material-ui/icons/Add';
 import Typography from '@material-ui/core/Typography';
-import { blue } from '@material-ui/core/colors';
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -17,13 +9,11 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { Box } from "@material-ui/core";
-import ValidatedStudentTable from "./ValidatedStudentTable";
 import InternshipOfferService from '../services/InternshipOfferService';
 import EditIcon from '@material-ui/icons/Edit';
 import IconButton from '@material-ui/core/IconButton';
+import { useHistory } from 'react-router-dom';
 
-
-//tables values
 
 const useStyles = makeStyles({
   table: {
@@ -31,56 +21,19 @@ const useStyles = makeStyles({
   },
 });
 
-//dialogs
-
-function ValidateStudentTableDialog(props) {
-  const { onClose, selectedValue, open } = props;
-
-  const handleClose = () => {
-    onClose(selectedValue);
-  };
-
-  return (
-    <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
-      <DialogTitle id="simple-dialog-title">Manage Access</DialogTitle>
-      <ValidatedStudentTable onClose={handleClose} selectedValue={selectedValue} />
-    </Dialog>
-  );
-}
-
-ValidateStudentTableDialog.propTypes = {
-  onClose: PropTypes.func.isRequired,
-  open: PropTypes.bool.isRequired,
-  selectedValue: PropTypes.string.isRequired,
-};
-
-//other class
-
 export default function StudentInternshipValidationTable() {
 
-  const [open, setOpen] = React.useState(false);
-  const [rows, setRows] = useState([]);
-  const [currentInternshipId, setCurrentInternshipId] = useState('');
-
+  const history = useHistory();
   const classes = useStyles();
 
-  const handleClickOpen = (internshipId) => {
-    setCurrentInternshipId(internshipId)
-    setOpen(true);
-  };
-
-  const handleClose = (value) => {
-    setOpen(false);
-  };
+  const [rows, setRows] = useState([]);
 
   const fetchInternshipOffers = async () => {
     const response = await InternshipOfferService.approved();
     setRows(response.data.internshipOffers);
   }
 
-  useEffect(() => {
-    fetchInternshipOffers();
-  }, [])
+  useEffect(() => { fetchInternshipOffers(); }, [])
 
   return (
     <div>
@@ -116,12 +69,11 @@ export default function StudentInternshipValidationTable() {
                 <TableCell align="center">{offer.hours}</TableCell>
                 <TableCell align="center"> 
                   <IconButton edge="end" aria-label="edit">
-                    <EditIcon onClick={() => handleClickOpen(offer.uniqueId)}/>
+                    <EditIcon onClick={() => history.push(`/manage-access/${offer.uniqueId}`)}/>
                   </IconButton>
                 </TableCell>
               </TableRow>
             ))}
-            <ValidateStudentTableDialog open={open} onClose={handleClose} selectedValue={currentInternshipId} />
           </TableBody>
         </Table>
       </TableContainer>
