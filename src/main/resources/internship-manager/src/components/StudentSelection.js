@@ -16,6 +16,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import { useHistory } from 'react-router-dom';
 
 
 
@@ -56,6 +57,7 @@ export default function StudentSelection() {
   const [open, setOpen] = React.useState(false);
   const [rows, setRows] = useState([]);
   const [currentInternshipId, setCurrentInternshipId] = useState('');
+  const history = useHistory();
 
   const classes = useStyles();
 
@@ -76,9 +78,7 @@ export default function StudentSelection() {
     setRows(response.data.internshipOffers);
   }
 
-  useEffect(() => {
-    fetchInternshipOffers();
-  }, [])
+  useEffect(() => { fetchInternshipOffers(); }, [])
 
 
   return (
