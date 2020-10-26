@@ -32,6 +32,7 @@ const state = {
   jobTitle: '',
   jobScope: new Array(),
   startDate: new Date(),
+  endDate: new Date(),
   duration: 0,
   salary: 0,
   hours: 0,
@@ -43,6 +44,7 @@ const errors = {
   jobTitle: '',
   jobScope: '',
   startDate: '',
+  endDate: '',
   duration: '',
   salary: '',
   hours: ''
@@ -104,6 +106,7 @@ export default class InternshipOfferCreationForm extends Component {
   }
 
   onDateChange = date => this.setState({ startDate: date });
+  onEndDateChange = date => this.setState({ endDate: date });
 
   onChange = event => this.setState({ [event.target.name]: event.target.value });
 
@@ -119,9 +122,11 @@ export default class InternshipOfferCreationForm extends Component {
     this.errors.jobTitle = Validator.notBlank(this.state.jobTitle, "Job title is mandatory");
     this.errors.salary = Validator.positive(this.state.salary, "Salary cannot be negative");
     this.errors.hours = Validator.min(this.state.hours, 1, "Hours must be atleast 1");
-    this.errors.duration = Validator.min(this.state.duration, 1, "Duration must be atleast 1 week");
+   // this.errors.duration = Validator.min(this.state.duration, 1, "Duration must be atleast 1 week");
     this.errors.startDate = Validator.after(this.state.startDate, new Date(), "Cannot set a start date in the past");
-
+    this.errors.endDate = Validator.after(this.state.endDate,this.state.startDate.getTime(), "Cannot set a end date before start date");
+    if(this.errors.endDate == '')
+      this.errors.endDate = Validator.week((this.state.endDate.getTime()-this.state.startDate.getTime())/ (1000 * 3600 * 24), "Cannot set a end date less than a week after start");
     this.forceUpdate();
   }
 
@@ -306,6 +311,22 @@ export default class InternshipOfferCreationForm extends Component {
                     'aria-label': 'change date',
                   }}
                 />
+                <KeyboardDatePicker
+                  disableToolbar
+                  variant="inline"
+                  format="MM/dd/yyyy"
+                  margin="normal"
+                  id="endDate"
+                  label="End Date"
+                  error={this.errors.endDate}
+                  helperText={this.errors.endDate}
+                  value={this.state.endDate}
+                  onChange={this.onEndDateChange}
+                  KeyboardButtonProps={{
+                    'aria-label': 'end date',
+                  }}
+                />
+                {/*
                 <TextField
                   error={this.errors.duration}
                   helperText={this.errors.duration}
@@ -320,6 +341,7 @@ export default class InternshipOfferCreationForm extends Component {
                   variant="standard"
                   name="duration"
                 />
+                */}
               </Grid>
             </MuiPickersUtilsProvider>
 
