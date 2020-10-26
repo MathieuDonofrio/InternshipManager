@@ -165,7 +165,7 @@ class LoginForm extends Component {
               color="primary"
               disabled={this.submitLock.locked}
             >
-              Log In
+              Se connecter
                 </Button>
 
             {
