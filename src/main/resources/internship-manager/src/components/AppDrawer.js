@@ -31,7 +31,7 @@ import VisibilityIcon from '@material-ui/icons/Visibility';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
 
-const drawerWidth = 240;
+const drawerWidth = 250;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -162,7 +162,7 @@ export default function AppDrawer(props) {
             onClick={() => {
               AuthenticationService.logout();
               history.push("/login");
-            }}>Logout</Button>
+            }}>Se déconnecter</Button>
 
         </Toolbar>
       </AppBar>
@@ -193,7 +193,7 @@ export default function AppDrawer(props) {
             key={"Home"}
             onClick={() => history.push("/home")}>
             <ListItemIcon><HomeIcon /> </ListItemIcon>
-            <ListItemText primary={"Home"} />
+            <ListItemText primary={"Accueil"} />
           </ListItem>
         </List>
 
@@ -254,21 +254,21 @@ export default function AppDrawer(props) {
               key={"Student Offer Validation"}
               onClick={() => history.push("/student-offer-validation")}>
               <ListItemIcon><VisibilityIcon /> </ListItemIcon>
-              <ListItemText primary={"Offer Visibility"} />
+              <ListItemText primary={"Visualisation des offres"} />
             </ListItem>
             <ListItem
               button
               key={"Pending Approval"}
               onClick={() => history.push("/pending-approval")}>
               <ListItemIcon><GavelOutlinedIcon /> </ListItemIcon>
-              <ListItemText primary={"Pending Approval"} />
+              <ListItemText primary={"Offres en attentes"} />
             </ListItem>
             <ListItem
               button
               key={"Applications en attente"}
               onClick={() => history.push("/internship-application-validation")}>
               <ListItemIcon><AssignmentLateIcon /> </ListItemIcon>
-              <ListItemText primary={"Applications en attente"} />
+              <ListItemText primary={"Applications en attentes"} />
             </ListItem>
           </List>
         }

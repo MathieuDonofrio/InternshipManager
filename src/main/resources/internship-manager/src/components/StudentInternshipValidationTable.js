@@ -43,7 +43,7 @@ export default function StudentInternshipValidationTable() {
           paddingTop={2}
           textAlign="center">
 
-          <Typography component="h1" variant="h4">Offer Student Access</Typography>
+          <Typography component="h1" variant="h4">Accès aux offres</Typography>
         </Box>
       </Container>
 
@@ -51,12 +51,12 @@ export default function StudentInternshipValidationTable() {
         <Table className={classes.table} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell align="center"><strong>Company</strong></TableCell>
-              <TableCell align="center"><strong>Job Title</strong></TableCell>
-              <TableCell align="center"><strong>Start Date</strong></TableCell>
-              <TableCell align="center"><strong>Duration</strong></TableCell>
-              <TableCell align="center"><strong>Hours</strong></TableCell>
-              <TableCell align="center"><strong>Manage Access</strong></TableCell>
+              <TableCell align="center"><strong>Compagnie</strong></TableCell>
+              <TableCell align="center"><strong>Titre du post</strong></TableCell>
+              <TableCell align="center"><strong>Date de début</strong></TableCell>
+              <TableCell align="center"><strong>Durée</strong></TableCell>
+              <TableCell align="center"><strong>Heures</strong></TableCell>
+              <TableCell align="center"><strong>Gérer l'accès</strong></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
