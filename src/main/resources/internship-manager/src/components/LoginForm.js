@@ -84,8 +84,8 @@ class LoginForm extends Component {
 
     Validator.clearErrors(this.errors);
 
-    this.errors.email = Validator.email(this.state.email, "Email is not valid");
-    this.errors.password = Validator.notBlank(this.state.password, "Password is mandatory");
+    this.errors.email = Validator.email(this.state.email, "Email invalide");
+    this.errors.password = Validator.notBlank(this.state.password, "le mot de passe est obligatoire");
 
     this.forceUpdate();
   }
@@ -94,8 +94,8 @@ class LoginForm extends Component {
 
     Validator.clearErrors(this.errors);
 
-    this.errors.email = "Email or password is incorrect";
-    this.errors.password = "Email or password is incorrect";
+    this.errors.email = "Email ou mot de passe invalide";
+    this.errors.password = "Email ou mot de passe incorrecte";
 
     this.forceUpdate();
   }
@@ -117,7 +117,7 @@ class LoginForm extends Component {
             textAlign="center">
 
             <LockOutlined fontSize="large" />
-            <Typography component="h1" variant="h4">Log in</Typography>
+            <Typography component="h1" variant="h4">Se connecter</Typography>
 
           </Box>
 
@@ -132,7 +132,7 @@ class LoginForm extends Component {
               required
               fullWidth
               id="email"
-              label="Email Address"
+              label="Adresse email"
               name="email"
               autoComplete="email"
               autoFocus
@@ -147,7 +147,7 @@ class LoginForm extends Component {
               required
               fullWidth
               name="password"
-              label="Password"
+              label="Mot de passe"
               type="password"
               id="password"
               autoComplete="current-password"
@@ -155,7 +155,7 @@ class LoginForm extends Component {
 
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
+              label="Se rappeler"
             />
 
             <Button
@@ -180,12 +180,12 @@ class LoginForm extends Component {
               <Grid container mt={4}>
                 <Grid item xs>
                   <Link>
-                    Forgot password?
+                    Mot de passe oublié?
                   </Link>
                 </Grid>
                 <Grid item>
                   <Link to="/registration">
-                    Don't have an account? Sign Up
+                    Vous n'avez pas de compte? S'inscrire
                   </Link>
                 </Grid>
               </Grid>
