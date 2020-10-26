@@ -53,7 +53,7 @@ public class AdministratorLoader implements CommandLineRunner {
             User user = new User();
 
             user.setUniqueId(UUID.randomUUID());
-            user.setType(User.Type.EMPLOYER);
+            user.setType(User.Type.ADMINISTRATOR);
             user.setEmail(email);
             user.setFirstName(firstName);
             user.setLastName(lastName);
