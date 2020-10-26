@@ -96,8 +96,8 @@ class PendingApprovalList extends Component {
           <TableCell component="th" scope="row" align="center">{new Date(startDate).toLocaleDateString()}</TableCell>
           <TableCell component="th" scope="row" align="center">{new Date(endDate).toLocaleDateString()}</TableCell>
           <TableCell component="th" scope="row" align="center">{location}</TableCell>
-          <TableCell component="th" scope="row" align="center">{duration}</TableCell>
-          <TableCell component="th" scope="row" align="center">{salary.toFixed(2) + '$'}</TableCell>
+         {/* <TableCell component="th" scope="row" align="center">{duration}</TableCell>
+         */} <TableCell component="th" scope="row" align="center">{salary.toFixed(2) + '$'}</TableCell>
           <TableCell component="th" scope="row" align="center">{hours}</TableCell>
           <TableCell omponent="th" scope="row" >
             <Box margin={1}>
@@ -150,8 +150,8 @@ class PendingApprovalList extends Component {
                 <TableCell align="center"><strong>Start Date</strong></TableCell>
                 <TableCell align="center"><strong>End Date</strong></TableCell>
                 <TableCell align="center"><strong>Location</strong></TableCell>
-                <TableCell align="center"><strong>Duration</strong></TableCell>
-                <TableCell align="center"><strong>Salary</strong></TableCell>
+               {/* <TableCell align="center"><strong>Duration</strong></TableCell>
+                */}<TableCell align="center"><strong>Salary</strong></TableCell>
                 <TableCell align="center"><strong>Hours</strong></TableCell>
                 <TableCell align="center"><strong>Action</strong></TableCell>
               </TableRow>

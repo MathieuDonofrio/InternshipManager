@@ -86,7 +86,7 @@ export default class InternshipOfferCreationForm extends Component {
       startDate: this.state.startDate.getTime(),
       endDate: this.state.endDate.getTime(),
       location: this.state.location,
-      duration: 1,
+      //duration: 1,
       salary: this.state.salary,
       hours: this.state.hours
     }

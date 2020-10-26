@@ -33,7 +33,7 @@ public class InternshipOfferCreationRequest implements Serializable {
 
     //To be removed
   //  @Min(value = 1, message = "Duration must be at least 1 hour")
-    private int duration;
+   // private int duration;
 
     @Min(value = 0, message = "Salary must be at least 0.00$")
     private float salary;

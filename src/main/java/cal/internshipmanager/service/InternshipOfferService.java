@@ -55,7 +55,7 @@ public class InternshipOfferService {
         internshipOffer.setEmployer(userUniqueId);
         internshipOffer.setStatus(InternshipOffer.Status.PENDING_APPROVAL);
         internshipOffer.setCompany(request.getCompany());
-        internshipOffer.setDuration(request.getDuration());
+        //internshipOffer.setDuration(request.getDuration());
         internshipOffer.setHours(request.getHours());
         internshipOffer.setJobScope(request.getJobScope());
         internshipOffer.setJobTitle(request.getJobTitle());

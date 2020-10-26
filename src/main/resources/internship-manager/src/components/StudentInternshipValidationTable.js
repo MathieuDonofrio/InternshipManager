@@ -56,8 +56,8 @@ export default function StudentInternshipValidationTable() {
               <TableCell align="center"><strong>Start Date</strong></TableCell>
               <TableCell align="center"><strong>End Date</strong></TableCell>
               <TableCell align="center"><strong>Location</strong></TableCell>
-              <TableCell align="center"><strong>Duration</strong></TableCell>
-              <TableCell align="center"><strong>Hours</strong></TableCell>
+         {/*     <TableCell align="center"><strong>Duration</strong></TableCell>
+          */}    <TableCell align="center"><strong>Hours</strong></TableCell>
               <TableCell align="center"><strong>Manage Access</strong></TableCell>
             </TableRow>
           </TableHead>
@@ -69,8 +69,8 @@ export default function StudentInternshipValidationTable() {
                 <TableCell align="center">{new Date(offer.startDate).toLocaleDateString()}</TableCell>
                 <TableCell align="center">{new Date(offer.endDate).toLocaleDateString()}</TableCell>
                 <TableCell align="center">{offer.location}</TableCell>
-                <TableCell align="center">{offer.duration}</TableCell>
-                <TableCell align="center">{offer.hours}</TableCell>
+            {/*    <TableCell align="center">{offer.duration}</TableCell>
+              */}  <TableCell align="center">{offer.hours}</TableCell>
                 <TableCell align="center"> 
                   <IconButton edge="end" aria-label="edit">
                     <EditIcon onClick={() => history.push(`/manage-access/${offer.uniqueId}`)}/>
