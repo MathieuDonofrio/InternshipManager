@@ -54,7 +54,7 @@ public class InternshipOfferLoader implements CommandLineRunner {
     @Override
     public void run(String... args) {
 
-        if(userRepository.findAllByType("EMPLOYER").isEmpty())
+        if(userRepository.findAllByType(User.Type.EMPLOYER).isEmpty())
             return;
 
         final int needed = MIN_INTERNSHIP_OFFER_AMOUNT - internshipOfferRepository.findAll().size();
@@ -76,7 +76,7 @@ public class InternshipOfferLoader implements CommandLineRunner {
 
         final Faker faker = new Faker();
 
-        List<User> employers = userRepository.findAllByType("EMPLOYER");
+        List<User> employers = userRepository.findAllByType(User.Type.EMPLOYER);
 
         User employer = employers.get(ThreadLocalRandom.current().nextInt(employers.size()));
 

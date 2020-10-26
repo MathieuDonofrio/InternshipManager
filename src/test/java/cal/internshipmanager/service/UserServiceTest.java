@@ -34,7 +34,7 @@ public class UserServiceTest {
 
         UserService userService = new UserService(userRepository);
 
-        when(userRepository.findAllByType("STUDENT"))
+        when(userRepository.findAllByType(User.Type.STUDENT))
                 .thenReturn(List.of(user));
 
         // Act
