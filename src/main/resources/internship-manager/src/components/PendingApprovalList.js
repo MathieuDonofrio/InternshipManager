@@ -88,12 +88,14 @@ class PendingApprovalList extends Component {
 
   renderTableData() {
     return this.state.internshipOffers.map((internshipOffer, index) => {
-      const { company, jobTitle, startDate, duration, salary, hours } = internshipOffer
+      const { company, jobTitle, startDate, endDate, location, duration, salary, hours } = internshipOffer
       return (
         <TableRow key={index}>
           <TableCell component="th" scope="row" align="center">{company}</TableCell>
           <TableCell component="th" scope="row" align="center">{jobTitle}</TableCell>
           <TableCell component="th" scope="row" align="center">{new Date(startDate).toLocaleDateString()}</TableCell>
+          <TableCell component="th" scope="row" align="center">{new Date(endDate).toLocaleDateString()}</TableCell>
+          <TableCell component="th" scope="row" align="center">{location}</TableCell>
           <TableCell component="th" scope="row" align="center">{duration}</TableCell>
           <TableCell component="th" scope="row" align="center">{salary.toFixed(2) + '$'}</TableCell>
           <TableCell component="th" scope="row" align="center">{hours}</TableCell>
@@ -146,6 +148,8 @@ class PendingApprovalList extends Component {
                 <TableCell align="center"><strong>Company</strong></TableCell>
                 <TableCell align="center"><strong>Job Title</strong></TableCell>
                 <TableCell align="center"><strong>Start Date</strong></TableCell>
+                <TableCell align="center"><strong>End Date</strong></TableCell>
+                <TableCell align="center"><strong>Location</strong></TableCell>
                 <TableCell align="center"><strong>Duration</strong></TableCell>
                 <TableCell align="center"><strong>Salary</strong></TableCell>
                 <TableCell align="center"><strong>Hours</strong></TableCell>

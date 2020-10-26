@@ -61,6 +61,8 @@ public class InternshipOfferService {
         internshipOffer.setJobTitle(request.getJobTitle());
         internshipOffer.setSalary(request.getSalary());
         internshipOffer.setStartDate(new Date(request.getStartDate()));
+        internshipOffer.setEndDate(new Date(request.getEndDate()));
+        internshipOffer.setLocation(request.getLocation());
         internshipOffer.setUsers(new ArrayList<>());
 
         internshipOfferRepository.save(internshipOffer);
@@ -88,6 +90,7 @@ public class InternshipOfferService {
 
         List<InternshipOffer> internshipOffers = internshipOfferRepository.findAllByStatus(
                 InternshipOffer.Status.PENDING_APPROVAL);
+        System.out.println(internshipOffers);
 
         InternshipOfferListResponse response = new InternshipOfferListResponse();
 

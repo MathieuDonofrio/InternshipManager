@@ -33,6 +33,7 @@ const state = {
   jobScope: new Array(),
   startDate: new Date(),
   endDate: new Date(),
+  location: '',
   duration: 0,
   salary: 0,
   hours: 0,
@@ -45,6 +46,7 @@ const errors = {
   jobScope: '',
   startDate: '',
   endDate: '',
+  location: '',
   duration: '',
   salary: '',
   hours: ''
@@ -82,7 +84,9 @@ export default class InternshipOfferCreationForm extends Component {
       jobTitle: this.state.jobTitle,
       jobScope: this.state.jobScope,
       startDate: this.state.startDate.getTime(),
-      duration: this.state.duration,
+      endDate: this.state.endDate.getTime(),
+      location: this.state.location,
+      duration: 1,
       salary: this.state.salary,
       hours: this.state.hours
     }
@@ -120,6 +124,7 @@ export default class InternshipOfferCreationForm extends Component {
 
     this.errors.company = Validator.notBlank(this.state.company, "Company is mandatory");
     this.errors.jobTitle = Validator.notBlank(this.state.jobTitle, "Job title is mandatory");
+    this.errors.location = Validator.notBlank(this.state.location, "Location is mandatory")
     this.errors.salary = Validator.positive(this.state.salary, "Salary cannot be negative");
     this.errors.hours = Validator.min(this.state.hours, 1, "Hours must be atleast 1");
    // this.errors.duration = Validator.min(this.state.duration, 1, "Duration must be atleast 1 week");
@@ -193,6 +198,20 @@ export default class InternshipOfferCreationForm extends Component {
               label="Job Title"
               name="jobTitle"
               autoComplete="jobTitle"
+            />
+
+            <TextField
+              error={this.errors.location}
+              helperText={this.errors.location}
+              onChange={this.onChange}
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="location"
+              label="Location"
+              name="location"
+              autoComplete="location"
             />
 
             <Box mt={2} textAlign="left">
