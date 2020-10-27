@@ -100,7 +100,8 @@ export default function StudentSelection() {
               <TableCell align="center"><strong>Company</strong></TableCell>
               <TableCell align="center"><strong>Job Title</strong></TableCell>
               <TableCell align="center"><strong>Start Date</strong></TableCell>
-              <TableCell align="center"><strong>Duration</strong></TableCell>
+              <TableCell align="center"><strong>End Date</strong></TableCell>
+              <TableCell align="center"><strong>Location</strong></TableCell>
               <TableCell align="center"><strong>Salary</strong></TableCell>
               <TableCell align="center"><strong>Hours</strong></TableCell>
               <TableCell align="center"><strong>Action</strong></TableCell>
@@ -112,7 +113,8 @@ export default function StudentSelection() {
                 <TableCell component="th" scope="row" align="center">{offer.company}</TableCell>
                 <TableCell component="th" scope="row" align="center">{offer.jobTitle}</TableCell>
                 <TableCell component="th" scope="row" align="center">{new Date(offer.startDate).toLocaleDateString()}</TableCell>
-                <TableCell component="th" scope="row" align="center">{offer.duration}</TableCell>
+                <TableCell component="th" scope="row" align="center">{new Date(offer.endDate).toLocaleDateString()}</TableCell>
+                <TableCell component="th" scope="row" align="center">{offer.location}</TableCell>
                 <TableCell component="th" scope="row" align="center">{offer.salary.toFixed(2) + '$'}</TableCell>
                 <TableCell component="th" scope="row" align="center">{offer.hours}</TableCell>
                 <TableCell omponent="th" scope="row" >
