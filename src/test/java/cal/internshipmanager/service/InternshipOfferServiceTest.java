@@ -54,7 +54,6 @@ public class InternshipOfferServiceTest {
         InternshipOfferCreationRequest internshipOfferCreationRequest = new InternshipOfferCreationRequest();
 
         internshipOfferCreationRequest.setCompany("test");
-        //internshipOfferCreationRequest.setDuration(25);
         internshipOfferCreationRequest.setLocation("test");
         internshipOfferCreationRequest.setHours(20);
         internshipOfferCreationRequest.setJobScope(Arrays.asList("test", "test", "test", "test"));
@@ -73,7 +72,6 @@ public class InternshipOfferServiceTest {
             assertEquals(user.getUniqueId(), internshipOffer.getEmployer());
             assertEquals(InternshipOffer.Status.PENDING_APPROVAL, internshipOffer.getStatus());
             assertEquals(internshipOfferCreationRequest.getCompany(), internshipOffer.getCompany());
-            //assertEquals(internshipOfferCreationRequest.getDuration(), internshipOffer.getDuration());
             assertEquals(internshipOfferCreationRequest.getHours(), internshipOffer.getHours());
             assertEquals(internshipOfferCreationRequest.getJobScope(), internshipOffer.getJobScope());
             assertEquals(internshipOfferCreationRequest.getJobTitle(), internshipOffer.getJobTitle());
@@ -193,7 +191,6 @@ public class InternshipOfferServiceTest {
             assertEquals(internshipOffer.getStartDate().getTime(), offer.getStartDate());
             assertEquals(internshipOffer.getEndDate().getTime(), offer.getEndDate());
             assertEquals(internshipOffer.getLocation(), offer.getLocation());
-            //assertEquals(internshipOffer.getDuration(), offer.getDuration());
             assertEquals(internshipOffer.getSalary(), offer.getSalary());
             assertEquals(internshipOffer.getHours(), offer.getHours());
 
