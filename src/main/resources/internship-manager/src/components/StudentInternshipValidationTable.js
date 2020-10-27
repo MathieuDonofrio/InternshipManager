@@ -54,7 +54,8 @@ export default function StudentInternshipValidationTable() {
               <TableCell align="center"><strong>Compagnie</strong></TableCell>
               <TableCell align="center"><strong>Titre du post</strong></TableCell>
               <TableCell align="center"><strong>Date de début</strong></TableCell>
-              <TableCell align="center"><strong>Durée</strong></TableCell>
+              <TableCell align="center"><strong>Date de fin</strong></TableCell>
+              <TableCell align="center"><strong>Location</strong></TableCell>
               <TableCell align="center"><strong>Heures</strong></TableCell>
               <TableCell align="center"><strong>Gérer l'accès</strong></TableCell>
             </TableRow>
@@ -65,7 +66,8 @@ export default function StudentInternshipValidationTable() {
                 <TableCell align="center">{offer.company}</TableCell>
                 <TableCell align="center">{offer.jobTitle}</TableCell>
                 <TableCell align="center">{new Date(offer.startDate).toLocaleDateString()}</TableCell>
-                <TableCell align="center">{offer.duration}</TableCell>
+                <TableCell align="center">{new Date(offer.endDate).toLocaleDateString()}</TableCell>
+                <TableCell align="center">{offer.location}</TableCell>
                 <TableCell align="center">{offer.hours}</TableCell>
                 <TableCell align="center"> 
                   <IconButton edge="end" aria-label="edit">

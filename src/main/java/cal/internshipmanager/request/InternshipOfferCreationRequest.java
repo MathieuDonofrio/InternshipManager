@@ -23,8 +23,11 @@ public class InternshipOfferCreationRequest implements Serializable {
     @NotNull(message = "Start date is mandatory")
     private Long startDate;
 
-    @Min(value = 1, message = "Duration must be at least 1 hour")
-    private int duration;
+    @NotNull(message = "End date is mandatory")
+    private Long endDate;
+
+    @NotBlank(message = "Location is mandatory")
+    private String location;
 
     @Min(value = 0, message = "Salary must be at least 0.00$")
     private float salary;

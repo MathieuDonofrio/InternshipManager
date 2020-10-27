@@ -88,14 +88,16 @@ class PendingApprovalList extends Component {
 
   renderTableData() {
     return this.state.internshipOffers.map((internshipOffer, index) => {
-      const { company, jobTitle, startDate, duration, salary, hours } = internshipOffer
+      const { company, jobTitle, startDate, endDate, location, duration, salary, hours } = internshipOffer
       return (
         <TableRow key={index}>
           <TableCell component="th" scope="row" align="center">{company}</TableCell>
           <TableCell component="th" scope="row" align="center">{jobTitle}</TableCell>
           <TableCell component="th" scope="row" align="center">{new Date(startDate).toLocaleDateString()}</TableCell>
-          <TableCell component="th" scope="row" align="center">{duration}</TableCell>
-          <TableCell component="th" scope="row" align="center">{salary.toFixed(2) + '$'}</TableCell>
+          <TableCell component="th" scope="row" align="center">{new Date(endDate).toLocaleDateString()}</TableCell>
+          <TableCell component="th" scope="row" align="center">{location}</TableCell>
+         {/* <TableCell component="th" scope="row" align="center">{duration}</TableCell>
+         */} <TableCell component="th" scope="row" align="center">{salary.toFixed(2) + '$'}</TableCell>
           <TableCell component="th" scope="row" align="center">{hours}</TableCell>
           <TableCell omponent="th" scope="row" >
             <Box margin={1}>
@@ -105,7 +107,7 @@ class PendingApprovalList extends Component {
                 size="small" startIcon={<ThumbUpAltOutlinedIcon />}
                 onClick={() => this.onApprovedClicked(internshipOffer)}
               >
-                Approuver
+                Approve
               </Button>
             </Box>
 
@@ -115,7 +117,7 @@ class PendingApprovalList extends Component {
                 size="small"
                 startIcon={<ThumbDownAltOutlinedIcon />} onClick={() => this.onRejectedClicked(internshipOffer)}
               >
-                Rejeter
+                Reject
               </Button>
             </Box>
 
@@ -135,7 +137,7 @@ class PendingApprovalList extends Component {
             paddingTop={2}
             textAlign="left"
           >
-            <Typography component="h1" variant="h4" align="center">Offres en attentes</Typography>
+            <Typography component="h1" variant="h4" align="center">Offre en attente</Typography>
           </Box>
         </Container>
 
@@ -144,9 +146,10 @@ class PendingApprovalList extends Component {
             <TableHead>
               <TableRow>
                 <TableCell align="center"><strong>Compagnie</strong></TableCell>
-                <TableCell align="center"><strong>Titre du poste</strong></TableCell>
+                <TableCell align="center"><strong>Titre du post</strong></TableCell>
                 <TableCell align="center"><strong>Date de début</strong></TableCell>
-                <TableCell align="center"><strong>Durée</strong></TableCell>
+                <TableCell align="center"><strong>Date de fin</strong></TableCell>
+                <TableCell align="center"><strong>Location</strong></TableCell>
                 <TableCell align="center"><strong>Salaire</strong></TableCell>
                 <TableCell align="center"><strong>Heures</strong></TableCell>
                 <TableCell align="center"><strong>Action</strong></TableCell>
