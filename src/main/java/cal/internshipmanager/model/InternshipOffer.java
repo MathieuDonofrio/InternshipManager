@@ -36,9 +36,6 @@ public class InternshipOffer implements Serializable {
 
     private String location;
 
-    //TO be removed
-    //private int duration;
-
     private float salary;
 
     private float hours;

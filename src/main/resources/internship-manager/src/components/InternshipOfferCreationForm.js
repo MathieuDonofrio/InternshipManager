@@ -86,7 +86,6 @@ export default class InternshipOfferCreationForm extends Component {
       startDate: this.state.startDate.getTime(),
       endDate: this.state.endDate.getTime(),
       location: this.state.location,
-      //duration: 1,
       salary: this.state.salary,
       hours: this.state.hours
     }
@@ -127,7 +126,6 @@ export default class InternshipOfferCreationForm extends Component {
     this.errors.location = Validator.notBlank(this.state.location, "Location is mandatory")
     this.errors.salary = Validator.positive(this.state.salary, "Salary cannot be negative");
     this.errors.hours = Validator.min(this.state.hours, 1, "Hours must be atleast 1");
-   // this.errors.duration = Validator.min(this.state.duration, 1, "Duration must be atleast 1 week");
     this.errors.startDate = Validator.after(this.state.startDate, new Date(), "Cannot set a start date in the past");
     this.errors.endDate = Validator.after(this.state.endDate,this.state.startDate.getTime(), "Cannot set a end date before start date");
     if(this.errors.endDate == '')

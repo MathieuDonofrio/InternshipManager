@@ -150,8 +150,7 @@ class PendingApprovalList extends Component {
                 <TableCell align="center"><strong>Start Date</strong></TableCell>
                 <TableCell align="center"><strong>End Date</strong></TableCell>
                 <TableCell align="center"><strong>Location</strong></TableCell>
-               {/* <TableCell align="center"><strong>Duration</strong></TableCell>
-                */}<TableCell align="center"><strong>Salary</strong></TableCell>
+                <TableCell align="center"><strong>Salary</strong></TableCell>
                 <TableCell align="center"><strong>Hours</strong></TableCell>
                 <TableCell align="center"><strong>Action</strong></TableCell>
               </TableRow>

@@ -125,9 +125,6 @@ export default function InternshipApplicationCreationForm() {
               <TableCell align="center"><strong>Start Date</strong></TableCell>
               <TableCell align="center"><strong>End Date</strong></TableCell>
               <TableCell align="center"><strong>Location</strong></TableCell>
-              {/*
-              <TableCell align="center"><strong>Duration</strong></TableCell>
-              */}
               <TableCell align="center"><strong>Hours</strong></TableCell>
               <TableCell align="center"><strong>Apply</strong></TableCell>
             </TableRow>
@@ -140,7 +137,6 @@ export default function InternshipApplicationCreationForm() {
                 <TableCell align="center">{new Date(offer.startDate).toLocaleDateString()}</TableCell>
                 <TableCell align="center">{new Date(offer.endDate).toLocaleDateString()}</TableCell>
                 <TableCell align="center">{offer.location}</TableCell>
-              {/*  <TableCell align="center">{offer.duration}</TableCell>*/}
                 <TableCell align="center">{offer.hours}</TableCell>
                 <TableCell align="center">
                   <Button
