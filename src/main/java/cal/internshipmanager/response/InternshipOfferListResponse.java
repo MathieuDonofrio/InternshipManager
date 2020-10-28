@@ -37,7 +37,9 @@ public class InternshipOfferListResponse implements Serializable {
 
         private Long startDate;
 
-        private int duration;
+        private Long endDate;
+
+        private String location;
 
         private float salary;
 
@@ -60,7 +62,8 @@ public class InternshipOfferListResponse implements Serializable {
         internshipOffer.jobTitle = from.getJobTitle();
         internshipOffer.jobScope = from.getJobScope();
         internshipOffer.startDate = from.getStartDate().getTime();
-        internshipOffer.duration = from.getDuration();
+        internshipOffer.endDate = from.getEndDate().getTime();
+        internshipOffer.location = from.getLocation();
         internshipOffer.salary = from.getSalary();
         internshipOffer.hours = from.getHours();
 

@@ -45,7 +45,9 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-import { DropzoneArea} from 'material-ui-dropzone'
+import { DropzoneArea } from 'material-ui-dropzone';
+import { saveAs } from 'file-saver';
+import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 
 //
 // Data
@@ -88,6 +90,14 @@ class Portfolio extends Component {
 
   }
 
+  onDownloadClick(document) {
+
+    PortfolioService.download(document.uniqueId).then(response => {
+      saveAs(new Blob([response.data], { type: response.headers['content-type'] }), document.fileName);
+    })
+
+  }
+
   onDelete = (document) => {
 
     const request = {
@@ -115,7 +125,7 @@ class Portfolio extends Component {
 
   }
 
-  onFileUpload = (files) => this.setState({files: files});
+  onFileUpload = (files) => this.setState({ files: files });
 
   onDialogOpen = () => this.setState({ open: true });
 
@@ -158,6 +168,7 @@ class Portfolio extends Component {
                 <TableCell align="center"><strong>File</strong></TableCell>
                 <TableCell align="center"><strong>Upload Date</strong></TableCell>
                 <TableCell align="center"><strong>Delete</strong></TableCell>
+                <TableCell align="center"><strong>Download</strong></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -168,7 +179,7 @@ class Portfolio extends Component {
                       <TableCell component="th" scope="row" align="center">{document.type}</TableCell>
                       <TableCell component="th" scope="row" align="center">{document.fileName}</TableCell>
                       <TableCell component="th" scope="row" align="center">{new Date(document.uploadDate).toLocaleDateString()}</TableCell>
-                      <TableCell omponent="th" scope="row" >
+                      <TableCell component="th" scope="row" align="center" >
                         <Box margin={1}>
                           <IconButton edge="end" aria-label="delete">
                             <DeleteIcon
@@ -176,6 +187,20 @@ class Portfolio extends Component {
                             />
                           </IconButton>
                         </Box>
+                      </TableCell>
+                      <TableCell component="th" scope="row" align="center" >
+
+                        <Box margin={1}>
+                          <Button
+                            variant="contained" color="secondary"
+                            size="small"
+                            startIcon={<CloudDownloadIcon />}
+                            onClick={() => this.onDownloadClick(document)}
+                          >
+                            Download
+                          </Button>
+                        </Box>
+
                       </TableCell>
                     </TableRow>
                   )
@@ -185,7 +210,7 @@ class Portfolio extends Component {
           </Table>
         </TableContainer>
 
-          <Dialog open={this.state.open} onClose={this.onDialogClose} aria-labelledby="form-dialog-title">
+        <Dialog open={this.state.open} onClose={this.onDialogClose} aria-labelledby="form-dialog-title">
           <DialogTitle id="form-dialog-title">Add Document</DialogTitle>
           <DialogContent>
             <DialogContentText>
@@ -210,7 +235,7 @@ class Portfolio extends Component {
                 dropzoneText={"Drag and drop or click to upload " + this.state.type.toLowerCase()}
                 filesLimit={1}
                 onChange={this.onFileUpload}
-                >
+              >
 
               </DropzoneArea>
             </Box>
