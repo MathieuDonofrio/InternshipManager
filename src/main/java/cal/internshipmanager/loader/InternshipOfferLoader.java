@@ -1,4 +1,4 @@
-package cal.internshipmanager.admin;
+package cal.internshipmanager.loader;
 
 import cal.internshipmanager.model.InternshipOffer;
 import cal.internshipmanager.model.User;
