@@ -109,6 +109,13 @@ export default function AppDrawer(props) {
   const userType = () => {
     let type = localStorage.getItem('UserType').toLowerCase();
     type = type.charAt(0).toUpperCase() + type.slice(1);
+
+    // switch (type){
+
+    //   case (type === "student") : return "ÉTUDIANT";
+    //   case (type === "employer") : return "EMPLOYEUR";
+    //   case (type === "administrator") : return "ADMINISTRATEUR";
+    // }
     return type;
   }
 
@@ -214,14 +221,14 @@ export default function AppDrawer(props) {
               key={"Application Creation"}
               onClick={() => history.push("/internship-application-creation")}>
               <ListItemIcon><CreateIcon /> </ListItemIcon>
-              <ListItemText primary={"Application Creation"} />
+              <ListItemText primary={"Application"} />
             </ListItem>
             <ListItem
               button
               key={"Application Status"}
               onClick={() => history.push("/internship-application-status")}>
               <ListItemIcon><VisibilityIcon /> </ListItemIcon>
-              <ListItemText primary={"Application Status"} />
+              <ListItemText primary={"État de la candidature"} />
             </ListItem>
           </List>
         }
@@ -234,14 +241,14 @@ export default function AppDrawer(props) {
               key={"Offer Creation"}
               onClick={() => history.push("/internship-offer-creation")}>
               <ListItemIcon><CreateIcon /> </ListItemIcon>
-              <ListItemText primary={"Offer Creation"} />
+              <ListItemText primary={"Créer une offre de stage"} />
             </ListItem>
             <ListItem
               button
               key={"Student Selection"}
               onClick={() => history.push("/student-selection-page")}>
               <ListItemIcon><AssignmentTurnedInIcon /> </ListItemIcon>
-              <ListItemText primary={"Student Selection"} />
+              <ListItemText primary={"Sélection des étudiants"} />
             </ListItem>
           </List>
         }

@@ -89,7 +89,7 @@ export default function StudentSelection() {
           paddingTop={2}
           textAlign="left"
         >
-          <Typography component="h1" variant="h4" align="center">List Internship Offer</Typography>
+          <Typography component="h1" variant="h4" align="center">Liste des offres de stage</Typography>
         </Box>
       </Container>
 
@@ -97,13 +97,13 @@ export default function StudentSelection() {
         <Table className={classes.table} aria-label="a dense table">
           <TableHead>
             <TableRow>
-              <TableCell align="center"><strong>Company</strong></TableCell>
-              <TableCell align="center"><strong>Job Title</strong></TableCell>
-              <TableCell align="center"><strong>Start Date</strong></TableCell>
-              <TableCell align="center"><strong>End Date</strong></TableCell>
+              <TableCell align="center"><strong>Compagnie</strong></TableCell>
+              <TableCell align="center"><strong>Titre du poste</strong></TableCell>
+              <TableCell align="center"><strong>Date de début</strong></TableCell>
+              <TableCell align="center"><strong>Date de fin</strong></TableCell>
               <TableCell align="center"><strong>Location</strong></TableCell>
-              <TableCell align="center"><strong>Salary</strong></TableCell>
-              <TableCell align="center"><strong>Hours</strong></TableCell>
+              <TableCell align="center"><strong>Salaire</strong></TableCell>
+              <TableCell align="center"><strong>Heures</strong></TableCell>
               <TableCell align="center"><strong>Action</strong></TableCell>
             </TableRow>
           </TableHead>
@@ -118,7 +118,7 @@ export default function StudentSelection() {
                 <TableCell component="th" scope="row" align="center">{offer.salary.toFixed(2) + '$'}</TableCell>
                 <TableCell component="th" scope="row" align="center">{offer.hours}</TableCell>
                 <TableCell omponent="th" scope="row" >
-                  <Button variant="contained" color="primary" onClick={() => handleClickOpen(offer.uniqueId)}>SELECT</Button>
+                  <Button variant="contained" color="primary" onClick={() => handleClickOpen(offer.uniqueId)}>SÉLECTIONNER</Button>
                 </TableCell>
               </TableRow>
             ))}
