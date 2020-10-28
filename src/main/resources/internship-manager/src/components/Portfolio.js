@@ -57,7 +57,7 @@ const state = {
   portfolioDocuments: [],
   open: false,
   files: [],
-  type: "Curriculum Vitae",
+  type: "Resume",
 }
 
 class Portfolio extends Component {

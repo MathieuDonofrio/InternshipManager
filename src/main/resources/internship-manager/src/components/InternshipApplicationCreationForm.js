@@ -124,7 +124,7 @@ export default function InternshipApplicationCreationForm() {
               <TableCell align="center"><strong>Titre du poste</strong></TableCell>
               <TableCell align="center"><strong>Date de début</strong></TableCell>
               <TableCell align="center"><strong>Date de fin</strong></TableCell>
-              <TableCell align="center"><strong>Location</strong></TableCell>
+              <TableCell align="center"><strong>Emplacement</strong></TableCell>
               <TableCell align="center"><strong>Heures</strong></TableCell>
               <TableCell align="center"><strong>Appliquer</strong></TableCell>
             </TableRow>

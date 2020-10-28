@@ -55,7 +55,7 @@ export default function StudentInternshipValidationTable() {
               <TableCell align="center"><strong>Titre du post</strong></TableCell>
               <TableCell align="center"><strong>Date de début</strong></TableCell>
               <TableCell align="center"><strong>Date de fin</strong></TableCell>
-              <TableCell align="center"><strong>Location</strong></TableCell>
+              <TableCell align="center"><strong>Emplacement</strong></TableCell>
               <TableCell align="center"><strong>Heures</strong></TableCell>
               <TableCell align="center"><strong>Gérer l'accès</strong></TableCell>
             </TableRow>

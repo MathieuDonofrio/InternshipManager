@@ -123,7 +123,7 @@ export default class InternshipOfferCreationForm extends Component {
 
     this.errors.company = Validator.notBlank(this.state.company, "La compagnie est obligatoire");
     this.errors.jobTitle = Validator.notBlank(this.state.jobTitle, "Titre du poste est obligatoire");
-    this.errors.location = Validator.notBlank(this.state.location, "Location est obligatoire")
+    this.errors.location = Validator.notBlank(this.state.location, "L'emplacement est obligatoire")
     this.errors.salary = Validator.positive(this.state.salary, "Le salaire ne peut pas être négative");
     this.errors.hours = Validator.min(this.state.hours, 1, "L'heure doit être au moins à 1");
     this.errors.startDate = Validator.after(this.state.startDate, new Date(), "Impossible de définir une date de début dans le passé");
@@ -207,7 +207,7 @@ export default class InternshipOfferCreationForm extends Component {
               required
               fullWidth
               id="location"
-              label="Location"
+              label="Emplacement"
               name="location"
               autoComplete="location"
             />
