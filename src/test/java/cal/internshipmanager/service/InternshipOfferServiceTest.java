@@ -54,12 +54,13 @@ public class InternshipOfferServiceTest {
         InternshipOfferCreationRequest internshipOfferCreationRequest = new InternshipOfferCreationRequest();
 
         internshipOfferCreationRequest.setCompany("test");
-        internshipOfferCreationRequest.setDuration(25);
+        internshipOfferCreationRequest.setLocation("test");
         internshipOfferCreationRequest.setHours(20);
         internshipOfferCreationRequest.setJobScope(Arrays.asList("test", "test", "test", "test"));
         internshipOfferCreationRequest.setJobTitle("test");
         internshipOfferCreationRequest.setSalary(69.25f);
         internshipOfferCreationRequest.setStartDate(new Date().getTime());
+        internshipOfferCreationRequest.setEndDate(new Date().getTime());
 
         // Act & Assert
 
@@ -71,12 +72,13 @@ public class InternshipOfferServiceTest {
             assertEquals(user.getUniqueId(), internshipOffer.getEmployer());
             assertEquals(InternshipOffer.Status.PENDING_APPROVAL, internshipOffer.getStatus());
             assertEquals(internshipOfferCreationRequest.getCompany(), internshipOffer.getCompany());
-            assertEquals(internshipOfferCreationRequest.getDuration(), internshipOffer.getDuration());
             assertEquals(internshipOfferCreationRequest.getHours(), internshipOffer.getHours());
             assertEquals(internshipOfferCreationRequest.getJobScope(), internshipOffer.getJobScope());
             assertEquals(internshipOfferCreationRequest.getJobTitle(), internshipOffer.getJobTitle());
             assertEquals(internshipOfferCreationRequest.getSalary(), internshipOffer.getSalary());
             assertEquals(internshipOfferCreationRequest.getStartDate(), internshipOffer.getStartDate().getTime());
+            assertEquals(internshipOfferCreationRequest.getEndDate(), internshipOffer.getEndDate().getTime());
+            assertEquals(internshipOfferCreationRequest.getLocation(), internshipOffer.getLocation());
 
             return null;
         });
@@ -159,8 +161,9 @@ public class InternshipOfferServiceTest {
         internshipOffer.setCompany("Test Company");
         internshipOffer.setJobTitle("Test Job Title");
         internshipOffer.setStartDate(new Date());
+        internshipOffer.setEndDate(new Date());
         internshipOffer.setJobScope(List.of("Test 1", "Test 2"));
-        internshipOffer.setDuration(12);
+        internshipOffer.setLocation("test");
         internshipOffer.setSalary(20);
         internshipOffer.setHours(40);
 
@@ -186,7 +189,8 @@ public class InternshipOfferServiceTest {
             assertEquals(internshipOffer.getJobTitle(), offer.getJobTitle());
             assertEquals(internshipOffer.getJobScope(), offer.getJobScope());
             assertEquals(internshipOffer.getStartDate().getTime(), offer.getStartDate());
-            assertEquals(internshipOffer.getDuration(), offer.getDuration());
+            assertEquals(internshipOffer.getEndDate().getTime(), offer.getEndDate());
+            assertEquals(internshipOffer.getLocation(), offer.getLocation());
             assertEquals(internshipOffer.getSalary(), offer.getSalary());
             assertEquals(internshipOffer.getHours(), offer.getHours());
 
@@ -207,7 +211,8 @@ public class InternshipOfferServiceTest {
         internshipOffer.setCompany("Test Company");
         internshipOffer.setJobTitle("Test Job Title");
         internshipOffer.setStartDate(new Date());
-        internshipOffer.setDuration(12);
+        internshipOffer.setEndDate(new Date());
+        internshipOffer.setLocation("test");
         internshipOffer.setSalary(20);
         internshipOffer.setHours(40);
 
@@ -232,7 +237,8 @@ public class InternshipOfferServiceTest {
             assertEquals(internshipOffer.getCompany(), offer.getCompany());
             assertEquals(internshipOffer.getJobTitle(), offer.getJobTitle());
             assertEquals(internshipOffer.getStartDate().getTime(), offer.getStartDate());
-            assertEquals(internshipOffer.getDuration(), offer.getDuration());
+            assertEquals(internshipOffer.getEndDate().getTime(), offer.getEndDate());
+            assertEquals(internshipOffer.getLocation(), offer.getLocation());
             assertEquals(internshipOffer.getSalary(), offer.getSalary());
             assertEquals(internshipOffer.getHours(), offer.getHours());
 
@@ -253,7 +259,8 @@ public class InternshipOfferServiceTest {
         internshipOffer.setCompany("Test Company");
         internshipOffer.setJobTitle("Test Job Title");
         internshipOffer.setStartDate(new Date());
-        internshipOffer.setDuration(12);
+        internshipOffer.setEndDate(new Date());
+        internshipOffer.setLocation("test");
         internshipOffer.setSalary(20);
         internshipOffer.setHours(40);
 
@@ -278,7 +285,8 @@ public class InternshipOfferServiceTest {
             assertEquals(internshipOffer.getCompany(), offer.getCompany());
             assertEquals(internshipOffer.getJobTitle(), offer.getJobTitle());
             assertEquals(internshipOffer.getStartDate().getTime(), offer.getStartDate());
-            assertEquals(internshipOffer.getDuration(), offer.getDuration());
+            assertEquals(internshipOffer.getEndDate().getTime(), offer.getEndDate());
+            assertEquals(internshipOffer.getLocation(), offer.getLocation());
             assertEquals(internshipOffer.getSalary(), offer.getSalary());
             assertEquals(internshipOffer.getHours(), offer.getHours());
 
@@ -299,7 +307,8 @@ public class InternshipOfferServiceTest {
         internshipOffer.setCompany("Test Company");
         internshipOffer.setJobTitle("Test Job Title");
         internshipOffer.setStartDate(new Date());
-        internshipOffer.setDuration(12);
+        internshipOffer.setEndDate(new Date());
+        internshipOffer.setLocation("test");
         internshipOffer.setSalary(20);
         internshipOffer.setHours(40);
         internshipOffer.setUsers(new ArrayList<>());
@@ -355,7 +364,8 @@ public class InternshipOfferServiceTest {
         internshipOffer.setCompany("Test Company");
         internshipOffer.setJobTitle("Test Job Title");
         internshipOffer.setStartDate(new Date());
-        internshipOffer.setDuration(12);
+        internshipOffer.setEndDate(new Date());
+        internshipOffer.setLocation("test");
         internshipOffer.setSalary(20);
         internshipOffer.setHours(40);
         internshipOffer.setUsers(new ArrayList<>());
@@ -411,7 +421,8 @@ public class InternshipOfferServiceTest {
         internshipOffer.setCompany("Test Company");
         internshipOffer.setJobTitle("Test Job Title");
         internshipOffer.setStartDate(new Date());
-        internshipOffer.setDuration(12);
+        internshipOffer.setEndDate(new Date());
+        internshipOffer.setLocation("test");
         internshipOffer.setSalary(20);
         internshipOffer.setHours(40);
         internshipOffer.setUsers(new ArrayList<>());
@@ -462,7 +473,8 @@ public class InternshipOfferServiceTest {
         internshipOffer.setCompany("Test Company");
         internshipOffer.setJobTitle("Test Job Title");
         internshipOffer.setStartDate(new Date());
-        internshipOffer.setDuration(12);
+        internshipOffer.setEndDate(new Date());
+        internshipOffer.setLocation("test");
         internshipOffer.setSalary(20);
         internshipOffer.setHours(40);
         internshipOffer.setUsers(new ArrayList<>());
@@ -504,7 +516,8 @@ public class InternshipOfferServiceTest {
         internshipOffer.setCompany("Test Company");
         internshipOffer.setJobTitle("Test Job Title");
         internshipOffer.setStartDate(new Date());
-        internshipOffer.setDuration(12);
+        internshipOffer.setEndDate(new Date());
+        internshipOffer.setLocation("test");
         internshipOffer.setSalary(20);
         internshipOffer.setHours(40);
         internshipOffer.setUsers(List.of(user));
