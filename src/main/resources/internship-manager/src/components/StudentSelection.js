@@ -99,6 +99,7 @@ export default function StudentSelection() {
             <TableRow>
               <TableCell align="center"><strong>Company</strong></TableCell>
               <TableCell align="center"><strong>Job Title</strong></TableCell>
+              <TableCell align="center"><strong>Job Scope</strong></TableCell>
               <TableCell align="center"><strong>Start Date</strong></TableCell>
               <TableCell align="center"><strong>Duration</strong></TableCell>
               <TableCell align="center"><strong>Salary</strong></TableCell>
@@ -109,13 +110,14 @@ export default function StudentSelection() {
           <TableBody>
             {rows.map((offer, index) => (
               <TableRow key={index}>
-                <TableCell component="th" scope="row" align="center">{offer.company}</TableCell>
-                <TableCell component="th" scope="row" align="center">{offer.jobTitle}</TableCell>
-                <TableCell component="th" scope="row" align="center">{new Date(offer.startDate).toLocaleDateString()}</TableCell>
-                <TableCell component="th" scope="row" align="center">{offer.duration}</TableCell>
-                <TableCell component="th" scope="row" align="center">{offer.salary.toFixed(2) + '$'}</TableCell>
-                <TableCell component="th" scope="row" align="center">{offer.hours}</TableCell>
-                <TableCell omponent="th" scope="row" >
+                <TableCell component="th" scope="row" style={{ verticalAlign: 'top' }} align="center">{offer.company}</TableCell>
+                <TableCell component="th" scope="row" style={{ verticalAlign: 'top' }} align="center">{offer.jobTitle}</TableCell>
+                <TableCell component="th" scope="row" style={{ verticalAlign: 'top' }} align="left">{offer.jobScope.map(scope =>(<li>{scope}</li>))}</TableCell>
+                <TableCell component="th" scope="row" style={{ verticalAlign: 'top' }} align="center">{new Date(offer.startDate).toLocaleDateString()}</TableCell>
+                <TableCell component="th" scope="row" style={{ verticalAlign: 'top' }} align="center">{offer.duration}</TableCell>
+                <TableCell component="th" scope="row" style={{ verticalAlign: 'top' }} align="center">{offer.salary.toFixed(2) + '$'}</TableCell>
+                <TableCell component="th" scope="row" style={{ verticalAlign: 'top' }} align="center">{offer.hours}</TableCell>
+                <TableCell component="th" scope="row" style={{ verticalAlign: 'top' }} >
                   <Button variant="contained" color="primary" onClick={() => handleClickOpen(offer.uniqueId)}>SELECT</Button>
                 </TableCell>
               </TableRow>
