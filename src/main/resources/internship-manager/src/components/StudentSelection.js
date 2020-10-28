@@ -100,7 +100,6 @@ export default function StudentSelection() {
               <TableCell align="center"><strong>Compagnie</strong></TableCell>
               <TableCell align="center"><strong>Titre du poste</strong></TableCell>
               <TableCell align="center"><strong>Portée de travail</strong></TableCell>
-              {/* <TableCell align="center"><strong>Start Date</strong></TableCell> */}
               <TableCell align="center"><strong>Détails</strong></TableCell>
               <TableCell align="center"><strong>Action</strong></TableCell>
             </TableRow>
