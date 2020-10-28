@@ -50,6 +50,10 @@ class Validator {
     return value.getTime() >= date ? '' : message;
   }
 
+  week(value, message){
+    return value >= 7 ? '' : message;
+  }
+
   notBlank(value, message) {
     return value ? '' : message;
   }
