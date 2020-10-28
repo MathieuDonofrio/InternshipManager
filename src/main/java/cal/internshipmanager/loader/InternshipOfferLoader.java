@@ -16,7 +16,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-@Order(4)
+@Order(5)
 @Component
 public class InternshipOfferLoader implements CommandLineRunner {
 

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
-@Order(3)
+@Order(4)
 @Component
 public class EmployerLoader implements CommandLineRunner {
 

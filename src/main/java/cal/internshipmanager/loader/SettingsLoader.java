@@ -3,10 +3,12 @@ package cal.internshipmanager.loader;
 import cal.internshipmanager.model.Settings;
 import cal.internshipmanager.repository.SettingsRepository;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Order(1)
 @Component
 public class SettingsLoader implements CommandLineRunner {
 

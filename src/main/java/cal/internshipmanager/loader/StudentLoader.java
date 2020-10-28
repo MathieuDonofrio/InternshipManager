@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
-@Order(2)
+@Order(3)
 @Component
 public class StudentLoader implements CommandLineRunner {
 
