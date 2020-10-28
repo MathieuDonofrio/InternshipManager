@@ -107,7 +107,7 @@ class PendingApprovalList extends Component {
                 size="small" startIcon={<ThumbUpAltOutlinedIcon />}
                 onClick={() => this.onApprovedClicked(internshipOffer)}
               >
-                Approve
+                Approuver
               </Button>
             </Box>
 
@@ -117,7 +117,7 @@ class PendingApprovalList extends Component {
                 size="small"
                 startIcon={<ThumbDownAltOutlinedIcon />} onClick={() => this.onRejectedClicked(internshipOffer)}
               >
-                Reject
+                Rejeter
               </Button>
             </Box>
 

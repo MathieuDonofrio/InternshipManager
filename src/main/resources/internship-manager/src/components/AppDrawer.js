@@ -108,15 +108,18 @@ export default function AppDrawer(props) {
 
   const userType = () => {
     let type = localStorage.getItem('UserType').toLowerCase();
-    type = type.charAt(0).toUpperCase() + type.slice(1);
+    //type = type.charAt(0).toUpperCase() + type.slice(1);
 
-    // switch (type){
+    switch (type){
 
-    //   case (type === "student") : return "ÉTUDIANT";
-    //   case (type === "employer") : return "EMPLOYEUR";
-    //   case (type === "administrator") : return "ADMINISTRATEUR";
-    // }
-    return type;
+      case "student" : return "ÉTUDIANT";
+      break;
+      case "employer" : return "EMPLOYEUR";
+      break;
+      case "administrator" : return "ADMINISTRATEUR";
+      break;
+      default: return "ÉTUDIANT";
+    }
   }
 
   const isStudent = () => {
@@ -161,7 +164,7 @@ export default function AppDrawer(props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap className={classes.panelTitle}>
-            {userType() + " Panel"}
+            {"PANNEAU " + userType()}
           </Typography>
 
           <Button
