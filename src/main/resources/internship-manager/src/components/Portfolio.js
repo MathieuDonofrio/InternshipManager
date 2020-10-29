@@ -67,7 +67,7 @@ class Portfolio extends Component {
   //
 
   constructor(props) {
-    super();
+    super(props);
 
     this.state = state;
 
@@ -82,7 +82,7 @@ class Portfolio extends Component {
 
   onUpdatePortfolio() {
 
-    let uuid = localStorage.getItem("UserUniqueId");
+    let uuid = this.props.studentId ? this.props.studentId : localStorage.getItem("UserUniqueId");
 
     PortfolioService.portfolioDocuments(uuid).then(response => {
       this.setState(response.data);
@@ -150,7 +150,7 @@ class Portfolio extends Component {
           </Box>
         </Container>
 
-        <Box margin={1}>
+        {!this.props.studentId && <Box margin={1}>
           <Button
             variant="contained" color="primary"
             size="small" startIcon={<AddIcon />}
@@ -158,7 +158,7 @@ class Portfolio extends Component {
           >
             Add Document
           </Button>
-        </Box>
+        </Box>}
 
         <TableContainer>
           <Table size="small" aria-label="a dense table">

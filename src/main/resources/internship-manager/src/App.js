@@ -62,7 +62,7 @@ function App() {
               <Route exact path="/student-list-page" component={StudentListPage}></Route>
 
               <Route exact path="/manage-access/:uuid" component={ManageAccessPage}></Route>
-              <Route exact path="/student-profile-page/:uuid" component={StudentProfilePage}></Route>
+              <Route exact path="/student-profile-page/:uuid/:fullName" component={StudentProfilePage}></Route>
 
             </AppDrawer>
 

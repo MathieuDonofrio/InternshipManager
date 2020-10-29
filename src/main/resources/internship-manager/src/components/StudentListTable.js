@@ -67,7 +67,7 @@ export default function StudentListTable() {
                   <Button
                       variant="contained" color="secondary"
                       size="small"
-                      onClick={() => history.push(`/student-profile-page/${student.uniqueId}`)}
+                      onClick={() => history.push(`/student-profile-page/${student.uniqueId}/${student.firstName + " " + student.lastName}`)}
                     >
                       Voir profil
                     </Button>
