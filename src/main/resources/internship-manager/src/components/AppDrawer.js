@@ -270,6 +270,13 @@ export default function AppDrawer(props) {
               <ListItemIcon><AssignmentLateIcon /> </ListItemIcon>
               <ListItemText primary={"Applications en attente"} />
             </ListItem>
+            <ListItem
+              button
+              key={"Liste des étudiants"}
+              onClick={() => history.push("/student-list-page")}>
+              <ListItemIcon><AssignmentLateIcon /> </ListItemIcon>
+              <ListItemText primary={"Liste des étudiants"} />
+            </ListItem>
           </List>
         }
 
