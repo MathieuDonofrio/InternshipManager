@@ -232,7 +232,7 @@ class Portfolio extends Component {
             <Box marginTop={2}>
               <DropzoneArea
                 name="files"
-                dropzoneText={"Glissez-déposez ou cliquez pour téléversez le " + this.state.type.toLowerCase()}
+                dropzoneText={"Glissez-déposez ou cliquez pour téléversez le document"}
                 filesLimit={1}
                 onChange={this.onFileUpload}
               >
@@ -242,10 +242,10 @@ class Portfolio extends Component {
           </DialogContent>
           <DialogActions>
             <Button onClick={this.onDialogClose} color="primary">
-              Cancel
+              Annulez
           </Button>
             <Button onClick={this.onSend} color="primary">
-              Add
+              Ajoutez
           </Button>
           </DialogActions>
         </Dialog>

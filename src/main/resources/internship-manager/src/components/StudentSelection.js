@@ -99,30 +99,30 @@ export default function StudentSelection() {
             <TableRow>
               <TableCell align="center"><strong>Compagnie</strong></TableCell>
               <TableCell align="center"><strong>Titre du poste</strong></TableCell>
-              <TableCell align="center"><strong>Date de début</strong></TableCell>
-              <TableCell align="center"><strong>Date de fin</strong></TableCell>
-              <TableCell align="center"><strong>Emplacement</strong></TableCell>
-              <TableCell align="center"><strong>Salaire</strong></TableCell>
-              <TableCell align="center"><strong>Heures</strong></TableCell>
+              <TableCell align="center"><strong>Portée de travail</strong></TableCell>
+              <TableCell align="center"><strong>Détails</strong></TableCell>
               <TableCell align="center"><strong>Action</strong></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {rows.map((offer, index) => (
               <TableRow key={index}>
-                <TableCell component="th" scope="row" align="center">{offer.company}</TableCell>
-                <TableCell component="th" scope="row" align="center">{offer.jobTitle}</TableCell>
-                <TableCell component="th" scope="row" align="center">{new Date(offer.startDate).toLocaleDateString()}</TableCell>
-                <TableCell component="th" scope="row" align="center">{new Date(offer.endDate).toLocaleDateString()}</TableCell>
-                <TableCell component="th" scope="row" align="center">{offer.location}</TableCell>
-                <TableCell component="th" scope="row" align="center">{offer.salary.toFixed(2) + '$'}</TableCell>
-                <TableCell component="th" scope="row" align="center">{offer.hours}</TableCell>
-                <TableCell omponent="th" scope="row" >
-                  <Button variant="contained" color="primary" onClick={() => handleClickOpen(offer.uniqueId)}>SÉLECTIONNER</Button>
+                <TableCell component="th" scope="row" style={{ verticalAlign: 'top' }} align="center">{offer.company}</TableCell>
+                <TableCell component="th" scope="row" style={{ verticalAlign: 'top' }} align="center">{offer.jobTitle}</TableCell>
+                <TableCell component="th" scope="row" style={{ verticalAlign: 'top' }} align="left">{offer.jobScope.map(scope => (<li  style={{ minWidth: '150px' }}>{scope}</li>))}</TableCell>
+                <TableCell component="th" scope="row" style={{ verticalAlign: 'top' }} align="left">
+                  <p><strong>Début: </strong>{new Date(offer.startDate).toLocaleDateString()}</p>
+                  <p><strong>Fin: </strong>{new Date(offer.endDate).toLocaleDateString()}</p>
+                  <p><strong>Lieu du stage: </strong>{offer.location}</p>
+                  <p><strong>Salaires: </strong>{offer.salary.toFixed(2) + '$'}</p>
+                  <p><strong>Heures: </strong>{offer.hours}</p>
+                </TableCell>
+                <TableCell component="th" scope="row" style={{ verticalAlign: 'top' }} >
+                  <Button variant="contained" color="primary" onClick={() => handleClickOpen(offer.uniqueId)}>OUVRIR</Button>
                 </TableCell>
               </TableRow>
             ))}
-            
+
             <StudentApplicationDialogProps open={open} onClose={handleClose} selectedValue={currentInternshipId} />
           </TableBody>
         </Table>
