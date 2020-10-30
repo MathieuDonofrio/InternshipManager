@@ -59,7 +59,7 @@ export default class RegistrationPage extends Component {
               variant="outlined"
               color="secondary"
               onClick={this.onBack}>
-              Go Back
+              Retourner
           </Button>
           </Box>
         }
@@ -75,7 +75,7 @@ export default class RegistrationPage extends Component {
               mt={24}
               textAlign="center">
 
-              <Typography component="h1" variant="h4">Register As</Typography>
+              <Typography component="h1" variant="h4">S'inscrire en tant que</Typography>
 
               <Box mt={4}>
                 <ButtonGroup>
@@ -84,14 +84,14 @@ export default class RegistrationPage extends Component {
                     color="primary"
                     size="large"
                     onClick={this.onSelectStudent}>
-                    Student
+                    Étudiant
               </Button>
                   <Button
                     variant="outlined"
                     color="secondary"
                     size="large"
                     onClick={this.onSelectEmployer}>
-                    Employer
+                    Employeur
               </Button>
                 </ButtonGroup>
               </Box>

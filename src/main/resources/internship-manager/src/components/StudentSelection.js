@@ -89,7 +89,7 @@ export default function StudentSelection() {
           paddingTop={2}
           textAlign="left"
         >
-          <Typography component="h1" variant="h4" align="center">List Internship Offer</Typography>
+          <Typography component="h1" variant="h4" align="center">Liste des offres de stage</Typography>
         </Box>
       </Container>
 

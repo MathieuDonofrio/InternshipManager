@@ -156,7 +156,7 @@ class Portfolio extends Component {
             size="small" startIcon={<AddIcon />}
             onClick={this.onDialogOpen}
           >
-            Add Document
+            Ajouter un document
           </Button>
         </Box>}
 
@@ -165,10 +165,10 @@ class Portfolio extends Component {
             <TableHead>
               <TableRow>
                 <TableCell align="center"><strong>Type</strong></TableCell>
-                <TableCell align="center"><strong>File</strong></TableCell>
-                <TableCell align="center"><strong>Upload Date</strong></TableCell>
-                <TableCell align="center"><strong>Delete</strong></TableCell>
-                <TableCell align="center"><strong>Download</strong></TableCell>
+                <TableCell align="center"><strong>Fichier</strong></TableCell>
+                <TableCell align="center"><strong>Date de téléversement</strong></TableCell>
+                <TableCell align="center"><strong>Supprimer</strong></TableCell>
+                <TableCell align="center"><strong>Téléchargement</strong></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -211,10 +211,10 @@ class Portfolio extends Component {
         </TableContainer>
 
         <Dialog open={this.state.open} onClose={this.onDialogClose} aria-labelledby="form-dialog-title">
-          <DialogTitle id="form-dialog-title">Add Document</DialogTitle>
+          <DialogTitle id="form-dialog-title">Ajouter un document</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              To add a document please select the type and upload the document.
+            Pour ajouter un document, sélectionnez le type et téléversez le document.
           </DialogContentText>
             <FormControl>
               <InputLabel>Type</InputLabel>
@@ -223,16 +223,16 @@ class Portfolio extends Component {
                 value={this.state.type}
                 onChange={this.onChange}
               >
-                <MenuItem value={"Resume"}>Resume</MenuItem>
-                <MenuItem value={"Cover Letter"}>Cover Letter</MenuItem>
-                <MenuItem value={"Grades"}>Grades</MenuItem>
-                <MenuItem value={"Other"}>Other</MenuItem>
+                <MenuItem value={"Resume"}>Curriculum Vitae</MenuItem>
+                <MenuItem value={"Cover Letter"}>Lettre de motivation</MenuItem>
+                <MenuItem value={"Grades"}>Bulletin</MenuItem>
+                <MenuItem value={"Other"}>Autre</MenuItem>
               </Select>
             </FormControl>
             <Box marginTop={2}>
               <DropzoneArea
                 name="files"
-                dropzoneText={"Drag and drop or click to upload " + this.state.type.toLowerCase()}
+                dropzoneText={"Glissez-déposez ou cliquez pour téléversez le document"}
                 filesLimit={1}
                 onChange={this.onFileUpload}
               >
@@ -242,10 +242,10 @@ class Portfolio extends Component {
           </DialogContent>
           <DialogActions>
             <Button onClick={this.onDialogClose} color="primary">
-              Cancel
+              Annulez
           </Button>
             <Button onClick={this.onSend} color="primary">
-              Add
+              Ajoutez
           </Button>
           </DialogActions>
         </Dialog>
