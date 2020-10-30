@@ -107,7 +107,7 @@ class PendingApprovalList extends Component {
                 size="small" startIcon={<ThumbUpAltOutlinedIcon />}
                 onClick={() => this.onApprovedClicked(internshipOffer)}
               >
-                Approve
+                Approuver
               </Button>
             </Box>
 
@@ -117,7 +117,7 @@ class PendingApprovalList extends Component {
                 size="small"
                 startIcon={<ThumbDownAltOutlinedIcon />} onClick={() => this.onRejectedClicked(internshipOffer)}
               >
-                Reject
+                Rejeter
               </Button>
             </Box>
 
@@ -137,7 +137,7 @@ class PendingApprovalList extends Component {
             paddingTop={2}
             textAlign="left"
           >
-            <Typography component="h1" variant="h4" align="center">Pending Approval</Typography>
+            <Typography component="h1" variant="h4" align="center">Offre en attente</Typography>
           </Box>
         </Container>
 
@@ -145,13 +145,13 @@ class PendingApprovalList extends Component {
           <Table size="small" aria-label="a dense table">
             <TableHead>
               <TableRow>
-                <TableCell align="center"><strong>Company</strong></TableCell>
-                <TableCell align="center"><strong>Job Title</strong></TableCell>
-                <TableCell align="center"><strong>Start Date</strong></TableCell>
-                <TableCell align="center"><strong>End Date</strong></TableCell>
-                <TableCell align="center"><strong>Location</strong></TableCell>
-                <TableCell align="center"><strong>Salary</strong></TableCell>
-                <TableCell align="center"><strong>Hours</strong></TableCell>
+                <TableCell align="center"><strong>Compagnie</strong></TableCell>
+                <TableCell align="center"><strong>Titre du post</strong></TableCell>
+                <TableCell align="center"><strong>Date de début</strong></TableCell>
+                <TableCell align="center"><strong>Date de fin</strong></TableCell>
+                <TableCell align="center"><strong>Emplacement</strong></TableCell>
+                <TableCell align="center"><strong>Salaire</strong></TableCell>
+                <TableCell align="center"><strong>Heures</strong></TableCell>
                 <TableCell align="center"><strong>Action</strong></TableCell>
               </TableRow>
             </TableHead>

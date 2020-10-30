@@ -31,7 +31,7 @@ import VisibilityIcon from '@material-ui/icons/Visibility';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
 
-const drawerWidth = 240;
+const drawerWidth = 250;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -108,8 +108,18 @@ export default function AppDrawer(props) {
 
   const userType = () => {
     let type = localStorage.getItem('UserType').toLowerCase();
-    type = type.charAt(0).toUpperCase() + type.slice(1);
-    return type;
+    //type = type.charAt(0).toUpperCase() + type.slice(1);
+
+    switch (type){
+
+      case "student" : return "ÉTUDIANT";
+      break;
+      case "employer" : return "EMPLOYEUR";
+      break;
+      case "administrator" : return "ADMINISTRATEUR";
+      break;
+      default: return "ÉTUDIANT";
+    }
   }
 
   const isStudent = () => {
@@ -154,7 +164,7 @@ export default function AppDrawer(props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap className={classes.panelTitle}>
-            {userType() + " Panel"}
+            {"PANNEAU " + userType()}
           </Typography>
 
           <Button
@@ -162,7 +172,7 @@ export default function AppDrawer(props) {
             onClick={() => {
               AuthenticationService.logout();
               history.push("/login");
-            }}>Logout</Button>
+            }}>Se déconnecter</Button>
 
         </Toolbar>
       </AppBar>
@@ -193,7 +203,7 @@ export default function AppDrawer(props) {
             key={"Home"}
             onClick={() => history.push("/home")}>
             <ListItemIcon><HomeIcon /> </ListItemIcon>
-            <ListItemText primary={"Home"} />
+            <ListItemText primary={"Accueil"} />
           </ListItem>
         </List>
 
@@ -214,14 +224,14 @@ export default function AppDrawer(props) {
               key={"Application Creation"}
               onClick={() => history.push("/internship-application-creation")}>
               <ListItemIcon><CreateIcon /> </ListItemIcon>
-              <ListItemText primary={"Application Creation"} />
+              <ListItemText primary={"Application"} />
             </ListItem>
             <ListItem
               button
               key={"Application Status"}
               onClick={() => history.push("/internship-application-status")}>
               <ListItemIcon><VisibilityIcon /> </ListItemIcon>
-              <ListItemText primary={"Application Status"} />
+              <ListItemText primary={"État de la candidature"} />
             </ListItem>
           </List>
         }
@@ -234,14 +244,14 @@ export default function AppDrawer(props) {
               key={"Offer Creation"}
               onClick={() => history.push("/internship-offer-creation")}>
               <ListItemIcon><CreateIcon /> </ListItemIcon>
-              <ListItemText primary={"Offer Creation"} />
+              <ListItemText primary={"Créer une offre de stage"} />
             </ListItem>
             <ListItem
               button
               key={"Student Selection"}
               onClick={() => history.push("/student-selection-page")}>
               <ListItemIcon><AssignmentTurnedInIcon /> </ListItemIcon>
-              <ListItemText primary={"Student Selection"} />
+              <ListItemText primary={"Sélection des étudiants"} />
             </ListItem>
           </List>
         }
@@ -254,21 +264,21 @@ export default function AppDrawer(props) {
               key={"Student Offer Validation"}
               onClick={() => history.push("/student-offer-validation")}>
               <ListItemIcon><VisibilityIcon /> </ListItemIcon>
-              <ListItemText primary={"Offer Visibility"} />
+              <ListItemText primary={"Visualisation des offres"} />
             </ListItem>
             <ListItem
               button
               key={"Pending Approval"}
               onClick={() => history.push("/pending-approval")}>
               <ListItemIcon><GavelOutlinedIcon /> </ListItemIcon>
-              <ListItemText primary={"Pending Approval"} />
+              <ListItemText primary={"Offres en attentes"} />
             </ListItem>
             <ListItem
               button
               key={"Applications en attente"}
               onClick={() => history.push("/internship-application-validation")}>
               <ListItemIcon><AssignmentLateIcon /> </ListItemIcon>
-              <ListItemText primary={"Applications en attente"} />
+              <ListItemText primary={"Applications en attentes"} />
             </ListItem>
           </List>
         }
