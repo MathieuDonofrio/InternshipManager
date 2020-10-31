@@ -189,6 +189,7 @@ public class InternshipApplicationServiceTest {
             InternshipApplication internshipApplication = inv.getArgument(0);
 
             assertNotNull(internshipApplication.getUniqueId());
+            assertEquals(settingsService.getSemester(), internshipApplication.getSemester());
             assertEquals(request.getOfferUniqueId(), internshipApplication.getOffer().getUniqueId());
             assertEquals(user.getUniqueId(), internshipApplication.getStudent().getUniqueId());
             assertNotNull(internshipApplication.getDate());

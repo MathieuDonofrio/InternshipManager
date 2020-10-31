@@ -41,7 +41,7 @@ public class SettingsService {
 
             final List<Settings> settings = settingsRepository.findAll();
 
-            if (settings == null || settings.size() != 1)
+            if (settings.size() != 1)
                 throw new IllegalStateException("No settings could be found!");
 
             settingsCache = settings.get(0);

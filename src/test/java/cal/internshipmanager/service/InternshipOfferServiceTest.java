@@ -73,6 +73,7 @@ public class InternshipOfferServiceTest {
             InternshipOffer internshipOffer = inv.getArgument(0);
 
             assertNotNull(internshipOffer.getUniqueId());
+            assertEquals(settingsService.getSemester(), internshipOffer.getSemester());
             assertEquals(user.getUniqueId(), internshipOffer.getEmployer());
             assertEquals(InternshipOffer.Status.PENDING_APPROVAL, internshipOffer.getStatus());
             assertEquals(internshipOfferCreationRequest.getCompany(), internshipOffer.getCompany());
