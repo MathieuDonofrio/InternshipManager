@@ -18,6 +18,7 @@ import StudentInternshipApplicationValidationPage from './pages/StudentInternshi
 import StudentSelectionPage from './pages/StudentSelectionPage';
 import StudentInternshipApplicationStatusPage from './pages/StudentInternshipApplicationStatusPage';
 import ManageAccessPage from './pages/ManageAccessPage';
+import SelectActionPage from './pages/SelectActionPage';
 
 function App() {
   
@@ -59,7 +60,7 @@ function App() {
               <Route exact path="/student-selection-page" component={StudentSelectionPage}></Route>
 
               <Route exact path="/manage-access/:uuid" component={ManageAccessPage}></Route>
-
+              <Route exact path="/select-action/:uuid" component={SelectActionPage}></Route>
             </AppDrawer>
 
           </Switch>
