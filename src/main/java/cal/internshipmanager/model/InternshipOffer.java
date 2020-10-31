@@ -20,6 +20,8 @@ public class InternshipOffer implements Serializable {
     @Id
     private UUID uniqueId;
 
+    private String semester;
+
     private UUID employer;
 
     private Status status;
