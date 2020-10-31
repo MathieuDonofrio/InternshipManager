@@ -48,7 +48,7 @@ public class JwtAuthentication implements Authentication {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
 
-        Claim type = token.getClaim("Type");
+        final Claim type = token.getClaim("Type");
 
         return type.isNull() ? Set.of()
                 : Set.of(new SimpleGrantedAuthority(type.asString()));

@@ -33,6 +33,9 @@ public class InternshipApplicationServiceTest {
     private JwtProvider jwtProvider;
 
     @Mock
+    private SettingsService settingsService;
+
+    @Mock
     private InternshipApplicationRepository internshipApplicationRepository;
 
     @Mock
@@ -53,7 +56,6 @@ public class InternshipApplicationServiceTest {
 
         user.setUniqueId(UUID.randomUUID());
 
-
         InternshipOffer internshipOffer = new InternshipOffer();
 
         internshipOffer.setUniqueId(UUID.randomUUID());
@@ -73,6 +75,7 @@ public class InternshipApplicationServiceTest {
         InternshipApplication internshipApplication = new InternshipApplication();
 
         internshipApplication.setUniqueId(UUID.randomUUID());
+        internshipApplication.setSemester(settingsService.getSemester());
         internshipApplication.setStudent(user);
         internshipApplication.setOffer(internshipOffer);
         internshipApplication.setStatus(InternshipApplication.Status.APPROVED);
@@ -80,7 +83,7 @@ public class InternshipApplicationServiceTest {
         internshipApplication.setDate(new Date());
 
         InternshipApplicationService applicationService=new InternshipApplicationService(
-                internshipApplicationRepository, portfolioDocumentRepository, userRepository, internshipOfferRepository);
+                settingsService, internshipApplicationRepository, portfolioDocumentRepository, userRepository, internshipOfferRepository);
 
         when(internshipApplicationRepository.findById(internshipApplication.getUniqueId())).thenReturn(Optional.of(internshipApplication));
 
@@ -111,15 +114,16 @@ public class InternshipApplicationServiceTest {
         InternshipApplication internshipApplication = new InternshipApplication();
 
         internshipApplication.setUniqueId(UUID.randomUUID());
+        internshipApplication.setSemester(settingsService.getSemester());
         internshipApplication.setStudent(user);
         internshipApplication.setOffer(internshipOffer);
         internshipApplication.setStatus(InternshipApplication.Status.APPROVED);
         internshipApplication.setDate(new Date());
 
         InternshipApplicationService internshipApplicationService = new InternshipApplicationService(
-                internshipApplicationRepository, portfolioDocumentRepository, userRepository, internshipOfferRepository);
+                settingsService, internshipApplicationRepository, portfolioDocumentRepository, userRepository, internshipOfferRepository);
 
-        when(internshipApplicationRepository.findAllByStudentUniqueId(user.getUniqueId()))
+        when(internshipApplicationRepository.findAllByStudentUniqueIdAndSemester(user.getUniqueId(), settingsService.getSemester()))
                 .thenReturn(List.of(internshipApplication));
 
         // Act
@@ -151,6 +155,7 @@ public class InternshipApplicationServiceTest {
         InternshipOffer offer = new InternshipOffer();
 
         offer.setUniqueId(UUID.randomUUID());
+        offer.setSemester(settingsService.getSemester());
         offer.setCompany("TestCompany");
         offer.setJobTitle("TestJobTitle");
 
@@ -164,7 +169,7 @@ public class InternshipApplicationServiceTest {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         InternshipApplicationService internshipApplicationService = new InternshipApplicationService(
-                internshipApplicationRepository, portfolioDocumentRepository, userRepository, internshipOfferRepository);
+                settingsService, internshipApplicationRepository, portfolioDocumentRepository, userRepository, internshipOfferRepository);
 
         InternshipApplicationCreationRequest request = new InternshipApplicationCreationRequest();
 
@@ -184,6 +189,7 @@ public class InternshipApplicationServiceTest {
             InternshipApplication internshipApplication = inv.getArgument(0);
 
             assertNotNull(internshipApplication.getUniqueId());
+            assertEquals(settingsService.getSemester(), internshipApplication.getSemester());
             assertEquals(request.getOfferUniqueId(), internshipApplication.getOffer().getUniqueId());
             assertEquals(user.getUniqueId(), internshipApplication.getStudent().getUniqueId());
             assertNotNull(internshipApplication.getDate());
@@ -211,21 +217,24 @@ public class InternshipApplicationServiceTest {
         InternshipOffer internshipOffer = new InternshipOffer();
 
         internshipOffer.setUniqueId(UUID.randomUUID());
+        internshipOffer.setSemester(settingsService.getSemester());
         internshipOffer.setCompany("TestCompany");
         internshipOffer.setJobTitle("TestJobTitle");
 
         InternshipApplication internshipApplication = new InternshipApplication();
 
         internshipApplication.setUniqueId(UUID.randomUUID());
+        internshipApplication.setSemester(settingsService.getSemester());
         internshipApplication.setStudent(user);
         internshipApplication.setOffer(internshipOffer);
         internshipApplication.setDate(new Date());
         internshipApplication.setStatus(InternshipApplication.Status.PENDING_APPROVAL);
 
         InternshipApplicationService internshipApplicationService = new InternshipApplicationService(
-                internshipApplicationRepository, portfolioDocumentRepository, userRepository, internshipOfferRepository);
+                settingsService, internshipApplicationRepository, portfolioDocumentRepository, userRepository, internshipOfferRepository);
 
-        when(internshipApplicationRepository.findAllByStatus(any())).thenReturn(List.of(internshipApplication));
+        when(internshipApplicationRepository.findAllByStatusAndSemester(any(), any()))
+                .thenReturn(List.of(internshipApplication));
         // Act
 
         InternshipApplicationListResponse response = internshipApplicationService.findByStatus(
@@ -263,12 +272,14 @@ public class InternshipApplicationServiceTest {
         InternshipOffer internshipOffer = new InternshipOffer();
 
         internshipOffer.setUniqueId(UUID.randomUUID());
+        internshipOffer.setSemester(settingsService.getSemester());
         internshipOffer.setCompany("TestCompany");
         internshipOffer.setJobTitle("TestJobTitle");
 
         InternshipApplication internshipApplication = new InternshipApplication();
 
         internshipApplication.setUniqueId(UUID.randomUUID());
+        internshipApplication.setSemester(settingsService.getSemester());
         internshipApplication.setOffer(internshipOffer);
         internshipApplication.setStudent(user);
         internshipApplication.setDate(new Date());
@@ -277,9 +288,9 @@ public class InternshipApplicationServiceTest {
         InternshipApplicationListResponse response = new InternshipApplicationListResponse();
 
         InternshipApplicationService internshipApplicationService = new InternshipApplicationService(
-                internshipApplicationRepository, portfolioDocumentRepository, userRepository, internshipOfferRepository);
+                settingsService, internshipApplicationRepository, portfolioDocumentRepository, userRepository, internshipOfferRepository);
 
-        when(internshipApplicationRepository.findAllByOfferUniqueIdAndStatus(any(), any()))
+        when(internshipApplicationRepository.findAllByOfferUniqueIdAndStatusAndSemester(any(), any(), any()))
                 .thenReturn(List.of(internshipApplication));
 
         response.setApplications(List.of(internshipApplication).stream()
@@ -318,7 +329,7 @@ public class InternshipApplicationServiceTest {
         internshipApplication.setStatus(InternshipApplication.Status.PENDING_APPROVAL);
 
         InternshipApplicationService internshipApplicationService = new InternshipApplicationService(
-                internshipApplicationRepository, portfolioDocumentRepository, userRepository, internshipOfferRepository);
+                settingsService, internshipApplicationRepository, portfolioDocumentRepository, userRepository, internshipOfferRepository);
 
         when(internshipApplicationRepository.findById(any())).thenReturn(Optional.of(internshipApplication));
 
@@ -356,7 +367,7 @@ public class InternshipApplicationServiceTest {
         internshipApplication.setStatus(InternshipApplication.Status.PENDING_APPROVAL);
 
         InternshipApplicationService internshipApplicationService = new InternshipApplicationService(
-                internshipApplicationRepository, portfolioDocumentRepository, userRepository, internshipOfferRepository);
+                settingsService, internshipApplicationRepository, portfolioDocumentRepository, userRepository, internshipOfferRepository);
 
         when(internshipApplicationRepository.findById(any())).thenReturn(Optional.of(internshipApplication));
 
@@ -394,7 +405,7 @@ public class InternshipApplicationServiceTest {
         internshipApplication.setStatus(InternshipApplication.Status.SELECTED);
 
         InternshipApplicationService internshipApplicationService = new InternshipApplicationService(
-                internshipApplicationRepository, portfolioDocumentRepository, userRepository, internshipOfferRepository);
+                settingsService, internshipApplicationRepository, portfolioDocumentRepository, userRepository, internshipOfferRepository);
 
         when(internshipApplicationRepository.findById(any())).thenReturn(Optional.of(internshipApplication));
 

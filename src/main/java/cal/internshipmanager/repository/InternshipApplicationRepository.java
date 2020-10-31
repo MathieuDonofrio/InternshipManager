@@ -10,9 +10,11 @@ import java.util.UUID;
 @Repository
 public interface InternshipApplicationRepository extends MongoRepository<InternshipApplication, UUID> {
 
-    List<InternshipApplication> findAllByStudentUniqueId(UUID studentUniqueId);
+    List<InternshipApplication> findAllBySemester(String semester);
 
-    List<InternshipApplication> findAllByStatus(InternshipApplication.Status status);
+    List<InternshipApplication> findAllByStudentUniqueIdAndSemester(UUID studentUniqueId, String semester);
 
-    List<InternshipApplication> findAllByOfferUniqueIdAndStatus(UUID offerUniqueId, InternshipApplication.Status status);
+    List<InternshipApplication> findAllByStatusAndSemester(InternshipApplication.Status status, String semester);
+
+    List<InternshipApplication> findAllByOfferUniqueIdAndStatusAndSemester(UUID offerUniqueId, InternshipApplication.Status status, String semester);
 }

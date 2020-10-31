@@ -23,7 +23,7 @@ public class DownloadFileResponse implements Serializable {
     // Utils
     //
 
-    public static ResponseEntity<Resource> ResponseEntity(final DownloadFileResponse response){
+    public static ResponseEntity<Resource> responseEntity(final DownloadFileResponse response){
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType(response.getType()))
                 .contentLength(response.getLength())

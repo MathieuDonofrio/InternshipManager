@@ -72,7 +72,7 @@ class StudentRegistrationForm extends Component {
       lastName: this.state.lastName,
     }
 
-    RegistrationService.registerStudent(request)
+    RegistrationService.student(request)
       .then(() => this.props.history.push('/login'))
       .catch(error => this.backendValidation(error))
       .finally(() => { this.submitLock.unlock(); this.forceUpdate() });

@@ -1,4 +1,4 @@
-package cal.internshipmanager.admin;
+package cal.internshipmanager.loader;
 
 import cal.internshipmanager.model.User;
 import cal.internshipmanager.repository.UserRepository;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
-@Order(2)
+@Order(3)
 @Component
 public class StudentLoader implements CommandLineRunner {
 
@@ -48,7 +48,7 @@ public class StudentLoader implements CommandLineRunner {
     @Override
     public void run(String... args) {
 
-        final int needed = MIN_STUDENT_AMOUNT -  userRepository.findAllByType("STUDENT").size();
+        final int needed = MIN_STUDENT_AMOUNT -  userRepository.findAllByType(User.Type.STUDENT).size();
 
         for(int i = 0; i < needed; i++){
 

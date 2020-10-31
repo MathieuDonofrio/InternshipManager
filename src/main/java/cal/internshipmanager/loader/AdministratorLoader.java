@@ -1,4 +1,4 @@
-package cal.internshipmanager.admin;
+package cal.internshipmanager.loader;
 
 import cal.internshipmanager.model.User;
 import cal.internshipmanager.repository.UserRepository;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
-@Order(1)
+@Order(2)
 @Component
 public class AdministratorLoader implements CommandLineRunner {
 

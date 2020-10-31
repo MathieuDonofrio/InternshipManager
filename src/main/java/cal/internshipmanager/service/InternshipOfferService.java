@@ -25,6 +25,8 @@ public class InternshipOfferService {
     // Dependencies
     //
 
+    private final SettingsService settingsService;
+
     private final InternshipOfferRepository internshipOfferRepository;
 
     private final UserRepository userRepository;
@@ -34,7 +36,8 @@ public class InternshipOfferService {
     //
 
     @Autowired
-    public InternshipOfferService(InternshipOfferRepository internshipOfferRepository, UserRepository userRepository) {
+    public InternshipOfferService(SettingsService settingsService, InternshipOfferRepository internshipOfferRepository, UserRepository userRepository) {
+        this.settingsService = settingsService;
         this.internshipOfferRepository = internshipOfferRepository;
         this.userRepository = userRepository;
     }
@@ -52,6 +55,7 @@ public class InternshipOfferService {
         InternshipOffer internshipOffer = new InternshipOffer();
 
         internshipOffer.setUniqueId(UUID.randomUUID());
+        internshipOffer.setSemester(settingsService.getSemester());
         internshipOffer.setEmployer(userUniqueId);
         internshipOffer.setStatus(InternshipOffer.Status.PENDING_APPROVAL);
         internshipOffer.setCompany(request.getCompany());
@@ -87,9 +91,8 @@ public class InternshipOfferService {
 
     public InternshipOfferListResponse pendingApproval() {
 
-        List<InternshipOffer> internshipOffers = internshipOfferRepository.findAllByStatus(
-                InternshipOffer.Status.PENDING_APPROVAL);
-        System.out.println(internshipOffers);
+        List<InternshipOffer> internshipOffers = internshipOfferRepository.findAllByStatusAndSemester(
+                InternshipOffer.Status.PENDING_APPROVAL, settingsService.getSemester());
 
         InternshipOfferListResponse response = new InternshipOfferListResponse();
 
@@ -101,8 +104,8 @@ public class InternshipOfferService {
 
     public InternshipOfferListResponse approved() {
 
-        List<InternshipOffer> internshipOffers = internshipOfferRepository.findAllByStatus(
-                InternshipOffer.Status.APPROVED);
+        List<InternshipOffer> internshipOffers = internshipOfferRepository.findAllByStatusAndSemester(
+                InternshipOffer.Status.APPROVED, settingsService.getSemester());
 
         InternshipOfferListResponse response = new InternshipOfferListResponse();
 
@@ -114,8 +117,8 @@ public class InternshipOfferService {
 
     public InternshipOfferListResponse rejected() {
 
-        List<InternshipOffer> internshipOffers = internshipOfferRepository.findAllByStatus(
-                InternshipOffer.Status.REJECTED);
+        List<InternshipOffer> internshipOffers = internshipOfferRepository.findAllByStatusAndSemester(
+                InternshipOffer.Status.REJECTED, settingsService.getSemester());
 
         InternshipOfferListResponse response = new InternshipOfferListResponse();
 
@@ -127,8 +130,8 @@ public class InternshipOfferService {
 
     public InternshipOfferListResponse accessible(UUID userUniqueId) {
 
-        List<InternshipOffer> internshipOffers = internshipOfferRepository.findAllByStatus(
-                InternshipOffer.Status.APPROVED);
+        List<InternshipOffer> internshipOffers = internshipOfferRepository.findAllByStatusAndSemester(
+                InternshipOffer.Status.APPROVED, settingsService.getSemester());
 
         InternshipOfferListResponse response = new InternshipOfferListResponse();
 
@@ -176,7 +179,8 @@ public class InternshipOfferService {
 
     public InternshipOfferListResponse findAllByEmployer(UUID uniqueId){
 
-        List<InternshipOffer> internshipOffers = internshipOfferRepository.findAllByEmployerAndStatus(uniqueId, InternshipOffer.Status.APPROVED);
+        List<InternshipOffer> internshipOffers = internshipOfferRepository.findAllByEmployerAndStatusAndSemester(
+                uniqueId, InternshipOffer.Status.APPROVED, settingsService.getSemester());
 
         InternshipOfferListResponse response = new InternshipOfferListResponse();
 
