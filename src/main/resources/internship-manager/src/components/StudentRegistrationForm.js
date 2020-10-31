@@ -88,11 +88,11 @@ class StudentRegistrationForm extends Component {
 
     Validator.clearErrors(this.errors);
 
-    this.errors.email = Validator.email(this.state.email, "Email is not valid");
-    this.errors.firstName = Validator.notBlank(this.state.firstName, "First name is mandatory");
-    this.errors.lastName = Validator.notBlank(this.state.lastName, "Last name is mandatory");
-    this.errors.password = Validator.size(this.state.password, 6, 18, "Password size must be between 6 and 18");
-    this.errors.confirm = Validator.match(this.state.password, this.state.confirm, "Password does not match");
+    this.errors.email = Validator.email(this.state.email, "L'adresse email n'est pas valide");
+    this.errors.firstName = Validator.notBlank(this.state.firstName, "Le prénom est obligatoire");
+    this.errors.lastName = Validator.notBlank(this.state.lastName, "Le nom est obligatoire");
+    this.errors.password = Validator.size(this.state.password, 6, 18, "La taille du mot de passe doit être entre 6 et 18 caractères");
+    this.errors.confirm = Validator.match(this.state.password, this.state.confirm, "Le mot de passe ne correspond pas");
 
     this.forceUpdate();
   }
@@ -123,7 +123,7 @@ class StudentRegistrationForm extends Component {
             textAlign="center">
 
             <LockOutlined fontSize="large" />
-            <Typography component="h1" variant="h4">Register As Student</Typography>
+            <Typography component="h1" variant="h4">S'inscrire en tant qu'étudiant</Typography>
 
           </Box>
 
@@ -140,7 +140,7 @@ class StudentRegistrationForm extends Component {
               required
               fullWidth
               id="email"
-              label="Email Address"
+              label="Adresse email"
               name="email"
               autoComplete="email"
               autoFocus
@@ -158,7 +158,7 @@ class StudentRegistrationForm extends Component {
                   required
                   fullWidth
                   id="firstName"
-                  label="First Name"
+                  label="Prénom"
                   margin="normal"
                 />
               </Grid>
@@ -171,7 +171,7 @@ class StudentRegistrationForm extends Component {
                   required
                   fullWidth
                   id="lastName"
-                  label="Last Name"
+                  label="Nom de famille"
                   name="lastName"
                   autoComplete="lname"
                   margin="normal"
@@ -189,7 +189,7 @@ class StudentRegistrationForm extends Component {
               required
               fullWidth
               name="password"
-              label="Password"
+              label="Mot de passe"
               type="password"
               id="password"
               autoComplete="current-password"
@@ -204,7 +204,7 @@ class StudentRegistrationForm extends Component {
               required
               fullWidth
               name="confirm"
-              label="Confirm"
+              label="Confirmer"
               type="password"
               id="confirm"
             />
@@ -217,7 +217,7 @@ class StudentRegistrationForm extends Component {
                 color="primary"
                 disabled={this.submitLock.locked}
               >
-                Register
+                S'inscrire 
                 </Button>
             </Box>
 
@@ -236,7 +236,7 @@ class StudentRegistrationForm extends Component {
                 <Grid item>
 
                   <Link to="/login">
-                    Already have an account? Log in
+                    Vous-avez déja un compte? Se connecter
                   </Link>
                   
                 </Grid>

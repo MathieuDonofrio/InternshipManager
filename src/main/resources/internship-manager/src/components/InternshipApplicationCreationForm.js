@@ -112,7 +112,7 @@ export default function InternshipApplicationCreationForm() {
           paddingTop={2}
           textAlign="center">
 
-          <Typography component="h1" variant="h4">Internship Offers</Typography>
+          <Typography component="h1" variant="h4">Offres de stages</Typography>
         </Box>
       </Container>
 
@@ -120,13 +120,13 @@ export default function InternshipApplicationCreationForm() {
         <Table className={classes.table} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell align="center"><strong>Company</strong></TableCell>
-              <TableCell align="center"><strong>Job Title</strong></TableCell>
-              <TableCell align="center"><strong>Start Date</strong></TableCell>
-              <TableCell align="center"><strong>End Date</strong></TableCell>
-              <TableCell align="center"><strong>Location</strong></TableCell>
-              <TableCell align="center"><strong>Hours</strong></TableCell>
-              <TableCell align="center"><strong>Apply</strong></TableCell>
+              <TableCell align="center"><strong>Compagnie</strong></TableCell>
+              <TableCell align="center"><strong>Titre du poste</strong></TableCell>
+              <TableCell align="center"><strong>Date de début</strong></TableCell>
+              <TableCell align="center"><strong>Date de fin</strong></TableCell>
+              <TableCell align="center"><strong>Emplacement</strong></TableCell>
+              <TableCell align="center"><strong>Heures</strong></TableCell>
+              <TableCell align="center"><strong>Appliquer</strong></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

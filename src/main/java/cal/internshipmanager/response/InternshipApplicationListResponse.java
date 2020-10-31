@@ -34,7 +34,7 @@ public class InternshipApplicationListResponse implements Serializable {
 
         private String company;
 
-        private String jobTitle;
+        private String jobTitle;    
 
         private Long date;
 

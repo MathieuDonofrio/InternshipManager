@@ -82,7 +82,7 @@ class StudentApplicationStatusList extends Component {
             paddingTop={2}
             textAlign="left"
           >
-            <Typography component="h1" variant="h4" align="center">Applications Status</Typography>
+            <Typography component="h1" variant="h4" align="center">État de la candidature</Typography>
           </Box>
         </Container>
 
@@ -90,10 +90,10 @@ class StudentApplicationStatusList extends Component {
           <Table size="small" aria-label="a dense table">
             <TableHead>
               <TableRow>
-                <TableCell align="center"><strong>Company</strong></TableCell>
-                <TableCell align="center"><strong>Job Title</strong></TableCell>
+                <TableCell align="center"><strong>Compagnie</strong></TableCell>
+                <TableCell align="center"><strong>Titre du poste</strong></TableCell>
                 <TableCell align="center"><strong>Date</strong></TableCell>
-                <TableCell align="center"><strong>Status</strong></TableCell>
+                <TableCell align="center"><strong>État</strong></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>

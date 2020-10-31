@@ -22,6 +22,8 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Dialog from '@material-ui/core/Dialog';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import ListSubheader from '@material-ui/core/ListSubheader';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
@@ -32,6 +34,8 @@ import AttachmentIcon from '@material-ui/icons/Attachment';
 import StudentDocumentsList from "./StudentDocumentsList";
 import InternshipApplicationService from '../services/InternshipApplicationService';
 import ContractService from "../services/ContractService";
+import ThumbUpAltOutlinedIcon from '@material-ui/icons/ThumbUpAltOutlined';
+import ThumbDownAltOutlinedIcon from '@material-ui/icons/ThumbDownAltOutlined';
 import { saveAs } from 'file-saver';
 import PageviewIcon from '@material-ui/icons/Pageview';
 
@@ -122,6 +126,18 @@ export default function InteractiveLists() {
     setOpen(true);
   };
 
+  const onApprovedClicked = (application) => {
+
+    InternshipApplicationService.select(application).then(() => fetchStudentApplications());
+
+  }
+
+  const onRejectedClicked = (application) => {
+
+    InternshipApplicationService.reject(application).then(() => fetchStudentApplications());
+
+  }
+
   const onDownloadContract = (application) => {
 
     ContractService.generate(application.uniqueId).then(response => {
@@ -151,7 +167,7 @@ export default function InteractiveLists() {
           paddingTop={2}
           textAlign="center">
 
-          <Typography component="h1" variant="h4">Liste d'etudiant interese</Typography>
+          <Typography component="h1" variant="h4">Liste d'étudiants intéressé</Typography>
         </Box>
       </Container>
       {rows.length == 0 &&
@@ -161,15 +177,15 @@ export default function InteractiveLists() {
             paddingTop={2}
             paddingBottom={2}
             textAlign="center">
-
-            <Typography >Pas d'application pour vous</Typography>
+            <Typography >Pas d'application pour cette offre</Typography>
           </Box>
         </Container>
       }
-      {rows.length > 0 &&
 
-        <TableContainer>
-          <Table className={classes.table} aria-label="simple table">
+
+      <TableContainer>
+        <Table className={classes.table} aria-label="simple table">
+          {rows.length > 0 &&
             <TableHead>
               <TableRow>
                 <TableCell align="center"><strong>Nom</strong></TableCell>
@@ -177,62 +193,66 @@ export default function InteractiveLists() {
                 <TableCell align="center"><strong>Decision</strong></TableCell>
               </TableRow>
             </TableHead>
-            <TableBody>
-              {rows.map((application, index) => (
-                <TableRow key={index}>
-                  <TableCell align="center">{application.studentFirstName + " " + application.studentLastName}</TableCell>
-                  <TableCell component="th" scope="row" align="center">{new Date(application.date).toLocaleDateString()}</TableCell>
-                  <TableCell align="center">
+          }
+          <TableBody>
+            {rows.map((application, index) => (
+              <TableRow key={index}>
+                <TableCell align="center">{application.studentFirstName + " " + application.studentLastName}</TableCell>
+                <TableCell component="th" scope="row" align="center">{new Date(application.date).toLocaleDateString()}</TableCell>
+                <TableCell align="center">
 
-                    <Box margin={1}>
-                      <Button
-                        variant="contained" color="secondary"
-                        size="small"
-                        onClick={() => handleClickOpen(application.uniqueId)}
+                  <Box margin={1}>
+                    <Button
+                      variant="contained" color="secondary"
+                      size="small"
+                      onClick={() => handleClickOpen(application.uniqueId)}
 
-                        startIcon={<AttachmentIcon />}
-                      >
-                        {console.log(application.studentUniqueId)}
+                      startIcon={<AttachmentIcon />}
+                    >
+                      {console.log(application.studentUniqueId)}
                         Documents
                         </Button>
-                    </Box>
+                  </Box>
 
-                    <Box margin={1}>
-                      <Button
-                        variant="contained" color="primary"
-                      >
-                        Approuver
-                        </Button>
-                    </Box>
-
-                    <Box margin={1}>
-                      <Button
-                        variant="contained" color="secondary"
-                        size="small"
-                      >
-                        Refuser
-                        </Button>
-                    </Box>
-
-
+                  <Box margin={1}>
                     <Button
                       variant="contained" color="primary"
-                      size="small" startIcon={<PageviewIcon />}
-                      onClick={() => onDownloadContract(application)}
+                      size="small" startIcon={<ThumbUpAltOutlinedIcon />}
+                      onClick={() => onApprovedClicked(application.uniqueId)}
                     >
-                      View Contract
+                      Approuver
+                        </Button>
+                  </Box>
+
+                  <Box margin={1}>
+                    <Button
+                      variant="contained" color="secondary"
+                      size="small"
+                      startIcon={<ThumbDownAltOutlinedIcon />} onClick={() => onRejectedClicked(application.uniqueId)}
+                    >
+                      Refuser
+                        </Button>
+                  </Box>
+
+
+                  <Button
+                    variant="contained" color="primary"
+                    size="small" startIcon={<PageviewIcon />}
+                    onClick={() => onDownloadContract(application)}
+                  >
+                    View Contract
                     </Button>
 
-                    <Box margin={1}>
-                    </Box>
-                  </TableCell>
-                </TableRow>
-              ))}
-              <StudentPortfolioDetailsDialogProps open={open} onClose={handleClose} selectedValue={currentStudentId} />
-            </TableBody>
-          </Table>
-        </TableContainer>
-      }
+                  <Box margin={1}>
+                  </Box>
+                </TableCell>
+              </TableRow>
+            ))}
+            <StudentPortfolioDetailsDialogProps open={open} onClose={handleClose} selectedValue={currentStudentId} />
+          </TableBody>
+        </Table>
+      </TableContainer>
+
     </div>
   );
 }
