@@ -17,6 +17,12 @@ public class SettingsService {
     private final SettingsRepository settingsRepository;
 
     //
+    // Cache
+    //
+
+    private Settings settingsCache;
+
+    //
     // Constructors
     //
 
@@ -29,21 +35,26 @@ public class SettingsService {
     // Private Method
     //
 
-    private Settings findSettings(){
+    private Settings findSettings() {
 
-        final List<Settings> settings = settingsRepository.findAll();
+        if (settingsCache == null) {
 
-        if(settings == null || settings.size() != 1)
-            throw new IllegalStateException("No settings could be found!");
+            final List<Settings> settings = settingsRepository.findAll();
 
-        return settings.get(0);
+            if (settings == null || settings.size() != 1)
+                throw new IllegalStateException("No settings could be found!");
+
+            settingsCache = settings.get(0);
+        }
+
+        return settingsCache;
     }
 
     //
     // Services
     //
 
-    public void setSemester(String semester){
+    public void setSemester(String semester) {
 
         final Settings settings = findSettings();
 
@@ -52,10 +63,7 @@ public class SettingsService {
         settingsRepository.save(settings);
     }
 
-    public String getSemester(){
-
-        final Settings settings = findSettings();
-
-        return settings.getSemester();
+    public String getSemester() {
+        return findSettings().getSemester();
     }
 }

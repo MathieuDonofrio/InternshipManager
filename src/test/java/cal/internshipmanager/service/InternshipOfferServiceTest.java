@@ -29,6 +29,9 @@ public class InternshipOfferServiceTest {
     private JwtProvider jwtProvider;
 
     @Mock
+    private SettingsService settingsService;
+
+    @Mock
     private InternshipOfferRepository internshipOfferRepository;
 
     @Mock
@@ -49,7 +52,8 @@ public class InternshipOfferServiceTest {
         JwtAuthentication authentication = new JwtAuthentication(decodedToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        InternshipOfferService internshipOfferService = new InternshipOfferService(internshipOfferRepository, null);
+        InternshipOfferService internshipOfferService = new InternshipOfferService(
+                settingsService, internshipOfferRepository, null);
 
         InternshipOfferCreationRequest internshipOfferCreationRequest = new InternshipOfferCreationRequest();
 
@@ -99,7 +103,8 @@ public class InternshipOfferServiceTest {
 
         internshipOffer.setStatus(InternshipOffer.Status.PENDING_APPROVAL);
 
-        InternshipOfferService internshipOfferService = new InternshipOfferService(internshipOfferRepository, null);
+        InternshipOfferService internshipOfferService = new InternshipOfferService(
+                settingsService, internshipOfferRepository, null);
 
         when(internshipOfferRepository.findById(any())).thenReturn(Optional.of(internshipOffer));
 
@@ -130,7 +135,8 @@ public class InternshipOfferServiceTest {
 
         internshipOffer.setStatus(InternshipOffer.Status.PENDING_APPROVAL);
 
-        InternshipOfferService internshipOfferService = new InternshipOfferService(internshipOfferRepository, null);
+        InternshipOfferService internshipOfferService = new InternshipOfferService(
+                settingsService, internshipOfferRepository, null);
 
         when(internshipOfferRepository.findById(any())).thenReturn(Optional.of(internshipOffer));
 
@@ -156,6 +162,7 @@ public class InternshipOfferServiceTest {
         InternshipOffer internshipOffer = new InternshipOffer();
 
         internshipOffer.setUniqueId(UUID.randomUUID());
+        internshipOffer.setSemester(settingsService.getSemester());
         internshipOffer.setEmployer(UUID.randomUUID());
         internshipOffer.setStatus(InternshipOffer.Status.PENDING_APPROVAL);
         internshipOffer.setCompany("Test Company");
@@ -167,9 +174,10 @@ public class InternshipOfferServiceTest {
         internshipOffer.setSalary(20);
         internshipOffer.setHours(40);
 
-        InternshipOfferService internshipOfferService = new InternshipOfferService(internshipOfferRepository, null);
+        InternshipOfferService internshipOfferService = new InternshipOfferService(
+                settingsService, internshipOfferRepository, null);
 
-        when(internshipOfferRepository.findAllByStatus(InternshipOffer.Status.PENDING_APPROVAL))
+        when(internshipOfferRepository.findAllByStatusAndSemester(InternshipOffer.Status.PENDING_APPROVAL, settingsService.getSemester()))
                 .thenReturn(List.of(internshipOffer));
 
         // Act
@@ -206,6 +214,7 @@ public class InternshipOfferServiceTest {
         InternshipOffer internshipOffer = new InternshipOffer();
 
         internshipOffer.setUniqueId(UUID.randomUUID());
+        internshipOffer.setSemester(settingsService.getSemester());
         internshipOffer.setEmployer(UUID.randomUUID());
         internshipOffer.setStatus(InternshipOffer.Status.APPROVED);
         internshipOffer.setCompany("Test Company");
@@ -216,9 +225,10 @@ public class InternshipOfferServiceTest {
         internshipOffer.setSalary(20);
         internshipOffer.setHours(40);
 
-        InternshipOfferService internshipOfferService = new InternshipOfferService(internshipOfferRepository, null);
+        InternshipOfferService internshipOfferService = new InternshipOfferService(
+                settingsService, internshipOfferRepository, null);
 
-        when(internshipOfferRepository.findAllByStatus(InternshipOffer.Status.APPROVED))
+        when(internshipOfferRepository.findAllByStatusAndSemester(InternshipOffer.Status.APPROVED, settingsService.getSemester()))
                 .thenReturn(List.of(internshipOffer));
 
         // Act
@@ -254,6 +264,7 @@ public class InternshipOfferServiceTest {
         InternshipOffer internshipOffer = new InternshipOffer();
 
         internshipOffer.setUniqueId(UUID.randomUUID());
+        internshipOffer.setSemester(settingsService.getSemester());
         internshipOffer.setEmployer(UUID.randomUUID());
         internshipOffer.setStatus(InternshipOffer.Status.REJECTED);
         internshipOffer.setCompany("Test Company");
@@ -264,9 +275,10 @@ public class InternshipOfferServiceTest {
         internshipOffer.setSalary(20);
         internshipOffer.setHours(40);
 
-        InternshipOfferService internshipOfferService = new InternshipOfferService(internshipOfferRepository, null);
+        InternshipOfferService internshipOfferService = new InternshipOfferService(
+                settingsService, internshipOfferRepository, null);
 
-        when(internshipOfferRepository.findAllByStatus(InternshipOffer.Status.REJECTED))
+        when(internshipOfferRepository.findAllByStatusAndSemester(InternshipOffer.Status.REJECTED, settingsService.getSemester()))
                 .thenReturn(List.of(internshipOffer));
 
         // Act
@@ -302,6 +314,7 @@ public class InternshipOfferServiceTest {
         InternshipOffer internshipOffer = new InternshipOffer();
 
         internshipOffer.setUniqueId(UUID.randomUUID());
+        internshipOffer.setSemester(settingsService.getSemester());
         internshipOffer.setEmployer(UUID.randomUUID());
         internshipOffer.setStatus(InternshipOffer.Status.REJECTED);
         internshipOffer.setCompany("Test Company");
@@ -321,7 +334,8 @@ public class InternshipOfferServiceTest {
         user.setFirstName("Toto");
         user.setLastName("Tata");
 
-        InternshipOfferService internshipOfferService = new InternshipOfferService(internshipOfferRepository, userRepository);
+        InternshipOfferService internshipOfferService = new InternshipOfferService(
+                settingsService, internshipOfferRepository, userRepository);
 
         InternshipOfferAddUserRequest request = new InternshipOfferAddUserRequest();
 
@@ -359,6 +373,7 @@ public class InternshipOfferServiceTest {
         InternshipOffer internshipOffer = new InternshipOffer();
 
         internshipOffer.setUniqueId(UUID.randomUUID());
+        internshipOffer.setSemester(settingsService.getSemester());
         internshipOffer.setEmployer(UUID.randomUUID());
         internshipOffer.setStatus(InternshipOffer.Status.REJECTED);
         internshipOffer.setCompany("Test Company");
@@ -380,7 +395,8 @@ public class InternshipOfferServiceTest {
 
         internshipOffer.getUsers().add(user);
 
-        InternshipOfferService internshipOfferService = new InternshipOfferService(internshipOfferRepository, userRepository);
+        InternshipOfferService internshipOfferService = new InternshipOfferService(
+                settingsService, internshipOfferRepository, userRepository);
 
         InternshipOfferRemoveUserRequest request = new InternshipOfferRemoveUserRequest();
 
@@ -416,6 +432,7 @@ public class InternshipOfferServiceTest {
         InternshipOffer internshipOffer = new InternshipOffer();
 
         internshipOffer.setUniqueId(UUID.randomUUID());
+        internshipOffer.setSemester(settingsService.getSemester());
         internshipOffer.setEmployer(UUID.randomUUID());
         internshipOffer.setStatus(InternshipOffer.Status.REJECTED);
         internshipOffer.setCompany("Test Company");
@@ -437,7 +454,8 @@ public class InternshipOfferServiceTest {
 
         internshipOffer.getUsers().add(user);
 
-        InternshipOfferService internshipOfferService = new InternshipOfferService(internshipOfferRepository, userRepository);
+        InternshipOfferService internshipOfferService = new InternshipOfferService(
+                settingsService, internshipOfferRepository, userRepository);
 
         when(internshipOfferRepository.findById(internshipOffer.getUniqueId()))
                 .thenReturn(Optional.of(internshipOffer));
@@ -468,6 +486,7 @@ public class InternshipOfferServiceTest {
         InternshipOffer internshipOffer = new InternshipOffer();
 
         internshipOffer.setUniqueId(UUID.randomUUID());
+        internshipOffer.setSemester(settingsService.getSemester());
         internshipOffer.setEmployer(UUID.randomUUID());
         internshipOffer.setStatus(InternshipOffer.Status.REJECTED);
         internshipOffer.setCompany("Test Company");
@@ -485,10 +504,12 @@ public class InternshipOfferServiceTest {
                 .collect(Collectors.toList()));
 
 
-        InternshipOfferService internshipOfferService = new InternshipOfferService(internshipOfferRepository, userRepository);
+        InternshipOfferService internshipOfferService = new InternshipOfferService(
+                settingsService, internshipOfferRepository, userRepository);
 
-        when(internshipOfferRepository.findAllByEmployerAndStatus(internshipOffer.getEmployer(),
-                InternshipOffer.Status.APPROVED)).thenReturn(List.of(internshipOffer));
+        when(internshipOfferRepository.findAllByEmployerAndStatusAndSemester(
+                internshipOffer.getEmployer(),InternshipOffer.Status.APPROVED, settingsService.getSemester()))
+                .thenReturn(List.of(internshipOffer));
 
         // Act
 
@@ -522,9 +543,10 @@ public class InternshipOfferServiceTest {
         internshipOffer.setHours(40);
         internshipOffer.setUsers(List.of(user));
 
-        InternshipOfferService internshipOfferService = new InternshipOfferService(internshipOfferRepository, userRepository);
+        InternshipOfferService internshipOfferService = new InternshipOfferService(
+                settingsService, internshipOfferRepository, userRepository);
 
-        when(internshipOfferRepository.findAllByStatus(InternshipOffer.Status.APPROVED))
+        when(internshipOfferRepository.findAllByStatusAndSemester(InternshipOffer.Status.APPROVED, settingsService.getSemester()))
                 .thenReturn(List.of(internshipOffer));
 
         // Act

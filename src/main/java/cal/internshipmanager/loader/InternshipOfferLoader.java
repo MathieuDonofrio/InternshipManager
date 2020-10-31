@@ -4,6 +4,7 @@ import cal.internshipmanager.model.InternshipOffer;
 import cal.internshipmanager.model.User;
 import cal.internshipmanager.repository.InternshipOfferRepository;
 import cal.internshipmanager.repository.UserRepository;
+import cal.internshipmanager.service.SettingsService;
 import com.github.javafaker.Faker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -30,6 +31,8 @@ public class InternshipOfferLoader implements CommandLineRunner {
     // Dependencies
     //
 
+    private final SettingsService settingsService;
+
     private final InternshipOfferRepository internshipOfferRepository;
 
     private final UserRepository userRepository;
@@ -41,7 +44,8 @@ public class InternshipOfferLoader implements CommandLineRunner {
     //
 
     @Autowired
-    public InternshipOfferLoader(UserRepository userRepository, PasswordEncoder passwordEncoder, InternshipOfferRepository internshipOfferRepository) {
+    public InternshipOfferLoader(SettingsService settingsService, UserRepository userRepository, PasswordEncoder passwordEncoder, InternshipOfferRepository internshipOfferRepository) {
+        this.settingsService = settingsService;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.internshipOfferRepository = internshipOfferRepository;
@@ -57,7 +61,8 @@ public class InternshipOfferLoader implements CommandLineRunner {
         if(userRepository.findAllByType(User.Type.EMPLOYER).isEmpty())
             return;
 
-        final int needed = MIN_INTERNSHIP_OFFER_AMOUNT - internshipOfferRepository.findAll().size();
+        final int needed = MIN_INTERNSHIP_OFFER_AMOUNT - internshipOfferRepository
+                .findAllBySemester(settingsService.getSemester()).size();
 
         for(int i = 0; i < needed; i++){
 
@@ -87,6 +92,7 @@ public class InternshipOfferLoader implements CommandLineRunner {
         InternshipOffer internshipOffer = new InternshipOffer();
 
         internshipOffer.setUniqueId(UUID.randomUUID());
+        internshipOffer.setSemester(settingsService.getSemester());
         internshipOffer.setEmployer(employer.getUniqueId());
         internshipOffer.setStatus(InternshipOffer.Status.PENDING_APPROVAL);
         internshipOffer.setCompany(faker.company().name());

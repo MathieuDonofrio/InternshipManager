@@ -25,6 +25,8 @@ public class InternshipApplicationService {
     // Dependencies
     //
 
+    private final SettingsService settingsService;
+
     private final InternshipApplicationRepository internshipApplicationRepository;
 
     private final PortfolioDocumentRepository portfolioDocumentRepository;
@@ -37,10 +39,12 @@ public class InternshipApplicationService {
     // Constructors
     //
 
-    public InternshipApplicationService(InternshipApplicationRepository internshipApplicationRepository,
+    public InternshipApplicationService(SettingsService settingsService,
+                                        InternshipApplicationRepository internshipApplicationRepository,
                                         PortfolioDocumentRepository portfolioDocumentRepository,
                                         UserRepository userRepository,
                                         InternshipOfferRepository internshipOfferRepository) {
+        this.settingsService = settingsService;
         this.internshipApplicationRepository = internshipApplicationRepository;
         this.portfolioDocumentRepository = portfolioDocumentRepository;
         this.userRepository = userRepository;
@@ -79,7 +83,8 @@ public class InternshipApplicationService {
 
     public InternshipApplicationListResponse internshipApplications(UUID userUniqueId) {
 
-        List<InternshipApplication> userApplications = internshipApplicationRepository.findAllByStudentUniqueId(userUniqueId);
+        List<InternshipApplication> userApplications = internshipApplicationRepository.findAllByStudentUniqueIdAndSemester(
+                userUniqueId, settingsService.getSemester());
 
         InternshipApplicationListResponse response = new InternshipApplicationListResponse();
 
@@ -92,7 +97,8 @@ public class InternshipApplicationService {
 
     public InternshipApplicationListResponse findByStatus(InternshipApplication.Status status) {
 
-        List<InternshipApplication> allApplications = internshipApplicationRepository.findAllByStatus(status);
+        List<InternshipApplication> allApplications = internshipApplicationRepository.findAllByStatusAndSemester(
+                status, settingsService.getSemester());
 
         InternshipApplicationListResponse response = new InternshipApplicationListResponse();
 
@@ -103,7 +109,7 @@ public class InternshipApplicationService {
         return response;
     }
 
-    public void approve(UUID uniqueId){
+    public void approve(UUID uniqueId) {
 
         InternshipApplication application = internshipApplicationRepository.findById(uniqueId).orElse(null);
 
@@ -112,7 +118,7 @@ public class InternshipApplicationService {
         internshipApplicationRepository.save(application);
     }
 
-    public void reject(UUID uniqueId){
+    public void reject(UUID uniqueId) {
 
         InternshipApplication application = internshipApplicationRepository.findById(uniqueId).orElse(null);
 
@@ -121,7 +127,7 @@ public class InternshipApplicationService {
         internshipApplicationRepository.save(application);
     }
 
-    public void select(UUID uniqueId){
+    public void select(UUID uniqueId) {
         InternshipApplication application = internshipApplicationRepository.findById(uniqueId).orElse(null);
 
         application.setStatus(InternshipApplication.Status.SELECTED);
@@ -131,7 +137,8 @@ public class InternshipApplicationService {
 
     public InternshipApplicationListResponse findByOffer(UUID uniqueId) {
 
-        List<InternshipApplication> allApplications = internshipApplicationRepository.findAllByOfferUniqueIdAndStatus(uniqueId, InternshipApplication.Status.APPROVED);
+        List<InternshipApplication> allApplications = internshipApplicationRepository.findAllByOfferUniqueIdAndStatusAndSemester(
+                uniqueId, InternshipApplication.Status.APPROVED, settingsService.getSemester());
 
         InternshipApplicationListResponse response = new InternshipApplicationListResponse();
 
