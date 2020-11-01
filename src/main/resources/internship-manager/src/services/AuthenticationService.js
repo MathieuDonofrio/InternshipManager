@@ -12,6 +12,7 @@ class AuthenticationService {
   //
 
   authenticate(request) {
+    console.log(Config.target);
     return axios.post(Config.target + '/authenticate', request, headers)
       .then(response => {
         localStorage.setItem('UserUniqueId', response.data.userUniqueId);
