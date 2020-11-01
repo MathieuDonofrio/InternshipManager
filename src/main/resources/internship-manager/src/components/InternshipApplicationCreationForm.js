@@ -20,6 +20,7 @@ import PortfolioService from '../services/PortfolioService';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import List from '@material-ui/core/List';
+import Divider from '@material-ui/core/Divider';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import Checkbox from '@material-ui/core/Checkbox';
 
@@ -117,37 +118,46 @@ export default function InternshipApplicationCreationForm() {
       </Container>
 
       <TableContainer>
+
+
         <Table className={classes.table} aria-label="simple table">
+
           <TableHead>
             <TableRow>
-              <TableCell align="center"><strong>Compagnie</strong></TableCell>
-              <TableCell align="center"><strong>Titre du poste</strong></TableCell>
-              <TableCell align="center"><strong>Date de début</strong></TableCell>
-              <TableCell align="center"><strong>Date de fin</strong></TableCell>
-              <TableCell align="center"><strong>Emplacement</strong></TableCell>
-              <TableCell align="center"><strong>Heures</strong></TableCell>
-              <TableCell align="center"><strong>Appliquer</strong></TableCell>
+              <TableCell width="40%" align="center"><strong>Poste</strong></TableCell>
+              <TableCell width="60%" align="center"><strong>Détails</strong></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {rows.map((offer, index) => (
               <TableRow key={index}>
-                <TableCell align="center">{offer.company}</TableCell>
-                <TableCell align="center">{offer.jobTitle}</TableCell>
-                <TableCell align="center">{new Date(offer.startDate).toLocaleDateString()}</TableCell>
-                <TableCell align="center">{new Date(offer.endDate).toLocaleDateString()}</TableCell>
-                <TableCell align="center">{offer.location}</TableCell>
-                <TableCell align="center">{offer.hours}</TableCell>
-                <TableCell align="center">
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={() => handleClickOpen(offer.uniqueId, index)}>
-                    Appliquer
-                  </Button>
+                <TableCell component="th" scope="row" style={{ verticalAlign: 'top' }} align="left">
+                  <p><strong>Compagnie: </strong>{offer.company}</p>
+                  <p><strong>Titre: </strong>{offer.jobTitle}</p>
+                  <Box
+                    style={{ backgroundColor: 'lightgray' }}
+                    padding={1}>
+                    <Typography>Actions</Typography>
+                    <Divider></Divider>
+                    <Box margin={1}>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={() => handleClickOpen(offer.uniqueId, index)}>
+                        Appliquer
+                      </Button>
+                    </Box>
+                  </Box>
+                </TableCell>
+                <TableCell component="th" scope="row" style={{ verticalAlign: 'top' }} align="left">
+                  <p><strong>Début: </strong>{new Date(offer.startDate).toLocaleDateString()} <strong>Fin: </strong>{new Date(offer.endDate).toLocaleDateString()}</p>
+                  <p><strong>Lieu du stage: </strong>{offer.location}</p>
+                  <p><strong>Salaires: </strong>{offer.salary.toFixed(2) + '$'} <strong>Heures: </strong>{offer.hours}</p>
+                  <p><strong>Portée de travail: </strong>{offer.jobScope.map(scope => (<li style={{}}>{scope}</li>))}</p>
                 </TableCell>
               </TableRow>
             ))}
+
           </TableBody>
         </Table>
       </TableContainer>
