@@ -1,6 +1,8 @@
 package cal.internshipmanager.service;
 
 import cal.internshipmanager.model.User;
+import cal.internshipmanager.repository.InternshipApplicationRepository;
+import cal.internshipmanager.repository.SettingsRepository;
 import cal.internshipmanager.repository.UserRepository;
 import cal.internshipmanager.response.UserListReponse;
 import org.junit.jupiter.api.Test;
@@ -18,6 +20,12 @@ public class UserServiceTest {
     @Mock
     private UserRepository userRepository;
 
+    @Mock
+    private InternshipApplicationRepository internshipApplicationRepository;
+
+    @Mock
+    private SettingsRepository settingsRepository;
+
     @Test
     public void studentUsers_validRequest() {
 
@@ -32,7 +40,7 @@ public class UserServiceTest {
         user.setLastName("Tata");
         user.setCompany("Test");
 
-        UserService userService = new UserService(userRepository);
+        UserService userService = new UserService(userRepository,internshipApplicationRepository,new SettingsService(settingsRepository));
 
         when(userRepository.findAllByType(User.Type.STUDENT))
                 .thenReturn(List.of(user));
@@ -70,7 +78,7 @@ public class UserServiceTest {
 
         UserListReponse.User userToFind = UserListReponse.map(user);
 
-        UserService userService = new UserService(userRepository);
+        UserService userService = new UserService(userRepository,internshipApplicationRepository,new SettingsService(settingsRepository));
 
         // Act
         when(userRepository.findById(any())).thenReturn(Optional.of(user));

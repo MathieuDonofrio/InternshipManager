@@ -10,73 +10,107 @@ import Button from '@material-ui/core/Button';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import { Box } from "@material-ui/core";
+import { Box, Paper, Tab, Tabs } from "@material-ui/core";
 import EditIcon from '@material-ui/icons/Edit';
 import IconButton from '@material-ui/core/IconButton';
 import UserService from '../services/UserService'
 
 const useStyles = makeStyles({
-    table: {
-        minWidth: 600,
-    },
+  table: {
+    minWidth: 600,
+  },
+});
+
+const useStyles2 = makeStyles({
+  root: {
+    flexGrow: 1,
+  },
 });
 
 export default function StudentListTable() {
 
-    const history = useHistory();
-    const classes = useStyles();
+  const history = useHistory();
+  const classes = useStyles();
+  const classes2 = useStyles();
 
-    const [rows, setRows] = useState([]);
+  const [rows, setRows] = useState([]);
+  const [value, setValue] = React.useState(0);
 
-    const fetchAllUsers = async () => {
-        const response = await UserService.students();
-        setRows(response.data.users);
-    }
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
 
-    useEffect(() => { fetchAllUsers(); }, [])
-
-    return (
-        <div>
-        <Container>
-          <Box
-            mb={2}
-            paddingTop={2}
-            textAlign="center">
+  const fetchAllUsers = async () => {
+    const response = await UserService.students();
+    setRows(response.data.users);
+  }
   
-            <Typography component="h1" variant="h4">Students</Typography>
-          </Box>
-        </Container>
-  
-        <TableContainer>
-          <Table className={classes.table} aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <TableCell align="center"><strong>Email</strong></TableCell>
-                <TableCell align="center"><strong>First name</strong></TableCell>
-                <TableCell align="center"><strong>Last name</strong></TableCell>
-                <TableCell align="center"><strong>Profil</strong></TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {rows.map((student,index) => (
-                <TableRow key={index}>
-                  <TableCell align="center">{student.email}</TableCell>
-                  <TableCell align="center">{student.firstName}</TableCell>
-                  <TableCell align="center">{student.lastName}</TableCell>
-                  <TableCell align="center"> 
+  const fetchAllWithApplication = async () =>{
+    console.log('button has been clicked');
+  }
+
+  const fetchAllWithoutApplication = async () =>{
+    console.log('button has been clicked');
+  }
+ 
+
+  useEffect(() => { fetchAllUsers(); }, [])
+
+  return (
+    <div>
+      <Paper className={classes2.root}>
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          indicatorColor="primary"
+          textColor="primary"
+          centered
+        >
+          <Tab label="tous" onClick={() => fetchAllUsers()}/>
+          <Tab label="sans application" onClick={() => fetchAllWithoutApplication()} />
+          <Tab label="avec application" onClick={() => fetchAllWithApplication()} />
+        </Tabs>
+      </Paper>
+      <Container>
+        <Box
+          mb={2}
+          paddingTop={2}
+          textAlign="center">
+
+          <Typography component="h1" variant="h4">Students</Typography>
+        </Box>
+      </Container>
+
+      <TableContainer>
+        <Table className={classes.table} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell align="center"><strong>First name</strong></TableCell>
+              <TableCell align="center"><strong>Last name</strong></TableCell>
+              <TableCell align="center"><strong>Email</strong></TableCell>
+              <TableCell align="center"><strong>Profil</strong></TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {rows.map((student, index) => (
+              <TableRow key={index}>
+                <TableCell align="center">{student.firstName}</TableCell>
+                <TableCell align="center">{student.lastName}</TableCell>
+                <TableCell align="center">{student.email}</TableCell>
+                <TableCell align="center">
                   <Button
-                      variant="contained" color="secondary"
-                      size="small"
-                      onClick={() => history.push(`/student-profile-page/${student.uniqueId}/${student.firstName + " " + student.lastName}`)}
-                    >
-                      Voir profil
+                    variant="contained" color="secondary"
+                    size="small"
+                    onClick={() => history.push(`/student-profile-page/${student.uniqueId}/${student.firstName + " " + student.lastName}`)}
+                  >
+                    Voir profil
                     </Button>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </div>
-    )
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </div>
+  )
 }
