@@ -65,7 +65,9 @@ class StudentApplicationStatusList extends Component {
             {status == "PENDING_APPROVAL" && <Typography color="primary">en attente</Typography>}
             {status == "REJECTED" && <Typography color="error">rejeté</Typography>}
             {status == "APPROVED" && <Typography color="primary">approuvé</Typography>}
-            {status == "SELECTED" && <Typography color="secondary">selectionné</Typography>}
+            {status == "SELECTED" && 
+              <Typography color="secondary">selectionné</Typography>
+            }
           </TableCell>
         </TableRow>
 

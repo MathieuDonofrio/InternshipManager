@@ -17,6 +17,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import Divider from '@material-ui/core/Divider';
 import { useHistory } from 'react-router-dom';
 import EditIcon from '@material-ui/icons/Edit';
 import IconButton from '@material-ui/core/IconButton';
@@ -92,7 +93,7 @@ export default function StudentSelection() {
           paddingTop={2}
           textAlign="left"
         >
-          <Typography component="h1" variant="h4" align="center">Liste des offres de stage</Typography>
+          <Typography component="h1" variant="h4" align="center">Mes offres de stage</Typography>
         </Box>
       </Container>
 
@@ -100,30 +101,36 @@ export default function StudentSelection() {
         <Table className={classes.table} aria-label="a dense table">
           <TableHead>
             <TableRow>
-              <TableCell align="center"><strong>Compagnie</strong></TableCell>
-              <TableCell align="center"><strong>Titre du poste</strong></TableCell>
-              <TableCell align="center"><strong>Portée de travail</strong></TableCell>
-              <TableCell align="center"><strong>Détails</strong></TableCell>
-              <TableCell align="center"><strong>Action</strong></TableCell>
+              <TableCell width="40%" align="center"><strong>Poste</strong></TableCell>
+              <TableCell width="60%" align="center"><strong>Détails</strong></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {rows.map((offer, index) => (
               <TableRow key={index}>
-                <TableCell component="th" scope="row" style={{ verticalAlign: 'top' }} align="center">{offer.company}</TableCell>
-                <TableCell component="th" scope="row" style={{ verticalAlign: 'top' }} align="center">{offer.jobTitle}</TableCell>
-                <TableCell component="th" scope="row" style={{ verticalAlign: 'top' }} align="left">{offer.jobScope.map(scope => (<li  style={{ minWidth: '150px' }}>{scope}</li>))}</TableCell>
                 <TableCell component="th" scope="row" style={{ verticalAlign: 'top' }} align="left">
-                  <p><strong>Début: </strong>{new Date(offer.startDate).toLocaleDateString()}</p>
-                  <p><strong>Fin: </strong>{new Date(offer.endDate).toLocaleDateString()}</p>
-                  <p><strong>Lieu du stage: </strong>{offer.location}</p>
-                  <p><strong>Salaires: </strong>{offer.salary.toFixed(2) + '$'}</p>
-                  <p><strong>Heures: </strong>{offer.hours}</p>
+                  <p><strong>Compagnie: </strong>{offer.company}</p>
+                  <p><strong>Titre: </strong>{offer.jobTitle}</p>
+                  <Box
+                    style={{ backgroundColor: 'lightgray' }}
+                    padding={1}>
+                    <Typography>Actions</Typography>
+                    <Divider></Divider>
+                    <Box margin={1}>
+                    <Button 
+                      variant="contained" 
+                      color="primary" 
+                      onClick={() => history.push(`select-action/${offer.uniqueId}`)}>
+                        Voir Applications
+                      </Button>
+                    </Box>
+                  </Box>
                 </TableCell>
-                <TableCell component="th" scope="row" style={{ verticalAlign: 'top' }} >
-                <IconButton edge="end" aria-label="edit">
-                    <EditIcon onClick={() => history.push(`select-action/${offer.uniqueId}`)}/>
-                </IconButton>
+                <TableCell component="th" scope="row" style={{ verticalAlign: 'top' }} align="left">
+                  <p><strong>Début: </strong>{new Date(offer.startDate).toLocaleDateString()} <strong>Fin: </strong>{new Date(offer.endDate).toLocaleDateString()}</p>
+                  <p><strong>Lieu du stage: </strong>{offer.location}</p>
+                  <p><strong>Salaires: </strong>{offer.salary.toFixed(2) + '$'} <strong>Heures: </strong>{offer.hours}</p>
+                  <p><strong>Portée de travail: </strong>{offer.jobScope.map(scope => (<li style={{}}>{scope}</li>))}</p>
                 </TableCell>
               </TableRow>
             ))}
