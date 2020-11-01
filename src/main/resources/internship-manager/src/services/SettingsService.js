@@ -1,8 +1,16 @@
 import axios from 'axios'
 import { Config } from "../environment";
 
-const headers = {
-  'Content-Type': 'application/json'
+function headers() {
+
+    let token = localStorage.getItem("AccessToken");
+
+    return {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': token
+        }
+    }
 }
 
 class SettingsService {

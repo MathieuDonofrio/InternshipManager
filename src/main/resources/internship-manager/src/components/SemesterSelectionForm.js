@@ -26,6 +26,7 @@ import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
 import FormControl from '@material-ui/core/FormControl';
+import SettingsService from "../services/SettingsService";
 
 
 
@@ -60,7 +61,28 @@ export default function SemesterSelectionForm () {
      
     setSession(event.target.value);
     setAnnee(event.target.value);
-  } 
+  }
+
+  const onFormSubmit = () => {
+
+    // const request = {
+    //   creationTimestamp : Math.floor(Date.now() / 1000),
+    //   semester: session + "-" + annee
+    // }
+
+    let semester = session + "-" + annee;
+
+    console.log(semester);
+
+    SettingsService.semester(semester)
+      .then(() => this.props.history.push('/home'))
+      .catch(error => console.log(error.message));
+
+  }
+
+  const onClicked = () => {
+    onFormSubmit();
+  }
 
   
 
@@ -95,6 +117,8 @@ export default function SemesterSelectionForm () {
                             type="number"
                             label="Année"
                             defaultValue="2020"
+                            value={annee}
+                            onChange={(event) => setAnnee(event.target.value)}
                         >
                         </TextField>
                             
@@ -124,6 +148,7 @@ export default function SemesterSelectionForm () {
                 fullWidth
                 variant="contained"
                 color="primary"
+                onClick={() => onClicked()}
               >
                 Sélectionner
               </Button>
