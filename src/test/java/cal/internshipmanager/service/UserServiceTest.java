@@ -34,7 +34,7 @@ public class UserServiceTest {
 
         UserService userService = new UserService(userRepository);
 
-        when(userRepository.findAllByType("STUDENT"))
+        when(userRepository.findAllByType(User.Type.STUDENT))
                 .thenReturn(List.of(user));
 
         // Act
@@ -62,7 +62,7 @@ public class UserServiceTest {
         User user = new User();
 
         user.setUniqueId(UUID.randomUUID());
-        user.setType(User.Type.STUDENT);
+        user.setType(User.Type.EMPLOYER);
         user.setEmail("toto@gmail.com");
         user.setFirstName("Toto");
         user.setLastName("Tata");
@@ -77,7 +77,7 @@ public class UserServiceTest {
 
 
         // Assert
-        assertEquals(userToFind,userService.find(user.getUniqueId()));
+        assertEquals(userToFind, userService.find(user.getUniqueId()));
 
     }
 

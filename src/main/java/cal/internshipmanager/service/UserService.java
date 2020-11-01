@@ -35,7 +35,7 @@ public class UserService {
 
     public UserListReponse students() {
 
-        List<User> students = userRepository.findAllByType("STUDENT");
+        List<User> students = userRepository.findAllByType(User.Type.STUDENT);
 
         UserListReponse response = new UserListReponse();
 
