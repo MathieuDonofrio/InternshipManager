@@ -81,7 +81,7 @@ class StudentApplicationStatusList extends Component {
         <Container>
           <Box
             mb={2}
-            paddingTop={2}
+            pt={2}
             textAlign="left"
           >
             <Typography component="h1" variant="h4" align="center">État de la candidature</Typography>

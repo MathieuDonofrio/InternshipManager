@@ -11,8 +11,6 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { Box, Paper, Tab, Tabs } from "@material-ui/core";
-import EditIcon from '@material-ui/icons/Edit';
-import IconButton from '@material-ui/core/IconButton';
 import UserService from '../services/UserService'
 
 const useStyles = makeStyles({
@@ -46,11 +44,13 @@ export default function StudentListTable() {
   }
   
   const fetchAllWithApplication = async () =>{
-    console.log('button has been clicked');
+    const response = await UserService.studentsWithApplication();
+    setRows(response.data.users);
   }
 
   const fetchAllWithoutApplication = async () =>{
-    console.log('button has been clicked');
+    const response = await UserService.studentsWithoutApplication();
+    setRows(response.data.users);
   }
  
 

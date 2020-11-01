@@ -167,7 +167,7 @@ class Portfolio extends Component {
                 <TableCell align="center"><strong>Type</strong></TableCell>
                 <TableCell align="center"><strong>Fichier</strong></TableCell>
                 <TableCell align="center"><strong>Date de téléversement</strong></TableCell>
-                <TableCell align="center"><strong>Supprimer</strong></TableCell>
+                {!this.props.studentId && <TableCell align="center"><strong>Supprimer</strong></TableCell>}
                 <TableCell align="center"><strong>Téléchargement</strong></TableCell>
               </TableRow>
             </TableHead>
@@ -179,7 +179,7 @@ class Portfolio extends Component {
                       <TableCell component="th" scope="row" align="center">{document.type}</TableCell>
                       <TableCell component="th" scope="row" align="center">{document.fileName}</TableCell>
                       <TableCell component="th" scope="row" align="center">{new Date(document.uploadDate).toLocaleDateString()}</TableCell>
-                      <TableCell component="th" scope="row" align="center" >
+                     {!this.props.studentId && <TableCell component="th" scope="row" align="center" >
                         <Box margin={1}>
                           <IconButton edge="end" aria-label="delete">
                             <DeleteIcon
@@ -187,7 +187,7 @@ class Portfolio extends Component {
                             />
                           </IconButton>
                         </Box>
-                      </TableCell>
+                      </TableCell>}
                       <TableCell component="th" scope="row" align="center" >
 
                         <Box margin={1}>

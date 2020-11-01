@@ -24,7 +24,6 @@ public class UserService {
 
     private final SettingsService settingsService;
 
-
     //
     // Constructors
     //

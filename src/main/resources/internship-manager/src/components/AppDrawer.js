@@ -22,6 +22,7 @@ import Button from '@material-ui/core/Button';
 import Link from '@material-ui/core/Link';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
+import PeopleIcon from '@material-ui/icons/People';
 import HomeIcon from '@material-ui/icons/Home';
 import CreateIcon from '@material-ui/icons/Create';
 import { useHistory } from 'react-router-dom';
@@ -284,7 +285,7 @@ export default function AppDrawer(props) {
               button
               key={"Liste des étudiants"}
               onClick={() => history.push("/student-list-page")}>
-              <ListItemIcon><AssignmentLateIcon /> </ListItemIcon>
+              <ListItemIcon><PeopleIcon /> </ListItemIcon>
               <ListItemText primary={"Liste des étudiants"} />
             </ListItem>
           </List>
