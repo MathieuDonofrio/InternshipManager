@@ -10,6 +10,7 @@ import Container from '@material-ui/core/Container';
 import InternshipOfferService from "../services/InternshipOfferService";
 import StudentApplicationList from "./StudentApplicationList";
 
+
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -17,6 +18,8 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { useHistory } from 'react-router-dom';
+import EditIcon from '@material-ui/icons/Edit';
+import IconButton from '@material-ui/core/IconButton';
 
 
 
@@ -31,7 +34,7 @@ const useStyles = makeStyles({
 
 
 function StudentApplicationDialogProps(props) {
-
+  
   const { onClose, selectedValue, open } = props;
 
   const handleClose = () => {
@@ -118,7 +121,9 @@ export default function StudentSelection() {
                   <p><strong>Heures: </strong>{offer.hours}</p>
                 </TableCell>
                 <TableCell component="th" scope="row" style={{ verticalAlign: 'top' }} >
-                  <Button variant="contained" color="primary" onClick={() => handleClickOpen(offer.uniqueId)}>OUVRIR</Button>
+                <IconButton edge="end" aria-label="edit">
+                    <EditIcon onClick={() => history.push(`select-action/${offer.uniqueId}`)}/>
+                </IconButton>
                 </TableCell>
               </TableRow>
             ))}
