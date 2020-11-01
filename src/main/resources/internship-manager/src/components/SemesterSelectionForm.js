@@ -65,11 +65,6 @@ export default function SemesterSelectionForm () {
 
   const onFormSubmit = () => {
 
-    // const request = {
-    //   creationTimestamp : Math.floor(Date.now() / 1000),
-    //   semester: session + "-" + annee
-    // }
-
     let semester = session + "-" + annee;
 
     console.log(semester);
@@ -116,7 +111,6 @@ export default function SemesterSelectionForm () {
                         <TextField
                             type="number"
                             label="Année"
-                            defaultValue="2020"
                             value={annee}
                             onChange={(event) => setAnnee(event.target.value)}
                         >
