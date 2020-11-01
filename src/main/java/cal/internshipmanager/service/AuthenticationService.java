@@ -50,9 +50,9 @@ public class AuthenticationService {
      */
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
 
-        AuthenticationResponse response = new AuthenticationResponse();
+        final AuthenticationResponse response = new AuthenticationResponse();
 
-        User user = userRepository.findByEmail(request.getEmail()).orElse(null);
+        final User user = userRepository.findByEmail(request.getEmail()).orElse(null);
 
         if (user != null && passwordEncoder.matches(request.getPassword(), user.getPasswordHash())) {
 

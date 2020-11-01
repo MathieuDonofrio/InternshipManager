@@ -57,7 +57,7 @@ public class PortfolioController {
 
     @GetMapping("{uniqueId}")
     public ResponseEntity<Resource> download(@Valid @ExistingPortfolioDocument @PathVariable UUID uniqueId) {
-        return DownloadFileResponse.ResponseEntity(portfolioService.download(uniqueId));
+        return DownloadFileResponse.responseEntity(portfolioService.download(uniqueId));
     }
 
     @GetMapping("portfolio-documents/{userUniqueId}")

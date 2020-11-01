@@ -12,6 +12,8 @@ import { Box } from "@material-ui/core";
 import InternshipOfferService from '../services/InternshipOfferService';
 import EditIcon from '@material-ui/icons/Edit';
 import IconButton from '@material-ui/core/IconButton';
+import Button from '@material-ui/core/Button';
+import Divider from '@material-ui/core/Divider';
 import { useHistory } from 'react-router-dom';
 
 
@@ -43,7 +45,7 @@ export default function StudentInternshipValidationTable() {
           paddingTop={2}
           textAlign="center">
 
-          <Typography component="h1" variant="h4">Offer Student Access</Typography>
+          <Typography component="h1" variant="h4">Accès aux offres</Typography>
         </Box>
       </Container>
 
@@ -51,32 +53,41 @@ export default function StudentInternshipValidationTable() {
         <Table className={classes.table} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell align="center"><strong>Company</strong></TableCell>
-              <TableCell align="center"><strong>Job Title</strong></TableCell>
-              <TableCell align="center"><strong>Start Date</strong></TableCell>
-              <TableCell align="center"><strong>End Date</strong></TableCell>
-              <TableCell align="center"><strong>Location</strong></TableCell>
-              <TableCell align="center"><strong>Hours</strong></TableCell>
-              <TableCell align="center"><strong>Manage Access</strong></TableCell>
+              <TableCell width="40%" align="center"><strong>Poste</strong></TableCell>
+              <TableCell width="60%" align="center"><strong>Détails</strong></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((offer,index) => (
+            {rows.map((offer, index) => (
               <TableRow key={index}>
-                <TableCell align="center">{offer.company}</TableCell>
-                <TableCell align="center">{offer.jobTitle}</TableCell>
-                <TableCell align="center">{new Date(offer.startDate).toLocaleDateString()}</TableCell>
-                <TableCell align="center">{new Date(offer.endDate).toLocaleDateString()}</TableCell>
-                <TableCell align="center">{offer.location}</TableCell>
-                <TableCell align="center">{offer.hours}</TableCell>
-                <TableCell align="center"> 
-                  <IconButton edge="end" aria-label="edit">
-                    <EditIcon onClick={() => history.push(`/manage-access/${offer.uniqueId}`)}/>
-                  </IconButton>
+                <TableCell component="th" scope="row" style={{ verticalAlign: 'top' }} align="left">
+                  <p><strong>Compagnie: </strong>{offer.company}</p>
+                  <p><strong>Titre: </strong>{offer.jobTitle}</p>
+                  <Box
+                    style={{ backgroundColor: 'lightgray' }}
+                    padding={1}>
+                    <Typography>Actions</Typography>
+                    <Divider></Divider>
+                    <Box margin={1}>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={() => history.push(`/manage-access/${offer.uniqueId}`)}>
+                        Gérer l'accès 
+                      </Button>
+                    </Box>
+                  </Box>
+                </TableCell>
+                <TableCell component="th" scope="row" style={{ verticalAlign: 'top' }} align="left">
+                  <p><strong>Début: </strong>{new Date(offer.startDate).toLocaleDateString()} <strong>Fin: </strong>{new Date(offer.endDate).toLocaleDateString()}</p>
+                  <p><strong>Lieu du stage: </strong>{offer.location}</p>
+                  <p><strong>Salaires: </strong>{offer.salary.toFixed(2) + '$'} <strong>Heures: </strong>{offer.hours}</p>
+                  <p><strong>Portée de travail: </strong>{offer.jobScope.map(scope => (<li style={{}}>{scope}</li>))}</p>
                 </TableCell>
               </TableRow>
             ))}
           </TableBody>
+
         </Table>
       </TableContainer>
     </div>

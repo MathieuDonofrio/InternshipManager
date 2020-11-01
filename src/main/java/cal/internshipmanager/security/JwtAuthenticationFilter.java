@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- *
  * Json web token authentication filter
  * <p>
  * Filter used to retrieve json web tokens from http request headers. If there
@@ -24,7 +23,6 @@ import java.io.IOException;
  * @see JwtProvider
  * @see OncePerRequestFilter
  * @see SecurityContextHolder
- *
  */
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
@@ -33,7 +31,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     //
 
     @Autowired
-    private JwtProvider JwtProvider;
+    private JwtProvider jwtProvider;
 
     //
     // Services
@@ -44,34 +42,16 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
 
         try {
+            final DecodedJWT token = jwtProvider.verify(request.getHeader("Authorization"));
 
-            final String token = getJwt(request);
-
-            final DecodedJWT decodedToken = JwtProvider.verify(token);
-
-            if (decodedToken != null) {
-
-                final JwtAuthentication authentication = new JwtAuthentication(decodedToken);
-
-                SecurityContextHolder.getContext().setAuthentication(authentication);
-
-            }
+            if (token != null)
+                SecurityContextHolder.getContext().setAuthentication(new JwtAuthentication(token));
 
         } catch (JWTVerificationException e) {
-
-            // failed to verify jwt token (No authentication set)
-            // e.printStackTrace();
+            // JWT Verification failed, do nothing
         }
 
         filterChain.doFilter(request, response);
-    }
-
-    private String getJwt(HttpServletRequest request) {
-        String authHeader = request.getHeader("Authorization");
-        if (authHeader != null && authHeader.startsWith("Bearer ")) {
-            return authHeader.replace("Bearer ","");
-        }
-        return authHeader;
     }
 
 }

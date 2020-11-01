@@ -121,15 +121,15 @@ export default class InternshipOfferCreationForm extends Component {
 
     Validator.clearErrors(this.errors);
 
-    this.errors.company = Validator.notBlank(this.state.company, "Company is mandatory");
-    this.errors.jobTitle = Validator.notBlank(this.state.jobTitle, "Job title is mandatory");
-    this.errors.location = Validator.notBlank(this.state.location, "Location is mandatory")
-    this.errors.salary = Validator.positive(this.state.salary, "Salary cannot be negative");
-    this.errors.hours = Validator.min(this.state.hours, 1, "Hours must be atleast 1");
-    this.errors.startDate = Validator.after(this.state.startDate, new Date(), "Cannot set a start date in the past");
-    this.errors.endDate = Validator.after(this.state.endDate,this.state.startDate.getTime(), "Cannot set a end date before start date");
+    this.errors.company = Validator.notBlank(this.state.company, "La compagnie est obligatoire");
+    this.errors.jobTitle = Validator.notBlank(this.state.jobTitle, "Titre du poste est obligatoire");
+    this.errors.location = Validator.notBlank(this.state.location, "L'emplacement est obligatoire")
+    this.errors.salary = Validator.positive(this.state.salary, "Le salaire ne peut pas être négative");
+    this.errors.hours = Validator.min(this.state.hours, 1, "L'heure doit être au moins à 1");
+    this.errors.startDate = Validator.after(this.state.startDate, new Date(), "Impossible de définir une date de début dans le passé");
+    this.errors.endDate = Validator.after(this.state.endDate,this.state.startDate.getTime(), "Impossible de définir une date de fin avant la date de début");
     if(this.errors.endDate == '')
-      this.errors.endDate = Validator.week((this.state.endDate.getTime()-this.state.startDate.getTime())/ (1000 * 3600 * 24), "Cannot set a end date less than a week after start");
+      this.errors.endDate = Validator.week((this.state.endDate.getTime()-this.state.startDate.getTime())/ (1000 * 3600 * 24), "Impossible de définir une date de fin moins d'une semaine après le début");
     this.forceUpdate();
   }
 
@@ -157,7 +157,7 @@ export default class InternshipOfferCreationForm extends Component {
             paddingTop={2}
             textAlign="left">
 
-            <Typography component="h1" variant="h4">Create Internship Offer</Typography>
+            <Typography component="h1" variant="h4">Créer une offre de stage</Typography>
 
           </Box>
 
@@ -166,7 +166,7 @@ export default class InternshipOfferCreationForm extends Component {
           <form noValidate onSubmit={this.onFormSubmit}>
 
             <Box mt={2} textAlign="left">
-              <Typography component="h2">General</Typography>
+              <Typography component="h2">Général</Typography>
             </Box>
 
             <TextField
@@ -178,7 +178,7 @@ export default class InternshipOfferCreationForm extends Component {
               required
               fullWidth
               id="company"
-              label="Company"
+              label="Compagnie"
               name="company"
               autoComplete="company"
               autoFocus
@@ -193,7 +193,7 @@ export default class InternshipOfferCreationForm extends Component {
               required
               fullWidth
               id="jobTitle"
-              label="Job Title"
+              label="Titre du poste"
               name="jobTitle"
               autoComplete="jobTitle"
             />
@@ -207,13 +207,13 @@ export default class InternshipOfferCreationForm extends Component {
               required
               fullWidth
               id="location"
-              label="Location"
+              label="Emplacement"
               name="location"
               autoComplete="location"
             />
 
             <Box mt={2} textAlign="left">
-              <Typography component="h2">Remuneration</Typography>
+              <Typography component="h2">Rémunération</Typography>
             </Box>
 
             <Grid container spacing={2}>
@@ -228,7 +228,7 @@ export default class InternshipOfferCreationForm extends Component {
                   fullWidth
                   type="number"
                   id="salary"
-                  label="Salary (Per Hour)"
+                  label="Salaire (par heure)"
                   name="salary"
                   autoComplete="salary"
                 />
@@ -244,7 +244,7 @@ export default class InternshipOfferCreationForm extends Component {
                   fullWidth
                   type="number"
                   id="hours"
-                  label="Hours (Per Week)"
+                  label="Heures par semaine)"
                   name="hours"
                   autoComplete="hours"
 
@@ -267,7 +267,7 @@ export default class InternshipOfferCreationForm extends Component {
                   fullWidth
                   type="text"
                   id="currentScope"
-                  label="Add Job Scope"
+                  label="Ajouter les tâches du poste"
                   name="currentScope"
                   autoComplete="currentScope"
                 />
@@ -277,7 +277,7 @@ export default class InternshipOfferCreationForm extends Component {
                   mt={2.5}>
                   <IconButton
                     color="secondary"
-                    aria-label="Add job scope"
+                    aria-label="Ajouter les tâches du poste"
                     component="span"
                     onClick={this.onJobScopeAdd}>
                     <AddCircleOutlineOutlinedIcon />
@@ -308,7 +308,7 @@ export default class InternshipOfferCreationForm extends Component {
             </List>
 
             <Box mt={2} textAlign="left">
-              <Typography component="h2">Time</Typography>
+              <Typography component="h2">Temps</Typography>
             </Box>
 
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -319,7 +319,7 @@ export default class InternshipOfferCreationForm extends Component {
                   format="MM/dd/yyyy"
                   margin="normal"
                   id="startDate"
-                  label="Start Date"
+                  label="Date de début"
                   error={this.errors.startDate}
                   helperText={this.errors.startDate}
                   value={this.state.startDate}
@@ -334,7 +334,7 @@ export default class InternshipOfferCreationForm extends Component {
                   format="MM/dd/yyyy"
                   margin="normal"
                   id="endDate"
-                  label="End Date"
+                  label="Date de fin"
                   error={this.errors.endDate}
                   helperText={this.errors.endDate}
                   value={this.state.endDate}
@@ -370,7 +370,7 @@ export default class InternshipOfferCreationForm extends Component {
                 color="primary"
                 disabled={this.submitLock.locked}
               >
-                Create
+                Créer
               </Button>
             </Box>
 
