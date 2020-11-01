@@ -19,6 +19,7 @@ import StudentSelectionPage from './pages/StudentSelectionPage';
 import StudentInternshipApplicationStatusPage from './pages/StudentInternshipApplicationStatusPage';
 import ManageAccessPage from './pages/ManageAccessPage';
 import SemesterSelectionPage from './pages/SemesterSelectionPage';
+import SelectActionPage from './pages/SelectActionPage';
 
 function App() {
   
@@ -63,6 +64,7 @@ function App() {
 
               <Route exact path="/semester-selection" component={SemesterSelectionPage}></Route>
 
+              <Route exact path="/select-action/:uuid" component={SelectActionPage}></Route>
             </AppDrawer>
 
           </Switch>

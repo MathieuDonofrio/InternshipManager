@@ -86,7 +86,7 @@ public class InternshipOfferLoader implements CommandLineRunner {
         User employer = employers.get(ThreadLocalRandom.current().nextInt(employers.size()));
 
         List<String> jobScope = IntStream.range(0,
-                ThreadLocalRandom.current().nextInt(4, 12)).mapToObj(x -> faker.job().keySkills())
+                ThreadLocalRandom.current().nextInt(2, 6)).mapToObj(x -> faker.lorem().sentence())
                 .collect(Collectors.toList());
 
         InternshipOffer internshipOffer = new InternshipOffer();
