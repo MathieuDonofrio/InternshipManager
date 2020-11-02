@@ -32,6 +32,7 @@ import VisibilityIcon from '@material-ui/icons/Visibility';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
 import SettingsService from "../services/SettingsService";
+import SettingsIcon from '@material-ui/icons/Settings';
 
 const drawerWidth = 250;
 
@@ -329,6 +330,13 @@ export default function AppDrawer(props) {
               onClick={() => history.push("/student-list-page")}>
               <ListItemIcon><PeopleIcon /> </ListItemIcon>
               <ListItemText primary={"Liste des étudiants"} />
+            </ListItem>
+            <ListItem
+              button
+              key={"Paramètres"}
+              onClick={() => history.push("/semester-selection")}>
+              <ListItemIcon><SettingsIcon /> </ListItemIcon>
+              <ListItemText primary={"Paramètres"} />
             </ListItem>
           </List>
         }
