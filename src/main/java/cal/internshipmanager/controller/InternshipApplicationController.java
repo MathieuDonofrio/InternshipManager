@@ -61,6 +61,7 @@ public class InternshipApplicationController {
 
     @PutMapping("approve/{applicationId}")
     public void approve(@Valid @ExistingInternshipApplication @PathVariable UUID applicationId) {
+        System.out.println("WHYYYYYYYYYYYYYYYYYYYYY");
         internshipApplicationService.approve(applicationId);
     }
 
@@ -80,6 +81,7 @@ public class InternshipApplicationController {
 
     @PostMapping("create")
     public void create(@Valid @RequestBody InternshipApplicationCreationRequest request) {
+        System.out.println("THE MONSTER HAS");
         internshipApplicationService.create(request);
     }
 

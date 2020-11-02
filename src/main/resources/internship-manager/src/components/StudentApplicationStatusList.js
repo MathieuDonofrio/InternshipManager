@@ -6,7 +6,7 @@ import Lock from '../utils/Lock'
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
-
+import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -67,6 +67,22 @@ class StudentApplicationStatusList extends Component {
             {status == "APPROVED" && <Typography color="primary">approuvé</Typography>}
             {status == "SELECTED" && 
               <Typography color="secondary">selectionné</Typography>
+              &&
+              <KeyboardDatePicker
+                  disableToolbar
+                  variant="inline"
+                  format="MM/dd/yyyy"
+                  margin="normal"
+                  id="endDate"
+                  label="Date de fin"
+                  error={this.errors.endDate}
+                  helperText={this.errors.endDate}
+                  value={this.state.endDate}
+                  onChange={this.onEndDateChange}
+                  KeyboardButtonProps={{
+                    'aria-label': 'end date',
+                  }}
+                />
             }
           </TableCell>
         </TableRow>
