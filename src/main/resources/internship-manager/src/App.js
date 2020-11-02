@@ -18,6 +18,8 @@ import StudentInternshipApplicationValidationPage from './pages/StudentInternshi
 import StudentSelectionPage from './pages/StudentSelectionPage';
 import StudentInternshipApplicationStatusPage from './pages/StudentInternshipApplicationStatusPage';
 import ManageAccessPage from './pages/ManageAccessPage';
+import StudentListPage from './pages/StudentListPage';
+import StudentProfilePage from './pages/StudentProfilePage';
 import SelectActionPage from './pages/SelectActionPage';
 
 function App() {
@@ -58,8 +60,11 @@ function App() {
               <Route exact path="/internship-application-validation" component={StudentInternshipApplicationValidationPage}></Route>
               <Route exact path="/internship-application-status" component={StudentInternshipApplicationStatusPage}></Route>
               <Route exact path="/student-selection-page" component={StudentSelectionPage}></Route>
+              <Route exact path="/student-list-page" component={StudentListPage}></Route>
 
               <Route exact path="/manage-access/:uuid" component={ManageAccessPage}></Route>
+              <Route exact path="/student-profile-page/:uuid/:fullName" component={StudentProfilePage}></Route>
+
               <Route exact path="/select-action/:uuid" component={SelectActionPage}></Route>
             </AppDrawer>
 

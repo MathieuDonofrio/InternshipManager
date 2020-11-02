@@ -24,6 +24,14 @@ class UserService {
     return axios.get(Config.target + '/user/students', headers());
   }
 
+  studentsWithApplication() {
+    return axios.get(Config.target + '/user/students-with-application', headers());
+  }
+
+  studentsWithoutApplication() {
+    return axios.get(Config.target + '/user/students-without-application', headers());
+  }
+
 }
 
 export default new UserService();

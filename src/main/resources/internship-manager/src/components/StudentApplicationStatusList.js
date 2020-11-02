@@ -31,7 +31,7 @@ class StudentApplicationStatusList extends Component {
   //
 
   constructor(props) {
-    super();
+    super(props);
     this.state = state;
     this.onUpdateStudentApplicationsList();
     this.submitLock = new Lock();
@@ -42,7 +42,7 @@ class StudentApplicationStatusList extends Component {
   //
 
   onUpdateStudentApplicationsList() {
-    let userId = localStorage.getItem("UserUniqueId");
+    let userId = this.props.studentId ? this.props.studentId : localStorage.getItem("UserUniqueId");
     InternshipApplicationService.internshipApplications(userId).then(response => {
       this.setState(response.data);
     })
@@ -81,7 +81,7 @@ class StudentApplicationStatusList extends Component {
         <Container>
           <Box
             mb={2}
-            paddingTop={2}
+            pt={2}
             textAlign="left"
           >
             <Typography component="h1" variant="h4" align="center">État de la candidature</Typography>

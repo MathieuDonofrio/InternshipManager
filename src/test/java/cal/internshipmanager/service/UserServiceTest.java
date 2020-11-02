@@ -1,22 +1,38 @@
 package cal.internshipmanager.service;
 
+import cal.internshipmanager.model.InternshipApplication;
+import cal.internshipmanager.model.InternshipOffer;
+import cal.internshipmanager.model.Settings;
 import cal.internshipmanager.model.User;
+import cal.internshipmanager.repository.InternshipApplicationRepository;
+import cal.internshipmanager.repository.SettingsRepository;
 import cal.internshipmanager.repository.UserRepository;
 import cal.internshipmanager.response.UserListReponse;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.*;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest
 public class UserServiceTest {
 
     @Mock
     private UserRepository userRepository;
+
+    @Mock
+    private InternshipApplicationRepository internshipApplicationRepository;
+
+    @Mock
+    private SettingsRepository settingsRepository;
 
     @Test
     public void studentUsers_validRequest() {
@@ -32,7 +48,7 @@ public class UserServiceTest {
         user.setLastName("Tata");
         user.setCompany("Test");
 
-        UserService userService = new UserService(userRepository);
+        UserService userService = new UserService(userRepository, internshipApplicationRepository, new SettingsService(settingsRepository));
 
         when(userRepository.findAllByType(User.Type.STUDENT))
                 .thenReturn(List.of(user));
@@ -56,7 +72,109 @@ public class UserServiceTest {
     }
 
     @Test
-    public void findUserById_validRequest(){
+    public void studentsWithApplication_validRequest() {
+        // Arrange
+
+        Settings settings = new Settings();
+        settings.setCreationTimestamp(new Date().getTime());
+        settings.setSemester("2020-03-16");
+
+        User user = new User();
+
+        user.setUniqueId(UUID.randomUUID());
+        user.setType(User.Type.STUDENT);
+        user.setEmail("toto@gmail.com");
+        user.setFirstName("Toto");
+        user.setLastName("Tata");
+        user.setCompany("Test");
+
+        InternshipApplication internshipApplication = new InternshipApplication();
+
+        internshipApplication.setUniqueId(UUID.randomUUID());
+        internshipApplication.setDate(new Date());
+        internshipApplication.setStatus(InternshipApplication.Status.SELECTED);
+
+        UserService userService = new UserService(userRepository, internshipApplicationRepository, new SettingsService(settingsRepository));
+
+        when(userRepository.findAllByType(User.Type.STUDENT))
+                .thenReturn(List.of(user));
+
+        when(internshipApplicationRepository.findAllByStudentUniqueIdAndSemester(Mockito.any(), Mockito.any()))
+                .thenReturn(List.of(internshipApplication));
+
+        when(settingsRepository.findAll()).thenReturn(List.of(settings));
+
+        // Act
+
+        UserListReponse response = userService.studentsWithoutApplication();
+
+        // Assert
+
+        for (UserListReponse.User user1 : response.getUsers()) {
+
+            assertEquals(user.getUniqueId(), user1.getUniqueId());
+            assertEquals(user.getType().toString(), user1.getType());
+            assertEquals(user.getEmail(), user1.getEmail());
+            assertEquals(user.getFirstName(), user1.getFirstName());
+            assertEquals(user.getLastName(), user1.getLastName());
+            assertEquals(user.getCompany(), user1.getCompany());
+
+        }
+    }
+
+    @Test
+    public void studentsWithoutApplication_validRequest() {
+        // Arrange
+
+        Settings settings = new Settings();
+        settings.setCreationTimestamp(new Date().getTime());
+        settings.setSemester("2020-03-16");
+
+        User user = new User();
+
+        user.setUniqueId(UUID.randomUUID());
+        user.setType(User.Type.STUDENT);
+        user.setEmail("toto@gmail.com");
+        user.setFirstName("Toto");
+        user.setLastName("Tata");
+        user.setCompany("Test");
+
+        InternshipApplication internshipApplication = new InternshipApplication();
+
+        internshipApplication.setUniqueId(UUID.randomUUID());
+        internshipApplication.setDate(new Date());
+        internshipApplication.setStatus(InternshipApplication.Status.SELECTED);
+
+        UserService userService = new UserService(userRepository, internshipApplicationRepository, new SettingsService(settingsRepository));
+
+        when(userRepository.findAllByType(User.Type.STUDENT))
+                .thenReturn(List.of(user));
+
+        when(internshipApplicationRepository.findAllByStudentUniqueIdAndSemester(Mockito.any(), Mockito.any()))
+                .thenReturn(List.of(internshipApplication));
+
+        when(settingsRepository.findAll()).thenReturn(List.of(settings));
+
+        // Act
+
+        UserListReponse response = userService.studentsWithApplication();
+
+        // Assert
+
+        for (UserListReponse.User user1 : response.getUsers()) {
+
+            assertEquals(user.getUniqueId(), user1.getUniqueId());
+            assertEquals(user.getType().toString(), user1.getType());
+            assertEquals(user.getEmail(), user1.getEmail());
+            assertEquals(user.getFirstName(), user1.getFirstName());
+            assertEquals(user.getLastName(), user1.getLastName());
+            assertEquals(user.getCompany(), user1.getCompany());
+
+        }
+    }
+
+    @Test
+    public void findUserById_validRequest() {
 
         // Arrange
         User user = new User();
@@ -70,7 +188,7 @@ public class UserServiceTest {
 
         UserListReponse.User userToFind = UserListReponse.map(user);
 
-        UserService userService = new UserService(userRepository);
+        UserService userService = new UserService(userRepository, internshipApplicationRepository, new SettingsService(settingsRepository));
 
         // Act
         when(userRepository.findById(any())).thenReturn(Optional.of(user));
