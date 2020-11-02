@@ -66,9 +66,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         CorsConfiguration configuration = new CorsConfiguration();
 
-        configuration.setAllowedOrigins(Collections.singletonList("http://localhost:3000"));
 
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
+
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE")); configuration.setAllowedOrigins(Collections.singletonList("http://react-intershipmanager.s3-website.us-east-2.amazonaws.com"));
 
         configuration.addAllowedHeader("Content-Type");
         configuration.addAllowedHeader("Access-Control-Allow-Origin");
