@@ -40,6 +40,16 @@ public class UserController {
         return userService.students();
     }
 
+    @GetMapping("students-with-application")
+    public UserListReponse studentsWithApplication() {
+        return userService.studentsWithApplication();
+    }
+
+    @GetMapping("students-without-application")
+    public UserListReponse studentsWithoutApplication() {
+        return userService.studentsWithoutApplication();
+    }
+
     @GetMapping("{userId}")
     public UserListReponse.User find(@Valid @ExistingUser @PathVariable UUID userId) {
         return userService.find(userId);
