@@ -67,22 +67,6 @@ class StudentApplicationStatusList extends Component {
             {status == "APPROVED" && <Typography color="primary">approuvé</Typography>}
             {status == "SELECTED" && 
               <Typography color="secondary">selectionné</Typography>
-              &&
-              <KeyboardDatePicker
-                  disableToolbar
-                  variant="inline"
-                  format="MM/dd/yyyy"
-                  margin="normal"
-                  id="endDate"
-                  label="Date de fin"
-                  error={this.errors.endDate}
-                  helperText={this.errors.endDate}
-                  value={this.state.endDate}
-                  onChange={this.onEndDateChange}
-                  KeyboardButtonProps={{
-                    'aria-label': 'end date',
-                  }}
-                />
             }
           </TableCell>
         </TableRow>
