@@ -67,7 +67,7 @@ class Portfolio extends Component {
   //
 
   constructor(props) {
-    super();
+    super(props);
 
     this.state = state;
 
@@ -82,7 +82,7 @@ class Portfolio extends Component {
 
   onUpdatePortfolio() {
 
-    let uuid = localStorage.getItem("UserUniqueId");
+    let uuid = this.props.studentId ? this.props.studentId : localStorage.getItem("UserUniqueId");
 
     PortfolioService.portfolioDocuments(uuid).then(response => {
       this.setState(response.data);
@@ -150,7 +150,7 @@ class Portfolio extends Component {
           </Box>
         </Container>
 
-        <Box margin={1}>
+        {!this.props.studentId && <Box margin={1}>
           <Button
             variant="contained" color="primary"
             size="small" startIcon={<AddIcon />}
@@ -158,7 +158,7 @@ class Portfolio extends Component {
           >
             Ajouter un document
           </Button>
-        </Box>
+        </Box>}
 
         <TableContainer>
           <Table size="small" aria-label="a dense table">
@@ -167,7 +167,7 @@ class Portfolio extends Component {
                 <TableCell align="center"><strong>Type</strong></TableCell>
                 <TableCell align="center"><strong>Fichier</strong></TableCell>
                 <TableCell align="center"><strong>Date de téléversement</strong></TableCell>
-                <TableCell align="center"><strong>Supprimer</strong></TableCell>
+                {!this.props.studentId && <TableCell align="center"><strong>Supprimer</strong></TableCell>}
                 <TableCell align="center"><strong>Téléchargement</strong></TableCell>
               </TableRow>
             </TableHead>
@@ -179,7 +179,7 @@ class Portfolio extends Component {
                       <TableCell component="th" scope="row" align="center">{document.type}</TableCell>
                       <TableCell component="th" scope="row" align="center">{document.fileName}</TableCell>
                       <TableCell component="th" scope="row" align="center">{new Date(document.uploadDate).toLocaleDateString()}</TableCell>
-                      <TableCell component="th" scope="row" align="center" >
+                     {!this.props.studentId && <TableCell component="th" scope="row" align="center" >
                         <Box margin={1}>
                           <IconButton edge="end" aria-label="delete">
                             <DeleteIcon
@@ -187,7 +187,7 @@ class Portfolio extends Component {
                             />
                           </IconButton>
                         </Box>
-                      </TableCell>
+                      </TableCell>}
                       <TableCell component="th" scope="row" align="center" >
 
                         <Box margin={1}>
