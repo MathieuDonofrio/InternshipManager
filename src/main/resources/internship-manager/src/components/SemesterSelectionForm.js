@@ -40,7 +40,8 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-export default function SemesterSelectionForm () {
+export default function SemesterSelectionForm (props) {
+
 
     const classes = useStyles();
     const [session, setSession] = useState("");
@@ -63,11 +64,26 @@ export default function SemesterSelectionForm () {
     setAnnee(event.target.value);
   }
 
-  const onFormSubmit = () => {
+  const sessionName = () => {
 
-    let semester = session + "-" + annee;
+    switch (session){
 
-    console.log(semester);
+      case "Automne" : return "Autumn";
+      break;
+      case "Hiver" : return "Winter";
+      break;
+      case "Été" : return "Summer";
+      break;
+      default: return "Winter";
+    }
+  }
+
+  
+
+  const onFormSubmit = async () => {
+
+
+    let semester = sessionName() + "-" + annee;
 
     SettingsService.semester(semester)
       .then(() => this.props.history.push('/home'))

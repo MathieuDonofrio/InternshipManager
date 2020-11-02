@@ -23,6 +23,12 @@ class SettingsService {
         return axios.put(Config.target + `/settings/semester/${request}`, {}, headers());
     }
 
+    // Get
+
+    getSemester(){
+        return axios.get(Config.target + '/settings/semester', headers());
+    }
+
 }
 
 export default new SettingsService();
