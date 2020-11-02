@@ -175,6 +175,43 @@ public class UserServiceTest {
     }
 
     @Test
+    public void employerUsers_validRequest() {
+
+        // Arrange
+
+        User user = new User();
+
+        user.setUniqueId(UUID.randomUUID());
+        user.setType(User.Type.EMPLOYER);
+        user.setEmail("toto@gmail.com");
+        user.setFirstName("Toto");
+        user.setLastName("Tata");
+        user.setCompany("Test");
+
+        UserService userService = new UserService(userRepository, internshipApplicationRepository,internshipOfferRepository, new SettingsService(settingsRepository));
+
+        when(userRepository.findAllByType(Mockito.any()))
+                .thenReturn(List.of(user));
+
+        // Act
+
+        UserListReponse response = userService.employers();
+
+        // Assert
+
+        for (UserListReponse.User user1 : response.getUsers()) {
+
+            assertEquals(user.getUniqueId(), user1.getUniqueId());
+            assertEquals(user.getType().toString(), user1.getType());
+            assertEquals(user.getEmail(), user1.getEmail());
+            assertEquals(user.getFirstName(), user1.getFirstName());
+            assertEquals(user.getLastName(), user1.getLastName());
+            assertEquals(user.getCompany(), user1.getCompany());
+
+        }
+    }
+
+    @Test
     public void employerWithOffer_validRequest() {
         // Arrange
 
