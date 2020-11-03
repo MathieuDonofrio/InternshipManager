@@ -141,7 +141,7 @@ public class InternshipApplicationServiceTest {
     }
 
     @Test
-    public void create_validRequest() {
+    public void create_requireApproval() {
 
         // Arrange
 
@@ -176,6 +176,8 @@ public class InternshipApplicationServiceTest {
         request.setOfferUniqueId(offer.getUniqueId());
         request.setDocuments(List.of(document.getUniqueId()));
 
+        when(settingsService.getRequireApproval()).thenReturn(true);
+
         when(userRepository.findById(user.getUniqueId())).thenReturn(Optional.of(user));
 
         when(internshipOfferRepository.findById(offer.getUniqueId())).thenReturn(Optional.of(offer));
@@ -195,6 +197,72 @@ public class InternshipApplicationServiceTest {
             assertNotNull(internshipApplication.getDate());
             assertFalse(internshipApplication.getDocuments().isEmpty());
             assertEquals(document.getUniqueId(), internshipApplication.getDocuments().get(0).getUniqueId());
+            assertEquals(InternshipApplication.Status.PENDING_APPROVAL, internshipApplication.getStatus());
+
+            return null;
+        });
+
+        internshipApplicationService.create(request);
+    }
+
+    @Test
+    public void create_noRequireApproval() {
+
+        // Arrange
+
+        User user = new User();
+
+        user.setUniqueId(UUID.randomUUID());
+        user.setType(User.Type.STUDENT);
+        user.setFirstName("TestFirstName");
+        user.setLastName("TestLastName");
+
+        InternshipOffer offer = new InternshipOffer();
+
+        offer.setUniqueId(UUID.randomUUID());
+        offer.setSemester(settingsService.getSemester());
+        offer.setCompany("TestCompany");
+        offer.setJobTitle("TestJobTitle");
+
+        PortfolioDocument document = new PortfolioDocument();
+
+        document.setUniqueId(UUID.randomUUID());
+
+        String token = jwtProvider.generate(user);
+        DecodedJWT decodedToken = jwtProvider.verify(token);
+        JwtAuthentication authentication = new JwtAuthentication(decodedToken);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        InternshipApplicationService internshipApplicationService = new InternshipApplicationService(
+                settingsService, internshipApplicationRepository, portfolioDocumentRepository, userRepository, internshipOfferRepository);
+
+        InternshipApplicationCreationRequest request = new InternshipApplicationCreationRequest();
+
+        request.setOfferUniqueId(offer.getUniqueId());
+        request.setDocuments(List.of(document.getUniqueId()));
+
+        when(settingsService.getRequireApproval()).thenReturn(false);
+
+        when(userRepository.findById(user.getUniqueId())).thenReturn(Optional.of(user));
+
+        when(internshipOfferRepository.findById(offer.getUniqueId())).thenReturn(Optional.of(offer));
+
+        when(portfolioDocumentRepository.findById(document.getUniqueId())).thenReturn(Optional.of(document));
+
+        // Act & Assert
+
+        when(internshipApplicationRepository.save(any())).then(inv -> {
+
+            InternshipApplication internshipApplication = inv.getArgument(0);
+
+            assertNotNull(internshipApplication.getUniqueId());
+            assertEquals(settingsService.getSemester(), internshipApplication.getSemester());
+            assertEquals(request.getOfferUniqueId(), internshipApplication.getOffer().getUniqueId());
+            assertEquals(user.getUniqueId(), internshipApplication.getStudent().getUniqueId());
+            assertNotNull(internshipApplication.getDate());
+            assertFalse(internshipApplication.getDocuments().isEmpty());
+            assertEquals(document.getUniqueId(), internshipApplication.getDocuments().get(0).getUniqueId());
+            assertEquals(InternshipApplication.Status.APPROVED, internshipApplication.getStatus());
 
             return null;
         });

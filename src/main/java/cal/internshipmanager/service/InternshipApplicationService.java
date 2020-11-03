@@ -65,6 +65,8 @@ public class InternshipApplicationService {
 
         InternshipOffer offer = internshipOfferRepository.findById(request.getOfferUniqueId()).orElse(null);
 
+        boolean requireApproval = settingsService.getRequireApproval();
+
         List<PortfolioDocument> documents = request.getDocuments().stream()
                 .map(portfolioDocumentRepository::findById)
                 .map(Optional::get).collect(Collectors.toList());
@@ -76,7 +78,9 @@ public class InternshipApplicationService {
         internshipApplication.setOffer(offer);
         internshipApplication.setDate(new Date());
         internshipApplication.setDocuments(documents);
-        internshipApplication.setStatus(InternshipApplication.Status.PENDING_APPROVAL);
+        internshipApplication.setStatus(requireApproval
+                ? InternshipApplication.Status.PENDING_APPROVAL
+                : InternshipApplication.Status.APPROVED);
 
         internshipApplicationRepository.save(internshipApplication);
     }
