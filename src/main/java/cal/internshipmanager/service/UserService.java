@@ -1,7 +1,9 @@
 package cal.internshipmanager.service;
 
+import cal.internshipmanager.model.InternshipOffer;
 import cal.internshipmanager.model.User;
 import cal.internshipmanager.repository.InternshipApplicationRepository;
+import cal.internshipmanager.repository.InternshipOfferRepository;
 import cal.internshipmanager.repository.UserRepository;
 import cal.internshipmanager.response.UserListReponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,8 @@ public class UserService {
 
     private final InternshipApplicationRepository internshipApplicationRepository;
 
+    private final InternshipOfferRepository internshipOfferRepository;
+
     private final SettingsService settingsService;
 
     //
@@ -29,10 +33,11 @@ public class UserService {
     //
 
     @Autowired
-    public UserService(UserRepository userRepository, InternshipApplicationRepository internshipApplicationRepository,SettingsService settingsService) {
+    public UserService(UserRepository userRepository, InternshipApplicationRepository internshipApplicationRepository,InternshipOfferRepository internshipOfferRepository,SettingsService settingsService) {
         this.userRepository = userRepository;
         this.internshipApplicationRepository = internshipApplicationRepository;
         this.settingsService = settingsService;
+        this.internshipOfferRepository = internshipOfferRepository;
     }
 
     //
@@ -72,6 +77,47 @@ public class UserService {
         response.setUsers(students
                 .stream()
                 .filter(x -> internshipApplicationRepository.findAllByStudentUniqueIdAndSemester(x.getUniqueId(),settingsService.getSemester()).isEmpty())
+                .map(UserListReponse::map)
+                .collect(Collectors.toList()));
+
+        return response;
+    }
+
+    public UserListReponse employers(){
+        List<User> employers = userRepository.findAllByType(User.Type.EMPLOYER);
+
+        UserListReponse response = new UserListReponse();
+
+        response.setUsers(employers
+                .stream()
+                .map(UserListReponse::map)
+                .collect(Collectors.toList()));
+
+        return response;
+    }
+
+    public UserListReponse employersWithOffers(){
+        List<User> employers = userRepository.findAllByType(User.Type.EMPLOYER);
+
+        UserListReponse response = new UserListReponse();
+
+        response.setUsers(employers
+                .stream()
+                .filter(x -> !internshipOfferRepository.findAllByEmployerAndStatusAndSemester(x.getUniqueId(), InternshipOffer.Status.APPROVED,settingsService.getSemester()).isEmpty())
+                .map(UserListReponse::map)
+                .collect(Collectors.toList()));
+
+        return response;
+    }
+
+    public UserListReponse employersWithoutOffers(){
+        List<User> employers = userRepository.findAllByType(User.Type.EMPLOYER);
+
+        UserListReponse response = new UserListReponse();
+
+        response.setUsers(employers
+                .stream()
+                .filter(x -> internshipOfferRepository.findAllByEmployerAndStatusAndSemester(x.getUniqueId(), InternshipOffer.Status.APPROVED,settingsService.getSemester()).isEmpty())
                 .map(UserListReponse::map)
                 .collect(Collectors.toList()));
 
