@@ -1,14 +1,12 @@
 package cal.internshipmanager.service;
 
-import cal.internshipmanager.model.InternshipApplication;
-import cal.internshipmanager.model.InternshipOffer;
-import cal.internshipmanager.model.PortfolioDocument;
-import cal.internshipmanager.model.User;
+import cal.internshipmanager.model.*;
 import cal.internshipmanager.repository.InternshipApplicationRepository;
 import cal.internshipmanager.repository.InternshipOfferRepository;
 import cal.internshipmanager.repository.PortfolioDocumentRepository;
 import cal.internshipmanager.repository.UserRepository;
 import cal.internshipmanager.request.InternshipApplicationCreationRequest;
+import cal.internshipmanager.request.InternshipApplicationInterviewDateRequest;
 import cal.internshipmanager.response.InternshipApplicationListResponse;
 import cal.internshipmanager.response.PortfolioDocumentListResponse;
 import org.springframework.security.core.Authentication;
@@ -82,9 +80,13 @@ public class InternshipApplicationService {
     }
 
     public InternshipApplicationListResponse internshipApplications(UUID userUniqueId) {
+        //original
+        //List<InternshipApplication> userApplications = internshipApplicationRepository.findAllByStudentUniqueIdAndSemester(
+        //        userUniqueId, settingsService.getSemester());
 
-        List<InternshipApplication> userApplications = internshipApplicationRepository.findAllByStudentUniqueIdAndSemester(
-                userUniqueId, settingsService.getSemester());
+        //to delete
+        List<InternshipApplication> userApplications = internshipApplicationRepository.findAllByStudentUniqueId(
+                userUniqueId);
 
         InternshipApplicationListResponse response = new InternshipApplicationListResponse();
 
@@ -97,9 +99,19 @@ public class InternshipApplicationService {
 
     public InternshipApplicationListResponse findByStatus(InternshipApplication.Status status) {
 
-        List<InternshipApplication> allApplications = internshipApplicationRepository.findAllByStatusAndSemester(
-                status, settingsService.getSemester());
-
+        //original
+        //List<InternshipApplication> allApplications = internshipApplicationRepository.findAllByStatusAndSemester(
+        //       status, settingsService.getSemester());
+        System.out.println("THE FIND iS HERE");
+        //to delete
+        List<InternshipApplication> allApplications = internshipApplicationRepository.findAllByStatus(
+                status);
+        System.out.println(allApplications.size());
+        System.out.println(settingsService.getSemester());
+        System.out.println(allApplications.get(0).getUniqueId());
+        System.out.println(allApplications.get(0).getOffer().getSemester());
+        System.out.println(allApplications.get(0).getSemester());
+        System.out.println("end");
         InternshipApplicationListResponse response = new InternshipApplicationListResponse();
 
         response.setApplications(allApplications.stream()
@@ -136,9 +148,13 @@ public class InternshipApplicationService {
     }
 
     public InternshipApplicationListResponse findByOffer(UUID uniqueId) {
+        //original
+        //List<InternshipApplication> allApplications = internshipApplicationRepository.findAllByOfferUniqueIdAndStatusAndSemester(
+        //        uniqueId, InternshipApplication.Status.APPROVED, settingsService.getSemester());
 
-        List<InternshipApplication> allApplications = internshipApplicationRepository.findAllByOfferUniqueIdAndStatusAndSemester(
-                uniqueId, InternshipApplication.Status.APPROVED, settingsService.getSemester());
+        //to delete
+        List<InternshipApplication> allApplications = internshipApplicationRepository.findAllByOfferUniqueIdAndStatus(
+                uniqueId, InternshipApplication.Status.APPROVED);
 
         InternshipApplicationListResponse response = new InternshipApplicationListResponse();
 
@@ -161,4 +177,11 @@ public class InternshipApplicationService {
         return response;
     }
 
+    public void addInterview(InternshipApplicationInterviewDateRequest request) {
+        InternshipApplication application = internshipApplicationRepository.findById(request.getUniqueId()).orElse(null);
+
+        application.setInterviewDate(new Date(request.getInterviewDate()));
+
+        internshipApplicationRepository.save(application);
+    }
 }

@@ -38,6 +38,8 @@ public class InternshipApplicationListResponse implements Serializable {
 
         private Long date;
 
+        private Long interviewDate;
+
         private String status;
 
     }
@@ -58,6 +60,7 @@ public class InternshipApplicationListResponse implements Serializable {
         application.company = from.getOffer().getCompany();
         application.jobTitle = from.getOffer().getJobTitle();
         application.date = from.getDate().getTime();
+        application.interviewDate = from.getDate().getTime();
         application.status = from.getStatus().toString();
 
         return application;

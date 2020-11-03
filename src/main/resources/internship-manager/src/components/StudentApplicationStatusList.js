@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import InternshipApplicationService from "../services/InternshipApplicationService";
 import { withRouter } from 'react-router';
 import Lock from '../utils/Lock'
-
+import DateFnsUtils from '@date-io/date-fns';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
@@ -41,6 +41,13 @@ class StudentApplicationStatusList extends Component {
   // Event Handlers
   //
 
+  
+  onDateChange(index){
+    console.log("we changing");
+    console.log("we changing");
+    InternshipApplicationService.addInterview("12");
+  };
+
   onUpdateStudentApplicationsList() {
     let userId = this.props.studentId ? this.props.studentId : localStorage.getItem("UserUniqueId");
     InternshipApplicationService.internshipApplications(userId).then(response => {
@@ -54,7 +61,7 @@ class StudentApplicationStatusList extends Component {
 
   renderTableData() {
     return this.state.applications.map((studentAppList, index) => {
-      const { company, jobTitle, date, status } = studentAppList
+      const { company, jobTitle, date, status,interviewDate} = studentAppList
       return (
         <TableRow key={index}>
           <TableCell component="th" scope="row" align="center">{company}</TableCell>
@@ -65,10 +72,31 @@ class StudentApplicationStatusList extends Component {
             {status == "PENDING_APPROVAL" && <Typography color="primary">en attente</Typography>}
             {status == "REJECTED" && <Typography color="error">rejeté</Typography>}
             {status == "APPROVED" && <Typography color="primary">approuvé</Typography>}
-            {status == "SELECTED" && 
+            {status == "SELECTED" &&
+            <div>
               <Typography color="secondary">selectionné</Typography>
+            
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <KeyboardDatePicker
+                  disableToolbar
+                  variant="inline"
+                  format="MM/dd/yyyy"
+                  margin="normal"
+                  //id="startDate"
+                  label="Date intervu"
+                  //error={this.errors.startDate}
+                  //helperText={this.errors.startDate}
+                  value={interviewDate}
+                  onChange={this.onDateChange(index)}
+                  KeyboardButtonProps={{
+                    'aria-label': 'change date',
+                  }}
+                />
+                </MuiPickersUtilsProvider>
+                </div>
             }
           </TableCell>
+          
         </TableRow>
 
       )

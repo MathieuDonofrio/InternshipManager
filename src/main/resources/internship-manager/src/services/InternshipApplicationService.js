@@ -24,7 +24,9 @@ class InternshipApplicationService {
     }
 
     pendingApproval(){
-        return axios.get(Config.target + `/internship-application/PENDING_APPROVAL`, headers());
+        //to change
+        const request="PENDING_APPROVAL";
+        return axios.get(Config.target + `/internship-application/${request}`, headers());
     }
 
     findByOffer(request){
@@ -49,6 +51,10 @@ class InternshipApplicationService {
 
     select(request){
         return axios.put(Config.target + `/internship-application/select/${request}`, {}, headers());
+    }
+
+    addInterview(request){
+        return axios.put(Config.target + `/internship-application/interview/${request}`, {}, headers());
     }
 
     //

@@ -2,6 +2,7 @@ package cal.internshipmanager.controller;
 
 import cal.internshipmanager.model.InternshipApplication;
 import cal.internshipmanager.request.InternshipApplicationCreationRequest;
+import cal.internshipmanager.request.InternshipApplicationInterviewDateRequest;
 import cal.internshipmanager.response.InternshipApplicationListResponse;
 import cal.internshipmanager.response.PortfolioDocumentListResponse;
 import cal.internshipmanager.service.InternshipApplicationService;
@@ -42,6 +43,7 @@ public class InternshipApplicationController {
 
     @GetMapping("{status}")
     public InternshipApplicationListResponse findByStatus(@Valid @NotNull @PathVariable InternshipApplication.Status status) {
+        System.out.println("THE GET IS HERE");
         return internshipApplicationService.findByStatus(status);
     }
 
@@ -61,7 +63,6 @@ public class InternshipApplicationController {
 
     @PutMapping("approve/{applicationId}")
     public void approve(@Valid @ExistingInternshipApplication @PathVariable UUID applicationId) {
-        System.out.println("WHYYYYYYYYYYYYYYYYYYYYY");
         internshipApplicationService.approve(applicationId);
     }
 
@@ -75,13 +76,18 @@ public class InternshipApplicationController {
         internshipApplicationService.select(applicationId);
     }
 
+    @PutMapping("interview")
+    public void addInterview(@Valid @RequestBody InternshipApplicationInterviewDateRequest request) {
+        System.out.println("adding inteview date");
+        internshipApplicationService.addInterview(request);
+    }
+
     //
     // Post
     //
 
     @PostMapping("create")
     public void create(@Valid @RequestBody InternshipApplicationCreationRequest request) {
-        System.out.println("THE MONSTER HAS");
         internshipApplicationService.create(request);
     }
 
