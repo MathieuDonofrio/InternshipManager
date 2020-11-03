@@ -50,6 +50,21 @@ public class UserController {
         return userService.studentsWithoutApplication();
     }
 
+    @GetMapping("employers")
+    public UserListReponse employers() {
+        return userService.employers();
+    }
+
+    @GetMapping("employers-with-offer")
+    public UserListReponse employersWithOffer() {
+        return userService.employersWithOffers();
+    }
+
+    @GetMapping("employers-without-offer")
+    public UserListReponse employersWithoutOffer() {
+        return userService.employersWithoutOffers();
+    }
+
     @GetMapping("{userId}")
     public UserListReponse.User find(@Valid @ExistingUser @PathVariable UUID userId) {
         return userService.find(userId);
