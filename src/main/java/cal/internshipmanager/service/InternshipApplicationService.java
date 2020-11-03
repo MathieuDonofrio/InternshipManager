@@ -70,6 +70,7 @@ public class InternshipApplicationService {
         InternshipApplication internshipApplication = new InternshipApplication();
 
         internshipApplication.setUniqueId(UUID.randomUUID());
+        internshipApplication.setSemester(settingsService.getSemester());
         internshipApplication.setStudent(student);
         internshipApplication.setOffer(offer);
         internshipApplication.setDate(new Date());
@@ -80,17 +81,13 @@ public class InternshipApplicationService {
     }
 
     public InternshipApplicationListResponse internshipApplications(UUID userUniqueId) {
-        //original
-        //List<InternshipApplication> userApplications = internshipApplicationRepository.findAllByStudentUniqueIdAndSemester(
-        //        userUniqueId, settingsService.getSemester());
 
-        //to delete
-        List<InternshipApplication> userApplications = internshipApplicationRepository.findAllByStudentUniqueId(
-                userUniqueId);
+        List<InternshipApplication> applications = internshipApplicationRepository.findAllByStudentUniqueIdAndSemester(
+                userUniqueId, settingsService.getSemester());
 
         InternshipApplicationListResponse response = new InternshipApplicationListResponse();
 
-        response.setApplications(userApplications.stream()
+        response.setApplications(applications.stream()
                 .map(InternshipApplicationListResponse::map)
                 .collect(Collectors.toList()));
 
@@ -99,22 +96,12 @@ public class InternshipApplicationService {
 
     public InternshipApplicationListResponse findByStatus(InternshipApplication.Status status) {
 
-        //original
-        //List<InternshipApplication> allApplications = internshipApplicationRepository.findAllByStatusAndSemester(
-        //       status, settingsService.getSemester());
-        System.out.println("THE FIND iS HERE");
-        //to delete
-        List<InternshipApplication> allApplications = internshipApplicationRepository.findAllByStatus(
-                status);
-        System.out.println(allApplications.size());
-        System.out.println(settingsService.getSemester());
-        System.out.println(allApplications.get(0).getUniqueId());
-        System.out.println(allApplications.get(0).getOffer().getSemester());
-        System.out.println(allApplications.get(0).getSemester());
-        System.out.println("end");
+        List<InternshipApplication> applications = internshipApplicationRepository.findAllByStatusAndSemester(
+                status, settingsService.getSemester());
+
         InternshipApplicationListResponse response = new InternshipApplicationListResponse();
 
-        response.setApplications(allApplications.stream()
+        response.setApplications(applications.stream()
                 .map(InternshipApplicationListResponse::map)
                 .collect(Collectors.toList()));
 
@@ -148,17 +135,13 @@ public class InternshipApplicationService {
     }
 
     public InternshipApplicationListResponse findByOffer(UUID uniqueId) {
-        //original
-        //List<InternshipApplication> allApplications = internshipApplicationRepository.findAllByOfferUniqueIdAndStatusAndSemester(
-        //        uniqueId, InternshipApplication.Status.APPROVED, settingsService.getSemester());
 
-        //to delete
-        List<InternshipApplication> allApplications = internshipApplicationRepository.findAllByOfferUniqueIdAndStatus(
-                uniqueId, InternshipApplication.Status.APPROVED);
+        List<InternshipApplication> applications = internshipApplicationRepository.findAllByOfferUniqueIdAndStatusAndSemester(
+                uniqueId, InternshipApplication.Status.APPROVED, settingsService.getSemester());
 
         InternshipApplicationListResponse response = new InternshipApplicationListResponse();
 
-        response.setApplications(allApplications.stream()
+        response.setApplications(applications.stream()
                 .map(InternshipApplicationListResponse::map)
                 .collect(Collectors.toList()));
 

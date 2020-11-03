@@ -32,7 +32,7 @@ public class InternshipApplicationServiceTest {
     @Autowired
     private JwtProvider jwtProvider;
 
-    @Mock
+    @Autowired
     private SettingsService settingsService;
 
     @Mock
