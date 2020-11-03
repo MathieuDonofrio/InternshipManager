@@ -7,6 +7,10 @@ const headers = {
 
 class RegistrationService {
 
+  //
+  // Post
+  //
+
   student(request) {
     return axios.post(Config.target + '/registration/student', request, headers);
   }

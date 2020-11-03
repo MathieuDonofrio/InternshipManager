@@ -83,4 +83,52 @@ public class SettingsServiceTest {
 
         service.setSemester("TestSemester2");
     }
+
+    @Test
+    public void getRequireApproval_firstRequest(){
+
+        // Arrange
+
+        Settings settings = new Settings();
+
+        settings.setRequireApproval(true);
+
+        SettingsService service = new SettingsService(settingsRepository);
+
+        when(settingsRepository.findAll()).thenReturn(List.of(settings));
+
+        // Act
+
+        Boolean requireApproval = service.getRequireApproval();
+
+        // Assert
+
+        assertEquals(settings.getRequireApproval(), requireApproval);
+    }
+    @Test
+    public void setRequireApproval_validRequest(){
+
+        // Arrange
+
+        Settings settings = new Settings();
+
+        settings.setRequireApproval(false);
+
+        SettingsService service = new SettingsService(settingsRepository);
+
+        when(settingsRepository.findAll()).thenReturn(List.of(settings));
+
+        // Act & Assert
+
+        when(settingsRepository.save(any())).then(inv -> {
+
+            Settings result = inv.getArgument(0);
+
+            assertEquals(settings.getRequireApproval(), result.getRequireApproval());
+
+            return null;
+        });
+
+        service.setRequireApproval(true);
+    }
 }

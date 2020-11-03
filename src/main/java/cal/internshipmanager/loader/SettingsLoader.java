@@ -42,6 +42,7 @@ public class SettingsLoader implements CommandLineRunner {
 
             settings.setCreationTimestamp(new Date().getTime());
             settings.setSemester("WINTER-2021");
+            settings.setRequireApproval(true);
 
             settingsRepository.save(settings);
         }

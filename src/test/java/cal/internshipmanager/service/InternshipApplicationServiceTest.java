@@ -256,7 +256,6 @@ public class InternshipApplicationServiceTest {
         assertEquals(InternshipApplication.Status.PENDING_APPROVAL.toString(), application.getStatus());
     }
 
-
     @Test
     public void findByOffer_validRequest() {
 
