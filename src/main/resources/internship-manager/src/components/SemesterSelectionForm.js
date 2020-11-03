@@ -27,25 +27,31 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
 import FormControl from '@material-ui/core/FormControl';
 import SettingsService from "../services/SettingsService";
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Switch from '@material-ui/core/Switch';
 
 
 
 const useStyles = makeStyles(theme => ({
     formControl:{
         minWidth: 150,
-        margin: theme.spacing(1), 
+        margin: theme.spacing(1),
+        marginBottom: 30,
     },
     selectEmpty:{
-        marginTop: theme.spacing(2),
+        marginTop: theme.spacing(1),
     },
 }));
 
-export default function SemesterSelectionForm (props) {
+export default function SemesterSelectionForm () {
 
 
     const classes = useStyles();
     const [session, setSession] = useState("");
     const [annee, setAnnee] = useState("");
+    const [state, setState] = useState({
+      approbationAutomatique : true,
+    });
 
     let sessiontoloop = [
         {session:"Automne"},
@@ -58,10 +64,10 @@ export default function SemesterSelectionForm (props) {
   // Event Handlers
   //
 
-  const onChange = (event) => {
+  const handleChange = (event) => {
      
-    setSession(event.target.value);
-    setAnnee(event.target.value);
+    setState({ ...state, [event.target.name]: !(event.target.checked) });
+    console.log(state);
   }
 
   const sessionName = () => {
@@ -111,17 +117,24 @@ export default function SemesterSelectionForm (props) {
             paddingTop={2}
             textAlign="center">
 
-            <Typography component="h1" variant="h5">Sélection de semestre</Typography>
+            <Typography component="h1" variant="h5">Paramètres</Typography>
 
           </Box>
 
           <Divider />
 
-          
+            <Box
+              mb={0}
+              paddingTop={2}
+              textAlign="left">
 
-            <Grid container spacing={2}>
+              <Typography component="h1" variant="h6">Selection de semestre</Typography>
 
-                <Grid item xs={20} sm={10}>
+            </Box>
+
+            <Grid container spacing={3}>
+
+                <Grid item xs={4} >
                     <FormControl className={classes.formControl} >
 
                         <TextField
@@ -135,7 +148,7 @@ export default function SemesterSelectionForm (props) {
                     </FormControl>
                 </Grid>
 
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={4} >
                     <FormControl className={classes.formControl} >
                         <InputLabel id="session-label">Session</InputLabel>
                             <Select labelId="session-label" id="session-label-select" value={session} onChange={(event) => setSession(event.target.value) } >
@@ -150,19 +163,44 @@ export default function SemesterSelectionForm (props) {
                             </Select>
                     </FormControl>
                 </Grid>
+
+                <Grid item xs={4}>
+                  <Box mt={2}>
+                    <Button
+                      type="submit"
+                      
+                      variant="contained"
+                      color="primary"
+                      onClick={() => onClicked()}
+                    >
+                      Sélectionner
+                    </Button>
+                  </Box>
+                </Grid>
             </Grid>
 
-            <Box mt={2}>
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                onClick={() => onClicked()}
-              >
-                Sélectionner
-              </Button>
-            </Box>
+
+            <Box
+              mb={2}
+              paddingTop={2}
+              textAlign="left">
+              
+
+              <Typography component="h1" variant="h6">Approbation</Typography>
+
+            </Box>                            
+
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={!(state.approbationAutomatique)}
+                  onChange={handleChange}
+                  name="approbationAutomatique"
+                  color="primary"
+                />
+              }
+              label="Approbation automatique"
+            />
 
 
             <Box paddingBottom={2} />
