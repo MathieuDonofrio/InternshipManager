@@ -9,6 +9,7 @@ import cal.internshipmanager.repository.InternshipOfferRepository;
 import cal.internshipmanager.repository.PortfolioDocumentRepository;
 import cal.internshipmanager.repository.UserRepository;
 import cal.internshipmanager.request.InternshipApplicationCreationRequest;
+import cal.internshipmanager.request.InternshipApplicationInterviewDateRequest;
 import cal.internshipmanager.response.InternshipApplicationListResponse;
 import cal.internshipmanager.response.PortfolioDocumentListResponse;
 import cal.internshipmanager.security.JwtAuthentication;
@@ -24,7 +25,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest
 public class InternshipApplicationServiceTest {
@@ -32,7 +34,7 @@ public class InternshipApplicationServiceTest {
     @Autowired
     private JwtProvider jwtProvider;
 
-    @Mock
+    @Autowired
     private SettingsService settingsService;
 
     @Mock
@@ -81,6 +83,7 @@ public class InternshipApplicationServiceTest {
         internshipApplication.setStatus(InternshipApplication.Status.APPROVED);
         internshipApplication.setDocuments(applicationDocuments);
         internshipApplication.setDate(new Date());
+        internshipApplication.setInterviewDate(new Date());
 
         InternshipApplicationService applicationService=new InternshipApplicationService(
                 settingsService, internshipApplicationRepository, portfolioDocumentRepository, userRepository, internshipOfferRepository);
@@ -119,6 +122,7 @@ public class InternshipApplicationServiceTest {
         internshipApplication.setOffer(internshipOffer);
         internshipApplication.setStatus(InternshipApplication.Status.APPROVED);
         internshipApplication.setDate(new Date());
+        internshipApplication.setInterviewDate(new Date());
 
         InternshipApplicationService internshipApplicationService = new InternshipApplicationService(
                 settingsService, internshipApplicationRepository, portfolioDocumentRepository, userRepository, internshipOfferRepository);
@@ -138,6 +142,8 @@ public class InternshipApplicationServiceTest {
         assertEquals(internshipApplication.getStudent().getUniqueId(), application.getStudentUniqueId());
         assertEquals(internshipApplication.getOffer().getUniqueId(), application.getOfferUniqueId());
         assertEquals(internshipApplication.getDate().getTime(), application.getDate());
+        assertEquals(internshipApplication.getInterviewDate().getTime(), application.getInterviewDate());
+
     }
 
     @Test
@@ -193,6 +199,7 @@ public class InternshipApplicationServiceTest {
             assertEquals(request.getOfferUniqueId(), internshipApplication.getOffer().getUniqueId());
             assertEquals(user.getUniqueId(), internshipApplication.getStudent().getUniqueId());
             assertNotNull(internshipApplication.getDate());
+            assertNotNull(internshipApplication.getInterviewDate());
             assertFalse(internshipApplication.getDocuments().isEmpty());
             assertEquals(document.getUniqueId(), internshipApplication.getDocuments().get(0).getUniqueId());
 
@@ -228,6 +235,7 @@ public class InternshipApplicationServiceTest {
         internshipApplication.setStudent(user);
         internshipApplication.setOffer(internshipOffer);
         internshipApplication.setDate(new Date());
+        internshipApplication.setInterviewDate(new Date());
         internshipApplication.setStatus(InternshipApplication.Status.PENDING_APPROVAL);
 
         InternshipApplicationService internshipApplicationService = new InternshipApplicationService(
@@ -253,6 +261,7 @@ public class InternshipApplicationServiceTest {
         assertEquals(internshipOffer.getCompany(), application.getCompany());
         assertEquals(internshipOffer.getJobTitle(), application.getJobTitle());
         assertEquals(internshipApplication.getDate().getTime(), application.getDate());
+        assertEquals(internshipApplication.getInterviewDate().getTime(), application.getInterviewDate());
         assertEquals(InternshipApplication.Status.PENDING_APPROVAL.toString(), application.getStatus());
     }
 
@@ -283,6 +292,7 @@ public class InternshipApplicationServiceTest {
         internshipApplication.setOffer(internshipOffer);
         internshipApplication.setStudent(user);
         internshipApplication.setDate(new Date());
+        internshipApplication.setInterviewDate(new Date());
         internshipApplication.setStatus(InternshipApplication.Status.APPROVED);
 
         InternshipApplicationListResponse response = new InternshipApplicationListResponse();
@@ -402,6 +412,7 @@ public class InternshipApplicationServiceTest {
         internshipApplication.setUniqueId(UUID.randomUUID());
         internshipApplication.setOffer(internshipOffer);
         internshipApplication.setDate(new Date());
+        internshipApplication.setInterviewDate(new Date());
         internshipApplication.setStatus(InternshipApplication.Status.SELECTED);
 
         InternshipApplicationService internshipApplicationService = new InternshipApplicationService(
@@ -422,5 +433,57 @@ public class InternshipApplicationServiceTest {
 
         internshipApplicationService.select(internshipApplication.getUniqueId());
 
+    }
+
+    @Test
+    public void addInterview_validRequest(){
+
+        // Arrange
+
+        User user = new User();
+
+        user.setUniqueId(UUID.randomUUID());
+        user.setFirstName("TestFirstName");
+        user.setLastName("TestLastName");
+        user.setType(User.Type.STUDENT);
+
+        InternshipOffer internshipOffer = new InternshipOffer();
+
+        internshipOffer.setUniqueId(UUID.randomUUID());
+        internshipOffer.setSemester(settingsService.getSemester());
+        internshipOffer.setCompany("TestCompany");
+        internshipOffer.setJobTitle("TestJobTitle");
+
+        InternshipApplication internshipApplication = new InternshipApplication();
+
+        internshipApplication.setUniqueId(UUID.randomUUID());
+        internshipApplication.setSemester(settingsService.getSemester());
+        internshipApplication.setStudent(user);
+        internshipApplication.setOffer(internshipOffer);
+        internshipApplication.setDate(new Date());
+        internshipApplication.setInterviewDate(new Date());
+        internshipApplication.setStatus(InternshipApplication.Status.PENDING_APPROVAL);
+
+        InternshipApplicationInterviewDateRequest request = new InternshipApplicationInterviewDateRequest();
+
+        request.setInterviewDate(new Date(0).getTime());
+
+        InternshipApplicationService internshipApplicationService = new InternshipApplicationService(
+                settingsService, internshipApplicationRepository, portfolioDocumentRepository, userRepository, internshipOfferRepository);
+
+        when(internshipApplicationRepository.findById(internshipApplication.getUniqueId())).thenReturn(Optional.of(internshipApplication));
+
+        // Act & Assert
+
+        when(internshipApplicationRepository.save(any())).then(inv -> {
+
+            InternshipApplication application = inv.getArgument(0);
+
+            assertEquals(new Date(0),application.getInterviewDate());
+
+            return null;
+        });
+
+        internshipApplicationService.addInterview(internshipApplication.getUniqueId(),request);
     }
 }

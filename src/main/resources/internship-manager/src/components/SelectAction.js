@@ -208,7 +208,6 @@ export default function InteractiveLists() {
 
                       startIcon={<AttachmentIcon />}
                     >
-                      {console.log(application.studentUniqueId)}
                         Documents
                         </Button>
                   </Box>
