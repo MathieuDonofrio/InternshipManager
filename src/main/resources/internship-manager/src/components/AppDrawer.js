@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import AuthenticationService from '../services/AuthenticationService';
@@ -31,6 +31,8 @@ import AssignmentLateIcon from '@material-ui/icons/AssignmentLate';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
+import SettingsService from "../services/SettingsService";
+import SettingsIcon from '@material-ui/icons/Settings';
 
 const drawerWidth = 250;
 
@@ -106,6 +108,11 @@ export default function AppDrawer(props) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const history = useHistory();
+  const [session, setSession] = useState();
+
+  useEffect(() => {
+    getSession();
+  }, [])
 
   const userType = () => {
     let type = localStorage.getItem('UserType').toLowerCase();
@@ -120,6 +127,38 @@ export default function AppDrawer(props) {
       case "administrator" : return "ADMINISTRATEUR";
       break;
       default: return "ÉTUDIANT";
+    }
+  }
+
+  const getSession = async () =>{
+
+    const response = await SettingsService.getSemester().then((data)=>{
+
+      let myIndex = data.data.indexOf( '-');
+  
+      let annee = data.data.substr(myIndex+1, data.data.length);
+      
+      let session = translateSession(data.data.substr(0, myIndex));
+
+      let monSemestre = session + "-" + annee;
+
+      setSession(monSemestre);
+
+    });
+   
+  }
+
+  const translateSession = (session) =>{
+    
+    switch (session){
+  
+      case "Autumn" : return "Automne";
+      break;
+      case "Winter" : return "Hiver";
+      break;
+      case "Summer" : return "Été";
+      break;
+      default: return "Automne";
     }
   }
 
@@ -166,6 +205,10 @@ export default function AppDrawer(props) {
           </IconButton>
           <Typography variant="h6" noWrap className={classes.panelTitle}>
             {"PANNEAU " + userType()}
+          </Typography>
+
+          <Typography variant="h6" noWrap className={classes.panelTitle}>
+            {"Session Courrante : " + session}
           </Typography>
 
           <Button
@@ -287,6 +330,20 @@ export default function AppDrawer(props) {
               onClick={() => history.push("/student-list-page")}>
               <ListItemIcon><PeopleIcon /> </ListItemIcon>
               <ListItemText primary={"Liste des étudiants"} />
+            </ListItem>
+            <ListItem
+              button
+              key={"Liste des employés"}
+              onClick={() => history.push("/employer-list-page")}>
+              <ListItemIcon><PeopleIcon /> </ListItemIcon>
+              <ListItemText primary={"Liste des employés"} />
+            </ListItem>
+            <ListItem
+              button
+              key={"Paramètres"}
+              onClick={() => history.push("/semester-selection")}>
+              <ListItemIcon><SettingsIcon /> </ListItemIcon>
+              <ListItemText primary={"Paramètres"} />
             </ListItem>
           </List>
         }

@@ -189,7 +189,7 @@ export default function InteractiveLists() {
               <TableRow>
                 <TableCell align="center"><strong>Nom</strong></TableCell>
                 <TableCell align="center"><strong>Date</strong></TableCell>
-                <TableCell align="center"><strong>Decision</strong></TableCell>
+                <TableCell align="center"><strong>Décision</strong></TableCell>
               </TableRow>
             </TableHead>
           }

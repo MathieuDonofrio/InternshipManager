@@ -6,6 +6,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.List;
 
 @Order(1)
@@ -39,6 +40,7 @@ public class SettingsLoader implements CommandLineRunner {
 
             Settings settings = new Settings();
 
+            settings.setCreationTimestamp(new Date().getTime());
             settings.setSemester("WINTER-2021");
 
             settingsRepository.save(settings);
