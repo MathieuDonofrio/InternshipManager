@@ -14,13 +14,6 @@ public interface InternshipApplicationRepository extends MongoRepository<Interns
 
     List<InternshipApplication> findAllByStudentUniqueIdAndSemester(UUID studentUniqueId, String semester);
 
-    //to delete
-    List<InternshipApplication> findAllByStatus(InternshipApplication.Status status);
-    //to delete
-    List<InternshipApplication> findAllByStudentUniqueId(UUID userUniqueId);
-    //to delete
-    List<InternshipApplication> findAllByOfferUniqueIdAndStatus(UUID uniqueId, InternshipApplication.Status approved);
-
     List<InternshipApplication> findAllByStatusAndSemester(InternshipApplication.Status status, String semester);
 
     List<InternshipApplication> findAllByOfferUniqueIdAndStatusAndSemester(UUID offerUniqueId, InternshipApplication.Status status, String semester);

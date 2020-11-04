@@ -60,7 +60,7 @@ public class InternshipApplicationListResponse implements Serializable {
         application.company = from.getOffer().getCompany();
         application.jobTitle = from.getOffer().getJobTitle();
         application.date = from.getDate().getTime();
-        application.interviewDate = from.getDate().getTime();
+        application.interviewDate = from.getInterviewDate().getTime();
         application.status = from.getStatus().toString();
 
         return application;

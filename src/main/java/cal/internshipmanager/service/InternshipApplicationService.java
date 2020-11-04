@@ -74,6 +74,7 @@ public class InternshipApplicationService {
         internshipApplication.setStudent(student);
         internshipApplication.setOffer(offer);
         internshipApplication.setDate(new Date());
+        internshipApplication.setInterviewDate(new Date(0));
         internshipApplication.setDocuments(documents);
         internshipApplication.setStatus(InternshipApplication.Status.PENDING_APPROVAL);
 
@@ -160,8 +161,8 @@ public class InternshipApplicationService {
         return response;
     }
 
-    public void addInterview(InternshipApplicationInterviewDateRequest request) {
-        InternshipApplication application = internshipApplicationRepository.findById(request.getUniqueId()).orElse(null);
+    public void addInterview(UUID uniqueId,InternshipApplicationInterviewDateRequest request) {
+        InternshipApplication application = internshipApplicationRepository.findById(uniqueId).orElse(null);
 
         application.setInterviewDate(new Date(request.getInterviewDate()));
 

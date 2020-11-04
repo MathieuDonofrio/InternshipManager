@@ -41,11 +41,10 @@ class StudentApplicationStatusList extends Component {
   // Event Handlers
   //
 
-  
-  onDateChange(index){
-    console.log("we changing");
-    console.log("we changing");
-    InternshipApplicationService.addInterview("12");
+  onDateChange = index => date => {
+    this.state.applications[index].interviewDate = date;
+    InternshipApplicationService.addInterview(this.state.applications[index].uniqueId, date.getTime());
+    this.forceUpdate();
   };
 
   onUpdateStudentApplicationsList() {
@@ -61,7 +60,7 @@ class StudentApplicationStatusList extends Component {
 
   renderTableData() {
     return this.state.applications.map((studentAppList, index) => {
-      const { company, jobTitle, date, status,interviewDate} = studentAppList
+      const { company, jobTitle, date, status, interviewDate } = studentAppList
       return (
         <TableRow key={index}>
           <TableCell component="th" scope="row" align="center">{company}</TableCell>
@@ -73,30 +72,29 @@ class StudentApplicationStatusList extends Component {
             {status == "REJECTED" && <Typography color="error">rejeté</Typography>}
             {status == "APPROVED" && <Typography color="primary">approuvé</Typography>}
             {status == "SELECTED" &&
-            <div>
-              <Typography color="secondary">selectionné</Typography>
-            
-            <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                <KeyboardDatePicker
-                  disableToolbar
-                  variant="inline"
-                  format="MM/dd/yyyy"
-                  margin="normal"
-                  //id="startDate"
-                  label="Date intervu"
-                  //error={this.errors.startDate}
-                  //helperText={this.errors.startDate}
-                  value={interviewDate}
-                  onChange={this.onDateChange(index)}
-                  KeyboardButtonProps={{
-                    'aria-label': 'change date',
-                  }}
-                />
+              <div>
+                <Typography color="secondary">selectionné</Typography>
+
+                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                  <KeyboardDatePicker
+                    disableToolbar
+                    variant="inline"
+                    format="MM/dd/yyyy"
+                    margin="normal"
+                    id="interviewDate"
+                    label="Date intervu"
+                    autoOk={true}
+                    value={new Date(interviewDate)}
+                    onChange={this.onDateChange(index)}
+                    KeyboardButtonProps={{
+                      'aria-label': 'change date',
+                    }}
+                  />
                 </MuiPickersUtilsProvider>
-                </div>
+              </div>
             }
           </TableCell>
-          
+
         </TableRow>
 
       )

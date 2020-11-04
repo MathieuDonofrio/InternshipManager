@@ -53,8 +53,8 @@ class InternshipApplicationService {
         return axios.put(Config.target + `/internship-application/select/${request}`, {}, headers());
     }
 
-    addInterview(request){
-        return axios.put(Config.target + `/internship-application/interview/${request}`, {}, headers());
+    addInterview(request,date){
+        return axios.put(Config.target + `/internship-application/interview/${request}`, {interviewDate: date}, headers());
     }
 
     //

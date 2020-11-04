@@ -43,7 +43,6 @@ public class InternshipApplicationController {
 
     @GetMapping("{status}")
     public InternshipApplicationListResponse findByStatus(@Valid @NotNull @PathVariable InternshipApplication.Status status) {
-        System.out.println("THE GET IS HERE");
         return internshipApplicationService.findByStatus(status);
     }
 
@@ -76,10 +75,10 @@ public class InternshipApplicationController {
         internshipApplicationService.select(applicationId);
     }
 
-    @PutMapping("interview")
-    public void addInterview(@Valid @RequestBody InternshipApplicationInterviewDateRequest request) {
-        System.out.println("adding inteview date");
-        internshipApplicationService.addInterview(request);
+    @PutMapping("interview/{applicationId}")
+    public void addInterview(@Valid @ExistingInternshipApplication @PathVariable UUID applicationId,
+                             @RequestBody InternshipApplicationInterviewDateRequest request) {
+        internshipApplicationService.addInterview(applicationId,request);
     }
 
     //
