@@ -128,7 +128,6 @@ export default function SemesterSelectionForm() {
 
           <Grid item xs={4} >
             <FormControl className={classes.formControl} >
-
               <TextField
                 type="number"
                 label="Année"
@@ -136,7 +135,6 @@ export default function SemesterSelectionForm() {
                 onChange={(event) => setAnnee(event.target.value)}
               >
               </TextField>
-
             </FormControl>
           </Grid>
 
@@ -144,15 +142,12 @@ export default function SemesterSelectionForm() {
             <FormControl className={classes.formControl} >
               <InputLabel id="session-label">Session</InputLabel>
               <Select labelId="session-label" id="session-label-select" value={session} onChange={(event) => setSession(event.target.value)} >
-
                 <MenuItem value=""><em>None</em></MenuItem>
-
                 {
                   sessiontoloop.map(session => {
                     return <MenuItem value={session.session}>{session.session}</MenuItem>;
                   })
                 }
-
               </Select>
             </FormControl>
           </Grid>
@@ -177,7 +172,6 @@ export default function SemesterSelectionForm() {
           paddingTop={2}
           textAlign="left">
 
-
           <Typography component="h1" variant="h6">Approbation</Typography>
 
         </Box>
@@ -191,7 +185,7 @@ export default function SemesterSelectionForm() {
               color="primary"
             />
           }
-          label="Approbation automatique"
+          label="Approbation D'Application Obligatoire"
         />
         <Box paddingBottom={2} />
       </div>

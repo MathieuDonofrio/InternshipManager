@@ -57,6 +57,7 @@ public class PortfolioService {
         portfolioDocument.setFileType(file.getContentType());
         portfolioDocument.setType(type);
         portfolioDocument.setUploadDate(new Date());
+        portfolioDocument.setApproved(false);
         portfolioDocument.setData(file.getBytes());
 
         portfolioDocumentRepository.save(portfolioDocument);
@@ -86,6 +87,28 @@ public class PortfolioService {
                 .map(PortfolioDocumentListResponse::map).collect(Collectors.toList()));
 
         return response;
+    }
+
+    public PortfolioDocumentListResponse approved(UUID userUniqueId){
+
+        List<PortfolioDocument> portfolioDocuments = portfolioDocumentRepository
+                .findAllByUserUniqueIdAndApproved(userUniqueId, true);
+
+        PortfolioDocumentListResponse response = new PortfolioDocumentListResponse();
+
+        response.setPortfolioDocuments(portfolioDocuments.stream()
+                .map(PortfolioDocumentListResponse::map).collect(Collectors.toList()));
+
+        return response;
+    }
+
+    public void approve(UUID uniqueId){
+
+        PortfolioDocument portfolioDocument = portfolioDocumentRepository.findById(uniqueId).orElse(null);
+
+        portfolioDocument.setApproved(true);
+
+        portfolioDocumentRepository.save(portfolioDocument);
     }
 
     public void delete(PortfolioDocumentDeleteRequest request) {

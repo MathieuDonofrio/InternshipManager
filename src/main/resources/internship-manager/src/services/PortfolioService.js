@@ -58,6 +58,14 @@ class PortfolioService {
     }
 
     //
+    // Put
+    //
+
+    approve(request){
+        return axios.put(Config.target + `/portfolio/approve/${request}`, {}, headers());
+    }
+
+    //
     // Get
     //
 
@@ -67,6 +75,10 @@ class PortfolioService {
     
     portfolioDocuments(request) {
         return axios.get(Config.target + `/portfolio/portfolio-documents/${request}`, headers());
+    }
+
+    approved(request){
+        return axios.get(Config.target + `/portfolio/approved/${request}`, headers());
     }
 
 }

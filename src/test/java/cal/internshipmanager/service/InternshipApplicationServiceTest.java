@@ -68,6 +68,7 @@ public class InternshipApplicationServiceTest {
         portfolioDocument.setFileName("Test1");
         portfolioDocument.setType("Test2");
         portfolioDocument.setUploadDate(new Date());
+        portfolioDocument.setApproved(true);
         portfolioDocument.setData(new byte[]{1, 2, 3});
 
         applicationDocuments.add(portfolioDocument);
