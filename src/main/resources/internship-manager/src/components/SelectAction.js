@@ -146,7 +146,6 @@ export default function InteractiveLists() {
   }
 
   const fetchStudentApplications = async () => {
-    console.log("we here");
     const r1 = await InternshipApplicationService.findByOffer(uuid);
     setRows(r1.data.applications);
   }
@@ -190,7 +189,7 @@ export default function InteractiveLists() {
               <TableRow>
                 <TableCell align="center"><strong>Nom</strong></TableCell>
                 <TableCell align="center"><strong>Date</strong></TableCell>
-                <TableCell align="center"><strong>Decision</strong></TableCell>
+                <TableCell align="center"><strong>Décision</strong></TableCell>
               </TableRow>
             </TableHead>
           }
@@ -209,7 +208,6 @@ export default function InteractiveLists() {
 
                       startIcon={<AttachmentIcon />}
                     >
-                      {console.log(application.studentUniqueId)}
                         Documents
                         </Button>
                   </Box>

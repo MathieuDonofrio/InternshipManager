@@ -314,6 +314,13 @@ export default function AppDrawer(props) {
             </ListItem>
             <ListItem
               button
+              key={"Liste des employés"}
+              onClick={() => history.push("/employer-list-page")}>
+              <ListItemIcon><PeopleIcon /> </ListItemIcon>
+              <ListItemText primary={"Liste des employés"} />
+            </ListItem>
+            <ListItem
+              button
               key={"Paramètres"}
               onClick={() => history.push("/semester-selection")}>
               <ListItemIcon><SettingsIcon /> </ListItemIcon>

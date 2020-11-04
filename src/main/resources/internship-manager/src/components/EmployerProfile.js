@@ -4,15 +4,16 @@ import React from "react";
 import { useHistory, useParams } from 'react-router-dom';
 import StudentApplicationStatusList from "./StudentApplicationStatusList";
 import Portfolio from "./Portfolio";
+import StudentSelection from "./StudentSelection";
 
-export default function StudentProfile() {
+export default function EmployerProfile() {
 
     const { uuid } = useParams();
     const { fullName } = useParams();
     const history = useHistory()
 
     return (
-        <div  style={{ paddingBottom: '100px' }}>
+        <div style={{ paddingBottom: '100px' }}>
             <IconButton
                 onClick={() => history.goBack()}>
                 <KeyboardBackspaceIcon />
@@ -34,13 +35,7 @@ export default function StudentProfile() {
             <Box
                 mt={10}
             >
-                    <StudentApplicationStatusList studentId={uuid} />
-            </Box>
-
-            <Box
-                mt={10}
-            >
-                    <Portfolio studentId={uuid} />
+                <StudentSelection employerId={uuid} />
             </Box>
         </div>
     )
