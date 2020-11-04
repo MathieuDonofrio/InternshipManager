@@ -77,9 +77,6 @@ export default function StudentInternshipApplicationValidationTable(props) {
 
   const fetchApplications = async () => {
     const response = await InternshipApplicationService.pendingApproval();
-    console.log("the get was sent");
-    console.log(response.data.applications.studentFirstName);
-
     setRows(response.data.applications);
   }
 

@@ -146,7 +146,6 @@ export default function InteractiveLists() {
   }
 
   const fetchStudentApplications = async () => {
-    console.log("we here");
     const r1 = await InternshipApplicationService.findByOffer(uuid);
     setRows(r1.data.applications);
   }
@@ -209,7 +208,6 @@ export default function InteractiveLists() {
 
                       startIcon={<AttachmentIcon />}
                     >
-                      {console.log(application.studentUniqueId)}
                         Documents
                         </Button>
                   </Box>

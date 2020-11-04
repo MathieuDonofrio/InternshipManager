@@ -76,20 +76,38 @@ class StudentApplicationStatusList extends Component {
                 <Typography color="secondary">selectionné</Typography>
 
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                  <KeyboardDatePicker
-                    disableToolbar
-                    variant="inline"
-                    format="MM/dd/yyyy"
-                    margin="normal"
-                    id="interviewDate"
-                    label="Date intervu"
-                    autoOk={true}
-                    value={new Date(interviewDate)}
-                    onChange={this.onDateChange(index)}
-                    KeyboardButtonProps={{
-                      'aria-label': 'change date',
-                    }}
-                  />
+                  {interviewDate == 0 &&
+                    <KeyboardDatePicker
+                      disableToolbar
+                      variant="inline"
+                      format="MM/dd/yyyy"
+                      margin="normal"
+                      id="interviewDate"
+                      label="Date intervu"
+                      autoOk={true}
+                      value={null}
+                      onChange={this.onDateChange(index)}
+                      KeyboardButtonProps={{
+                        'aria-label': 'change date',
+                      }}
+                    />
+                  }
+                  {interviewDate > 0 &&
+                    <KeyboardDatePicker
+                      disableToolbar
+                      variant="inline"
+                      format="MM/dd/yyyy"
+                      margin="normal"
+                      id="interviewDate"
+                      label="Date intervu"
+                      autoOk={true}
+                      value={new Date(interviewDate)}
+                      onChange={this.onDateChange(index)}
+                      KeyboardButtonProps={{
+                        'aria-label': 'change date',
+                      }}
+                    />
+                  }
                 </MuiPickersUtilsProvider>
               </div>
             }
