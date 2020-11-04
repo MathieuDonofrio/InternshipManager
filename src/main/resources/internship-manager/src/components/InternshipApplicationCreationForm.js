@@ -65,7 +65,7 @@ export default function InternshipApplicationCreationForm() {
 
     let uuid = localStorage.getItem("UserUniqueId");
 
-    PortfolioService.portfolioDocuments(uuid).then(response => {
+    PortfolioService.approved(uuid).then(response => {
       setDocuments(response.data.portfolioDocuments);
       setOpen(true);
     });

@@ -52,6 +52,15 @@ public class PortfolioController {
     }
 
     //
+    // Put
+    //
+
+    @PutMapping("approve/{uniqueId}")
+    public void approve(@Valid @ExistingPortfolioDocument @PathVariable UUID uniqueId){
+        portfolioService.approve(uniqueId);
+    }
+
+    //
     // Get
     //
 
@@ -63,6 +72,11 @@ public class PortfolioController {
     @GetMapping("portfolio-documents/{userUniqueId}")
     public PortfolioDocumentListResponse portfolioDocuments(@Valid @ExistingUser @PathVariable UUID userUniqueId) {
         return portfolioService.portfolioDocuments(userUniqueId);
+    }
+
+    @GetMapping("approved/{userUniqueId}")
+    public PortfolioDocumentListResponse approved(@Valid @ExistingUser @PathVariable UUID userUniqueId) {
+        return portfolioService.approved(userUniqueId);
     }
 
 }

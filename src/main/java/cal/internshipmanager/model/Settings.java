@@ -16,4 +16,7 @@ public class Settings {
     private long creationTimestamp;
 
     private String semester;
+
+    private Boolean requireApproval;
+
 }

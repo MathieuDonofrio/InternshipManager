@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @RestController
 @RequestMapping("/settings")
@@ -35,6 +36,11 @@ public class SettingsController {
         return settingsService.getSemester();
     }
 
+    @GetMapping("require-approval")
+    public boolean requireApproval() {
+        return settingsService.getRequireApproval();
+    }
+
     //
     // Put
     //
@@ -42,6 +48,11 @@ public class SettingsController {
     @PutMapping("semester/{semester}")
     public void semester(@Valid @NotBlank @PathVariable String semester) {
         settingsService.setSemester(semester);
+    }
+
+    @PutMapping("require-approval/{requireApproval}")
+    public void requireApproval(@Valid @NotNull @PathVariable Boolean requireApproval) {
+        settingsService.setRequireApproval(requireApproval);
     }
 
 }

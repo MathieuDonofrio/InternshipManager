@@ -15,18 +15,28 @@ function headers() {
 
 class SettingsService {
 
-
-
-    // PUT
-
-    semester(request){
-        return axios.put(Config.target + `/settings/semester/${request}`, {}, headers());
-    }
-
+    //
     // Get
+    //
 
     getSemester(){
         return axios.get(Config.target + '/settings/semester', headers());
+    }
+
+    getRequireApproval(){
+        return axios.get(Config.target + '/settings/require-approval', headers());
+    }
+
+    //
+    // Put
+    //
+
+    setSemester(request){
+        return axios.put(Config.target + `/settings/semester/${request}`, {}, headers());
+    }
+
+    setRequireApproval(request){
+        return axios.put(Config.target + `/settings/require-approval/${request}`, {}, headers());
     }
 
 }

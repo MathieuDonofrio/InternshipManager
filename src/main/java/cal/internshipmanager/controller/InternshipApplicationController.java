@@ -2,6 +2,7 @@ package cal.internshipmanager.controller;
 
 import cal.internshipmanager.model.InternshipApplication;
 import cal.internshipmanager.request.InternshipApplicationCreationRequest;
+import cal.internshipmanager.request.InternshipApplicationInterviewDateRequest;
 import cal.internshipmanager.response.InternshipApplicationListResponse;
 import cal.internshipmanager.response.PortfolioDocumentListResponse;
 import cal.internshipmanager.service.InternshipApplicationService;
@@ -72,6 +73,12 @@ public class InternshipApplicationController {
     @PutMapping("select/{applicationId}")
     public void select(@Valid @ExistingInternshipApplication @PathVariable UUID applicationId) {
         internshipApplicationService.select(applicationId);
+    }
+
+    @PutMapping("interview/{applicationId}")
+    public void addInterview(@Valid @ExistingInternshipApplication @PathVariable UUID applicationId,
+                             @RequestBody InternshipApplicationInterviewDateRequest request) {
+        internshipApplicationService.addInterview(applicationId,request);
     }
 
     //

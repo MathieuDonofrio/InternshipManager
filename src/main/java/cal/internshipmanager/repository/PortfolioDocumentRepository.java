@@ -12,4 +12,6 @@ public interface PortfolioDocumentRepository extends MongoRepository<PortfolioDo
 
     List<PortfolioDocument> findAllByUserUniqueId(UUID userUniqueId);
 
+    List<PortfolioDocument> findAllByUserUniqueIdAndApproved(UUID userUniqueId, Boolean approved);
+
 }

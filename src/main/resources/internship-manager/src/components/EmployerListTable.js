@@ -25,7 +25,7 @@ const useStyles2 = makeStyles({
   },
 });
 
-export default function StudentListTable() {
+export default function EmployerListTable() {
 
   const history = useHistory();
   const classes = useStyles();
@@ -39,17 +39,17 @@ export default function StudentListTable() {
   };
 
   const fetchAllUsers = async () => {
-    const response = await UserService.students();
+    const response = await UserService.employers();
     setRows(response.data.users);
   }
   
-  const fetchAllWithApplication = async () =>{
-    const response = await UserService.studentsWithApplication();
+  const fetchAllWithOffer = async () =>{
+    const response = await UserService.employersWithOffer();
     setRows(response.data.users);
   }
 
-  const fetchAllWithoutApplication = async () =>{
-    const response = await UserService.studentsWithoutApplication();
+  const fetchAllWithoutOffer = async () =>{
+    const response = await UserService.employersWithoutOffer();
     setRows(response.data.users);
   }
  
@@ -67,8 +67,8 @@ export default function StudentListTable() {
           centered
         >
           <Tab label="tous" onClick={() => fetchAllUsers()}/>
-          <Tab label="sans application" onClick={() => fetchAllWithoutApplication()} />
-          <Tab label="avec application" onClick={() => fetchAllWithApplication()} />
+          <Tab label="sans offre" onClick={() => fetchAllWithoutOffer()} />
+          <Tab label="avec offre" onClick={() => fetchAllWithOffer()} />
         </Tabs>
       </Paper>
       <Container>
@@ -77,7 +77,7 @@ export default function StudentListTable() {
           paddingTop={2}
           textAlign="center">
 
-          <Typography component="h1" variant="h4">Étudiants</Typography>
+          <Typography component="h1" variant="h4">Employés</Typography>
         </Box>
       </Container>
 
@@ -101,7 +101,7 @@ export default function StudentListTable() {
                   <Button
                     variant="contained" color="secondary"
                     size="small"
-                    onClick={() => history.push(`/student-profile-page/${student.uniqueId}/${student.firstName + " " + student.lastName}`)}
+                    onClick={() => history.push(`/employer-profile-page/${student.uniqueId}/${student.firstName + " " + student.lastName}`)}
                   >
                     Voir profil
                     </Button>

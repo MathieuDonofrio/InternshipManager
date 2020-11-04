@@ -45,6 +45,8 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
+import CheckIcon from '@material-ui/icons/Check';
+import ClearIcon from '@material-ui/icons/Clear';
 import { DropzoneArea } from 'material-ui-dropzone';
 import { saveAs } from 'file-saver';
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
@@ -125,6 +127,14 @@ class Portfolio extends Component {
 
   }
 
+  onApprove = (uniqueId) => {
+
+    PortfolioService.approve(uniqueId).then(() => {
+      this.onUpdatePortfolio();
+    })
+
+  }
+
   onFileUpload = (files) => this.setState({ files: files });
 
   onDialogOpen = () => this.setState({ open: true });
@@ -169,6 +179,7 @@ class Portfolio extends Component {
                 <TableCell align="center"><strong>Date de téléversement</strong></TableCell>
                 {!this.props.studentId && <TableCell align="center"><strong>Supprimer</strong></TableCell>}
                 <TableCell align="center"><strong>Téléchargement</strong></TableCell>
+                <TableCell align="center"><strong>Status</strong></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -179,7 +190,7 @@ class Portfolio extends Component {
                       <TableCell component="th" scope="row" align="center">{document.type}</TableCell>
                       <TableCell component="th" scope="row" align="center">{document.fileName}</TableCell>
                       <TableCell component="th" scope="row" align="center">{new Date(document.uploadDate).toLocaleDateString()}</TableCell>
-                     {!this.props.studentId && <TableCell component="th" scope="row" align="center" >
+                      {!this.props.studentId && <TableCell component="th" scope="row" align="center" >
                         <Box margin={1}>
                           <IconButton edge="end" aria-label="delete">
                             <DeleteIcon
@@ -202,6 +213,41 @@ class Portfolio extends Component {
                         </Box>
 
                       </TableCell>
+                      <TableCell component="th" scope="row" align="center">
+                        {
+                          this.props.studentId &&
+                          <div>
+                            {
+                              document.approved && <CheckIcon />
+                            }
+
+                            {
+                              !document.approved &&
+                              <Box margin={1}>
+                                <Button
+                                  variant="contained" color="secondary"
+                                  size="small"
+                                  onClick={() => this.onApprove(document.uniqueId)}
+                                >
+                                  Approve
+                              </Button>
+                              </Box>
+                            }
+                          </div>
+                        }
+                        {
+                          !this.props.studentId &&
+                          <div>
+                            {
+                              document.approved && <CheckIcon />
+                            }
+
+                            {
+                              !document.approved && <ClearIcon />
+                            }
+                          </div>
+                        }
+                      </TableCell>
                     </TableRow>
                   )
                 })
@@ -214,7 +260,7 @@ class Portfolio extends Component {
           <DialogTitle id="form-dialog-title">Ajouter un document</DialogTitle>
           <DialogContent>
             <DialogContentText>
-            Pour ajouter un document, sélectionnez le type et téléversez le document.
+              Pour ajouter un document, sélectionnez le type et téléversez le document.
           </DialogContentText>
             <FormControl>
               <InputLabel>Type</InputLabel>

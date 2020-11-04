@@ -28,6 +28,8 @@ public class InternshipApplication implements Serializable {
 
     private Date date;
 
+    private Date interviewDate;
+
     private List<PortfolioDocument> documents;
 
     private Status status;

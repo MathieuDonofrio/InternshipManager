@@ -29,6 +29,8 @@ public class PortfolioDocument implements Serializable {
 
     private Date uploadDate;
 
+    private Boolean approved;
+
     private byte[] data;
 
 }

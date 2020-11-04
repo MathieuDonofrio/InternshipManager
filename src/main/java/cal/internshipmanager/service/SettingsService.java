@@ -66,4 +66,18 @@ public class SettingsService {
     public String getSemester() {
         return findSettings().getSemester();
     }
+
+    public void setRequireApproval(boolean requireApproval) {
+
+        final Settings settings = findSettings();
+
+        settings.setRequireApproval(requireApproval);
+
+        settingsRepository.save(settings);
+    }
+
+    public boolean getRequireApproval() {
+        return findSettings().getRequireApproval();
+    }
+
 }

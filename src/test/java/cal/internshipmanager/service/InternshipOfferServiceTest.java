@@ -28,7 +28,7 @@ public class InternshipOfferServiceTest {
     @Autowired
     private JwtProvider jwtProvider;
 
-    @Mock
+    @Autowired
     private SettingsService settingsService;
 
     @Mock

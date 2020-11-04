@@ -31,6 +31,8 @@ public class PortfolioDocumentListResponse implements Serializable {
 
         private String type;
 
+        private boolean approved;
+
         private long uploadDate;
 
     }
@@ -47,6 +49,7 @@ public class PortfolioDocumentListResponse implements Serializable {
         portfolioDocument.fileName = from.getFileName();
         portfolioDocument.fileType = from.getFileType();
         portfolioDocument.type = from.getType();
+        portfolioDocument.approved = from.getApproved();
         portfolioDocument.uploadDate = from.getUploadDate().getTime();
 
         return portfolioDocument;

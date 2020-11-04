@@ -104,61 +104,42 @@ const useStyles = makeStyles((theme) => ({
 
 export default function AppDrawer(props) {
 
-  const classes = useStyles();
-  const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
-  const history = useHistory();
+  const [open, setOpen] = useState(false);
   const [session, setSession] = useState();
 
-  useEffect(() => {
-    getSession();
-  }, [])
+  const classes = useStyles();
+  const theme = useTheme();
+  const history = useHistory();
+
+  useEffect(() => { getSession(); }, [])
 
   const userType = () => {
+
     let type = localStorage.getItem('UserType').toLowerCase();
-    //type = type.charAt(0).toUpperCase() + type.slice(1);
 
     switch (type){
-
       case "student" : return "ÉTUDIANT";
-      break;
       case "employer" : return "EMPLOYEUR";
-      break;
       case "administrator" : return "ADMINISTRATEUR";
-      break;
       default: return "ÉTUDIANT";
     }
   }
 
-  const getSession = async () =>{
+  const getSession = () => {
 
-    const response = await SettingsService.getSemester().then((data)=>{
+    SettingsService.getSemester().then((response) => {
+      let split = response.data.split('-');
 
-      let myIndex = data.data.indexOf( '-');
-  
-      let annee = data.data.substr(myIndex+1, data.data.length);
-      
-      let session = translateSession(data.data.substr(0, myIndex));
-
-      let monSemestre = session + "-" + annee;
-
-      setSession(monSemestre);
-
+      setSession(translateSession(split[0]) + "-" + split[1]);
     });
-   
   }
 
   const translateSession = (session) =>{
-    
     switch (session){
-  
-      case "Autumn" : return "Automne";
-      break;
-      case "Winter" : return "Hiver";
-      break;
-      case "Summer" : return "Été";
-      break;
-      default: return "Automne";
+      case "AUTUMN" : return "Automne";
+      case "WINTER" : return "Hiver";
+      case "SUMMER" : return "Été";
+      default: return "ERROR";
     }
   }
 
@@ -330,6 +311,13 @@ export default function AppDrawer(props) {
               onClick={() => history.push("/student-list-page")}>
               <ListItemIcon><PeopleIcon /> </ListItemIcon>
               <ListItemText primary={"Liste des étudiants"} />
+            </ListItem>
+            <ListItem
+              button
+              key={"Liste des employés"}
+              onClick={() => history.push("/employer-list-page")}>
+              <ListItemIcon><PeopleIcon /> </ListItemIcon>
+              <ListItemText primary={"Liste des employés"} />
             </ListItem>
             <ListItem
               button

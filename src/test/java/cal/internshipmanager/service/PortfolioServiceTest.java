@@ -48,6 +48,7 @@ public class PortfolioServiceTest {
         portfolioDocument.setType("Test2");
         portfolioDocument.setFileType("pdf");
         portfolioDocument.setUploadDate(new Date());
+        portfolioDocument.setApproved(false);
         portfolioDocument.setData(new byte[]{1, 2, 3});
 
         PortfolioService portfolioService = new PortfolioService(portfolioDocumentRepository);
@@ -68,6 +69,45 @@ public class PortfolioServiceTest {
         assertEquals(portfolioDocument.getFileType(), document.getFileType());
         assertEquals(portfolioDocument.getType(), document.getType());
         assertEquals(portfolioDocument.getUploadDate().getTime(), document.getUploadDate());
+    }
+
+    @Test
+    public void approved_validRequest() {
+
+        // Arrange
+
+        UUID userUniqueId = UUID.randomUUID();
+
+        PortfolioDocument portfolioDocument = new PortfolioDocument();
+
+        portfolioDocument.setUniqueId(UUID.randomUUID());
+        portfolioDocument.setUserUniqueId(userUniqueId);
+        portfolioDocument.setFileName("Test1");
+        portfolioDocument.setType("Test2");
+        portfolioDocument.setFileType("pdf");
+        portfolioDocument.setUploadDate(new Date());
+        portfolioDocument.setApproved(true);
+        portfolioDocument.setData(new byte[]{1, 2, 3});
+
+        PortfolioService portfolioService = new PortfolioService(portfolioDocumentRepository);
+
+        when(portfolioDocumentRepository.findAllByUserUniqueIdAndApproved(userUniqueId, true))
+                .thenReturn(List.of(portfolioDocument));
+
+        // Act
+
+        PortfolioDocumentListResponse response = portfolioService.approved(userUniqueId);
+
+        PortfolioDocumentListResponse.PortfolioDocument document = response.getPortfolioDocuments().get(0);
+
+        // Assert
+
+        assertEquals(portfolioDocument.getUniqueId(), document.getUniqueId());
+        assertEquals(portfolioDocument.getFileName(), document.getFileName());
+        assertEquals(portfolioDocument.getFileType(), document.getFileType());
+        assertEquals(portfolioDocument.getType(), document.getType());
+        assertEquals(portfolioDocument.getUploadDate().getTime(), document.getUploadDate());
+        assertTrue(document.isApproved());
     }
 
     @Test
@@ -144,6 +184,35 @@ public class PortfolioServiceTest {
         assertEquals(portfolioDocument.getFileType(), response.getType());
         assertEquals(portfolioDocument.getData().length, response.getLength());
         assertEquals(new ByteArrayResource(portfolioDocument.getData()), response.getResource());
+    }
+
+    @Test
+    public void approve_validRequest() {
+
+        // Arrange
+
+        PortfolioDocument portfolioDocument = new PortfolioDocument();
+
+        portfolioDocument.setUniqueId(UUID.randomUUID());
+        portfolioDocument.setApproved(false);
+
+        PortfolioService portfolioService = new PortfolioService(portfolioDocumentRepository);
+
+        when(portfolioDocumentRepository.findById(portfolioDocument.getUniqueId()))
+                .thenReturn(Optional.of(portfolioDocument));
+
+        // Act & Assert
+
+        when(portfolioDocumentRepository.save(any())).then(inv -> {
+
+            PortfolioDocument saving = inv.getArgument(0);
+
+            assertTrue(saving.getApproved());
+
+            return null;
+        });
+
+        portfolioService.approve(portfolioDocument.getUniqueId());
     }
 
     @Test
