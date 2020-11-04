@@ -82,7 +82,6 @@ class StudentApplicationStatusList extends Component {
                       variant="inline"
                       format="MM/dd/yyyy"
                       margin="normal"
-                      id="interviewDate"
                       label="Date intervu"
                       autoOk={true}
                       value={null}
@@ -98,7 +97,6 @@ class StudentApplicationStatusList extends Component {
                       variant="inline"
                       format="MM/dd/yyyy"
                       margin="normal"
-                      id="interviewDate"
                       label="Date intervu"
                       autoOk={true}
                       value={new Date(interviewDate)}
