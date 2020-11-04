@@ -56,7 +56,7 @@ StudentApplicationDialogProps.propTypes = {
   selectedValue: PropTypes.string.isRequired,
 };
 
-export default function StudentSelection() {
+export default function StudentSelection(props) {
 
   const [open, setOpen] = React.useState(false);
   const [rows, setRows] = useState([]);
@@ -65,7 +65,7 @@ export default function StudentSelection() {
 
   const classes = useStyles();
 
-  const uniqueId = localStorage.getItem('UserUniqueId');
+  const uniqueId = props.employerId ? props.employerId : localStorage.getItem('UserUniqueId');
 
 
   const handleClickOpen = (internshipId) => {
@@ -117,12 +117,18 @@ export default function StudentSelection() {
                     <Typography>Actions</Typography>
                     <Divider></Divider>
                     <Box margin={1}>
-                    <Button 
+                    {!props.employerId && <Button 
                       variant="contained" 
                       color="primary" 
                       onClick={() => history.push(`select-action/${offer.uniqueId}`)}>
                         Voir Applications
-                      </Button>
+                      </Button>}
+                      {props.employerId && <Button 
+                      variant="contained" 
+                      color="primary" 
+                      onClick={() => history.push(`../../select-action/${offer.uniqueId}`)}>
+                        Voir Applications
+                      </Button>}
                     </Box>
                   </Box>
                 </TableCell>
