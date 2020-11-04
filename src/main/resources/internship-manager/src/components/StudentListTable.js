@@ -29,7 +29,7 @@ export default function StudentListTable() {
 
   const history = useHistory();
   const classes = useStyles();
-  const classes2 = useStyles();
+  const classes2 = useStyles2();
 
   const [rows, setRows] = useState([]);
   const [value, setValue] = React.useState(0);
