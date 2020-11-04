@@ -129,8 +129,6 @@ class Portfolio extends Component {
 
   onApprove = (uniqueId) => {
 
-    console.log(uniqueId);
-
     PortfolioService.approve(uniqueId).then(() => {
       this.onUpdatePortfolio();
     })
