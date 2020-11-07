@@ -52,7 +52,7 @@ public class InternshipApplicationServiceTest {
     @Test
     public void portfolioDocuments_validRequest() {
 
-        //Arrange
+        // Arrange
 
         User user = new User();
 
