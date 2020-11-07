@@ -24,6 +24,8 @@ import StudentProfilePage from './pages/StudentProfilePage';
 import SelectActionPage from './pages/SelectActionPage';
 import EmployerProfilePage from './pages/EmployerProfilePage';
 import EmployerListPage from './pages/EmployerListPage';
+import UploadSignaturePage from './pages/UploadSignaturePage';
+import CreateSignaturePage from './pages/CreateSignaturePage';
 
 function App() {
   
@@ -73,6 +75,8 @@ function App() {
               <Route exact path="/employer-profile-page/:uuid/:fullName" component={EmployerProfilePage}></Route>
 
               <Route exact path="/select-action/:uuid" component={SelectActionPage}></Route>
+              <Route exact path="/upload-signature" component={UploadSignaturePage}></Route>
+              <Route exact path="/create-signature" component={CreateSignaturePage}></Route>
             </AppDrawer>
 
           </Switch>
