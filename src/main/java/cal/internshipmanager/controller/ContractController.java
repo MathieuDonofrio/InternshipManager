@@ -1,12 +1,11 @@
 package cal.internshipmanager.controller;
 
+import cal.internshipmanager.response.DownloadFileResponse;
 import cal.internshipmanager.service.ContractService;
 import cal.internshipmanager.validator.ExistingInternshipApplication;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
+import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.Base64Utils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,17 +38,8 @@ public class ContractController {
     //
 
     @GetMapping("internship-application/{uniqueId}")
-    public ResponseEntity<byte[]> generate(@Valid @PathVariable @ExistingInternshipApplication UUID uniqueId) {
-
-        byte[] data = Base64Utils.encode(contractService.generate(uniqueId));
-
-        HttpHeaders headers = new HttpHeaders();
-
-        headers.setContentType(MediaType.parseMediaType("application/pdf"));
-        headers.setContentLength(data.length);
-        headers.set(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"Contrat\"");
-
-        return ResponseEntity.ok().headers(headers).body(data);
+    public ResponseEntity<Resource> generate(@Valid @PathVariable @ExistingInternshipApplication UUID uniqueId) {
+        return DownloadFileResponse.responseEntity(contractService.generate(uniqueId));
     }
 
 }
