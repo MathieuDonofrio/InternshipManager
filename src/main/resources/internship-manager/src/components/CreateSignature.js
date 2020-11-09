@@ -54,6 +54,7 @@ import { saveAs } from 'file-saver';
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 import Popup from "reactjs-popup";
 import SignaturePad from "react-signature-canvas";
+import "./signCanvas.css";
 
 
 
@@ -115,16 +116,15 @@ export default function CreateSignature(){
                     onClose={handleClose}
                 >
 
-                    <DialogContent>
-                        <Box>
-
+                    <DialogContent
+                        style={{ backgroundColor: 'lightGray' }}
+                    >
                             <SignaturePad
                                 ref={sigCanvas}
                                 canvasProps={{
                                     className: "signatureCanvas"
-                                }}
+                                  }}
                             />
-                        </Box>
                     </DialogContent>
 
                     <DialogActions>
@@ -140,7 +140,6 @@ export default function CreateSignature(){
                     </DialogActions>
 
                 </Dialog>
-
                 <br />
                 <br />
                 {/* if our we have a non-null image url we should 
