@@ -56,7 +56,7 @@ public class PortfolioController {
     //
 
     @PutMapping("approve/{uniqueId}")
-    public void approve(@Valid @ExistingPortfolioDocument @PathVariable UUID uniqueId){
+    public void approve(@Valid @ExistingPortfolioDocument @PathVariable UUID uniqueId) {
         portfolioService.approve(uniqueId);
     }
 
