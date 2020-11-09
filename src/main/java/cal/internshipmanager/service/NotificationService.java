@@ -5,7 +5,6 @@ import cal.internshipmanager.model.User;
 import cal.internshipmanager.repository.UserRepository;
 import cal.internshipmanager.request.SendNotificationRequest;
 import cal.internshipmanager.response.NotificationListResponse;
-import cal.internshipmanager.validator.ExistingUser;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -45,7 +44,7 @@ public class NotificationService {
         return response;
     }
 
-    public void sendNotification(SendNotificationRequest request)
+    public void send(SendNotificationRequest request)
     {
         User user = userRepository.findById(request.getUserUniqueId()).orElse(null);
 
