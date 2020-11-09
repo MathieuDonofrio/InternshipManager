@@ -80,6 +80,8 @@ export default function SemesterSelectionForm() {
   const onFormSubmit = () => {
     let semester = sessionName() + "-" + annee;
     SettingsService.setSemester(semester);
+
+    window.location.reload(true);
   }
 
   const onRequireApprovalChange = () => {

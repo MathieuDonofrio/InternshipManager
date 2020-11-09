@@ -73,7 +73,7 @@ public class InternshipOfferService {
 
     public void approve(InternshipOfferApproveRequest request) {
 
-        final InternshipOffer internshipOffer = internshipOfferRepository.findById(request.getUniqueId()).orElse(null);
+        InternshipOffer internshipOffer = internshipOfferRepository.findById(request.getUniqueId()).orElse(null);
 
         internshipOffer.setStatus(InternshipOffer.Status.APPROVED);
 

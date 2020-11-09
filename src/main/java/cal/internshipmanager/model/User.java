@@ -6,6 +6,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.UUID;
 
 @Document
@@ -32,6 +33,8 @@ public class User implements Serializable {
     private String company;
 
     private Signature signature;
+    
+    private List<Notification> notifications;
 
     //
     // Inner classes & Enums
