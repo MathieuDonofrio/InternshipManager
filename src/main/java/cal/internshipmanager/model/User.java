@@ -31,6 +31,8 @@ public class User implements Serializable {
 
     private String company;
 
+    private Signature signature;
+
     //
     // Inner classes & Enums
     //
