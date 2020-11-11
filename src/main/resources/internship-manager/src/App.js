@@ -73,6 +73,7 @@ function App() {
               <Route exact path="/employer-profile-page/:uuid/:fullName" component={EmployerProfilePage}></Route>
 
               <Route exact path="/select-action/:uuid" component={SelectActionPage}></Route>
+              
             </AppDrawer>
 
           </Switch>

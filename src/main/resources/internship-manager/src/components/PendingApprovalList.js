@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
+import { withSnackbar } from 'notistack';
 
 import AuthenticationService from '../services/AuthenticationService';
 import Validator from '../utils/Validator';
@@ -74,12 +75,14 @@ class PendingApprovalList extends Component {
   onApprovedClicked(internshipOffer) {
     InternshipOfferService.approve(internshipOffer).then(response => {
       this.onUpdateInternshipOffers();
+      this.props.enqueueSnackbar("Offre de " + internshipOffer.company + " apprové",  { variant: 'success' });
     });
   }
 
   onRejectedClicked(internshipOffer) {
     InternshipOfferService.reject(internshipOffer).then(response => {
       this.onUpdateInternshipOffers();
+      this.props.enqueueSnackbar("Offre de " + internshipOffer.company + " rejeté",  { variant: 'success' });
     });
   }
 
@@ -157,4 +160,4 @@ class PendingApprovalList extends Component {
   }
 }
 
-export default withRouter(PendingApprovalList);
+export default withSnackbar(withRouter(PendingApprovalList));

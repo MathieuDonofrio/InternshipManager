@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useSnackbar } from 'notistack';
 
 import Button from '@material-ui/core/Button';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -43,6 +44,8 @@ export default function InternshipApplicationCreationForm() {
 
   const classes = useStyles();
 
+  const { enqueueSnackbar } = useSnackbar();
+
   const onApply = () => {
 
     let docs = checked.map(doc => doc.uniqueId);
@@ -54,6 +57,7 @@ export default function InternshipApplicationCreationForm() {
 
     InternshipApplicationService.createInternshipApplication(request).then(response => {
       fetchInternshipOffers();
+      enqueueSnackbar("Application envoyée",  { variant: 'success' });
     })
 
     setOpen(false);

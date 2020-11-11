@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { SnackbarProvider } from 'notistack';
 import AuthenticationService from '../services/AuthenticationService';
-
 
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
@@ -19,9 +19,6 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Button from '@material-ui/core/Button';
-import Link from '@material-ui/core/Link';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 import PeopleIcon from '@material-ui/icons/People';
 import HomeIcon from '@material-ui/icons/Home';
 import CreateIcon from '@material-ui/icons/Create';
@@ -33,6 +30,7 @@ import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
 import SettingsService from "../services/SettingsService";
 import SettingsIcon from '@material-ui/icons/Settings';
+
 
 const drawerWidth = 250;
 
@@ -117,10 +115,10 @@ export default function AppDrawer(props) {
 
     let type = localStorage.getItem('UserType').toLowerCase();
 
-    switch (type){
-      case "student" : return "ÉTUDIANT";
-      case "employer" : return "EMPLOYEUR";
-      case "administrator" : return "ADMINISTRATEUR";
+    switch (type) {
+      case "student": return "ÉTUDIANT";
+      case "employer": return "EMPLOYEUR";
+      case "administrator": return "ADMINISTRATEUR";
       default: return "ÉTUDIANT";
     }
   }
@@ -134,11 +132,11 @@ export default function AppDrawer(props) {
     });
   }
 
-  const translateSession = (session) =>{
-    switch (session){
-      case "AUTUMN" : return "Automne";
-      case "WINTER" : return "Hiver";
-      case "SUMMER" : return "Été";
+  const translateSession = (session) => {
+    switch (session) {
+      case "AUTUMN": return "Automne";
+      case "WINTER": return "Hiver";
+      case "SUMMER": return "Été";
       default: return "ERROR";
     }
   }
@@ -164,176 +162,177 @@ export default function AppDrawer(props) {
   };
 
   return (
-    <div className={classes.root}>
-      <CssBaseline />
-      <AppBar
-        position="fixed"
-        className={clsx(classes.appBar, {
-          [classes.appBarShift]: open,
-        })}
-      >
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            className={clsx(classes.menuButton, {
-              [classes.hide]: open,
-            })}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" noWrap className={classes.panelTitle}>
-            {"PANNEAU " + userType()}
-          </Typography>
+    <SnackbarProvider maxSnack={3}>
+      <div className={classes.root}>
+        <CssBaseline />
+        <AppBar
+          position="fixed"
+          className={clsx(classes.appBar, {
+            [classes.appBarShift]: open,
+          })}
+        >
+          <Toolbar>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              onClick={handleDrawerOpen}
+              edge="start"
+              className={clsx(classes.menuButton, {
+                [classes.hide]: open,
+              })}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="h6" noWrap className={classes.panelTitle}>
+              {"PANNEAU " + userType()}
+            </Typography>
 
-          <Typography variant="h6" noWrap className={classes.panelTitle}>
-            {"Session Courrante : " + session}
-          </Typography>
+            <Typography variant="h6" noWrap className={classes.panelTitle}>
+              {"Session Courrante : " + session}
+            </Typography>
 
-          <Button
-            color="inherit"
-            onClick={() => {
-              AuthenticationService.logout();
-              history.push("/login");
-            }}>Se déconnecter</Button>
+            <Button
+              color="inherit"
+              onClick={() => {
+                AuthenticationService.logout();
+                history.push("/login");
+              }}>Se déconnecter</Button>
 
-        </Toolbar>
-      </AppBar>
-      <Drawer
-        variant="permanent"
-        className={clsx(classes.drawer, {
-          [classes.drawerOpen]: open,
-          [classes.drawerClose]: !open,
-        })}
-        classes={{
-          paper: clsx({
+          </Toolbar>
+        </AppBar>
+        <Drawer
+          variant="permanent"
+          className={clsx(classes.drawer, {
             [classes.drawerOpen]: open,
             [classes.drawerClose]: !open,
-          }),
-        }}
-      >
-        <div className={classes.toolbar}>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-          </IconButton>
-        </div>
+          })}
+          classes={{
+            paper: clsx({
+              [classes.drawerOpen]: open,
+              [classes.drawerClose]: !open,
+            }),
+          }}
+        >
+          <div className={classes.toolbar}>
+            <IconButton onClick={handleDrawerClose}>
+              {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+            </IconButton>
+          </div>
 
-        <Divider />
+          <Divider />
 
-        <List>
-          <ListItem
-            button
-            key={"Home"}
-            onClick={() => history.push("/home")}>
-            <ListItemIcon><HomeIcon /> </ListItemIcon>
-            <ListItemText primary={"Accueil"} />
-          </ListItem>
-        </List>
-
-        <Divider />
-
-        {
-          isStudent() &&
           <List>
             <ListItem
               button
-              key={"Portfolio"}
-              onClick={() => history.push("/portfolio")}>
-              <ListItemIcon><CloudUploadIcon /> </ListItemIcon>
-              <ListItemText primary={"Portfolio"} />
-            </ListItem>
-            <ListItem
-              button
-              key={"Application Creation"}
-              onClick={() => history.push("/internship-application-creation")}>
-              <ListItemIcon><CreateIcon /> </ListItemIcon>
-              <ListItemText primary={"Application"} />
-            </ListItem>
-            <ListItem
-              button
-              key={"Application Status"}
-              onClick={() => history.push("/internship-application-status")}>
-              <ListItemIcon><VisibilityIcon /> </ListItemIcon>
-              <ListItemText primary={"État de la candidature"} />
+              key={"Home"}
+              onClick={() => history.push("/home")}>
+              <ListItemIcon><HomeIcon /> </ListItemIcon>
+              <ListItemText primary={"Accueil"} />
             </ListItem>
           </List>
-        }
 
-        {
-          isEmployer() &&
-          <List>
-            <ListItem
-              button
-              key={"Offer Creation"}
-              onClick={() => history.push("/internship-offer-creation")}>
-              <ListItemIcon><CreateIcon /> </ListItemIcon>
-              <ListItemText primary={"Créer une offre de stage"} />
-            </ListItem>
-            <ListItem
-              button
-              key={"Student Selection"}
-              onClick={() => history.push("/student-selection-page")}>
-              <ListItemIcon><AssignmentTurnedInIcon /> </ListItemIcon>
-              <ListItemText primary={"Sélection des étudiants"} />
-            </ListItem>
-          </List>
-        }
+          <Divider />
 
-        {
-          isAdministrator() &&
-          <List>
-            <ListItem
-              button
-              key={"Student Offer Validation"}
-              onClick={() => history.push("/student-offer-validation")}>
-              <ListItemIcon><VisibilityIcon /> </ListItemIcon>
-              <ListItemText primary={"Visualisation des offres"} />
-            </ListItem>
-            <ListItem
-              button
-              key={"Pending Approval"}
-              onClick={() => history.push("/pending-approval")}>
-              <ListItemIcon><GavelOutlinedIcon /> </ListItemIcon>
-              <ListItemText primary={"Offres en attentes"} />
-            </ListItem>
-            <ListItem
-              button
-              key={"Applications en attente"}
-              onClick={() => history.push("/internship-application-validation")}>
-              <ListItemIcon><AssignmentLateIcon /> </ListItemIcon>
-              <ListItemText primary={"Applications en attentes"} />
-            </ListItem>
-            <ListItem
-              button
-              key={"Liste des étudiants"}
-              onClick={() => history.push("/student-list-page")}>
-              <ListItemIcon><PeopleIcon /> </ListItemIcon>
-              <ListItemText primary={"Liste des étudiants"} />
-            </ListItem>
-            <ListItem
-              button
-              key={"Liste des employés"}
-              onClick={() => history.push("/employer-list-page")}>
-              <ListItemIcon><PeopleIcon /> </ListItemIcon>
-              <ListItemText primary={"Liste des employés"} />
-            </ListItem>
-            <ListItem
-              button
-              key={"Paramètres"}
-              onClick={() => history.push("/semester-selection")}>
-              <ListItemIcon><SettingsIcon /> </ListItemIcon>
-              <ListItemText primary={"Paramètres"} />
-            </ListItem>
-          </List>
-        }
+          {
+            isStudent() &&
+            <List>
+              <ListItem
+                button
+                key={"Portfolio"}
+                onClick={() => history.push("/portfolio")}>
+                <ListItemIcon><CloudUploadIcon /> </ListItemIcon>
+                <ListItemText primary={"Portfolio"} />
+              </ListItem>
+              <ListItem
+                button
+                key={"Application Creation"}
+                onClick={() => history.push("/internship-application-creation")}>
+                <ListItemIcon><CreateIcon /> </ListItemIcon>
+                <ListItemText primary={"Application"} />
+              </ListItem>
+              <ListItem
+                button
+                key={"Application Status"}
+                onClick={() => history.push("/internship-application-status")}>
+                <ListItemIcon><VisibilityIcon /> </ListItemIcon>
+                <ListItemText primary={"État de la candidature"} />
+              </ListItem>
+            </List>
+          }
 
-      </Drawer>
-      <main className={classes.content}>
-        <div className={classes.toolbar} />
-        {props.children}
-      </main>
-    </div>
+          {
+            isEmployer() &&
+            <List>
+              <ListItem
+                button
+                key={"Offer Creation"}
+                onClick={() => history.push("/internship-offer-creation")}>
+                <ListItemIcon><CreateIcon /> </ListItemIcon>
+                <ListItemText primary={"Créer une offre de stage"} />
+              </ListItem>
+              <ListItem
+                button
+                key={"Student Selection"}
+                onClick={() => history.push("/student-selection-page")}>
+                <ListItemIcon><AssignmentTurnedInIcon /> </ListItemIcon>
+                <ListItemText primary={"Sélection des étudiants"} />
+              </ListItem>
+            </List>
+          }
+
+          {
+            isAdministrator() &&
+            <List>
+              <ListItem
+                button
+                key={"Student Offer Validation"}
+                onClick={() => history.push("/student-offer-validation")}>
+                <ListItemIcon><VisibilityIcon /> </ListItemIcon>
+                <ListItemText primary={"Visualisation des offres"} />
+              </ListItem>
+              <ListItem
+                button
+                key={"Pending Approval"}
+                onClick={() => history.push("/pending-approval")}>
+                <ListItemIcon><GavelOutlinedIcon /> </ListItemIcon>
+                <ListItemText primary={"Offres en attentes"} />
+              </ListItem>
+              <ListItem
+                button
+                key={"Applications en attente"}
+                onClick={() => history.push("/internship-application-validation")}>
+                <ListItemIcon><AssignmentLateIcon /> </ListItemIcon>
+                <ListItemText primary={"Applications en attentes"} />
+              </ListItem>
+              <ListItem
+                button
+                key={"Liste des étudiants"}
+                onClick={() => history.push("/student-list-page")}>
+                <ListItemIcon><PeopleIcon /> </ListItemIcon>
+                <ListItemText primary={"Liste des étudiants"} />
+              </ListItem>
+              <ListItem
+                button
+                key={"Liste des employés"}
+                onClick={() => history.push("/employer-list-page")}>
+                <ListItemIcon><PeopleIcon /> </ListItemIcon>
+                <ListItemText primary={"Liste des employés"} />
+              </ListItem>
+              <ListItem
+                button
+                key={"Paramètres"}
+                onClick={() => history.push("/semester-selection")}>
+                <ListItemIcon><SettingsIcon /> </ListItemIcon>
+                <ListItemText primary={"Paramètres"} />
+              </ListItem>
+            </List>
+          }
+        </Drawer>
+        <main className={classes.content}>
+          <div className={classes.toolbar} />
+          {props.children}
+        </main>
+      </div>
+    </SnackbarProvider>
   );
 }
