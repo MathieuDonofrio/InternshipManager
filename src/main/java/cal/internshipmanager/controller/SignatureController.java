@@ -1,6 +1,7 @@
 package cal.internshipmanager.controller;
 
 import cal.internshipmanager.response.DownloadFileResponse;
+import cal.internshipmanager.response.SignatureResponse;
 import cal.internshipmanager.service.SignatureService;
 import cal.internshipmanager.validator.ExistingUser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +49,11 @@ public class SignatureController {
     @GetMapping("{uniqueId}")
     public ResponseEntity<Resource> download(@Valid @ExistingUser @PathVariable UUID uniqueId) {
         return DownloadFileResponse.responseEntity(signatureService.download(uniqueId));
+    }
+
+    @GetMapping("find/{uniqueId}")
+    public SignatureResponse find(@Valid @ExistingUser @PathVariable UUID uniqueId) {
+        return signatureService.find(uniqueId);
     }
 
     //

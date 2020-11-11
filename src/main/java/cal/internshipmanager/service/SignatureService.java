@@ -4,6 +4,7 @@ import cal.internshipmanager.model.Signature;
 import cal.internshipmanager.model.User;
 import cal.internshipmanager.repository.UserRepository;
 import cal.internshipmanager.response.DownloadFileResponse;
+import cal.internshipmanager.response.SignatureResponse;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
@@ -24,6 +25,18 @@ public class SignatureService {
     @Autowired
     public SignatureService(UserRepository userRepository) {
         this.userRepository = userRepository;
+    }
+
+    public SignatureResponse find(UUID userUniqueId){
+        User user = userRepository.findById(userUniqueId).get();
+        Signature signature = user.getSignature();
+
+        SignatureResponse response = new SignatureResponse();
+
+        response.setUniqueId(signature.getUniqueId());
+        response.setUploadDate(signature.getUploadDate());
+
+        return response;
     }
 
     @SneakyThrows

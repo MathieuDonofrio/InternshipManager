@@ -4,6 +4,7 @@ import cal.internshipmanager.model.Signature;
 import cal.internshipmanager.model.User;
 import cal.internshipmanager.repository.UserRepository;
 import cal.internshipmanager.response.DownloadFileResponse;
+import cal.internshipmanager.response.SignatureResponse;
 import cal.internshipmanager.security.JwtAuthentication;
 import cal.internshipmanager.security.JwtProvider;
 import com.auth0.jwt.interfaces.DecodedJWT;
@@ -31,6 +32,40 @@ public class SignatureServiceTest {
 
     @Autowired
     private JwtProvider jwtProvider;
+
+    @Test
+    public void find_validRequest(){
+
+        // Arrange
+        Signature signature = new Signature();
+
+        signature.setData("signature".getBytes());
+        signature.setUniqueId(UUID.randomUUID());
+        signature.setUploadDate(new Date());
+
+        User user = new User();
+
+        user.setUniqueId(UUID.randomUUID());
+        user.setType(User.Type.EMPLOYER);
+        user.setEmail("toto@gmail.com");
+        user.setFirstName("Toto");
+        user.setLastName("Tata");
+        user.setCompany("Test");
+        user.setSignature(signature);
+
+        SignatureService signatureService = new SignatureService(userRepository);
+
+        // Act
+
+        when(userRepository.findById(Mockito.any())).thenReturn(Optional.of(user));
+
+        SignatureResponse signatureResponse = signatureService.find(user.getUniqueId());
+
+        // Assert
+
+        assertEquals(signatureResponse.getUniqueId(),signature.getUniqueId());
+        assertEquals(signatureResponse.getUploadDate(),signature.getUploadDate());
+    }
 
     @Test
     public void upload_validRequest() {
@@ -81,6 +116,7 @@ public class SignatureServiceTest {
 
     @Test
     public void download_validRequest() {
+
         // Arrange
 
         final String signatureName = "signature";
@@ -120,6 +156,7 @@ public class SignatureServiceTest {
 
     @Test
     public void delete_validRequest() {
+
         // Arrange
 
         Signature signature = new Signature();
