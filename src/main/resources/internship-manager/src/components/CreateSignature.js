@@ -55,6 +55,9 @@ import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 import Popup from "reactjs-popup";
 import SignaturePad from "react-signature-canvas";
 import "./signCanvas.css";
+import SignatureService from "../services/SignatureService";
+
+
 
 
 
@@ -82,9 +85,38 @@ export default function CreateSignature(){
     */
 
     const save = () => {
-        setImageURL(sigCanvas.current.getTrimmedCanvas().toDataURL("image/png"));
+
+
+
+        let signature = sigCanvas.current.getTrimmedCanvas();
+
+        signature.toBlob(function(blob){
+
+            const request = {
+                file: blob
+            }
+            SignatureService.upload(request).then((response) => {
+                
+                setImageURL(signature.toDataURL("image/png"));
+            });
+        });
+
         handleClose();
+
     };
+
+    const fetchSignature = () => {
+
+        // download signature
+
+        let uuid = localStorage.getItem("UserUniqueId");
+
+        SignatureService.download(uuid)
+
+        let signature;
+        
+        setImageURL(URL.createObjectURL(signature))
+    }
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -108,7 +140,7 @@ export default function CreateSignature(){
                 <Divider />
 
                 <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-                    Créer une signature
+                    Signature
                 </Button>
 
                 <Dialog
@@ -152,7 +184,8 @@ export default function CreateSignature(){
                         display: "block",
                         margin: "0 auto",
                         border: "1px solid black",
-                        width: "150px"
+                        width: "200px",
+                        height: "150px",
                     }}
                     />
                 ) : null}

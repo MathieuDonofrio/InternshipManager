@@ -46,8 +46,6 @@ class SignatureService {
 
     upload(request){
         let fd = new FormData();
-
-        fd.append('type', request.type);
         fd.append('file', request.file);
 
         return axios.post(Config.target + '/signature/upload', fd, uploadHeaders());
