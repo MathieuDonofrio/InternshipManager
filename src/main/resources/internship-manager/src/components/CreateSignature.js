@@ -1,58 +1,12 @@
 import React, { useEffect, useState, useRef } from "react";
-import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
-import { Link } from 'react-router-dom';
-import { withRouter } from 'react-router';
-
-import AuthenticationService from '../services/AuthenticationService';
-import Validator from '../utils/Validator';
-import Lock from '../utils/Lock'
-import Copyright from './Copyright';
 
 import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
-import LinearProgress from '@material-ui/core/LinearProgress';
-import Container from '@material-ui/core/Container';
 import Divider from '@material-ui/core/Divider';
-import LockOutlined from '@material-ui/icons/LockOutlined';
-import PortfolioService from "../services/PortfolioService";
-
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import ListItemText from '@material-ui/core/ListItemText';
-import * as ReactBootStrap from "react-bootstrap";
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import IconButton from '@material-ui/core/IconButton';
-import DeleteIcon from '@material-ui/icons/Delete';
-import AddIcon from '@material-ui/icons/Add';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import CheckIcon from '@material-ui/icons/Check';
-import ClearIcon from '@material-ui/icons/Clear';
-import { DropzoneArea } from 'material-ui-dropzone';
-import { saveAs } from 'file-saver';
-import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
-import Popup from "reactjs-popup";
 import SignaturePad from "react-signature-canvas";
 import "./signCanvas.css";
 import SignatureService from "../services/SignatureService";
@@ -111,12 +65,16 @@ export default function CreateSignature(){
 
         let uuid = localStorage.getItem("UserUniqueId");
 
-        SignatureService.download(uuid)
+        SignatureService.download(uuid).then((response) =>{
+            if(response){
 
-        let signature;
-        
-        setImageURL(URL.createObjectURL(signature))
+                let signature = new Blob([response.data], { type: response.headers['content-type'] },"image.png");
+                setImageURL(URL.createObjectURL(signature))
+            }
+        });
     }
+
+    useEffect(() => { fetchSignature(); }, []);
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -139,9 +97,13 @@ export default function CreateSignature(){
 
                 <Divider />
 
-                <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-                    Signature
-                </Button>
+                <Box
+                margin={1}>
+
+                    <Button variant="contained" color="primary" onClick={handleClickOpen}>
+                        Nouvelle Signature
+                    </Button>
+                </Box>
 
                 <Dialog
                     open={open}
@@ -176,23 +138,40 @@ export default function CreateSignature(){
                 <br />
                 {/* if our we have a non-null image url we should 
                 show an image and pass our imageURL state to it*/}
-                {imageURL ? (
-                    <img
-                    src={imageURL}
-                    alt="my signature"
-                    style={{
-                        display: "block",
-                        margin: "0 auto",
-                        border: "1px solid black",
-                        width: "200px",
-                        height: "150px",
-                    }}
-                    />
-                ) : null}
                 
+                {imageURL ? (
+                    <Box
+                        pb={8}
+                    >
+                             <Box
+                                mb={2}
+                                paddingTop={2}
+                                textAlign="center">
+                                <Typography>Signature courrente</Typography>
+                            </Box>
 
+                        <Box
+                        margin={1}>
+
+                            <img
+                            src={imageURL}
+                            alt="my signature"
+                            style={{
+                                display: "block",
+                                margin: "0 auto",
+                                border: "1px solid black",
+                                width: "200px",
+                                height: "150px",
+                            }}
+                            />
+                        </Box>
+                    </Box>
+                    ) :     <Box
+                                mb={2}
+                                paddingTop={2}
+                                textAlign="center">
+                                <Typography>Aucune Signature</Typography>
+                            </Box>}
             </div>
-
     );
-
 }

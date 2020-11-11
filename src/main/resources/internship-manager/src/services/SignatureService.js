@@ -56,8 +56,8 @@ class SignatureService {
     // Get
     //
 
-    download(){
-        return axios.get(Config.target + `/signature`, downloadHeaders());
+    download(request){
+        return axios.get(Config.target + `/signature/${request}`, downloadHeaders());
     }
     
 }
