@@ -46,11 +46,7 @@ public class SignatureService {
         userRepository.save(user);
     }
 
-    public DownloadFileResponse download() {
-
-        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        UUID userUniqueId = UUID.fromString((String) authentication.getPrincipal());
+    public DownloadFileResponse download(UUID userUniqueId) {
 
         User user = userRepository.findById(userUniqueId).get();
         Signature signature = user.getSignature();
@@ -63,5 +59,13 @@ public class SignatureService {
         response.setLength(signature.getData().length);
 
         return response;
+    }
+
+    public void delete(UUID userUniqueId){
+        User user = userRepository.findById(userUniqueId).get();
+
+        user.setSignature(null);
+
+        userRepository.save(user);
     }
 }

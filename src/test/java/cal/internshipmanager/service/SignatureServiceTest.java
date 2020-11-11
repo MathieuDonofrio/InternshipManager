@@ -20,8 +20,7 @@ import java.util.Date;
 import java.util.Optional;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -104,17 +103,12 @@ public class SignatureServiceTest {
         user.setCompany("Test");
         user.setSignature(signature);
 
-        String token = jwtProvider.generate(user);
-        DecodedJWT decodedToken = jwtProvider.verify(token);
-        JwtAuthentication authentication = new JwtAuthentication(decodedToken);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-
         final SignatureService signatureService = new SignatureService(userRepository);
 
         // Act
 
         when(userRepository.findById(Mockito.any())).thenReturn(Optional.of(user));
-        DownloadFileResponse response = signatureService.download();
+        DownloadFileResponse response = signatureService.download(user.getUniqueId());
 
         // Assert
 
@@ -122,6 +116,45 @@ public class SignatureServiceTest {
         assertEquals(response.getType(), signatureType);
         assertEquals(response.getLength(), signature.getData().length);
         assertEquals(response.getResource(), new ByteArrayResource(signature.getData()));
+    }
+
+    @Test
+    public void delete_validRequest() {
+        // Arrange
+
+        Signature signature = new Signature();
+
+        signature.setData("signature".getBytes());
+        signature.setUniqueId(UUID.randomUUID());
+        signature.setUploadDate(new Date());
+
+        User user = new User();
+
+        user.setUniqueId(UUID.randomUUID());
+        user.setType(User.Type.EMPLOYER);
+        user.setEmail("toto@gmail.com");
+        user.setFirstName("Toto");
+        user.setLastName("Tata");
+        user.setCompany("Test");
+        user.setSignature(signature);
+
+        SignatureService signatureService = new SignatureService(userRepository);
+
+        // Act & Assert
+
+        when(userRepository.findById(Mockito.any())).thenReturn(Optional.of(user));
+
+        when(userRepository.save(Mockito.any())).then(inv -> {
+            User user1 = (User) inv.getArgument(0);
+
+            assertNull(user1.getSignature());
+
+            return null;
+        });
+
+        // Assert
+
+        signatureService.delete(user.getUniqueId());
     }
 
 }
