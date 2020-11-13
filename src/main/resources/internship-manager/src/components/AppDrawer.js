@@ -189,7 +189,7 @@ export default function AppDrawer(props) {
           </Typography>
 
           <Typography variant="h6" noWrap className={classes.panelTitle}>
-            {"Session Courrante : " + session}
+            {"Session Actuelle : " + session}
           </Typography>
 
           <Button

@@ -101,7 +101,7 @@ export default function CreateSignature(){
                 margin={1}>
 
                     <Button variant="contained" color="primary" onClick={handleClickOpen}>
-                        Nouvelle Signature
+                        Signature
                     </Button>
                 </Box>
 
@@ -147,11 +147,16 @@ export default function CreateSignature(){
                                 mb={2}
                                 paddingTop={2}
                                 textAlign="center">
-                                <Typography>Signature courrente</Typography>
+                                <Typography color="primary" variant="h6">Signature actuelle</Typography>
                             </Box>
 
                         <Box
-                        margin={1}>
+                        id="mybox"
+                        style={{
+                            margin:"1",
+                            width: "auto",
+                            height: "auto",
+                        }}>
 
                             <img
                             src={imageURL}
@@ -159,9 +164,11 @@ export default function CreateSignature(){
                             style={{
                                 display: "block",
                                 margin: "0 auto",
-                                border: "1px solid black",
-                                width: "200px",
-                                height: "150px",
+                                maxWidth: "100%",
+                                height: "auto",
+                                boxShadow : "0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22)",
+                                borderRadius: "8px",
+                                backgroundColor: "#FAEBD7",
                             }}
                             />
                         </Box>
@@ -170,7 +177,7 @@ export default function CreateSignature(){
                                 mb={2}
                                 paddingTop={2}
                                 textAlign="center">
-                                <Typography>Aucune Signature</Typography>
+                                <Typography color="primary" variant="h6">Aucune Signature</Typography>
                             </Box>}
             </div>
     );
