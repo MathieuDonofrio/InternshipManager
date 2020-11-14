@@ -137,8 +137,6 @@ export default class InternshipOfferCreationForm extends Component {
 
     Validator.clearErrors(this.errors);
 
-    console.log(error);
-
     this.forceUpdate();
   }
 

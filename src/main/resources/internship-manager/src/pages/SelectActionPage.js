@@ -23,17 +23,11 @@ export default class SelectActionPage extends Component {
     return (
       <div>
         <CssBaseline />
-
         <Container>
-
           <Paper elevation={3}>
-              
-              <SelectAction/>
-
+            <SelectAction />
           </Paper>
-
         </Container>
-
       </div>
     )
   }
