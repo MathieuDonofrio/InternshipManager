@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
+import { withSnackbar } from 'notistack';
 
 import RegistrationService from '../services/RegistrationService';
 import Validator from '../utils/Validator';
@@ -75,7 +76,10 @@ class EmployerRegistrationForm extends Component {
     }
 
     RegistrationService.employer(request)
-      .then(() => this.props.history.push('/login'))
+      .then(() => {
+        this.props.history.push('/login');
+        this.props.enqueueSnackbar("Enregistré avec succes! Vous pouvez maintenant vous loggé",  { variant: 'success' });
+      })
       .catch(error => this.backendValidation(error))
       .finally(() => { this.submitLock.unlock(); this.forceUpdate() });
   }
@@ -268,4 +272,4 @@ class EmployerRegistrationForm extends Component {
   }
 }
 
-export default withRouter(EmployerRegistrationForm);
+export default withSnackbar(withRouter(EmployerRegistrationForm));
