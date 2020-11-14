@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
+import { withSnackbar } from 'notistack';
 
 import AuthenticationService from '../services/AuthenticationService';
 import Validator from '../utils/Validator';
@@ -66,7 +67,11 @@ class LoginForm extends Component {
     }
 
     AuthenticationService.authenticate(request)
-      .then(() => this.props.history.push('/home'))
+      .then(() => 
+      {
+        this.props.history.push('/home');
+        this.props.enqueueSnackbar("Bienvenue!",  { variant: 'info' });
+      })
       .catch(error => this.backendValidation(error))
       .finally(() => { 
         this.submitLock.unlock(); 
@@ -201,4 +206,4 @@ class LoginForm extends Component {
   }
 }
 
-export default withRouter(LoginForm);
+export default withSnackbar(withRouter(LoginForm));
