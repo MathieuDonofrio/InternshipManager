@@ -152,25 +152,36 @@ export default function CreateSignature(){
 
                         <Box
                         id="mybox"
+                        
                         style={{
                             margin:"1",
                             width: "auto",
-                            height: "auto",
+                            height: "auto",            
                         }}>
 
-                            <img
-                            src={imageURL}
-                            alt="my signature"
+                            <Box
+                            padding = {2}
                             style={{
-                                display: "block",
                                 margin: "0 auto",
-                                maxWidth: "100%",
-                                height: "auto",
-                                boxShadow : "0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22)",
-                                borderRadius: "8px",
-                                backgroundColor: "#FAEBD7",
+                                // boxShadow : "0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22)",
+                                width: "400px",
+                                height: "250px",  
+                                
                             }}
-                            />
+                            >
+                                <img
+                                src={imageURL}
+                                alt="my signature"
+                                style={{
+                                    display: "block",
+                                    margin: "auto",
+                                    maxWidth: "400px",
+                                    maxHeight: "250px",
+                                }}
+                                />
+
+                            </Box>
+
                         </Box>
                     </Box>
                     ) :     <Box
