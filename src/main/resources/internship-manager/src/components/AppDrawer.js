@@ -117,10 +117,10 @@ export default function AppDrawer(props) {
 
     let type = localStorage.getItem('UserType').toLowerCase();
 
-    switch (type){
-      case "student" : return "ÉTUDIANT";
-      case "employer" : return "EMPLOYEUR";
-      case "administrator" : return "ADMINISTRATEUR";
+    switch (type) {
+      case "student": return "ÉTUDIANT";
+      case "employer": return "EMPLOYEUR";
+      case "administrator": return "ADMINISTRATEUR";
       default: return "ÉTUDIANT";
     }
   }
@@ -134,11 +134,11 @@ export default function AppDrawer(props) {
     });
   }
 
-  const translateSession = (session) =>{
-    switch (session){
-      case "AUTUMN" : return "Automne";
-      case "WINTER" : return "Hiver";
-      case "SUMMER" : return "Été";
+  const translateSession = (session) => {
+    switch (session) {
+      case "AUTUMN": return "Automne";
+      case "WINTER": return "Hiver";
+      case "SUMMER": return "Été";
       default: return "ERROR";
     }
   }
@@ -328,6 +328,16 @@ export default function AppDrawer(props) {
             </ListItem>
           </List>
         }
+
+        <List>
+          <ListItem
+            button
+            key={"contract"}
+            onClick={() => history.push("/contract")}>
+            <ListItemIcon><HomeIcon /> </ListItemIcon>
+            <ListItemText primary={"contrats"} />
+          </ListItem>
+        </List>
 
       </Drawer>
       <main className={classes.content}>

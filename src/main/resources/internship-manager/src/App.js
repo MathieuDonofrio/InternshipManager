@@ -24,6 +24,7 @@ import StudentProfilePage from './pages/StudentProfilePage';
 import SelectActionPage from './pages/SelectActionPage';
 import EmployerProfilePage from './pages/EmployerProfilePage';
 import EmployerListPage from './pages/EmployerListPage';
+import ContractPage from './pages/ContractPage';
 
 function App() {
   
@@ -71,6 +72,8 @@ function App() {
               <Route exact path="/semester-selection" component={SemesterSelectionPage}></Route>
               <Route exact path="/student-profile-page/:uuid/:fullName" component={StudentProfilePage}></Route>
               <Route exact path="/employer-profile-page/:uuid/:fullName" component={EmployerProfilePage}></Route>
+              
+              <Route exact path="/contract" component={ContractPage}></Route>
 
               <Route exact path="/select-action/:uuid" component={SelectActionPage}></Route>
             </AppDrawer>
