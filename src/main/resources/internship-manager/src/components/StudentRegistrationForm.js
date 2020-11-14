@@ -76,7 +76,7 @@ class StudentRegistrationForm extends Component {
     RegistrationService.student(request)
       .then(() => {
         this.props.history.push('/login');
-        this.props.enqueueSnackbar("Enregistré avec succes! Vous pouvez maintenant vous loggé",  { variant: 'success' });
+        this.props.enqueueSnackbar("Enregistré avec succès! Vous pouvez maintenant vous connecter",  { variant: 'success' });
       })
       .catch(error => this.backendValidation(error))
       .finally(() => { this.submitLock.unlock(); this.forceUpdate() });

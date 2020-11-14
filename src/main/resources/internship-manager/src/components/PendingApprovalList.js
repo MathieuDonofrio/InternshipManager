@@ -75,7 +75,7 @@ class PendingApprovalList extends Component {
   onApprovedClicked(internshipOffer) {
     InternshipOfferService.approve(internshipOffer).then(response => {
       this.onUpdateInternshipOffers();
-      this.props.enqueueSnackbar("Offre de " + internshipOffer.company + " apprové",  { variant: 'success' });
+      this.props.enqueueSnackbar("Offre de " + internshipOffer.company + " approuvé",  { variant: 'success' });
     });
   }
 
