@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
 import './App.css';
+import { SnackbarProvider } from 'notistack';
 
 import AppDrawer from './components/AppDrawer';
 
@@ -27,58 +28,61 @@ import EmployerListPage from './pages/EmployerListPage';
 import ContractPage from './pages/ContractPage';
 
 function App() {
-  
+
   return (
     <Router>
       <div className="App">
         <div className="container">
-          <Switch>
+          <SnackbarProvider maxSnack={3}>
 
-            <Route
-              exact
-              path="/"
-              render={() => {
-                return (
-                  AuthenticationService.authenticationRequired() ?
-                    <Redirect to="/login" /> :
-                    <Redirect to="/home" />
-                )
-              }}
-            />
+            <Switch>
 
-            <Route exact path="/login" component={LoginPage}></Route>
-            <Route exact path="/registration" component={RegistrationPage}></Route>
+              <Route
+                exact
+                path="/"
+                render={() => {
+                  return (
+                    AuthenticationService.authenticationRequired() ?
+                      <Redirect to="/login" /> :
+                      <Redirect to="/home" />
+                  )
+                }}
+              />
 
-            <AppDrawer>
+              <Route exact path="/login" component={LoginPage}></Route>
+              <Route exact path="/registration" component={RegistrationPage}></Route>
 
-              <Route exact path="/home" component={HomePage}></Route>
+              <AppDrawer>
 
-              <Route exact path="/internship-offer-creation" component={InternshipOfferCreationPage}></Route>
-              
-              <Route exact path="/student-offer-validation" component={StudentInternshipOfferValidationPage}></Route>
-              <Route exact path="/pending-approval" component={PendingApprovalPage}></Route>
+                <Route exact path="/home" component={HomePage}></Route>
 
-              <Route exact path="/internship-application-creation" component={StudentInternshipApplicationPage}></Route>
-              <Route exact path="/portfolio" component={PortfolioPage}></Route>
+                <Route exact path="/internship-offer-creation" component={InternshipOfferCreationPage}></Route>
 
-              <Route exact path="/internship-application-validation" component={StudentInternshipApplicationValidationPage}></Route>
-              <Route exact path="/internship-application-status" component={StudentInternshipApplicationStatusPage}></Route>
-              <Route exact path="/student-selection-page" component={StudentSelectionPage}></Route>
-              <Route exact path="/student-list-page" component={StudentListPage}></Route>
-              <Route exact path="/employer-list-page" component={EmployerListPage}></Route>
+                <Route exact path="/student-offer-validation" component={StudentInternshipOfferValidationPage}></Route>
+                <Route exact path="/pending-approval" component={PendingApprovalPage}></Route>
 
-              <Route exact path="/manage-access/:uuid" component={ManageAccessPage}></Route>
+                <Route exact path="/internship-application-creation" component={StudentInternshipApplicationPage}></Route>
+                <Route exact path="/portfolio" component={PortfolioPage}></Route>
 
-              <Route exact path="/semester-selection" component={SemesterSelectionPage}></Route>
-              <Route exact path="/student-profile-page/:uuid/:fullName" component={StudentProfilePage}></Route>
-              <Route exact path="/employer-profile-page/:uuid/:fullName" component={EmployerProfilePage}></Route>
-              
-              <Route exact path="/contract" component={ContractPage}></Route>
+                <Route exact path="/internship-application-validation" component={StudentInternshipApplicationValidationPage}></Route>
+                <Route exact path="/internship-application-status" component={StudentInternshipApplicationStatusPage}></Route>
+                <Route exact path="/student-selection-page" component={StudentSelectionPage}></Route>
+                <Route exact path="/student-list-page" component={StudentListPage}></Route>
+                <Route exact path="/employer-list-page" component={EmployerListPage}></Route>
 
-              <Route exact path="/select-action/:uuid" component={SelectActionPage}></Route>
-            </AppDrawer>
+                <Route exact path="/manage-access/:uuid" component={ManageAccessPage}></Route>
 
-          </Switch>
+                <Route exact path="/semester-selection" component={SemesterSelectionPage}></Route>
+                <Route exact path="/student-profile-page/:uuid/:fullName" component={StudentProfilePage}></Route>
+                <Route exact path="/employer-profile-page/:uuid/:fullName" component={EmployerProfilePage}></Route>
+
+                <Route exact path="/contract" component={ContractPage}></Route>
+                <Route exact path="/select-action/:uuid" component={SelectActionPage}></Route>
+
+              </AppDrawer>
+
+            </Switch>
+          </SnackbarProvider>
         </div>
       </div>
     </Router>

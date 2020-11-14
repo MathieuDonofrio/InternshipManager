@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
+import { withSnackbar } from 'notistack';
 
 import RegistrationService from '../services/RegistrationService';
 import Validator from '../utils/Validator';
@@ -73,7 +74,10 @@ class StudentRegistrationForm extends Component {
     }
 
     RegistrationService.student(request)
-      .then(() => this.props.history.push('/login'))
+      .then(() => {
+        this.props.history.push('/login');
+        this.props.enqueueSnackbar("Enregistré avec succès! Vous pouvez maintenant vous connecter",  { variant: 'success' });
+      })
       .catch(error => this.backendValidation(error))
       .finally(() => { this.submitLock.unlock(); this.forceUpdate() });
   }
@@ -253,4 +257,4 @@ class StudentRegistrationForm extends Component {
   }
 }
 
-export default withRouter(StudentRegistrationForm);
+export default withSnackbar(withRouter(StudentRegistrationForm));
