@@ -4,6 +4,7 @@ import cal.internshipmanager.model.Signature;
 import cal.internshipmanager.model.User;
 import cal.internshipmanager.repository.UserRepository;
 import cal.internshipmanager.response.DownloadFileResponse;
+import cal.internshipmanager.response.SignatureResponse;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
@@ -26,6 +27,18 @@ public class SignatureService {
         this.userRepository = userRepository;
     }
 
+    public SignatureResponse find(UUID userUniqueId){
+        User user = userRepository.findById(userUniqueId).get();
+        Signature signature = user.getSignature();
+
+        SignatureResponse response = new SignatureResponse();
+
+        response.setUniqueId(signature.getUniqueId());
+        response.setUploadDate(signature.getUploadDate());
+
+        return response;
+    }
+
     @SneakyThrows
     public void upload(MultipartFile file) {
 
@@ -46,11 +59,7 @@ public class SignatureService {
         userRepository.save(user);
     }
 
-    public DownloadFileResponse download() {
-
-        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        UUID userUniqueId = UUID.fromString((String) authentication.getPrincipal());
+    public DownloadFileResponse download(UUID userUniqueId) {
 
         User user = userRepository.findById(userUniqueId).get();
         Signature signature = user.getSignature();
@@ -63,5 +72,13 @@ public class SignatureService {
         response.setLength(signature.getData().length);
 
         return response;
+    }
+
+    public void delete(UUID userUniqueId){
+        User user = userRepository.findById(userUniqueId).get();
+
+        user.setSignature(null);
+
+        userRepository.save(user);
     }
 }
