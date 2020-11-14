@@ -34,7 +34,7 @@ public class InternshipApplicationServiceTest {
     @Autowired
     private JwtProvider jwtProvider;
 
-    @Autowired
+    @Mock
     private SettingsService settingsService;
 
     @Mock
@@ -52,7 +52,7 @@ public class InternshipApplicationServiceTest {
     @Test
     public void portfolioDocuments_validRequest() {
 
-        //Arrange
+        // Arrange
 
         User user = new User();
 
@@ -296,6 +296,7 @@ public class InternshipApplicationServiceTest {
         internshipOffer.setSemester(settingsService.getSemester());
         internshipOffer.setCompany("TestCompany");
         internshipOffer.setJobTitle("TestJobTitle");
+
 
         InternshipApplication internshipApplication = new InternshipApplication();
 
