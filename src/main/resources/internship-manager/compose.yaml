@@ -1,0 +1,10 @@
+version : '3'
+services :
+    spring-app:
+        image : spring-boot-docker
+        ports:
+          - 9090:9090
+    react-app:
+        image: react-app-docker
+        ports:
+          - 3000:80
