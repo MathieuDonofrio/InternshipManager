@@ -122,7 +122,7 @@ export default function SemesterSelectionForm() {
           paddingTop={2}
           textAlign="left">
 
-          <Typography component="h1" variant="h6">Selection de semestre</Typography>
+          <Typography component="h1" variant="h6">Sélection de semestre</Typography>
 
         </Box>
 
@@ -144,7 +144,7 @@ export default function SemesterSelectionForm() {
             <FormControl className={classes.formControl} >
               <InputLabel id="session-label">Session</InputLabel>
               <Select labelId="session-label" id="session-label-select" value={session} onChange={(event) => setSession(event.target.value)} >
-                <MenuItem value=""><em>None</em></MenuItem>
+                <MenuItem value=""><em>Vide</em></MenuItem>
                 {
                   sessiontoloop.map(session => {
                     return <MenuItem value={session.session}>{session.session}</MenuItem>;
