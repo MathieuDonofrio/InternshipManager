@@ -66,9 +66,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         CorsConfiguration configuration = new CorsConfiguration();
 
+
+        // aws app
        // configuration.setAllowedOrigins(Collections.singletonList("http://react-intershipmanager.s3-website.us-east-2.amazonaws.com"));
 
-        configuration.setAllowedOrigins(Collections.singletonList("http://3.139.92.105:3000"));
+
+        // aws docker
+        //configuration.setAllowedOrigins(Collections.singletonList("http://3.139.92.105:3000"));
+
+        // azure docker
+        configuration.setAllowedOrigins(Collections.singletonList("http://40.117.254.179:3000"));
+
 
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
 
