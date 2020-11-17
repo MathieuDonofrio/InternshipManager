@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
+import java.util.Objects;
 import java.util.UUID;
 
 @Service
@@ -27,16 +28,20 @@ public class SignatureService {
         this.userRepository = userRepository;
     }
 
-    public SignatureResponse find(UUID userUniqueId){
+    public SignatureResponse find(UUID userUniqueId) {
         User user = userRepository.findById(userUniqueId).get();
         Signature signature = user.getSignature();
 
-        SignatureResponse response = new SignatureResponse();
+        if (signature != null) {
+            SignatureResponse response = new SignatureResponse();
 
-        response.setUniqueId(signature.getUniqueId());
-        response.setUploadDate(signature.getUploadDate());
+            response.setUniqueId(signature.getUniqueId());
+            response.setUploadDate(signature.getUploadDate());
 
-        return response;
+            return response;
+        }
+
+        return null;
     }
 
     @SneakyThrows
@@ -74,7 +79,7 @@ public class SignatureService {
         return response;
     }
 
-    public void delete(UUID userUniqueId){
+    public void delete(UUID userUniqueId) {
         User user = userRepository.findById(userUniqueId).get();
 
         user.setSignature(null);

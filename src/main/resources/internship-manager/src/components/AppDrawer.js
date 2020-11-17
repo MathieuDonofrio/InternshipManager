@@ -29,6 +29,7 @@ import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
 import SettingsService from "../services/SettingsService";
 import SettingsIcon from '@material-ui/icons/Settings';
+import CheckIcon from '@material-ui/icons/Check';
 
 
 const drawerWidth = 250;
@@ -186,7 +187,7 @@ export default function AppDrawer(props) {
           </Typography>
 
           <Typography variant="h6" noWrap className={classes.panelTitle}>
-            {"Session Courrante : " + session}
+            {"Session Actuelle : " + session}
           </Typography>
 
           <Button
@@ -255,6 +256,13 @@ export default function AppDrawer(props) {
               <ListItemIcon><VisibilityIcon /> </ListItemIcon>
               <ListItemText primary={"État de la candidature"} />
             </ListItem>
+            <ListItem
+              button
+              key={"Signature"}
+              onClick={() => history.push("/create-signature")}>
+              <ListItemIcon><CheckIcon /> </ListItemIcon>
+              <ListItemText primary={"Signature"} />
+            </ListItem>
           </List>
         }
 
@@ -274,6 +282,13 @@ export default function AppDrawer(props) {
               onClick={() => history.push("/student-selection-page")}>
               <ListItemIcon><AssignmentTurnedInIcon /> </ListItemIcon>
               <ListItemText primary={"Sélection des étudiants"} />
+            </ListItem>
+            <ListItem
+              button
+              key={"Signature"}
+              onClick={() => history.push("/create-signature")}>
+              <ListItemIcon><CheckIcon /> </ListItemIcon>
+              <ListItemText primary={"Signature"} />
             </ListItem>
           </List>
         }
@@ -322,6 +337,13 @@ export default function AppDrawer(props) {
               onClick={() => history.push("/semester-selection")}>
               <ListItemIcon><SettingsIcon /> </ListItemIcon>
               <ListItemText primary={"Paramètres"} />
+            </ListItem>
+            <ListItem
+              button
+              key={"Signature"}
+              onClick={() => history.push("/create-signature")}>
+              <ListItemIcon><CheckIcon /> </ListItemIcon>
+              <ListItemText primary={"Signature"} />
             </ListItem>
           </List>
         }

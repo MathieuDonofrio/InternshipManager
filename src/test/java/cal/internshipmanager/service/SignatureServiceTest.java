@@ -68,6 +68,32 @@ public class SignatureServiceTest {
     }
 
     @Test
+    public void find_invalidRequest(){
+
+        // Arrange
+        User user = new User();
+
+        user.setUniqueId(UUID.randomUUID());
+        user.setType(User.Type.EMPLOYER);
+        user.setEmail("toto@gmail.com");
+        user.setFirstName("Toto");
+        user.setLastName("Tata");
+        user.setCompany("Test");
+
+        SignatureService signatureService = new SignatureService(userRepository);
+
+        // Act
+
+        when(userRepository.findById(Mockito.any())).thenReturn(Optional.of(user));
+
+        SignatureResponse signatureResponse = signatureService.find(user.getUniqueId());
+
+        // Assert
+
+        assertNull(signatureResponse);
+    }
+
+    @Test
     public void upload_validRequest() {
         // Arrange
 
