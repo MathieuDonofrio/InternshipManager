@@ -142,6 +142,7 @@ export default function InteractiveLists() {
 
     ContractService.generate(application.uniqueId).then(response => {
       saveAs(new Blob([response.data], { type: response.headers['content-type'] }), "Contrat");
+      
     });
   }
 

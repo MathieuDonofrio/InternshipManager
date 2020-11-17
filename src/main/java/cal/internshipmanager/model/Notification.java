@@ -8,6 +8,10 @@ import java.util.Date;
 @Data
 public class Notification implements Serializable {
 
+    //
+    // Fields
+    //
+
     private Date date;
 
     private String type;

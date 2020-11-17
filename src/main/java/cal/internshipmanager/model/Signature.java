@@ -9,6 +9,10 @@ import java.util.UUID;
 @Data
 public class Signature implements Serializable {
 
+    //
+    // Fields
+    //
+
     private UUID uniqueId;
 
     private Date uploadDate;
