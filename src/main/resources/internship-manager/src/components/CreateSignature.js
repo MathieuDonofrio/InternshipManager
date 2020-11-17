@@ -42,7 +42,9 @@ export default function CreateSignature(){
 
 
 
-        let signature = sigCanvas.current.getTrimmedCanvas();
+        let signature = sigCanvas.current.getCanvas();
+
+
 
         signature.toBlob(function(blob){
 
@@ -113,12 +115,20 @@ export default function CreateSignature(){
                     <DialogContent
                         style={{ backgroundColor: 'lightGray' }}
                     >
+                        <Typography>Veuillez signez sur la ligne noir</Typography>
+                        <Divider></Divider>
+                        <Box
+                            style={{ 
+                                borderBottom: "5px solid black",
+                            }}
+                        >
                             <SignaturePad
                                 ref={sigCanvas}
                                 canvasProps={{
                                     className: "signatureCanvas"
                                   }}
                             />
+                        </Box>
                     </DialogContent>
 
                     <DialogActions>
@@ -177,6 +187,7 @@ export default function CreateSignature(){
                                     margin: "auto",
                                     maxWidth: "400px",
                                     maxHeight: "250px",
+                                    borderBottom: "5px solid black",
                                 }}
                                 />
 
