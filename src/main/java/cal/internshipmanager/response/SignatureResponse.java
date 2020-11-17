@@ -1,5 +1,6 @@
 package cal.internshipmanager.response;
 
+import cal.internshipmanager.model.Signature;
 import lombok.Data;
 
 import java.util.Date;
@@ -11,4 +12,5 @@ public class SignatureResponse {
     private UUID uniqueId;
 
     private Date uploadDate;
+
 }

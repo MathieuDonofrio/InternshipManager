@@ -4,6 +4,7 @@ import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.UUID;
 
 @Document
@@ -18,18 +19,24 @@ public class Contract implements Serializable {
 
     private String semester;
 
+    private Status status;
+
     private InternshipApplication application;
 
-    private User student;
+    private User administrator;
 
-    private User employer;
-
-    private User administrateur;
+    private Date creationDate;
 
     private Signature studentSignature;
 
     private Signature employerSignature;
 
     private Signature administratorSignature;
+
+    private UUID currentUserUniqueId;
+
+    public enum Status {
+        STUDENT, EMPLOYER, ADMINISTRATOR, COMPLETED
+    }
 
 }
