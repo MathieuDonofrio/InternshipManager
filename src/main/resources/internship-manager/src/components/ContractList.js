@@ -12,6 +12,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { Box, Paper, Tab, Tabs } from "@material-ui/core";
 import UserService from '../services/UserService'
+import ContractService from '../services/ContractService';
 
 const useStyles = makeStyles({
     table: {
@@ -48,8 +49,9 @@ export default function ContractList() {
     };
 
     const fetchAllUsers = async () => {
-        const response = await UserService.students();
+        const response = await ContractService.awaitingSignature(localStorage.getItem('UserUniqueId'));
         //setRows(response.data.users);
+        console.log(response.data);
         setRows(fakeRow);
     }
 
