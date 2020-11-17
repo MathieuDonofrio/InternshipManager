@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
 import java.util.UUID;
 
 @RestController
@@ -55,6 +54,15 @@ public class ContractController {
     @PutMapping("sign/{uniqueId}")
     public void semester(@Valid @PathVariable @ExistingContract UUID uniqueId) {
         contractService.sign(uniqueId);
+    }
+
+    //
+    // Post
+    //
+
+    @GetMapping("create/{applicationUniqueId}") // TODO replace internship-application by generate
+    public void create(@Valid @PathVariable @ExistingInternshipApplication UUID applicationUniqueId) {
+        contractService.create(applicationUniqueId);
     }
 
 
