@@ -31,12 +31,20 @@ class ContractService {
     // Get
     //
 
-    generate(request){
+    generate(request) {
         return axios.get(Config.target + `/contract/internship-application/${request}`, downloadHeaders());
     }
 
-    awaitingSignature(request){
-        return axios.get(Config.target + `/contract/awaiting-signature/${request}`,headers());
+    awaitingSignature(request) {
+        return axios.get(Config.target + `/contract/awaiting-signature/${request}`, headers());
+    }
+
+    //
+    // Put
+    //
+
+    sign(request) {
+        return axios.put(Config.target + `/contract/sign/${request}`, {}, headers());
     }
 
 }

@@ -123,7 +123,6 @@ public class ContractService {
 
         InternshipApplication application = internshipApplicationRepository.findById(applicationUniqueId).get();
 
-
         Contract contract = new Contract();
 
         contract.setUniqueId(UUID.randomUUID());

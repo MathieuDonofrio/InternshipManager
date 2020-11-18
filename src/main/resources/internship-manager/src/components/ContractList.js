@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
@@ -10,12 +9,10 @@ import Button from '@material-ui/core/Button';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import { Box, Paper, Tab, Tabs } from "@material-ui/core";
+import { Box } from "@material-ui/core";
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 import ContractService from '../services/ContractService';
 import CreateIcon from '@material-ui/icons/Create';
-import ThumbUpAltOutlinedIcon from '@material-ui/icons/ThumbUpAltOutlined';
-import { Divider } from "@material-ui/core";
 
 const useStyles = makeStyles({
     table: {
@@ -23,57 +20,27 @@ const useStyles = makeStyles({
     },
 });
 
-const useStyles2 = makeStyles({
-    root: {
-        flexGrow: 1,
-    },
-});
-
-const fakeRow = [
-    { firstName: 'test', lastName: 'test', company: 'jeancoutu', jobTitle: 'developpeur' },
-    { firstName: 'test', lastName: 'test', company: 'jeancoutu', jobTitle: 'developpeur' },
-    { firstName: 'test', lastName: 'test', company: 'jeancoutu', jobTitle: 'developpeur' },
-    { firstName: 'test', lastName: 'test', company: 'jeancoutu', jobTitle: 'developpeur' },
-    { firstName: 'test', lastName: 'test', company: 'jeancoutu', jobTitle: 'developpeur' },
-    { firstName: 'test', lastName: 'test', company: 'jeancoutu', jobTitle: 'developpeur' },
-]
 
 export default function ContractList() {
 
-    const history = useHistory();
     const classes = useStyles();
-    const classes2 = useStyles2();
 
     const [rows, setRows] = useState([]);
-    const [value, setValue] = React.useState(0);
 
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
-    };
+    const signContract = (contractId) =>{
+        ContractService.sign(contractId).then(() => fetchAllAwaitingContracts());
+    }
 
-    const fetchAllUsers = async () => {
+    const fetchAllAwaitingContracts = async () => {
         const response = await ContractService.awaitingSignature(localStorage.getItem('UserUniqueId'));
-        console.log(response.data);
+        console.log(response.data.contracts);
         setRows(response.data.contracts);
     }
 
-    useEffect(() => { fetchAllUsers(); }, [])
+    useEffect(() => { fetchAllAwaitingContracts(); }, [])
 
     return (
         <div>
-            <Paper className={classes2.root}>
-                <Tabs
-                    value={value}
-                    onChange={handleChange}
-                    indicatorColor="primary"
-                    textColor="primary"
-                    centered
-                >
-                    <Tab label="tous"/>
-                    <Tab label="signé"/>
-                    <Tab label="non signé"/>
-                </Tabs>
-            </Paper>
             <Container>
                 <Box
                     mb={2}
@@ -108,6 +75,7 @@ export default function ContractList() {
                                             variant="contained" color="secondary"
                                             size="small"
                                             startIcon={<CreateIcon />}
+                                            onClick={() => signContract(contract.uniqueId)}
                                         >
                                             Signer
                                         </Button>
