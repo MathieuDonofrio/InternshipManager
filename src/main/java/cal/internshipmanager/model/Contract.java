@@ -35,6 +35,12 @@ public class Contract implements Serializable {
 
     private Signature administratorSignature;
 
+    private Date studentSignedDate;
+
+    private Date employerSignedDate;
+
+    private Date administratorSignedDate;
+
     private UUID currentUserUniqueId;
 
     public enum Status {

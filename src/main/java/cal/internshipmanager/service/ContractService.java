@@ -70,8 +70,8 @@ public class ContractService {
 
         Contract contract = contractRepository.findById(uniqueId).get();
 
-        if (contract.getStatus() != Contract.Status.COMPLETED && contract.getCurrentUserUniqueId() == userUniqueId) {
 
+        if (contract.getStatus() != Contract.Status.COMPLETED && contract.getCurrentUserUniqueId().equals(userUniqueId)) {
             User user = userRepository.findById(userUniqueId).get();
 
             if (user.getSignature() != null) {
@@ -81,16 +81,19 @@ public class ContractService {
                         contract.setStudentSignature(user.getSignature());
                         contract.setCurrentUserUniqueId(contract.getApplication().getOffer().getEmployer());
                         contract.setStatus(Contract.Status.EMPLOYER);
+                        contract.setStudentSignedDate(new Date());
                         break;
                     case EMPLOYER:
                         contract.setEmployerSignature(user.getSignature());
                         contract.setCurrentUserUniqueId(contract.getAdministrator().getUniqueId());
                         contract.setStatus(Contract.Status.ADMINISTRATOR);
+                        contract.setEmployerSignedDate(new Date());
                         break;
                     case ADMINISTRATOR:
                         contract.setAdministratorSignature(user.getSignature());
                         contract.setCurrentUserUniqueId(null);
                         contract.setStatus(Contract.Status.COMPLETED);
+                        contract.setAdministratorSignedDate(new Date());
                         break;
                     default:
                         break;
@@ -131,9 +134,6 @@ public class ContractService {
         contract.setApplication(application);
         contract.setAdministrator(administrator);
         contract.setCreationDate(new Date());
-        contract.setStudentSignature(null);
-        contract.setEmployerSignature(null);
-        contract.setAdministratorSignature(null);
         contract.setCurrentUserUniqueId(application.getStudent().getUniqueId());
 
         contractRepository.save(contract);
