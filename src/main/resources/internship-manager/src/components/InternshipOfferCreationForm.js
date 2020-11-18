@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 
-
 import InternshipOfferService from '../services/InternshipOfferService';
 import Validator from '../utils/Validator';
 import Lock from '../utils/Lock'
@@ -92,9 +91,8 @@ class InternshipOfferCreationForm extends Component {
     }
 
     InternshipOfferService.create(request)
-      .then(response =>
-      {
-        this.props.enqueueSnackbar("Offre de stage crée",  { variant: 'success' });
+      .then(response => {
+        this.props.enqueueSnackbar("Offre de stage crée", { variant: 'success' });
       })
       .catch(error => this.backendValidation(error))
       .finally(() => { this.submitLock.unlock(); this.forceUpdate() });
@@ -132,9 +130,9 @@ class InternshipOfferCreationForm extends Component {
     this.errors.salary = Validator.positive(this.state.salary, "Le salaire ne peut pas être négative");
     this.errors.hours = Validator.min(this.state.hours, 1, "L'heure doit être au moins à 1");
     this.errors.startDate = Validator.after(this.state.startDate, new Date(), "Impossible de définir une date de début dans le passé");
-    this.errors.endDate = Validator.after(this.state.endDate,this.state.startDate.getTime(), "Impossible de définir une date de fin avant la date de début");
-    if(this.errors.endDate == '')
-      this.errors.endDate = Validator.week((this.state.endDate.getTime()-this.state.startDate.getTime())/ (1000 * 3600 * 24), "Impossible de définir une date de fin moins d'une semaine après le début");
+    this.errors.endDate = Validator.after(this.state.endDate, this.state.startDate.getTime(), "Impossible de définir une date de fin avant la date de début");
+    if (this.errors.endDate == '')
+      this.errors.endDate = Validator.week((this.state.endDate.getTime() - this.state.startDate.getTime()) / (1000 * 3600 * 24), "Impossible de définir une date de fin moins d'une semaine après le début");
     this.forceUpdate();
   }
 
@@ -300,8 +298,8 @@ class InternshipOfferCreationForm extends Component {
                       <ListItemSecondaryAction>
                         <IconButton edge="end" aria-label="delete">
                           <DeleteIcon
-                            onClick={() => this.onJobScopeDelete(value)} 
-                            />
+                            onClick={() => this.onJobScopeDelete(value)}
+                          />
                         </IconButton>
                       </ListItemSecondaryAction>
                     </ListItem>

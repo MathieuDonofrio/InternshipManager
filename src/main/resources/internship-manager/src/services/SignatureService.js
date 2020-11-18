@@ -60,6 +60,10 @@ class SignatureService {
         return axios.get(Config.target + `/signature/${request}`, downloadHeaders());
     }
     
+    find(request){
+        return axios.get(Config.target + `/signature/find/${request}`, headers());
+    }
+    
 }
 
 export default new SignatureService();

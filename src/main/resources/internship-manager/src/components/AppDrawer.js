@@ -347,6 +347,17 @@ export default function AppDrawer(props) {
             </ListItem>
           </List>
         }
+
+        <List>
+          <ListItem
+            button
+            key={"contract"}
+            onClick={() => history.push("/contract")}>
+            <ListItemIcon><HomeIcon /> </ListItemIcon>
+            <ListItemText primary={"contrats"} />
+          </ListItem>
+        </List>
+
       </Drawer>
       <main className={classes.content}>
         <div className={classes.toolbar} />

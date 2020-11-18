@@ -42,8 +42,8 @@ public class ContractController {
         return contractService.awaitingSignature(userUniqueId);
     }
 
-    @GetMapping("internship-application/{uniqueId}") // TODO replace internship-application by generate
-    public ResponseEntity<Resource> generate(@Valid @PathVariable @ExistingInternshipApplication UUID uniqueId) {
+    @GetMapping("generate/{uniqueId}") // TODO replace internship-application by generate
+    public ResponseEntity<Resource> generate(@Valid @PathVariable @ExistingContract UUID uniqueId) {
         return DownloadFileResponse.responseEntity(contractService.generate(uniqueId));
     }
 
@@ -52,7 +52,7 @@ public class ContractController {
     //
 
     @PutMapping("sign/{uniqueId}")
-    public void semester(@Valid @PathVariable @ExistingContract UUID uniqueId) {
+    public void sign(@Valid @PathVariable @ExistingContract UUID uniqueId) {
         contractService.sign(uniqueId);
     }
 

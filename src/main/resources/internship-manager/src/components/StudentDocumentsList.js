@@ -74,7 +74,7 @@ export default function StudentDocumentsList (props) {
                       startIcon={<CloudDownloadIcon />}
                       onClick={() => onDownloadClick(row)}
                     >
-                      Download
+                      Télécharger
                     </Button>
                   </Box>
 

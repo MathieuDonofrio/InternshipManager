@@ -15,7 +15,7 @@ import SignatureService from "../services/SignatureService";
 
 
 
-export default function CreateSignature(){
+export default function CreateSignature() {
 
     const [imageURL, setImageURL] = useState(null); // creer un state qui va contenir l'url de l'image
 
@@ -46,13 +46,13 @@ export default function CreateSignature(){
 
 
 
-        signature.toBlob(function(blob){
+        signature.toBlob(function (blob) {
 
             const request = {
                 file: blob
             }
             SignatureService.upload(request).then((response) => {
-                
+
                 setImageURL(signature.toDataURL("image/png"));
             });
         });
@@ -67,13 +67,18 @@ export default function CreateSignature(){
 
         let uuid = localStorage.getItem("UserUniqueId");
 
-        SignatureService.download(uuid).then((response) =>{
-            if(response){
+        SignatureService.find(uuid).then(data => {
 
-                let signature = new Blob([response.data], { type: response.headers['content-type'] },"image.png");
-                setImageURL(URL.createObjectURL(signature))
+            if (data.data) {
+                SignatureService.download(uuid).then((response) => {
+
+                    let signature = new Blob([response.data], { type: response.headers['content-type'] }, "image.png");
+                    setImageURL(URL.createObjectURL(signature))
+                });
             }
+
         });
+
     }
 
     useEffect(() => { fetchSignature(); }, []);
@@ -81,105 +86,105 @@ export default function CreateSignature(){
     const handleClickOpen = () => {
         setOpen(true);
     };
-    
+
     const handleClose = () => {
         setOpen(false);
     };
 
-    return(
+    return (
 
-            <div>
+        <div>
 
-                <Box
-                    mb={2}
-                    paddingTop={2}
-                    textAlign="center">
-                    <Typography component="h1" variant="h5">Créer une signature</Typography>
-                </Box>
+            <Box
+                mb={2}
+                paddingTop={2}
+                textAlign="center">
+                <Typography component="h1" variant="h5">Créer une signature</Typography>
+            </Box>
 
-                <Divider />
+            <Divider />
 
-                <Box
+            <Box
                 margin={1}>
 
-                    <Button variant="contained" color="primary" onClick={handleClickOpen}>
-                        Signature
+                <Button variant="contained" color="primary" onClick={handleClickOpen}>
+                    Signature
                     </Button>
-                </Box>
+            </Box>
 
-                <Dialog
-                    open={open}
-                    onClose={handleClose}
+            <Dialog
+                open={open}
+                onClose={handleClose}
+            >
+
+                <DialogContent
+                    style={{ backgroundColor: 'lightGray' }}
                 >
-
-                    <DialogContent
-                        style={{ backgroundColor: 'lightGray' }}
-                    >
-                        <Typography>Veuillez signez sur la ligne noir</Typography>
-                        <Divider></Divider>
-                        <Box
-                            style={{ 
-                                borderBottom: "5px solid black",
-                            }}
-                        >
-                            <SignaturePad
-                                ref={sigCanvas}
-                                canvasProps={{
-                                    className: "signatureCanvas"
-                                  }}
-                            />
-                        </Box>
-                    </DialogContent>
-
-                    <DialogActions>
-                        <Button onClick={handleClose} color="primary">
-                            Close
-                        </Button>
-                        <Button onClick={save} color="primary">
-                            Save
-                        </Button>
-                        <Button onClick={clear} color="primary">
-                            Clear
-                        </Button>
-                    </DialogActions>
-
-                </Dialog>
-                <br />
-                <br />
-                {/* if our we have a non-null image url we should 
-                show an image and pass our imageURL state to it*/}
-                
-                {imageURL ? (
+                    <Typography>Veuillez signez sur la ligne noir</Typography>
+                    <Divider></Divider>
                     <Box
-                        pb={8}
-                    >
-                             <Box
-                                mb={2}
-                                paddingTop={2}
-                                textAlign="center">
-                                <Typography color="primary" variant="h6">Signature actuelle</Typography>
-                            </Box>
-
-                        <Box
-                        id="mybox"
-                        
                         style={{
-                            margin:"1",
+                            borderBottom: "5px solid black",
+                        }}
+                    >
+                        <SignaturePad
+                            ref={sigCanvas}
+                            canvasProps={{
+                                className: "signatureCanvas"
+                            }}
+                        />
+                    </Box>
+                </DialogContent>
+
+                <DialogActions>
+                    <Button onClick={handleClose} color="primary">
+                        Close
+                        </Button>
+                    <Button onClick={save} color="primary">
+                        Save
+                        </Button>
+                    <Button onClick={clear} color="primary">
+                        Clear
+                        </Button>
+                </DialogActions>
+
+            </Dialog>
+            <br />
+            <br />
+            {/* if our we have a non-null image url we should 
+                show an image and pass our imageURL state to it*/}
+
+            {imageURL ? (
+                <Box
+                    pb={8}
+                >
+                    <Box
+                        mb={2}
+                        paddingTop={2}
+                        textAlign="center">
+                        <Typography color="primary" variant="h6">Signature actuelle</Typography>
+                    </Box>
+
+                    <Box
+                        id="mybox"
+
+                        style={{
+                            margin: "1",
                             width: "auto",
-                            height: "auto",            
+                            height: "auto",
                         }}>
 
-                            <Box
-                            padding = {2}
+                        <Box
+                            padding={2}
                             style={{
                                 margin: "0 auto",
                                 // boxShadow : "0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22)",
                                 width: "400px",
-                                height: "250px",  
-                                
+                                height: "250px",
+
                             }}
-                            >
-                                <img
+                        >
+                            <img
                                 src={imageURL}
                                 alt="my signature"
                                 style={{
@@ -189,18 +194,18 @@ export default function CreateSignature(){
                                     maxHeight: "250px",
                                     borderBottom: "5px solid black",
                                 }}
-                                />
-
-                            </Box>
+                            />
 
                         </Box>
+
                     </Box>
-                    ) :     <Box
-                                mb={2}
-                                paddingTop={2}
-                                textAlign="center">
-                                <Typography color="primary" variant="h6">Aucune Signature</Typography>
-                            </Box>}
-            </div>
+                </Box>
+            ) : <Box
+                mb={2}
+                paddingTop={2}
+                textAlign="center">
+                    <Typography color="primary" variant="h6">Aucune Signature</Typography>
+                </Box>}
+        </div>
     );
 }

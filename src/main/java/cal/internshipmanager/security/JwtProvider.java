@@ -85,12 +85,12 @@ public final class JwtProvider {
      * @return verified decoded jwt token
      * @throws JWTVerificationException if the verification failed
      */
-    public DecodedJWT verify(final String token) throws JWTVerificationException {
+    public DecodedJWT verify(String token) throws JWTVerificationException {
 
         if (token == null)
             throw new JWTVerificationException("Token cannot be null");
 
-        token.replace("Bearer ", "");
+        token = token.replace("Bearer ", "");
 
         return verifier.verify(token);
     }

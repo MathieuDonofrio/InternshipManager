@@ -25,6 +25,7 @@ import StudentProfilePage from './pages/StudentProfilePage';
 import SelectActionPage from './pages/SelectActionPage';
 import EmployerProfilePage from './pages/EmployerProfilePage';
 import EmployerListPage from './pages/EmployerListPage';
+import ContractPage from './pages/ContractPage';
 import CreateSignaturePage from './pages/CreateSignaturePage';
 
 function App() {
@@ -76,6 +77,7 @@ function App() {
                 <Route exact path="/student-profile-page/:uuid/:fullName" component={StudentProfilePage}></Route>
                 <Route exact path="/employer-profile-page/:uuid/:fullName" component={EmployerProfilePage}></Route>
 
+                <Route exact path="/contract" component={ContractPage}></Route>
                 <Route exact path="/select-action/:uuid" component={SelectActionPage}></Route>
                 <Route exact path="/create-signature" component={CreateSignaturePage}></Route>
 

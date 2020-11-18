@@ -126,7 +126,7 @@ class Portfolio extends Component {
 
     PortfolioService.upload(request).then(() => {
       this.onUpdatePortfolio();
-      this.props.enqueueSnackbar(request.file.name + "téléversé",  { variant: 'success' });
+      this.props.enqueueSnackbar(request.file.name + " téléversé",  { variant: 'success' });
     })
 
     this.onDialogClose();

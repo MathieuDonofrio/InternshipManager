@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
 
 import Button from '@material-ui/core/Button';
@@ -58,8 +57,6 @@ export default function StudentApplicationList(props) {
   const [rows, setRows] = useState([]);
   const [currentStudentId, setCurrentStudentId] = useState('');
 
-  const classes = useStyles();
-
   const handleClose = () => {
     props.onClose();
   };
@@ -92,13 +89,11 @@ export default function StudentApplicationList(props) {
 
   const onDownloadContract = (application) => {
 
-    ContractService.generate(application.uniqueId).then(response =>{
+    ContractService.generate(application.uniqueId).then(response => {
       saveAs(new Blob([response.data], { type: response.headers['content-type'] }), "Contrat");
     });
 
   }
-
-
 
   return (
     <div>
@@ -108,7 +103,7 @@ export default function StudentApplicationList(props) {
           paddingTop={2}
           textAlign="left"
         >
-          <Typography component="h1" variant="h4" align="center">List Internship Application</Typography>
+          <Typography component="h1" variant="h4" align="center">Liste des candidatures de stages</Typography>
         </Box>
       </Container>
 
@@ -116,7 +111,7 @@ export default function StudentApplicationList(props) {
         <Table size="small" aria-label="a dense table">
           <TableHead>
             <TableRow>
-              <TableCell align="center"><strong>Name</strong></TableCell>
+              <TableCell align="center"><strong>Nom</strong></TableCell>
               <TableCell align="center"><strong>Date</strong></TableCell>
               <TableCell align="center"><strong>Action</strong></TableCell>
             </TableRow>
@@ -146,7 +141,7 @@ export default function StudentApplicationList(props) {
                       size="small" startIcon={<ThumbUpAltOutlinedIcon />}
                       onClick={() => onApprovedClicked(row.uniqueId)}
                     >
-                      Select
+                      Choisir
                     </Button>
                   </Box>
 
@@ -156,7 +151,7 @@ export default function StudentApplicationList(props) {
                       size="small"
                       startIcon={<ThumbDownAltOutlinedIcon />} onClick={() => onRejectedClicked(row.uniqueId)}
                     >
-                      Reject
+                      Rejeté
                     </Button>
                   </Box>
 
@@ -167,7 +162,7 @@ export default function StudentApplicationList(props) {
                       size="small" startIcon={<PageviewIcon />}
                       onClick={() => onDownloadContract(row)}
                     >
-                      View Contract
+                      Voir Contrat
                     </Button>
                   </Box>
 
