@@ -11,8 +11,11 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { Box, Paper, Tab, Tabs } from "@material-ui/core";
-import UserService from '../services/UserService'
+import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 import ContractService from '../services/ContractService';
+import CreateIcon from '@material-ui/icons/Create';
+import ThumbUpAltOutlinedIcon from '@material-ui/icons/ThumbUpAltOutlined';
+import { Divider } from "@material-ui/core";
 
 const useStyles = makeStyles({
     table: {
@@ -27,12 +30,12 @@ const useStyles2 = makeStyles({
 });
 
 const fakeRow = [
-    {firstName: 'test',lastName:'test',company:'jeancoutu',jobTitle:'developpeur'},
-    {firstName: 'test',lastName:'test',company:'jeancoutu',jobTitle:'developpeur'},
-    {firstName: 'test',lastName:'test',company:'jeancoutu',jobTitle:'developpeur'},
-    {firstName: 'test',lastName:'test',company:'jeancoutu',jobTitle:'developpeur'},
-    {firstName: 'test',lastName:'test',company:'jeancoutu',jobTitle:'developpeur'},
-    {firstName: 'test',lastName:'test',company:'jeancoutu',jobTitle:'developpeur'},
+    { firstName: 'test', lastName: 'test', company: 'jeancoutu', jobTitle: 'developpeur' },
+    { firstName: 'test', lastName: 'test', company: 'jeancoutu', jobTitle: 'developpeur' },
+    { firstName: 'test', lastName: 'test', company: 'jeancoutu', jobTitle: 'developpeur' },
+    { firstName: 'test', lastName: 'test', company: 'jeancoutu', jobTitle: 'developpeur' },
+    { firstName: 'test', lastName: 'test', company: 'jeancoutu', jobTitle: 'developpeur' },
+    { firstName: 'test', lastName: 'test', company: 'jeancoutu', jobTitle: 'developpeur' },
 ]
 
 export default function ContractList() {
@@ -50,15 +53,27 @@ export default function ContractList() {
 
     const fetchAllUsers = async () => {
         const response = await ContractService.awaitingSignature(localStorage.getItem('UserUniqueId'));
-        //setRows(response.data.users);
         console.log(response.data);
-        setRows(fakeRow);
+        setRows(response.data.contracts);
     }
 
     useEffect(() => { fetchAllUsers(); }, [])
 
     return (
         <div>
+            <Paper className={classes2.root}>
+                <Tabs
+                    value={value}
+                    onChange={handleChange}
+                    indicatorColor="primary"
+                    textColor="primary"
+                    centered
+                >
+                    <Tab label="tous"/>
+                    <Tab label="signé"/>
+                    <Tab label="non signé"/>
+                </Tabs>
+            </Paper>
             <Container>
                 <Box
                     mb={2}
@@ -74,25 +89,39 @@ export default function ContractList() {
                     <TableHead>
                         <TableRow>
                             <TableCell align="center"><strong>Étudiant</strong></TableCell>
-                            <TableCell align="center"><strong>Compagnie</strong></TableCell>
-                            <TableCell align="center"><strong>Titre de poste</strong></TableCell>
-                            <TableCell align="center"><strong>Signer</strong></TableCell>
+                            <TableCell align="center"><strong>Détails</strong></TableCell>
+                            <TableCell align="center"><strong>Actions</strong></TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {rows.map((contract, index) => (
                             <TableRow key={index}>
-                                <TableCell align="center">{contract.firstName + " " + contract.lastName} </TableCell>
-                                <TableCell align="center">{contract.company}</TableCell>
-                                <TableCell align="center">{contract.jobTitle}</TableCell>
-                                <TableCell align="center">
-                                    <Button
-                                        variant="contained" color="secondary"
-                                        size="small"
-                                        // onClick={() => history.push(`/student-profile-page/${student.uniqueId}/${student.firstName + " " + student.lastName}`)}
-                                    >
-                                        signer le contrat
-                    </Button>
+                                <TableCell style={{ verticalAlign: 'top' }} align="center">{contract.application.studentFirstName + " " + contract.application.studentLastName} </TableCell>
+                                <TableCell component="th" scope="row" style={{ verticalAlign: 'top' }} align="left">
+                                    <p><strong>Compagnie: </strong>{contract.application.company}</p>
+                                    <p><strong>Titre de poste: </strong>{contract.application.jobTitle}</p>
+                                    <p><strong>Date: </strong>{new Date(contract.creationDate).toDateString()}</p>
+                                </TableCell>
+                                <TableCell align="center" style={{ verticalAlign: 'top' }}>
+                                    <div style={{ marginBottom: '10px' }}>
+                                        <Button
+                                            variant="contained" color="secondary"
+                                            size="small"
+                                            startIcon={<CreateIcon />}
+                                        >
+                                            Signer
+                                        </Button>
+                                    </div>
+                                    <div>
+
+                                        <Button
+                                            variant="contained" color="secondary"
+                                            size="small"
+                                            startIcon={<CloudDownloadIcon />}
+                                        >
+                                            Télécharger
+                                        </Button>
+                                    </div>
                                 </TableCell>
                             </TableRow>
                         ))}
