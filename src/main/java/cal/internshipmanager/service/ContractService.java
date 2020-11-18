@@ -188,8 +188,8 @@ public class ContractService {
         User employer = userRepository.findById(offer.getEmployer()).orElse(null);
 
 
-        Image image = Image.getInstance("D:/InternshipManager/src/main/resources/logo.png");
-
+        //Image image = Image.getInstance("D:/InternshipManager/src/main/resources/logo.png");
+        Image image = Image.getInstance("IMG");
         SimpleDateFormat DateFor = new SimpleDateFormat("dd MMMM yyyy");
         Font font = FontFactory.getFont(FontFactory.COURIER, 16, BaseColor.BLACK);
         Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 18, Font.BOLD);
@@ -217,9 +217,9 @@ public class ContractService {
         document.setMargins(5,5,5,5);
         document.addTitle("Contrat");
         document.add(r);
-        image.setScaleToFitHeight(true);
-        image.setWidthPercentage(125);
-        document.add(image);
+        //image.setScaleToFitHeight(true);
+        //image.setWidthPercentage(125);
+        //document.add(image);
         document.add(p2);
 
 
