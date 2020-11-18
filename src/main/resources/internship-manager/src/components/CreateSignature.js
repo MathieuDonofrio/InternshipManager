@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-
+import { useSnackbar } from 'notistack';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
@@ -13,8 +13,6 @@ import SignatureService from "../services/SignatureService";
 
 
 
-
-
 export default function CreateSignature() {
 
     const [imageURL, setImageURL] = useState(null); // creer un state qui va contenir l'url de l'image
@@ -22,6 +20,8 @@ export default function CreateSignature() {
     const [open, setOpen] = useState(false);
 
     const sigCanvas = useRef({});
+
+    const { enqueueSnackbar } = useSnackbar();
 
 
     /* 
@@ -54,6 +54,8 @@ export default function CreateSignature() {
             SignatureService.upload(request).then((response) => {
 
                 setImageURL(signature.toDataURL("image/png"));
+
+                enqueueSnackbar("Signature changé",  { variant: 'success' });
             });
         });
 

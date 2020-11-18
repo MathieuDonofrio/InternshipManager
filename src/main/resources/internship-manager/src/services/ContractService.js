@@ -47,6 +47,14 @@ class ContractService {
         return axios.put(Config.target + `/contract/sign/${request}`, {}, headers());
     }
 
+    //
+    // Post
+    //
+
+    create(request){
+        return axios.post(Config.target + `/contract/create/${request}`, {}, headers());
+    }
+
 }
 
 export default new ContractService();

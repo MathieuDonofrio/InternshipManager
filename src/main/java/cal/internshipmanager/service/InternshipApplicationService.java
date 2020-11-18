@@ -75,6 +75,8 @@ public class InternshipApplicationService {
         internshipApplication.setSemester(settingsService.getSemester());
         internshipApplication.setStudent(student);
         internshipApplication.setOffer(offer);
+        //internshipApplication.setStudentUniqueId(student.getUniqueId());
+        //internshipApplication.setOfferUniqueId(offer.getUniqueId());
         internshipApplication.setDate(new Date());
         internshipApplication.setInterviewDate(new Date(0));
         internshipApplication.setDocuments(documents);

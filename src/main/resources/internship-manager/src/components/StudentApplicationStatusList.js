@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import InternshipApplicationService from "../services/InternshipApplicationService";
 import { withRouter } from 'react-router';
+import { withSnackbar } from 'notistack';
 import Lock from '../utils/Lock'
 import DateFnsUtils from '@date-io/date-fns';
 import Box from '@material-ui/core/Box';
@@ -10,9 +11,11 @@ import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/picker
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
+import Button from '@material-ui/core/Button';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import ContractService from "../services/ContractService";
 
 
 //
@@ -37,9 +40,20 @@ class StudentApplicationStatusList extends Component {
     this.submitLock = new Lock();
   }
 
+  
+  isAdministrator = () => {
+    return localStorage.getItem('UserType') === "ADMINISTRATOR";
+  }
+
   //
   // Event Handlers
   //
+
+  onCreateContract = applicationUniqueId => {
+    ContractService.create(applicationUniqueId).then(response => {
+      this.props.enqueueSnackbar("Contrat crée",  { variant: 'success' });
+    })
+  }
 
   onDateChange = index => date => {
     this.state.applications[index].interviewDate = date;
@@ -50,7 +64,6 @@ class StudentApplicationStatusList extends Component {
   onUpdateStudentApplicationsList() {
     let userId = this.props.studentId ? this.props.studentId : localStorage.getItem("UserUniqueId");
     InternshipApplicationService.internshipApplications(userId).then(response => {
-      console.log(response.data);
       this.setState(response.data);
     })
   }
@@ -61,7 +74,7 @@ class StudentApplicationStatusList extends Component {
 
   renderTableData() {
     return this.state.applications.map((studentAppList, index) => {
-      const { company, jobTitle, date, status, interviewDate } = studentAppList
+      const { uniqueId, company, jobTitle, date, status, interviewDate } = studentAppList
       return (
         <TableRow key={index}>
           <TableCell component="th" scope="row" align="center">{company}</TableCell>
@@ -108,6 +121,18 @@ class StudentApplicationStatusList extends Component {
                     />
                   }
                 </MuiPickersUtilsProvider>
+
+                {
+                  this.isAdministrator() &&
+                  <Button
+                    variant="contained" color="primary"
+                    size="small"
+                    onClick={() => this.onCreateContract(uniqueId)}
+                  >
+                    Create contract
+                  </Button>
+                }
+                
               </div>
             }
           </TableCell>
@@ -156,4 +181,4 @@ class StudentApplicationStatusList extends Component {
 
 
 }
-export default withRouter(StudentApplicationStatusList);
+export default withSnackbar(withRouter(StudentApplicationStatusList));

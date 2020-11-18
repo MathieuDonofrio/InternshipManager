@@ -60,7 +60,7 @@ public class ContractController {
     // Post
     //
 
-    @GetMapping("create/{applicationUniqueId}") // TODO replace internship-application by generate
+    @PostMapping("create/{applicationUniqueId}") // TODO replace internship-application by generate
     public void create(@Valid @PathVariable @ExistingInternshipApplication UUID applicationUniqueId) {
         contractService.create(applicationUniqueId);
     }

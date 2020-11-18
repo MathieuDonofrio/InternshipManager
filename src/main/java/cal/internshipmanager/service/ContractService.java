@@ -462,6 +462,7 @@ public class ContractService {
         p7 = new Paragraph(new Phrase(admin.getFirstName()+" "+admin.getLastName()));
         p7.setAlignment(Paragraph.ALIGN_MIDDLE+Paragraph.ALIGN_TOP);
         tmpCell3.addElement(p7);
+        t3.addCell(tmpCell3);
         t3.addCell(removeBorders(new Phrase("Date")));
         cell8.addElement(t3);
         t2.addCell(cell8);

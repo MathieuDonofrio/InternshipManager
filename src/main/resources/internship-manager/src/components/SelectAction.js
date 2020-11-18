@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
 import { useParams } from "react-router-dom";
+import { useSnackbar } from 'notistack';
 import InternshipOfferService from '../services/InternshipOfferService';
 import UserService from '../services/UserService';
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
@@ -88,7 +89,7 @@ const useStyles = makeStyles((theme) => ({
 function StudentPortfolioDetailsDialogProps(props) {
 
   const { onClose, selectedValue, open } = props;
-
+  
   const handleClose = () => {
     onClose(selectedValue);
   };
@@ -116,7 +117,8 @@ export default function InteractiveLists() {
   const classes = useStyles();
   const history = useHistory();
 
-
+  const { enqueueSnackbar } = useSnackbar();
+  
   const handleClose = (value) => {
     setOpen(false);
   };
@@ -129,21 +131,15 @@ export default function InteractiveLists() {
   const onApprovedClicked = (application) => {
 
     InternshipApplicationService.select(application).then(() => fetchStudentApplications());
+    enqueueSnackbar("Contrat Apprové",  { variant: 'success' });
 
   }
 
   const onRejectedClicked = (application) => {
 
     InternshipApplicationService.reject(application).then(() => fetchStudentApplications());
+    enqueueSnackbar("Contrat Rejeté",  { variant: 'success' });
 
-  }
-
-  const onDownloadContract = (application) => {
-
-    ContractService.generate(application.uniqueId).then(response => {
-      saveAs(new Blob([response.data], { type: response.headers['content-type'] }), "Contrat");
-      
-    });
   }
 
   const fetchStudentApplications = async () => {
@@ -232,15 +228,6 @@ export default function InteractiveLists() {
                       Refuser
                         </Button>
                   </Box>
-
-
-                  <Button
-                    variant="contained" color="primary"
-                    size="small" startIcon={<PageviewIcon />}
-                    onClick={() => onDownloadContract(application)}
-                  >
-                    View Contract
-                    </Button>
 
                   <Box margin={1}>
                   </Box>

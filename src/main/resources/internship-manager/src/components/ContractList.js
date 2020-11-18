@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { useSnackbar } from 'notistack';
+import SignatureService from "../services/SignatureService";
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
@@ -26,16 +28,36 @@ export default function ContractList() {
 
     const classes = useStyles();
 
+    const { enqueueSnackbar } = useSnackbar();
+
     const [rows, setRows] = useState([]);
 
     const generateContract = (contractId) => {
         ContractService.generate(contractId).then(response => {
             saveAs(new Blob([response.data], { type: response.headers['content-type'] }), 'contrat.pdf');
+            enqueueSnackbar("Contrat téléchargé",  { variant: 'info' });
         });
     }
 
     const signContract = (contractId) => {
-        ContractService.sign(contractId).then(() => fetchAllAwaitingContracts());
+        let uuid = localStorage.getItem("UserUniqueId");
+
+        SignatureService.find(uuid).then(data => {
+
+            if (data.data) {
+
+                ContractService.sign(contractId).then(() => 
+                {
+                    fetchAllAwaitingContracts();
+                    enqueueSnackbar("Contrat Signé",  { variant: 'success' });
+                })
+
+            }else{
+                enqueueSnackbar("Vous n'avez pas de signature!",  { variant: 'error' });
+            }
+
+        });
+        
     }
 
     const fetchAllAwaitingContracts = async () => {
