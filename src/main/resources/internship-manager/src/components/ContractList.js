@@ -13,6 +13,7 @@ import { Box } from "@material-ui/core";
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 import ContractService from '../services/ContractService';
 import CreateIcon from '@material-ui/icons/Create';
+import { saveAs } from 'file-saver';
 
 const useStyles = makeStyles({
     table: {
@@ -27,7 +28,13 @@ export default function ContractList() {
 
     const [rows, setRows] = useState([]);
 
-    const signContract = (contractId) =>{
+    const generateContract = (contractId) => {
+        ContractService.generate(contractId).then(response => {
+            saveAs(new Blob([response.data], { type: response.headers['content-type'] }), 'filename.pdf');
+        });
+    }
+
+    const signContract = (contractId) => {
         ContractService.sign(contractId).then(() => fetchAllAwaitingContracts());
     }
 
@@ -86,6 +93,7 @@ export default function ContractList() {
                                             variant="contained" color="secondary"
                                             size="small"
                                             startIcon={<CloudDownloadIcon />}
+                                            onClick={() => generateContract(contract.uniqueId)}
                                         >
                                             Télécharger
                                         </Button>

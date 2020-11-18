@@ -32,7 +32,7 @@ class ContractService {
     //
 
     generate(request) {
-        return axios.get(Config.target + `/contract/internship-application/${request}`, downloadHeaders());
+        return axios.get(Config.target + `/contract/generate/${request}`, downloadHeaders());
     }
 
     awaitingSignature(request) {
