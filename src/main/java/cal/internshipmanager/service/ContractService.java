@@ -405,13 +405,13 @@ public class ContractService {
         t3.addCell(tmpCell3);
         t3.addCell(removeBorders(new Phrase("Date")));
 
-        if(contract.getStudentSignature() != null){
+        if(contract.getEmployerSignature() != null){
         image = Image.getInstance(contract.getEmployerSignature().getData());
         image.scaleAbsolute(120,40);
         image.setAlignment(Element.ALIGN_MIDDLE);}
         tmpCell=assignBorder(new PdfPCell(new Phrase("",new Font(Font.FontFamily.HELVETICA,12,Font.BOLD))),0,0,2);
         tmpCell.addElement(new Phrase("Pour l’entreprise : ",new Font(Font.FontFamily.HELVETICA,12,Font.BOLD)));
-        if(contract.getStudentSignature() != null)
+        if(contract.getEmployerSignature() != null)
         tmpCell.addElement(image);
         tmpCell.setPadding(20);
         t3.addCell(tmpCell);
@@ -423,13 +423,13 @@ public class ContractService {
         t3.addCell(tmpCell3);
         t3.addCell(removeBorders(new Phrase("Date")));
 
-        if(contract.getStudentSignature() != null){
+        if(contract.getAdministratorSignature() != null){
         image = Image.getInstance(contract.getAdministratorSignature().getData());
         image.scaleAbsolute(120,40);
         image.setAlignment(Element.ALIGN_MIDDLE);}
         tmpCell=assignBorder(new PdfPCell(new Phrase("",new Font(Font.FontFamily.HELVETICA,12,Font.BOLD))),0,0,2);
         tmpCell.addElement(new Phrase("Pour le Collège : ",new Font(Font.FontFamily.HELVETICA,12,Font.BOLD)));
-        if(contract.getStudentSignature() != null)
+        if(contract.getAdministratorSignature() != null)
         tmpCell.addElement(image);
         tmpCell.setPadding(20);
         t3.addCell(tmpCell);
