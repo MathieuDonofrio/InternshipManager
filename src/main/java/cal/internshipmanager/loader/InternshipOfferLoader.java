@@ -65,9 +65,7 @@ public class InternshipOfferLoader implements CommandLineRunner {
                 .findAllBySemester(settingsService.getSemester()).size();
 
         for(int i = 0; i < needed; i++){
-
             final InternshipOffer internshipOffer = generate();
-
             internshipOfferRepository.save(internshipOffer);
         }
 

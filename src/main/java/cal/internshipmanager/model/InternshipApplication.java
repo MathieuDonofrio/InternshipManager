@@ -38,5 +38,4 @@ public class InternshipApplication implements Serializable {
         PENDING_APPROVAL, APPROVED, REJECTED, SELECTED;
     }
 
-
 }
