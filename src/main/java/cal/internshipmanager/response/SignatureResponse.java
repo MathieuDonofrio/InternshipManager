@@ -1,6 +1,5 @@
 package cal.internshipmanager.response;
 
-import cal.internshipmanager.model.Signature;
 import lombok.Data;
 
 import java.util.Date;
