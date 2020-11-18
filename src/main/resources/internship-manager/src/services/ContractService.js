@@ -35,6 +35,10 @@ class ContractService {
         return axios.get(Config.target + `/contract/internship-application/${request}`, downloadHeaders());
     }
 
+    awaitingSignature(request){
+        return axios.get(Config.target + `/contract/awaiting-signature/${request}`,headers());
+    }
+
 }
 
 export default new ContractService();

@@ -75,7 +75,9 @@ public class ContractListResponse {
         return contract;
     }
 
-    public static Signature map(cal.internshipmanager.model.Signature from){
+    public static Signature map(cal.internshipmanager.model.Signature from) {
+        if (from == null)
+            return null;
 
         Signature signature = new Signature();
 

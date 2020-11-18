@@ -52,7 +52,6 @@ export default function StudentListTable() {
     const response = await UserService.studentsWithoutApplication();
     setRows(response.data.users);
   }
- 
 
   useEffect(() => { fetchAllUsers(); }, [])
 

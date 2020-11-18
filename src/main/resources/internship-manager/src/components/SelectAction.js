@@ -167,7 +167,7 @@ export default function InteractiveLists() {
           paddingTop={2}
           textAlign="center">
 
-          <Typography component="h1" variant="h4">Liste d'étudiants intéressé</Typography>
+          <Typography component="h1" variant="h4">Liste d'étudiants intéressés</Typography>
         </Box>
       </Container>
       {rows.length == 0 &&

@@ -117,7 +117,7 @@ export default function StudentInternshipApplicationValidationTable(props) {
                 <TableCell align="center"><strong>Compagnie</strong></TableCell>
                 <TableCell align="center"><strong>Job Title</strong></TableCell>
                 <TableCell align="center"><strong>Date</strong></TableCell>
-                <TableCell align="center"><strong>Decision</strong></TableCell>
+                <TableCell align="center"><strong>Décision</strong></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>

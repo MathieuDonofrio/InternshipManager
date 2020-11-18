@@ -6,6 +6,7 @@ import AuthenticationService from '../services/AuthenticationService';
 import Validator from '../utils/Validator';
 import Lock from '../utils/Lock'
 import Copyright from './Copyright';
+import { useSnackbar } from 'notistack';
 
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -19,6 +20,8 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import Container from '@material-ui/core/Container';
 import LockOutlined from '@material-ui/icons/LockOutlined';
 import PortfolioService from "../services/PortfolioService";
+import { withSnackbar } from 'notistack';
+import NotificationService from '../services/NotificationService';
 
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -96,6 +99,7 @@ class Portfolio extends Component {
 
     PortfolioService.download(document.uniqueId).then(response => {
       saveAs(new Blob([response.data], { type: response.headers['content-type'] }), document.fileName);
+      this.props.enqueueSnackbar(document.fileName + " téléchargé",  { variant: 'info' });
     })
 
   }
@@ -108,6 +112,7 @@ class Portfolio extends Component {
 
     PortfolioService.delete(request).then(() => {
       this.onUpdatePortfolio();
+      this.props.enqueueSnackbar(document.fileName + " supprimé",  { variant: 'success' });
     })
 
   }
@@ -121,6 +126,7 @@ class Portfolio extends Component {
 
     PortfolioService.upload(request).then(() => {
       this.onUpdatePortfolio();
+      this.props.enqueueSnackbar(request.file.name + " téléversé",  { variant: 'success' });
     })
 
     this.onDialogClose();
@@ -301,4 +307,4 @@ class Portfolio extends Component {
   }
 }
 
-export default withRouter(Portfolio);
+export default withSnackbar(withRouter(Portfolio));
