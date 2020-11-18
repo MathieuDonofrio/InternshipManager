@@ -5,6 +5,7 @@ import cal.internshipmanager.repository.ContractRepository;
 import cal.internshipmanager.repository.InternshipApplicationRepository;
 import cal.internshipmanager.repository.UserRepository;
 import cal.internshipmanager.response.ContractListResponse;
+import cal.internshipmanager.response.DownloadFileResponse;
 import cal.internshipmanager.response.PortfolioDocumentListResponse;
 import cal.internshipmanager.security.JwtAuthentication;
 import cal.internshipmanager.security.JwtProvider;
@@ -15,10 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.junit.jupiter.api.Assertions.*;
@@ -430,6 +428,75 @@ public class ContractServiceTest {
 
         contractService.sign(contract.getUniqueId());
 
+    }
+
+    @Test
+    public void generate_validRequest(){
+
+        // Arrange
+
+        User student = new User();
+
+        student.setUniqueId(UUID.randomUUID());
+        student.setType(User.Type.STUDENT);
+        student.setEmail("student@student.com");
+        student.setFirstName("Student");
+        student.setLastName("Student");
+
+        User employer = new User();
+
+        employer.setUniqueId(UUID.randomUUID());
+        employer.setType(User.Type.EMPLOYER);
+        employer.setEmail("employer@employer.com");
+        employer.setFirstName("Employer");
+        employer.setLastName("Employer");
+
+        User admin = new User();
+
+        admin.setUniqueId(UUID.randomUUID());
+        admin.setType(User.Type.ADMINISTRATOR);
+        admin.setEmail("admin@admin.com");
+        admin.setFirstName("Admin");
+        admin.setLastName("Admin");
+
+        InternshipOffer internshipOffer = new InternshipOffer();
+
+        internshipOffer.setUniqueId(UUID.randomUUID());
+        internshipOffer.setEmployer(employer.getUniqueId());
+        internshipOffer.setStartDate(new Date());
+        internshipOffer.setEndDate(new Date());
+        internshipOffer.setJobScope(new ArrayList<>());
+
+        InternshipApplication application = new InternshipApplication();
+
+        application.setUniqueId(UUID.randomUUID());
+        application.setSemester(settingsService.getSemester());
+        application.setStudent(student);
+        application.setOffer(internshipOffer);
+        application.setStatus(InternshipApplication.Status.APPROVED);
+        application.setDate(new Date());
+        application.setInterviewDate(new Date());
+
+        Contract contract = new Contract();
+
+        contract.setUniqueId(UUID.randomUUID());
+        contract.setCurrentUserUniqueId(student.getUniqueId());
+        contract.setApplication(application);
+        contract.setStatus(Contract.Status.STUDENT);
+        contract.setAdministrator(admin);
+
+        ContractService contractService = new ContractService(internshipApplicationRepository, userRepository, null, contractRepository, settingsService );
+
+        when(contractRepository.findById(contract.getUniqueId())).thenReturn(Optional.of(contract));
+        when(userRepository.findById(employer.getUniqueId())).thenReturn(Optional.of(employer));
+
+        // Act
+
+        DownloadFileResponse response = contractService.generate(contract.getUniqueId());
+
+        // Assert
+
+        assertNotNull(response);
     }
 
 }

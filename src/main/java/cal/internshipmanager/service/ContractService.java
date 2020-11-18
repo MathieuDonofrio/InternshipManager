@@ -187,8 +187,7 @@ public class ContractService {
         User employer = userRepository.findById(offer.getEmployer()).orElse(null);
 
 
-        Image image = Image.getInstance("D:/InternshipManager/src/main/resources/logo.png");
-
+        Image image = Image.getInstance("src/main/resources/logo.png");
         SimpleDateFormat DateFor = new SimpleDateFormat("dd MMMM yyyy");
         Font font = FontFactory.getFont(FontFactory.COURIER, 16, BaseColor.BLACK);
         Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 18, Font.BOLD);
