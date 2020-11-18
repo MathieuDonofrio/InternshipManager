@@ -188,7 +188,9 @@ public class ContractService {
         User employer = userRepository.findById(offer.getEmployer()).orElse(null);
 
 
+
         Image image = Image.getInstance("src/main/resources/logo.png");
+
         SimpleDateFormat DateFor = new SimpleDateFormat("dd MMMM yyyy");
         Font font = FontFactory.getFont(FontFactory.COURIER, 16, BaseColor.BLACK);
         Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 18, Font.BOLD);
@@ -393,11 +395,16 @@ public class ContractService {
         tmpCell.addElement(image);
         tmpCell.setPadding(20);
         t3.addCell(tmpCell);
-        PdfPCell tmpCell2 = assignBorder(new PdfPCell(),0,0,2);
-        Paragraph p6 = new Paragraph(new Phrase(""+new Date()));
-        p6.setAlignment(Paragraph.ALIGN_MIDDLE+Paragraph.ALIGN_BOTTOM);
-        tmpCell2.addElement(p6);
-        t3.addCell(tmpCell2);
+        if(contract.getStudentSignature() != null) {
+            PdfPCell tmpCell2 = assignBorder(new PdfPCell(), 0, 0, 2);
+            Paragraph p6 = new Paragraph(new Phrase("" + new Date()));
+            p6.setAlignment(Paragraph.ALIGN_MIDDLE + Paragraph.ALIGN_BOTTOM);
+            tmpCell2.addElement(p6);
+            t3.addCell(tmpCell2);
+        }
+        else {
+            t3.addCell(assignBorder(new PdfPCell(), 0, 0, 2));
+        }
         PdfPCell tmpCell3=assignBorder(new PdfPCell(),0,0,0);
         Paragraph p7 = new Paragraph(new Phrase(student.getFirstName()+" "+student.getLastName()));
         p7.setAlignment(Paragraph.ALIGN_MIDDLE+Paragraph.ALIGN_TOP);
@@ -415,7 +422,16 @@ public class ContractService {
         tmpCell.addElement(image);
         tmpCell.setPadding(20);
         t3.addCell(tmpCell);
-        t3.addCell(assignBorder(new PdfPCell(),0,0,2));
+        if(contract.getEmployerSignature() != null) {
+            PdfPCell tmpCell2 = assignBorder(new PdfPCell(), 0, 0, 2);
+            Paragraph p6 = new Paragraph(new Phrase("" + new Date()));
+            p6.setAlignment(Paragraph.ALIGN_MIDDLE + Paragraph.ALIGN_BOTTOM);
+            tmpCell2.addElement(p6);
+            t3.addCell(tmpCell2);
+        }
+        else {
+            t3.addCell(assignBorder(new PdfPCell(), 0, 0, 2));
+        }
         tmpCell3=assignBorder(new PdfPCell(),0,0,0);
         p7 = new Paragraph(new Phrase(employer.getFirstName()+" "+employer.getLastName()));
         p7.setAlignment(Paragraph.ALIGN_MIDDLE+Paragraph.ALIGN_TOP);
@@ -433,7 +449,16 @@ public class ContractService {
         tmpCell.addElement(image);
         tmpCell.setPadding(20);
         t3.addCell(tmpCell);
-        t3.addCell(assignBorder(new PdfPCell(),0,0,2));
+        if(contract.getAdministratorSignature() != null) {
+            PdfPCell tmpCell2 = assignBorder(new PdfPCell(), 0, 0, 2);
+            Paragraph p6 = new Paragraph(new Phrase("" + new Date()));
+            p6.setAlignment(Paragraph.ALIGN_MIDDLE + Paragraph.ALIGN_BOTTOM);
+            tmpCell2.addElement(p6);
+            t3.addCell(tmpCell2);
+        }
+        else {
+            t3.addCell(assignBorder(new PdfPCell(), 0, 0, 2));
+        }
         tmpCell3=assignBorder(new PdfPCell(),0,0,0);
         p7 = new Paragraph(new Phrase(admin.getFirstName()+" "+admin.getLastName()));
         p7.setAlignment(Paragraph.ALIGN_MIDDLE+Paragraph.ALIGN_TOP);
