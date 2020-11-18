@@ -11,4 +11,5 @@ public class SignatureResponse {
     private UUID uniqueId;
 
     private Date uploadDate;
+
 }
