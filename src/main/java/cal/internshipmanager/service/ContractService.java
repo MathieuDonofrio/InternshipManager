@@ -189,6 +189,7 @@ public class ContractService {
 
 
         Image image = Image.getInstance("../../../resources/logo.png");
+        
         SimpleDateFormat DateFor = new SimpleDateFormat("dd MMMM yyyy");
         Font font = FontFactory.getFont(FontFactory.COURIER, 16, BaseColor.BLACK);
         Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 18, Font.BOLD);
