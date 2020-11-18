@@ -52,7 +52,7 @@ public class ContractController {
     //
 
     @PutMapping("sign/{uniqueId}")
-    public void semester(@Valid @PathVariable @ExistingContract UUID uniqueId) {
+    public void sign(@Valid @PathVariable @ExistingContract UUID uniqueId) {
         contractService.sign(uniqueId);
     }
 
