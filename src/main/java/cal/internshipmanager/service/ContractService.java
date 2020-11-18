@@ -70,7 +70,6 @@ public class ContractService {
 
         Contract contract = contractRepository.findById(uniqueId).get();
 
-
         if (contract.getStatus() != Contract.Status.COMPLETED && contract.getCurrentUserUniqueId().equals(userUniqueId)) {
             User user = userRepository.findById(userUniqueId).get();
 
