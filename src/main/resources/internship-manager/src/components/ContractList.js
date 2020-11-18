@@ -30,7 +30,7 @@ export default function ContractList() {
 
     const generateContract = (contractId) => {
         ContractService.generate(contractId).then(response => {
-            saveAs(new Blob([response.data], { type: response.headers['content-type'] }), 'filename.pdf');
+            saveAs(new Blob([response.data], { type: response.headers['content-type'] }), 'contrat.pdf');
         });
     }
 
