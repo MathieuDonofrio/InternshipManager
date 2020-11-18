@@ -3,7 +3,6 @@ import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import AuthenticationService from '../services/AuthenticationService';
 
-
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -19,9 +18,6 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Button from '@material-ui/core/Button';
-import Link from '@material-ui/core/Link';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 import PeopleIcon from '@material-ui/icons/People';
 import HomeIcon from '@material-ui/icons/Home';
 import CreateIcon from '@material-ui/icons/Create';
@@ -33,6 +29,8 @@ import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
 import SettingsService from "../services/SettingsService";
 import SettingsIcon from '@material-ui/icons/Settings';
+import CheckIcon from '@material-ui/icons/Check';
+
 
 const drawerWidth = 250;
 
@@ -117,10 +115,10 @@ export default function AppDrawer(props) {
 
     let type = localStorage.getItem('UserType').toLowerCase();
 
-    switch (type){
-      case "student" : return "ÉTUDIANT";
-      case "employer" : return "EMPLOYEUR";
-      case "administrator" : return "ADMINISTRATEUR";
+    switch (type) {
+      case "student": return "ÉTUDIANT";
+      case "employer": return "EMPLOYEUR";
+      case "administrator": return "ADMINISTRATEUR";
       default: return "ÉTUDIANT";
     }
   }
@@ -134,11 +132,11 @@ export default function AppDrawer(props) {
     });
   }
 
-  const translateSession = (session) =>{
-    switch (session){
-      case "AUTUMN" : return "Automne";
-      case "WINTER" : return "Hiver";
-      case "SUMMER" : return "Été";
+  const translateSession = (session) => {
+    switch (session) {
+      case "AUTUMN": return "Automne";
+      case "WINTER": return "Hiver";
+      case "SUMMER": return "Été";
       default: return "ERROR";
     }
   }
@@ -189,7 +187,7 @@ export default function AppDrawer(props) {
           </Typography>
 
           <Typography variant="h6" noWrap className={classes.panelTitle}>
-            {"Session Courrante : " + session}
+            {"Session Actuelle : " + session}
           </Typography>
 
           <Button
@@ -258,6 +256,13 @@ export default function AppDrawer(props) {
               <ListItemIcon><VisibilityIcon /> </ListItemIcon>
               <ListItemText primary={"État de la candidature"} />
             </ListItem>
+            <ListItem
+              button
+              key={"Signature"}
+              onClick={() => history.push("/create-signature")}>
+              <ListItemIcon><CheckIcon /> </ListItemIcon>
+              <ListItemText primary={"Signature"} />
+            </ListItem>
           </List>
         }
 
@@ -277,6 +282,13 @@ export default function AppDrawer(props) {
               onClick={() => history.push("/student-selection-page")}>
               <ListItemIcon><AssignmentTurnedInIcon /> </ListItemIcon>
               <ListItemText primary={"Sélection des étudiants"} />
+            </ListItem>
+            <ListItem
+              button
+              key={"Signature"}
+              onClick={() => history.push("/create-signature")}>
+              <ListItemIcon><CheckIcon /> </ListItemIcon>
+              <ListItemText primary={"Signature"} />
             </ListItem>
           </List>
         }
@@ -326,9 +338,15 @@ export default function AppDrawer(props) {
               <ListItemIcon><SettingsIcon /> </ListItemIcon>
               <ListItemText primary={"Paramètres"} />
             </ListItem>
+            <ListItem
+              button
+              key={"Signature"}
+              onClick={() => history.push("/create-signature")}>
+              <ListItemIcon><CheckIcon /> </ListItemIcon>
+              <ListItemText primary={"Signature"} />
+            </ListItem>
           </List>
         }
-
       </Drawer>
       <main className={classes.content}>
         <div className={classes.toolbar} />

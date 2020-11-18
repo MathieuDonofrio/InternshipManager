@@ -5,6 +5,7 @@ import InternshipOfferService from '../services/InternshipOfferService';
 import Validator from '../utils/Validator';
 import Lock from '../utils/Lock'
 import DateFnsUtils from '@date-io/date-fns';
+import { withSnackbar } from 'notistack';
 
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -52,7 +53,7 @@ const errors = {
   hours: ''
 }
 
-export default class InternshipOfferCreationForm extends Component {
+class InternshipOfferCreationForm extends Component {
 
   //
   // Constructors
@@ -91,6 +92,10 @@ export default class InternshipOfferCreationForm extends Component {
     }
 
     InternshipOfferService.create(request)
+      .then(response =>
+      {
+        this.props.enqueueSnackbar("Offre de stage crée",  { variant: 'success' });
+      })
       .catch(error => this.backendValidation(error))
       .finally(() => { this.submitLock.unlock(); this.forceUpdate() });
   }
@@ -388,3 +393,5 @@ export default class InternshipOfferCreationForm extends Component {
     )
   }
 }
+
+export default withSnackbar(InternshipOfferCreationForm);
