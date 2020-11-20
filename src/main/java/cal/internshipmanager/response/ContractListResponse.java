@@ -76,9 +76,9 @@ public class ContractListResponse {
         contract.studentSignature = map(from.getStudentSignature());
         contract.employerSignature = map(from.getEmployerSignature());
         contract.administratorSignature = map(from.getAdministratorSignature());
-        contract.studentSignedDate = from.getStudentSignedDate().getTime();
-        contract.employerSignedDate = from.getEmployerSignedDate().getTime();
-        contract.administratorSignedDate = from.getAdministratorSignedDate().getTime();
+        contract.studentSignedDate = from.getStudentSignedDate() == null ? -1 : from.getStudentSignedDate().getTime();
+        contract.employerSignedDate = from.getEmployerSignedDate() == null ? -1 :from.getEmployerSignedDate().getTime();
+        contract.administratorSignedDate = from.getAdministratorSignedDate() == null ? -1 :from.getAdministratorSignedDate().getTime();
         contract.currentUserUniqueId = from.getCurrentUserUniqueId();
 
         return contract;

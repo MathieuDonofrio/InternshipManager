@@ -37,7 +37,7 @@ public class ContractController {
     // Get
     //
 
-    @GetMapping("{userUniqueId}")
+    @GetMapping("{uniqueId}")
     public ContractListResponse.Contract find(@Valid @ExistingContract @PathVariable UUID uniqueId) {
         return contractService.find(uniqueId);
     }
