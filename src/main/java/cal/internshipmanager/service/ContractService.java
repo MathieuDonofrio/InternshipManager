@@ -10,6 +10,7 @@ import cal.internshipmanager.repository.InternshipOfferRepository;
 import cal.internshipmanager.repository.UserRepository;
 import cal.internshipmanager.response.ContractListResponse;
 import cal.internshipmanager.response.DownloadFileResponse;
+import cal.internshipmanager.response.UserListReponse;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
@@ -65,6 +66,10 @@ public class ContractService {
     //
     // Services
     //
+
+    public ContractListResponse.Contract find(UUID uniqueId){
+        return ContractListResponse.map(contractRepository.findById(uniqueId).get());
+    }
 
     public void sign(UUID uniqueId) {
 

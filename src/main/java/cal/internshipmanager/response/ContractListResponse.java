@@ -40,6 +40,12 @@ public class ContractListResponse {
 
         private Signature administratorSignature;
 
+        private long studentSignedDate;
+
+        private long employerSignedDate;
+
+        private long administratorSignedDate;
+
         private UUID currentUserUniqueId;
 
     }
@@ -49,7 +55,7 @@ public class ContractListResponse {
 
         private UUID uniqueId;
 
-        private Date uploadDate;
+        private long uploadDate;
 
     }
 
@@ -70,6 +76,9 @@ public class ContractListResponse {
         contract.studentSignature = map(from.getStudentSignature());
         contract.employerSignature = map(from.getEmployerSignature());
         contract.administratorSignature = map(from.getAdministratorSignature());
+        contract.studentSignedDate = from.getStudentSignedDate().getTime();
+        contract.employerSignedDate = from.getEmployerSignedDate().getTime();
+        contract.administratorSignedDate = from.getAdministratorSignedDate().getTime();
         contract.currentUserUniqueId = from.getCurrentUserUniqueId();
 
         return contract;
@@ -82,7 +91,7 @@ public class ContractListResponse {
         Signature signature = new Signature();
 
         signature.uniqueId = from.getUniqueId();
-        signature.uploadDate = from.getUploadDate();
+        signature.uploadDate = from.getUploadDate().getTime();
 
         return signature;
     }

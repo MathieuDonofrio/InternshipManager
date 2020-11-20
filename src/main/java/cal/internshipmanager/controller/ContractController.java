@@ -37,6 +37,11 @@ public class ContractController {
     // Get
     //
 
+    @GetMapping("{userUniqueId}")
+    public ContractListResponse.Contract find(@Valid @ExistingContract @PathVariable UUID uniqueId) {
+        return contractService.find(uniqueId);
+    }
+
     @GetMapping("awaiting-signature/{userUniqueId}")
     public ContractListResponse awaitingSignature(@Valid @PathVariable @ExistingUser UUID userUniqueId){
         return contractService.awaitingSignature(userUniqueId);

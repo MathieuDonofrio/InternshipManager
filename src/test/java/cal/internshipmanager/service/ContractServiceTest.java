@@ -6,7 +6,6 @@ import cal.internshipmanager.repository.InternshipApplicationRepository;
 import cal.internshipmanager.repository.UserRepository;
 import cal.internshipmanager.response.ContractListResponse;
 import cal.internshipmanager.response.DownloadFileResponse;
-import cal.internshipmanager.response.PortfolioDocumentListResponse;
 import cal.internshipmanager.security.JwtAuthentication;
 import cal.internshipmanager.security.JwtProvider;
 import com.auth0.jwt.interfaces.DecodedJWT;
@@ -170,6 +169,9 @@ public class ContractServiceTest {
         c.setStudentSignature(null);
         c.setEmployerSignature(null);
         c.setAdministratorSignature(null);
+        c.setStudentSignedDate(new Date());
+        c.setEmployerSignedDate(new Date());
+        c.setAdministratorSignedDate(new Date());
         c.setCurrentUserUniqueId(application.getStudent().getUniqueId());
 
         ContractService contractService = new ContractService(internshipApplicationRepository, userRepository, null, contractRepository, settingsService );
@@ -193,6 +195,9 @@ public class ContractServiceTest {
         assertNull(contract.getStudentSignature());
         assertNull(contract.getEmployerSignature());
         assertNull(contract.getAdministratorSignature());
+        assertNotNull(contract.getStudentSignedDate());
+        assertNotNull(contract.getEmployerSignedDate());
+        assertNotNull(contract.getAdministratorSignedDate());
         assertEquals(c.getCurrentUserUniqueId(), contract.getCurrentUserUniqueId());
 
     }
@@ -428,6 +433,44 @@ public class ContractServiceTest {
 
         contractService.sign(contract.getUniqueId());
 
+    }
+
+    @Test
+    public void findUserById_validRequest() {
+
+        // Arrange
+
+        Signature signature = new Signature();
+
+        signature.setUniqueId(UUID.randomUUID());
+        signature.setUploadDate(new Date());
+
+        Contract contract = new Contract();
+
+        contract.setUniqueId(UUID.randomUUID());
+        contract.setStatus(Contract.Status.COMPLETED);
+        contract.setCreationDate(new Date());
+        contract.setStudentSignature(signature);
+        contract.setStudentSignedDate(new Date());
+        contract.setEmployerSignedDate(new Date());
+        contract.setAdministratorSignedDate(new Date());
+
+
+        ContractService contractService = new ContractService(internshipApplicationRepository, userRepository, null, contractRepository, settingsService );
+
+        when(contractRepository.findById(contract.getUniqueId())).thenReturn(Optional.of(contract));
+
+        // Act
+
+        ContractListResponse.Contract response = contractService.find(contract.getUniqueId());
+
+        // Assert
+
+        assertEquals(contract.getUniqueId(), response.getUniqueId());
+        assertEquals(contract.getStatus().toString(), response.getStatus());
+        assertNotNull(response.getStudentSignature());
+        assertEquals(signature.getUniqueId(), response.getStudentSignature().getUniqueId());
+        assertEquals(signature.getUploadDate().getTime(), response.getStudentSignature().getUploadDate());
     }
 
     @Test
