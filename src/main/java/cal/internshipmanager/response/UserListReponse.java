@@ -44,6 +44,10 @@ public class UserListReponse implements Serializable {
     //
 
     public static UserListReponse.User map(cal.internshipmanager.model.User from) {
+
+        if (from == null)
+            return null;
+
         UserListReponse.User user = new UserListReponse.User();
 
         user.uniqueId = from.getUniqueId();

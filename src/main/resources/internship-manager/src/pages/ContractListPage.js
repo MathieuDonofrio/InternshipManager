@@ -3,9 +3,9 @@ import React, { Component } from "react";
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
-import Contract from "../components/Contract";
+import ContractList from "../components/ContractList";
 
-export default class ContractPage extends Component {
+export default class ContractListPage extends Component {
 
   //
   // Constructors
@@ -28,7 +28,7 @@ export default class ContractPage extends Component {
 
           <Paper elevation={3}>
               
-              <Contract/>
+              <ContractList/>
 
           </Paper>
 

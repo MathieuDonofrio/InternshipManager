@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import SignatureService from "../services/SignatureService";
 import Typography from '@material-ui/core/Typography';
@@ -27,6 +28,7 @@ const useStyles = makeStyles({
 export default function ContractList() {
 
     const classes = useStyles();
+    const history = useHistory()
 
     const { enqueueSnackbar } = useSnackbar();
 
@@ -91,7 +93,11 @@ export default function ContractList() {
                     </TableHead>
                     <TableBody>
                         {rows.map((contract, index) => (
-                            <TableRow key={index}>
+                            <TableRow  
+                                key={index} 
+                                button
+                                onClick={() => history.push(`/contract/${contract.uniqueId}`)}>
+
                                 <TableCell style={{ verticalAlign: 'top' }} align="center">{contract.application.studentFirstName + " " + contract.application.studentLastName} </TableCell>
                                 <TableCell component="th" scope="row" style={{ verticalAlign: 'top' }} align="left">
                                     <p><strong>Compagnie: </strong>{contract.application.company}</p>

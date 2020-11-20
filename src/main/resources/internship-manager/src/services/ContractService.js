@@ -31,6 +31,10 @@ class ContractService {
     // Get
     //
 
+    find(request) {
+        return axios.get(Config.target + `/contract/${request}`, headers());
+    }
+
     generate(request) {
         return axios.get(Config.target + `/contract/generate/${request}`, downloadHeaders());
     }

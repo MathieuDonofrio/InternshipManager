@@ -2,8 +2,6 @@ import { Box, Container, IconButton, Typography } from "@material-ui/core";
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 import React from "react";
 import { useHistory, useParams } from 'react-router-dom';
-import StudentApplicationStatusList from "./StudentApplicationStatusList";
-import Portfolio from "./Portfolio";
 import StudentSelection from "./StudentSelection";
 
 export default function EmployerProfile() {

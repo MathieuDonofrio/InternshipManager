@@ -50,6 +50,9 @@ public class InternshipApplicationListResponse implements Serializable {
 
     public static InternshipApplication map(cal.internshipmanager.model.InternshipApplication from) {
 
+        if (from == null)
+            return null;
+
         InternshipApplication application = new InternshipApplication();
 
         application.uniqueId = from.getUniqueId();
