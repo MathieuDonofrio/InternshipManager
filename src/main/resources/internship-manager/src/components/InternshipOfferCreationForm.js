@@ -212,6 +212,29 @@ class InternshipOfferCreationForm extends Component {
               name="location"
               autoComplete="location"
             />
+            <Grid container spacing={3}>
+              <Grid item xs={12} sm={4}>
+                <TextField
+                label="Addresse"
+                required>
+                  "a"
+                </TextField>
+              </Grid>
+              <Grid item xs={12} sm={4}>
+                <TextField
+                label="Ville"
+                required>
+                  "a"
+                </TextField>
+              </Grid>
+              <Grid item xs={12} sm={4}>
+                <TextField
+                label="Code postal"
+                required>
+                  "a"
+                </TextField>
+              </Grid>
+            </Grid>
 
             <Box mt={2} textAlign="left">
               <Typography component="h2">Rémunération</Typography>
