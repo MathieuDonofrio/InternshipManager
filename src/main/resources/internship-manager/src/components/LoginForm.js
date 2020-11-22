@@ -27,6 +27,7 @@ import LockOutlined from '@material-ui/icons/LockOutlined';
 const state = {
   email: '',
   password: '',
+  rememberMe: false,
 }
 
 const errors = {
@@ -42,7 +43,6 @@ class LoginForm extends Component {
 
   constructor(props) {
     super();
-
     this.state = state;
     this.errors = errors;
 
@@ -66,11 +66,14 @@ class LoginForm extends Component {
       password: this.state.password
     }
 
+    
     AuthenticationService.authenticate(request)
-      .then(() => 
-      {
-        this.props.history.push('/home');
-        this.props.enqueueSnackbar("Bienvenue!",  { variant: 'info' });
+    .then(() => 
+    {
+      this.props.history.push('/home');
+      this.props.enqueueSnackbar("Bienvenue!",  { variant: 'info' });
+      this.setData(request.email, request.password);
+
       })
       .catch(error => this.backendValidation(error))
       .finally(() => { 
@@ -80,6 +83,8 @@ class LoginForm extends Component {
   }
 
   onChange = event => this.setState({ [event.target.name]: event.target.value });
+
+  onChangeCheckBox = event => this.setState({rememberMe: event.target.checked});
 
   //
   // Validation
@@ -103,6 +108,21 @@ class LoginForm extends Component {
     this.errors.password = "Email ou mot de passe incorrecte";
 
     this.forceUpdate();
+  }
+
+  setData(username,password){
+    let obj = { username : username, password : password};
+    localStorage.setItem('rememberMe', this.state.rememberMe);
+    localStorage.setItem('loginInfo', this.state.rememberMe ? JSON.stringify(obj) : '');
+  }
+
+  componentDidMount() {
+
+    let rememberMe = localStorage.getItem('rememberMe') === 'true';
+    let loginInfo = rememberMe ? JSON.parse(localStorage.getItem('loginInfo')) : '';
+    let email = loginInfo.username;
+    let password = loginInfo.password;
+    this.setState({email, password, rememberMe});
   }
 
   //
@@ -132,6 +152,7 @@ class LoginForm extends Component {
               error={this.errors.email}
               helperText={this.errors.email}
               onChange={this.onChange}
+              value={this.state.email}
               variant="outlined"
               margin="normal"
               required
@@ -146,6 +167,7 @@ class LoginForm extends Component {
             <TextField
               error={this.errors.password}
               helperText={this.errors.password}
+              value={this.state.password}
               onChange={this.onChange}
               variant="outlined"
               margin="normal"
@@ -159,7 +181,7 @@ class LoginForm extends Component {
             />
 
             <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
+              control={<Checkbox checked={this.state.remember} color="primary" onChange={this.onChangeCheckBox}/>}
               label="Se rappeler"
             />
 

@@ -98,7 +98,6 @@ export default function StudentProfile() {
             case "ADMINISTRATOR": return "En attente de la signature du gestionaire de stage";
             case "COMPLEATED": return "Contrat complet!";
         }
-
     }
 
     const progress = () => {
