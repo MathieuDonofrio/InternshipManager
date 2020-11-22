@@ -34,6 +34,9 @@ const state = {
   startDate: new Date(),
   endDate: new Date(),
   location: '',
+  address: '',
+  city: '',
+  postal: '',
   duration: 0,
   salary: 0,
   hours: 0,
@@ -85,7 +88,7 @@ class InternshipOfferCreationForm extends Component {
       jobScope: this.state.jobScope,
       startDate: this.state.startDate.getTime(),
       endDate: this.state.endDate.getTime(),
-      location: this.state.location,
+      location: this.state.address+","+this.state.city+","+this.state.postal,
       salary: this.state.salary,
       hours: this.state.hours
     }
@@ -126,7 +129,7 @@ class InternshipOfferCreationForm extends Component {
 
     this.errors.company = Validator.notBlank(this.state.company, "La compagnie est obligatoire");
     this.errors.jobTitle = Validator.notBlank(this.state.jobTitle, "Titre du poste est obligatoire");
-    this.errors.location = Validator.notBlank(this.state.location, "L'emplacement est obligatoire")
+    //this.errors.location = Validator.notBlank(this.state.location, "L'emplacement est obligatoire")
     this.errors.salary = Validator.positive(this.state.salary, "Le salaire ne peut pas être négative");
     this.errors.hours = Validator.min(this.state.hours, 1, "L'heure doit être au moins à 1");
     this.errors.startDate = Validator.after(this.state.startDate, new Date(), "Impossible de définir une date de début dans le passé");
@@ -215,22 +218,31 @@ class InternshipOfferCreationForm extends Component {
             <Grid container spacing={3}>
               <Grid item xs={12} sm={4}>
                 <TextField
-                label="Addresse"
-                required>
+                  label="Addresse"
+                  id="address"
+                  name="address"
+                  onChange={this.onChange}
+                  required>
                   "a"
                 </TextField>
               </Grid>
               <Grid item xs={12} sm={4}>
                 <TextField
-                label="Ville"
-                required>
+                  label="Ville"
+                  id="city"
+                  name="city"
+                  onChange={this.onChange}
+                  required>
                   "a"
                 </TextField>
               </Grid>
               <Grid item xs={12} sm={4}>
                 <TextField
-                label="Code postal"
-                required>
+                  label="Code postal"
+                  id="postal"
+                  name="postal"
+                  onChange={this.onChange}
+                  required>
                   "a"
                 </TextField>
               </Grid>

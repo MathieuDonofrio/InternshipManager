@@ -10,7 +10,6 @@ import cal.internshipmanager.repository.InternshipOfferRepository;
 import cal.internshipmanager.repository.UserRepository;
 import cal.internshipmanager.response.ContractListResponse;
 import cal.internshipmanager.response.DownloadFileResponse;
-import cal.internshipmanager.response.UserListReponse;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
@@ -188,7 +187,7 @@ public class ContractService {
         User student = application.getStudent();
         User admin   = contract.getAdministrator();
         InternshipOffer offer = application.getOffer();
-
+        String[] location = offer.getLocation().split(",");
         User employer = userRepository.findById(offer.getEmployer()).orElse(null);
 
 
@@ -259,9 +258,9 @@ public class ContractService {
         document.add(setNewEmptyParagraph(1));
         PdfPTable table = new PdfPTable(1);
         PdfPTable table2 = new PdfPTable(2);
-        table2.addCell(cellWithoutBorder("Addresse: "+ offer.getLocation()));
-        table2.addCell(cellWithoutBorder("Ville: "));
-        table2.addCell(cellWithoutBorder("Code Postal: "));
+        table2.addCell(cellWithoutBorder("Addresse: "+ location[0]));
+        table2.addCell(cellWithoutBorder("Ville: "+ location[1]));
+        table2.addCell(cellWithoutBorder("Code Postal: "+ location[2]));
         table2.addCell(cellWithoutBorder("Telephone: "));
         PdfPCell cell = new PdfPCell(new Phrase("Nom de l'entreprise : "+offer.getCompany()));
         cell.setBackgroundColor(new BaseColor(232,232,232));
