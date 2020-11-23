@@ -111,14 +111,14 @@ class LoginForm extends Component {
   }
 
   setData(username,password){
+
     let obj = { username : username, password : password};
     localStorage.setItem('rememberMe', this.state.rememberMe);
     localStorage.setItem('loginInfo', this.state.rememberMe ? JSON.stringify(obj) : '');
   }
 
   componentDidMount() {
-
-    let rememberMe = localStorage.getItem('rememberMe') === 'true';
+    let rememberMe = localStorage.getItem('rememberMe') == 'true';
     let loginInfo = rememberMe ? JSON.parse(localStorage.getItem('loginInfo')) : '';
     let email = loginInfo.username;
     let password = loginInfo.password;
@@ -181,7 +181,7 @@ class LoginForm extends Component {
             />
 
             <FormControlLabel
-              control={<Checkbox checked={this.state.remember} color="primary" onChange={this.onChangeCheckBox}/>}
+              control={<Checkbox checked={this.state.rememberMe} color="primary" onChange={this.onChangeCheckBox}/>}
               label="Se rappeler"
             />
 
