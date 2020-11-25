@@ -105,9 +105,10 @@ export default function InternshipApplicationCreationForm() {
     setRows(offers);
   }
 
+
   useEffect(() => {
     fetchInternshipOffers();
-  }, [])
+  }, []);
 
   return (
     <div>

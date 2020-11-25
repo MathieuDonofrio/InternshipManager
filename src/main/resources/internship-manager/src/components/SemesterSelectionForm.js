@@ -144,7 +144,6 @@ export default function SemesterSelectionForm() {
             <FormControl className={classes.formControl} >
               <InputLabel id="session-label">Session</InputLabel>
               <Select labelId="session-label" id="session-label-select" value={session} onChange={(event) => setSession(event.target.value)} >
-                <MenuItem value=""><em>Vide</em></MenuItem>
                 {
                   sessiontoloop.map(session => {
                     return <MenuItem value={session.session}>{session.session}</MenuItem>;
