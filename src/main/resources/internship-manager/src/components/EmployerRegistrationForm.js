@@ -27,6 +27,7 @@ const state = {
   firstName: '',
   lastName: '',
   password: '',
+  phone: '',
   company: '',
   confirm: ''
 }
@@ -72,7 +73,8 @@ class EmployerRegistrationForm extends Component {
       password: this.state.password,
       firstName: this.state.firstName,
       lastName: this.state.lastName,
-      company: this.state.company
+      company: this.state.company,
+      phone: this.state.phone
     }
 
     RegistrationService.employer(request)

@@ -94,11 +94,13 @@ public class InternshipOfferLoader implements CommandLineRunner {
         internshipOffer.setEmployer(employer.getUniqueId());
         internshipOffer.setStatus(InternshipOffer.Status.PENDING_APPROVAL);
         internshipOffer.setCompany(faker.company().name());
+        internshipOffer.setPhone(faker.phoneNumber().cellPhone()+"");
         internshipOffer.setJobTitle(faker.job().title());
         internshipOffer.setJobScope(jobScope);
         internshipOffer.setStartDate(new Date());
         internshipOffer.setEndDate(new Date());
-        internshipOffer.setLocation(faker.address().streetName());
+        internshipOffer.setSchedule("Lundi-Vendredi (8h00-17h00)");
+        internshipOffer.setLocation(faker.address().streetName()+","+faker.country().capital()+","+faker.address().zipCode()+","+faker.country().name());
         internshipOffer.setSalary(14 + ThreadLocalRandom.current().nextFloat() * 10);
         internshipOffer.setHours(ThreadLocalRandom.current().nextInt(30, 45));
         internshipOffer.setUsers(new ArrayList<>());

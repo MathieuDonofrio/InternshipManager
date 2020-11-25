@@ -96,11 +96,13 @@ class InternshipOfferCreationForm extends Component {
 
     const request = {
       company: this.state.company,
+      phone: this.state.phone,
       jobTitle: this.state.jobTitle,
       jobScope: this.state.jobScope,
       startDate: this.state.startDate.getTime(),
       endDate: this.state.endDate.getTime(),
-      location: this.state.address + "," + this.state.city + "," + this.state.postal + "," + this.state.country + "," + this.state.region+","+this.state.phone+","+this.state.schedule,
+      schedule: this.state.schedule,
+      location: this.state.address + "," + this.state.city + "," + this.state.postal + "," + this.state.country + "," + this.state.region,
       salary: this.state.salary,
       hours: this.state.hours
     }

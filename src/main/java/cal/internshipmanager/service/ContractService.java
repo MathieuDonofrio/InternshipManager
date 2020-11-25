@@ -268,8 +268,9 @@ public class ContractService {
         table4.addCell(cellWithoutBorder("Ville : "+location[1]));
         table4.addCell(cellWithoutBorder("Code Postal : "+location[2]));
         table4.addCell(cellWithoutBorder("Pays : "+location[3]));
+        if(location.length > 4 )
         table4.addCell(cellWithoutBorder("Region/Province/Etat : "+location[4]));
-        table4.addCell(cellWithoutBorder("Telephone : "+location[5]));
+        table4.addCell(cellWithoutBorder("Telephone : "+offer.getPhone()));
         table3.addCell(setTitleCell("ENDROIT DU STAGE (si differente de l'addresse ci haut)"));
         PdfPCell c1 = new PdfPCell(new Phrase("Service ou departement : "));
         c1.setBorder(PdfPCell.NO_BORDER + PdfPCell.LEFT + PdfPCell.RIGHT);
@@ -278,7 +279,7 @@ public class ContractService {
         table3.addCell(setTitleCell("SUPERVISEUR DU STAGE"));
         PdfPTable table5 = new PdfPTable(2);
         table5.addCell(cellWithoutBorder("Nom: "+employer.getFirstName()+" "+employer.getLastName()));
-        table5.addCell(cellWithoutBorder("Telephone: "+location[5]));
+        table5.addCell(cellWithoutBorder("Telephone: "+employer.getPhone()));
         table5.addCell(cellWithoutBorder("Courriel : "+employer.getEmail()));
         table3.addCell(table5);
         table3.addCell(setTitleCell("DUREE DU STAGE : "));
@@ -288,7 +289,7 @@ public class ContractService {
         table6.addCell("Nombre total d'heures par semaine : ");
         table3.addCell(table6);
         table3.addCell(setTitleCell("HORAIRE DE TRAVAIL"));
-        PdfPCell c4 = new PdfPCell(new Phrase("Horaire de travail : "+location[6]));
+        PdfPCell c4 = new PdfPCell(new Phrase("Horaire de travail : "+offer.getSchedule()));
         c4.setBorder(PdfPCell.NO_BORDER + PdfPCell.LEFT + PdfPCell.RIGHT);
         table3.addCell(c4);
         PdfPCell c5 = new PdfPCell(new Phrase("Nombre total d'heures par semaine : "+offer.getHours()));

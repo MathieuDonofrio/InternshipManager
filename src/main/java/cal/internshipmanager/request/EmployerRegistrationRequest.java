@@ -24,6 +24,9 @@ public class EmployerRegistrationRequest implements Serializable {
     @NotBlank(message = "First name is mandatory")
     private String lastName;
 
+    //@NotBlank(message = "Phone is mandatory")
+    private String phone;
+
     @NotBlank(message = "Company is mandatory")
     private String company;
 }

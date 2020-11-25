@@ -78,6 +78,7 @@ public class EmployerLoader implements CommandLineRunner {
         user.setEmail(email);
         user.setFirstName(firstName);
         user.setLastName(lastName);
+        user.setPhone(""+faker.phoneNumber().cellPhone());
         user.setPasswordHash(passwordEncoder.encode(PASSWORD));
 
         return user;
