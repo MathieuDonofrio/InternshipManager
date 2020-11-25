@@ -65,6 +65,9 @@ class InternshipOfferCreationForm extends Component {
     this.errors = errors;
 
     this.submitLock = new Lock();
+
+    Validator.clearErrors(this.errors);
+    this.state.jobScope = new Array();
   }
 
   //
