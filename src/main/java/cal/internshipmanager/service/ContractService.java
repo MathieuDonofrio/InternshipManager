@@ -20,7 +20,9 @@ import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -108,6 +110,32 @@ public class ContractService {
         contractRepository.save(contract);
     }
 
+    public ContractListResponse allSignature(UUID userUniqueId) {
+
+        ContractListResponse response = new ContractListResponse();
+
+        List<Contract> responseContractList = new ArrayList<>();
+
+        User user = userRepository.findById(userUniqueId).get();
+
+        switch (user.getType()) {
+            case STUDENT:
+                responseContractList = contractRepository.findAllBySemesterAndApplication_Student_UniqueId(settingsService.getSemester(), userUniqueId);
+                break;
+            case EMPLOYER:
+                responseContractList = contractRepository.findAllBySemesterAndApplication_Offer_Employer(settingsService.getSemester(), userUniqueId);
+                break;
+            case ADMINISTRATOR:
+                responseContractList = contractRepository.findAllBySemesterAndAdministrator_UniqueId(settingsService.getSemester(), userUniqueId);
+                break;
+        }
+
+        response.setContracts(responseContractList.stream()
+                .map(ContractListResponse::map).collect(Collectors.toList()));
+
+        return response;
+    }
+
     public ContractListResponse awaitingSignature(UUID userUniqueId) {
 
         ContractListResponse response = new ContractListResponse();
@@ -132,7 +160,7 @@ public class ContractService {
             response.setContracts(contractRepository
                     .findAllBySemester(settingsService.getSemester())
                     .stream()
-                    .filter(contract -> isSignaturePresent(contract,signatureUUID))
+                    .filter(contract -> isSignaturePresent(contract, signatureUUID))
                     .map(ContractListResponse::map)
                     .collect(Collectors.toList()));
         }
@@ -154,7 +182,6 @@ public class ContractService {
 
         return false;
     }
-
 
     // TODO add preauthorize for admin
     public void create(UUID applicationUniqueId) {

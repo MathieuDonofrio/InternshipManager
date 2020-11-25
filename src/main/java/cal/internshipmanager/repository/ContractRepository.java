@@ -15,4 +15,10 @@ public interface ContractRepository extends MongoRepository<Contract, UUID> {
     List<Contract> findAllBySemesterAndStatus(String semester, Contract.Status status);
 
     List<Contract> findAllBySemesterAndCurrentUserUniqueId(String Semester, UUID currentUserUniqueId);
+
+    List<Contract> findAllBySemesterAndAdministrator_UniqueId(String semester, UUID uniqueId);
+
+    List<Contract> findAllBySemesterAndApplication_Student_UniqueId(String semester,UUID uniqueId);
+
+    List<Contract> findAllBySemesterAndApplication_Offer_Employer(String semester,UUID uniqueId);
 }
