@@ -115,4 +115,8 @@ public class PortfolioService {
         portfolioDocumentRepository.deleteById(request.getUniqueId());
     }
 
+    public PortfolioDocumentListResponse.PortfolioDocument find(UUID uniqueId){
+        return PortfolioDocumentListResponse.map(portfolioDocumentRepository.findById(uniqueId).get());
+    }
+
 }

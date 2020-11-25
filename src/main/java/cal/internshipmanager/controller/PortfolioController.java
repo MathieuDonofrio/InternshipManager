@@ -8,6 +8,7 @@ import cal.internshipmanager.validator.ExistingPortfolioDocument;
 import cal.internshipmanager.validator.ExistingUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
+import org.springframework.data.repository.cdi.Eager;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -65,6 +66,11 @@ public class PortfolioController {
     //
 
     @GetMapping("{uniqueId}")
+    public PortfolioDocumentListResponse.PortfolioDocument find(@Valid @ExistingPortfolioDocument @PathVariable UUID uniqueId){
+        return portfolioService.find(uniqueId);
+    }
+
+    @GetMapping("download/{uniqueId}")
     public ResponseEntity<Resource> download(@Valid @ExistingPortfolioDocument @PathVariable UUID uniqueId) {
         return DownloadFileResponse.responseEntity(portfolioService.download(uniqueId));
     }
