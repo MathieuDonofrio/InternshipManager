@@ -12,15 +12,13 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 
-export default function StudentProfile() {
+export default function Contract() {
 
     const { uuid } = useParams();
     const history = useHistory()
@@ -31,9 +29,10 @@ export default function StudentProfile() {
     const [application, setApplication] = useState({});
 
     const [canSign, setCanSign] = useState(false);
-    const [pdfUrl, setPdfUrl] = useState(null);
 
-    const fetchContract = () => {
+    const [url, setUrl] = useState(null);
+
+    const fetch = () => {
         ContractService.find(uuid).then(response => {
 
             setContract(response.data);
@@ -46,7 +45,7 @@ export default function StudentProfile() {
 
             let blob = new Blob([response.data], { type: response.headers['content-type'] });
 
-            setPdfUrl(URL.createObjectURL(blob));
+            setUrl(URL.createObjectURL(blob));
         });
     }
 
@@ -59,7 +58,7 @@ export default function StudentProfile() {
             if (data.data) {
 
                 ContractService.sign(uuid).then(() => {
-                    fetchContract();
+                    fetch();
                     enqueueSnackbar("Contrat Signé", { variant: 'success' });
                 });
 
@@ -98,7 +97,6 @@ export default function StudentProfile() {
             case "ADMINISTRATOR": return "En attente de la signature du gestionaire de stage";
             case "COMPLEATED": return "Contrat complet!";
         }
-
     }
 
     const progress = () => {
@@ -110,7 +108,7 @@ export default function StudentProfile() {
         }
     }
 
-    useEffect(() => { fetchContract(); }, [])
+    useEffect(() => { fetch(); }, [])
 
     return (
         <div>
@@ -171,7 +169,7 @@ export default function StudentProfile() {
                 <Box
                     marginTop={2}
                     border="1px solid black">
-                    <iframe src={pdfUrl} width="100%" height="800px">
+                    <iframe src={url} width="100%" height="800px">
                     </iframe>
                 </Box>
 
@@ -183,7 +181,7 @@ export default function StudentProfile() {
                         canSign && <Button
                             variant="contained" color="secondary"
                             size="small"
-                            onClick={sign}
+                            onClick={sign()}
                         >
                             Signer
                         </Button>

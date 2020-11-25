@@ -69,8 +69,12 @@ class PortfolioService {
     // Get
     //
 
+    find(request){
+        return axios.get(Config.target + `/portfolio/${request}`, headers());
+    }
+
     download(request){
-        return axios.get(Config.target + `/portfolio/${request}`, downloadHeaders());
+        return axios.get(Config.target + `/portfolio/download/${request}`, downloadHeaders());
     }
     
     portfolioDocuments(request) {
