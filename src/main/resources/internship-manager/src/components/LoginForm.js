@@ -47,6 +47,7 @@ class LoginForm extends Component {
     this.errors = errors;
 
     this.submitLock = new Lock();
+    Validator.clearErrors(this.errors);
   }
 
   //
@@ -118,6 +119,7 @@ class LoginForm extends Component {
   }
 
   componentDidMount() {
+    Validator.clearErrors(this.errors);
     let rememberMe = localStorage.getItem('rememberMe') == 'true';
     let loginInfo = rememberMe ? JSON.parse(localStorage.getItem('loginInfo')) : '';
     let email = loginInfo.username;
