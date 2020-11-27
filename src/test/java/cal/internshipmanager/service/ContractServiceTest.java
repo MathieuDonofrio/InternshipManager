@@ -36,8 +36,12 @@ public class ContractServiceTest {
     @Mock
     SettingsService settingsService;
 
+    @Mock
+    private  ContractGenerationService contractGenerationService;
+
     @Autowired
     private JwtProvider jwtProvider;
+
 
     @Test
     public void create_validRequest(){
@@ -91,7 +95,7 @@ public class ContractServiceTest {
         application.setInterviewDate(new Date());
 
 
-        ContractService contractService = new ContractService(internshipApplicationRepository, userRepository, null, contractRepository, settingsService );
+        ContractService contractService = new ContractService(internshipApplicationRepository, userRepository, null, contractRepository, settingsService,contractGenerationService );
 
         when (userRepository.findById(user.getUniqueId())).thenReturn(Optional.of(user));
         when (internshipApplicationRepository.findById(application.getUniqueId())).thenReturn(Optional.of(application));
@@ -174,7 +178,7 @@ public class ContractServiceTest {
         c.setAdministratorSignedDate(new Date());
         c.setCurrentUserUniqueId(application.getStudent().getUniqueId());
 
-        ContractService contractService = new ContractService(internshipApplicationRepository, userRepository, null, contractRepository, settingsService );
+        ContractService contractService = new ContractService(internshipApplicationRepository, userRepository, null, contractRepository, settingsService,contractGenerationService );
 
         when (contractRepository.findAllBySemesterAndCurrentUserUniqueId(settingsService.getSemester(), c.getCurrentUserUniqueId())).thenReturn(List.of(c));
 
@@ -258,7 +262,7 @@ public class ContractServiceTest {
         contract.setApplication(application);
         contract.setStatus(Contract.Status.STUDENT);
 
-        ContractService contractService = new ContractService(internshipApplicationRepository, userRepository, null, contractRepository, settingsService );
+        ContractService contractService = new ContractService(internshipApplicationRepository, userRepository, null, contractRepository, settingsService,contractGenerationService );
 
         when(contractRepository.findById(contract.getUniqueId())).thenReturn(Optional.of(contract));
         when(userRepository.findById(user.getUniqueId())).thenReturn(Optional.of(user));
@@ -343,7 +347,7 @@ public class ContractServiceTest {
         contract.setStatus(Contract.Status.EMPLOYER);
         contract.setAdministrator(admin);
 
-        ContractService contractService = new ContractService(internshipApplicationRepository, userRepository, null, contractRepository, settingsService );
+        ContractService contractService = new ContractService(internshipApplicationRepository, userRepository, null, contractRepository, settingsService,contractGenerationService );
 
         when(contractRepository.findById(contract.getUniqueId())).thenReturn(Optional.of(contract));
         when(userRepository.findById(user.getUniqueId())).thenReturn(Optional.of(user));
@@ -407,7 +411,7 @@ public class ContractServiceTest {
         contract.setStatus(Contract.Status.ADMINISTRATOR);
         contract.setAdministrator(user);
 
-        ContractService contractService = new ContractService(internshipApplicationRepository, userRepository, null, contractRepository, settingsService );
+        ContractService contractService = new ContractService(internshipApplicationRepository, userRepository, null, contractRepository, settingsService,contractGenerationService );
 
         when(contractRepository.findById(contract.getUniqueId())).thenReturn(Optional.of(contract));
         when(userRepository.findById(user.getUniqueId())).thenReturn(Optional.of(user));
@@ -456,7 +460,7 @@ public class ContractServiceTest {
         contract.setAdministratorSignedDate(new Date());
 
 
-        ContractService contractService = new ContractService(internshipApplicationRepository, userRepository, null, contractRepository, settingsService );
+        ContractService contractService = new ContractService(internshipApplicationRepository, userRepository, null, contractRepository, settingsService,contractGenerationService );
 
         when(contractRepository.findById(contract.getUniqueId())).thenReturn(Optional.of(contract));
 
@@ -528,7 +532,7 @@ public class ContractServiceTest {
         contract.setStatus(Contract.Status.STUDENT);
         contract.setAdministrator(admin);
 
-        ContractService contractService = new ContractService(internshipApplicationRepository, userRepository, null, contractRepository, settingsService );
+        ContractService contractService = new ContractService(internshipApplicationRepository, userRepository, null, contractRepository, settingsService,contractGenerationService );
 
         when(contractRepository.findById(contract.getUniqueId())).thenReturn(Optional.of(contract));
         when(userRepository.findById(employer.getUniqueId())).thenReturn(Optional.of(employer));
