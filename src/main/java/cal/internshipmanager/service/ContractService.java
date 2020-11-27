@@ -160,7 +160,7 @@ public class ContractService {
             response.setContracts(contractRepository
                     .findAllBySemester(settingsService.getSemester())
                     .stream()
-                    .filter(contract -> isSignaturePresent(contract, signatureUUID))
+                    .filter(contract -> isSignaturePresent(contract, signatureUUID,user.getType()))
                     .map(ContractListResponse::map)
                     .collect(Collectors.toList()));
         }else{
@@ -170,16 +170,16 @@ public class ContractService {
         return response;
     }
 
-    private boolean isSignaturePresent(Contract contract, UUID signatureID) {
+    private boolean isSignaturePresent(Contract contract, UUID signatureID, User.Type type) {
         Signature adminSignature = contract.getAdministratorSignature();
         Signature employerSignature = contract.getEmployerSignature();
         Signature studentSignature = contract.getStudentSignature();
 
-        if (adminSignature != null)
+        if (adminSignature != null && type.equals(User.Type.ADMINISTRATOR))
             return adminSignature.getUniqueId().equals(signatureID);
-        else if (employerSignature != null)
+        else if (employerSignature != null && type.equals(User.Type.EMPLOYER))
             return employerSignature.getUniqueId().equals(signatureID);
-        else if (studentSignature != null)
+        else if (studentSignature != null && type.equals(User.Type.STUDENT))
             return studentSignature.getUniqueId().equals(signatureID);
 
         return false;
