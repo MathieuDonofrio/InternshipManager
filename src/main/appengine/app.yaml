@@ -1,12 +1,3 @@
 runtime: java11
 service: backend
 instance_class: F1
-handlers:
-  # Serve all static files with url ending with a file extension
-  - url: /(.*\..+)$
-    static_files: src/main/resources/build/\1
-    upload: build/(.*\..+)$
-  # Catch all handler to index.html
-  - url: /.*
-    static_files: src/main/resources/build/index.html
-    upload: src/main/resources/build/index.html
