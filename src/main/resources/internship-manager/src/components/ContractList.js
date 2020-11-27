@@ -12,7 +12,7 @@ import Button from '@material-ui/core/Button';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import { Box } from "@material-ui/core";
+import { Box, Paper, Tab, Tabs } from "@material-ui/core";
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 import ContractService from '../services/ContractService';
 import CreateIcon from '@material-ui/icons/Create';
@@ -24,11 +24,18 @@ const useStyles = makeStyles({
     },
 });
 
+const useStyles2 = makeStyles({
+    root: {
+      flexGrow: 1,
+    },
+});
 
 export default function ContractList() {
-
+    
     const classes = useStyles();
-    const history = useHistory()
+    const history = useHistory();
+    const classes2 = useStyles2();
+    const [value, setValue] = React.useState(0);
 
     const { enqueueSnackbar } = useSnackbar();
 
@@ -37,7 +44,7 @@ export default function ContractList() {
     const generateContract = (contractId) => {
         ContractService.generate(contractId).then(response => {
             saveAs(new Blob([response.data], { type: response.headers['content-type'] }), 'contrat.pdf');
-            enqueueSnackbar("Contrat téléchargé",  { variant: 'info' });
+            enqueueSnackbar("Contrat téléchargé", { variant: 'info' });
         });
     }
 
@@ -48,30 +55,57 @@ export default function ContractList() {
 
             if (data.data) {
 
-                ContractService.sign(contractId).then(() => 
-                {
+                ContractService.sign(contractId).then(() => {
                     fetchAllAwaitingContracts();
-                    enqueueSnackbar("Contrat Signé",  { variant: 'success' });
+                    enqueueSnackbar("Contrat Signé", { variant: 'success' });
                 })
 
-            }else{
-                enqueueSnackbar("Vous n'avez pas de signature!",  { variant: 'error' });
+            } else {
+                enqueueSnackbar("Vous n'avez pas de signature!", { variant: 'error' });
             }
 
         });
-        
+
     }
+
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
 
     const fetchAllAwaitingContracts = async () => {
         const response = await ContractService.awaitingSignature(localStorage.getItem('UserUniqueId'));
-        console.log(response.data.contracts);
         setRows(response.data.contracts);
     }
+
+    const fetchAllSignedContracts = () => {
+        const response = ContractService.signedSignature(localStorage.getItem('UserUniqueId'));
+        setRows(response.data.contracts);
+    }
+
+    const fetchAllSignature = () => {
+        const response = ContractService.allSignature(localStorage.getItem('UserUniqueId'));
+        setRows(response.data.contracts);
+    }
+
 
     useEffect(() => { fetchAllAwaitingContracts(); }, [])
 
     return (
         <div>
+            <Paper className={classes2.root}>
+                <Tabs
+                    value={value}
+                    onChange={handleChange}
+                    indicatorColor="primary"
+                    textColor="primary"
+                    centered
+                >
+                    <Tab label="tous" onClick={() => fetchAllAwaitingContracts()} />
+                    <Tab label="avec signature" onClick={() => fetchAllSignedContracts()} />
+                    <Tab label="sans signature" onClick={() => fetchAllSignature()} />
+                </Tabs>
+            </Paper>
             <Container>
                 <Box
                     mb={2}
@@ -93,8 +127,8 @@ export default function ContractList() {
                     </TableHead>
                     <TableBody>
                         {rows.map((contract, index) => (
-                            <TableRow  
-                                key={index} 
+                            <TableRow
+                                key={index}
                                 button
                                 onClick={() => history.push(`/contract/${contract.uniqueId}`)}>
 
