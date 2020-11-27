@@ -111,7 +111,16 @@ export default function CreateSignature() {
 
                 <Button variant="contained" color="primary" onClick={handleClickOpen}>
                     Signature
-                    </Button>
+                </Button>
+
+
+            </Box>
+
+            <Box
+                margin={1}>
+
+                <Typography color="contained" variant="h7">Votre signature sera seulement utiliser<br/> à l'intention de signer le contrat de stage.</Typography>
+
             </Box>
 
             <Dialog
