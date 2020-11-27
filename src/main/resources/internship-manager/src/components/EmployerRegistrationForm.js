@@ -53,6 +53,7 @@ class EmployerRegistrationForm extends Component {
     this.errors = errors;
 
     this.submitLock = new Lock();
+    Validator.clearErrors(this.errors);
   }
 
   //
@@ -112,6 +113,7 @@ class EmployerRegistrationForm extends Component {
 
     this.forceUpdate();
   }
+
 
   //
   // Rendering

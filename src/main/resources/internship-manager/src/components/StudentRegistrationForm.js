@@ -52,6 +52,7 @@ class StudentRegistrationForm extends Component {
     this.errors = errors;
 
     this.submitLock = new Lock();
+    Validator.clearErrors(this.errors);
   }
 
   //
@@ -109,6 +110,7 @@ class StudentRegistrationForm extends Component {
 
     this.forceUpdate();
   }
+
 
   //
   // Rendering
