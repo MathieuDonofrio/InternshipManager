@@ -27,7 +27,7 @@ const useStyles2 = makeStyles({
   },
 });
 
-export default function EmployerListTable() {
+export default function EmployerList() {
 
   const history = useHistory();
   const classes = useStyles();
@@ -94,16 +94,16 @@ export default function EmployerListTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((student, index) => (
+            {rows.map((employer, index) => (
               <TableRow key={index}>
-                <TableCell align="center">{student.firstName}</TableCell>
-                <TableCell align="center">{student.lastName}</TableCell>
-                <TableCell align="center">{student.email}</TableCell>
+                <TableCell align="center">{employer.firstName}</TableCell>
+                <TableCell align="center">{employer.lastName}</TableCell>
+                <TableCell align="center">{employer.email}</TableCell>
                 <TableCell align="center">
                   <Button
                     variant="contained" color="secondary"
                     size="small"
-                    onClick={() => history.push(`/employer-profile-page/${student.uniqueId}/${student.firstName + " " + student.lastName}`)}
+                    onClick={() => history.push(`/user/${employer.uniqueId}`)}
                   >
                     Voir profil
                     </Button>

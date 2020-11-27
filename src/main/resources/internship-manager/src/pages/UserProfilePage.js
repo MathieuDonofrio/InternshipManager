@@ -2,10 +2,9 @@ import React, { Component } from "react";
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
-import StudentSelection from '../components/StudentSelection'
-import StudentProfile from "../components/StudentProfile";
+import UserProfile from "../components/UserProfile";
 
-export default class StudentProfilePage extends Component {
+export default class UserProfilePage extends Component {
 
     //
     // Constructor
@@ -25,7 +24,7 @@ export default class StudentProfilePage extends Component {
                 <CssBaseline />
                 <Container>
                     <Paper elevation={3}>
-                        <StudentProfile/>
+                        <UserProfile/>
                     </Paper>
                 </Container>
             </div>
