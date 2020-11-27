@@ -43,13 +43,9 @@ function App() {
               <Route
                 exact
                 path="/"
-                render={() => {
-                  return (
-                    AuthenticationService.authenticationRequired() ?
-                      <Redirect to="/login" /> :
-                      <Redirect to="/home" />
-                  )
-                }}
+                render={() => (
+                  AuthenticationService.authenticationRequired() ? <Redirect to="/login" /> : <Redirect to="/home" />
+                )}
               />
 
               <Route exact path="/login" component={LoginPage}></Route>
