@@ -26,12 +26,12 @@ const useStyles = makeStyles({
 
 const useStyles2 = makeStyles({
     root: {
-      flexGrow: 1,
+        flexGrow: 1,
     },
 });
 
 export default function ContractList() {
-    
+
     const classes = useStyles();
     const history = useHistory();
     const classes2 = useStyles2();
@@ -56,7 +56,7 @@ export default function ContractList() {
             if (data.data) {
 
                 ContractService.sign(contractId).then(() => {
-                    fetchAllAwaitingContracts();
+                    fetchAllAwaitingSignature();
                     enqueueSnackbar("Contrat Signé", { variant: 'success' });
                 })
 
@@ -69,27 +69,26 @@ export default function ContractList() {
     }
 
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
+    };
+    
+    const fetchAllContracts = async () => {
+        const response = await ContractService.allContracts(localStorage.getItem('UserUniqueId'));
+        setRows(response.data.contracts);
+    }
+    
+    const fetchAllSignedContracts = async () => {
+        const response = await ContractService.signedContracts(localStorage.getItem('UserUniqueId'));
+        setRows(response.data.contracts);
+    }
 
-    const fetchAllAwaitingContracts = async () => {
+    const fetchAllAwaitingSignature = async () => {
         const response = await ContractService.awaitingSignature(localStorage.getItem('UserUniqueId'));
         setRows(response.data.contracts);
     }
 
-    const fetchAllSignedContracts = () => {
-        const response = ContractService.signedSignature(localStorage.getItem('UserUniqueId'));
-        setRows(response.data.contracts);
-    }
-
-    const fetchAllSignature = () => {
-        const response = ContractService.allSignature(localStorage.getItem('UserUniqueId'));
-        setRows(response.data.contracts);
-    }
-
-
-    useEffect(() => { fetchAllAwaitingContracts(); }, [])
+    useEffect(() => { fetchAllContracts(); }, [])
 
     return (
         <div>
@@ -101,9 +100,9 @@ export default function ContractList() {
                     textColor="primary"
                     centered
                 >
-                    <Tab label="tous" onClick={() => fetchAllAwaitingContracts()} />
+                    <Tab label="tous" onClick={() => fetchAllContracts()} />
                     <Tab label="avec signature" onClick={() => fetchAllSignedContracts()} />
-                    <Tab label="sans signature" onClick={() => fetchAllSignature()} />
+                    <Tab label="sans signature" onClick={() => fetchAllAwaitingSignature()} />
                 </Tabs>
             </Paper>
             <Container>
@@ -129,7 +128,6 @@ export default function ContractList() {
                         {rows.map((contract, index) => (
                             <TableRow
                                 key={index}
-                                button
                                 onClick={() => history.push(`/contract/${contract.uniqueId}`)}>
 
                                 <TableCell style={{ verticalAlign: 'top' }} align="center">{contract.application.studentFirstName + " " + contract.application.studentLastName} </TableCell>

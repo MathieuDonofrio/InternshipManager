@@ -11,7 +11,6 @@ import cal.internshipmanager.security.JwtProvider;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -612,7 +611,7 @@ public class ContractServiceTest {
 
         // ACT
 
-        ContractListResponse response = contractService.signedSignature(user.getUniqueId());
+        ContractListResponse response = contractService.signedContracts(user.getUniqueId());
 
         ContractListResponse.Contract contract = response.getContracts().get(0);
 
@@ -702,7 +701,7 @@ public class ContractServiceTest {
 
         // ACT
 
-        ContractListResponse response = contractService.signedSignature(user.getUniqueId());
+        ContractListResponse response = contractService.signedContracts(user.getUniqueId());
 
         // ASSERT
         assertTrue(response.getContracts().isEmpty());
@@ -772,7 +771,7 @@ public class ContractServiceTest {
 
         // ACT
 
-        ContractListResponse response = contractService.allSignature(user.getUniqueId());
+        ContractListResponse response = contractService.allContracts(user.getUniqueId());
 
         ContractListResponse.Contract contract = response.getContracts().get(0);
 
@@ -856,7 +855,7 @@ public class ContractServiceTest {
 
         // ACT
 
-        ContractListResponse response = contractService.allSignature(employer.getUniqueId());
+        ContractListResponse response = contractService.allContracts(employer.getUniqueId());
 
         ContractListResponse.Contract contract = response.getContracts().get(0);
 
@@ -940,7 +939,7 @@ public class ContractServiceTest {
 
         // ACT
 
-        ContractListResponse response = contractService.allSignature(student.getUniqueId());
+        ContractListResponse response = contractService.allContracts(student.getUniqueId());
 
         ContractListResponse.Contract contract = response.getContracts().get(0);
 

@@ -110,7 +110,7 @@ public class ContractService {
         contractRepository.save(contract);
     }
 
-    public ContractListResponse allSignature(UUID userUniqueId) {
+    public ContractListResponse allContracts(UUID userUniqueId) {
 
         ContractListResponse response = new ContractListResponse();
 
@@ -147,7 +147,7 @@ public class ContractService {
         return response;
     }
 
-    public ContractListResponse signedSignature(UUID userUniqueId) {
+    public ContractListResponse signedContracts(UUID userUniqueId) {
 
         ContractListResponse response = new ContractListResponse();
 
@@ -163,6 +163,8 @@ public class ContractService {
                     .filter(contract -> isSignaturePresent(contract, signatureUUID))
                     .map(ContractListResponse::map)
                     .collect(Collectors.toList()));
+        }else{
+            response.setContracts(new ArrayList<>());
         }
 
         return response;

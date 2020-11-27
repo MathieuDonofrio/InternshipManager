@@ -47,14 +47,14 @@ public class ContractController {
         return contractService.awaitingSignature(userUniqueId);
     }
 
-    @GetMapping("signed-signature/{userUniqueId}")
-    public ContractListResponse signedSignature(@Valid @PathVariable @ExistingUser UUID userUniqueId){
-        return contractService.signedSignature(userUniqueId);
+    @GetMapping("signed-contracts/{userUniqueId}")
+    public ContractListResponse signedContracts(@Valid @PathVariable @ExistingUser UUID userUniqueId){
+        return contractService.signedContracts(userUniqueId);
     }
 
-    @GetMapping("all-signature/{userUniqueId}")
-    public ContractListResponse allSignature(@Valid @PathVariable @ExistingUser UUID userUniqueId){
-        return contractService.allSignature(userUniqueId);
+    @GetMapping("all-contracts/{userUniqueId}")
+    public ContractListResponse allContracts(@Valid @PathVariable @ExistingUser UUID userUniqueId){
+        return contractService.allContracts(userUniqueId);
     }
 
     @GetMapping("generate/{uniqueId}") // TODO replace internship-application by generate
