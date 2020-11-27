@@ -95,12 +95,9 @@ class Portfolio extends Component {
 
   }
 
-  onDownloadClick(document) {
+  onView(document) {
 
-    PortfolioService.download(document.uniqueId).then(response => {
-      saveAs(new Blob([response.data], { type: response.headers['content-type'] }), document.fileName);
-      this.props.enqueueSnackbar(document.fileName + " téléchargé",  { variant: 'info' });
-    })
+    this.props.history.push(`/portfolio-document/${document.uniqueId}`);
 
   }
 
@@ -139,6 +136,15 @@ class Portfolio extends Component {
       this.onUpdatePortfolio();
     })
 
+  }
+
+  translateType = (type) => {
+    switch(type){
+      case "Resume": return "Curriculum Vitae";
+      case "Cover Letter": return "Lettre de motivation";
+      case "Grades": return "Bulletin";
+      case "Other": return "Autre";
+    }
   }
 
   onFileUpload = (files) => this.setState({ files: files });
@@ -184,7 +190,7 @@ class Portfolio extends Component {
                 <TableCell align="center"><strong>Fichier</strong></TableCell>
                 <TableCell align="center"><strong>Date de téléversement</strong></TableCell>
                 {!this.props.studentId && <TableCell align="center"><strong>Supprimer</strong></TableCell>}
-                <TableCell align="center"><strong>Téléchargement</strong></TableCell>
+                <TableCell align="center"><strong>Visualizer</strong></TableCell>
                 <TableCell align="center"><strong>Status</strong></TableCell>
               </TableRow>
             </TableHead>
@@ -193,7 +199,7 @@ class Portfolio extends Component {
                 this.state.portfolioDocuments.map((document, index) => {
                   return (
                     <TableRow key={index}>
-                      <TableCell component="th" scope="row" align="center">{document.type}</TableCell>
+                      <TableCell component="th" scope="row" align="center">{this.translateType(document.type)}</TableCell>
                       <TableCell component="th" scope="row" align="center">{document.fileName}</TableCell>
                       <TableCell component="th" scope="row" align="center">{new Date(document.uploadDate).toLocaleDateString()}</TableCell>
                       {!this.props.studentId && <TableCell component="th" scope="row" align="center" >
@@ -211,10 +217,9 @@ class Portfolio extends Component {
                           <Button
                             variant="contained" color="secondary"
                             size="small"
-                            startIcon={<CloudDownloadIcon />}
-                            onClick={() => this.onDownloadClick(document)}
+                            onClick={() => this.onView(document)}
                           >
-                            Download
+                            View
                           </Button>
                         </Box>
 

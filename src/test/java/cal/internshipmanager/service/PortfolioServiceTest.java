@@ -235,6 +235,30 @@ public class PortfolioServiceTest {
         portfolioService.delete(request);
     }
 
+    @Test
+    public void find_validRequest() {
+
+        // Arrange
+
+        PortfolioDocument portfolioDocument = new PortfolioDocument();
+
+        portfolioDocument.setUniqueId(UUID.randomUUID());
+        portfolioDocument.setApproved(true);
+        portfolioDocument.setUploadDate(new Date());
+
+        PortfolioService portfolioService = new PortfolioService(portfolioDocumentRepository);
+
+        when(portfolioDocumentRepository.findById(portfolioDocument.getUniqueId())).thenReturn(Optional.of(portfolioDocument));
+
+        // Act
+
+        PortfolioDocumentListResponse.PortfolioDocument response = portfolioService.find(portfolioDocument.getUniqueId());
+
+        // Assert
+
+        assertTrue(portfolioDocument.getApproved());
+    }
+
     private static class MultipartFileMock implements MultipartFile {
 
         @Override

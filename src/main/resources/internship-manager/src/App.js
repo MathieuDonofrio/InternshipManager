@@ -14,6 +14,7 @@ import HomePage from './pages/HomePage';
 import StudentInternshipOfferValidationPage from './pages/StudentInternshipOfferValidationPage';
 import PendingApprovalPage from './pages/PendingApprovalPage';
 import PortfolioPage from './pages/PortfolioPage';
+import PortfolioDocumentPage from './pages/PortfolioDocumentPage';
 import StudentInternshipApplicationPage from './pages/StudentInternshipApplicationPage';
 import StudentInternshipApplicationValidationPage from './pages/StudentInternshipApplicationValidationPage';
 import StudentSelectionPage from './pages/StudentSelectionPage';
@@ -64,7 +65,6 @@ function App() {
                 <Route exact path="/pending-approval" component={PendingApprovalPage}></Route>
 
                 <Route exact path="/internship-application-creation" component={StudentInternshipApplicationPage}></Route>
-                <Route exact path="/portfolio" component={PortfolioPage}></Route>
 
                 <Route exact path="/internship-application-validation" component={StudentInternshipApplicationValidationPage}></Route>
                 <Route exact path="/internship-application-status" component={StudentInternshipApplicationStatusPage}></Route>
@@ -83,6 +83,9 @@ function App() {
 
                 <Route exact path="/contracts" component={ContractListPage}></Route>
                 <Route exact path="/contract/:uuid" component={ContractPage}></Route>
+
+                <Route exact path="/portfolio" component={PortfolioPage}></Route>
+                <Route exact path="/portfolio-document/:uuid" component={PortfolioDocumentPage}></Route>
 
               </AppDrawer>
 
