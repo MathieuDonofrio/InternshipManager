@@ -35,7 +35,7 @@ public class User implements Serializable {
     private String phone;
 
     private Signature signature;
-    
+
     private List<Notification> notifications;
 
     //

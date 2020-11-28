@@ -165,10 +165,10 @@ public class ContractService {
             response.setContracts(contractRepository
                     .findAllBySemester(settingsService.getSemester())
                     .stream()
-                    .filter(contract -> isSignaturePresent(contract, signatureUUID,user.getType()))
+                    .filter(contract -> isSignaturePresent(contract, signatureUUID, user.getType()))
                     .map(ContractListResponse::map)
                     .collect(Collectors.toList()));
-        }else{
+        } else {
             response.setContracts(new ArrayList<>());
         }
 

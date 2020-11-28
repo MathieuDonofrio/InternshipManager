@@ -45,7 +45,7 @@ public class ContractServiceTest {
 
 
     @Test
-    public void create_validRequest(){
+    public void create_validRequest() {
 
         // Arrange
 
@@ -78,11 +78,9 @@ public class ContractServiceTest {
         employer.setLastName("employer");
 
 
-
         InternshipOffer internshipOffer = new InternshipOffer();
         internshipOffer.setUniqueId(UUID.randomUUID());
         internshipOffer.setEmployer(employer.getUniqueId());
-
 
 
         InternshipApplication application = new InternshipApplication();
@@ -98,24 +96,24 @@ public class ContractServiceTest {
 
         ContractService contractService = new ContractService(internshipApplicationRepository, userRepository, null, contractRepository, settingsService, null);
 
-        when (userRepository.findById(user.getUniqueId())).thenReturn(Optional.of(user));
-        when (internshipApplicationRepository.findById(application.getUniqueId())).thenReturn(Optional.of(application));
+        when(userRepository.findById(user.getUniqueId())).thenReturn(Optional.of(user));
+        when(internshipApplicationRepository.findById(application.getUniqueId())).thenReturn(Optional.of(application));
 
         when(contractRepository.save(any())).then(inv -> {
 
             Contract contract = inv.getArgument(0);
 
-           assertNotNull(contract.getUniqueId());
-           assertEquals( settingsService.getSemester(), contract.getSemester());
-           assertEquals(application.getUniqueId(), contract.getApplication().getUniqueId());
-           assertEquals(user, contract.getAdministrator());
-           assertNotNull(contract.getCreationDate());
-           assertNull(contract.getStudentSignature());
-           assertNull(contract.getEmployerSignature());
-           assertNull(contract.getAdministratorSignature());
-           assertEquals(application.getStudent().getUniqueId(), contract.getCurrentUserUniqueId());
+            assertNotNull(contract.getUniqueId());
+            assertEquals(settingsService.getSemester(), contract.getSemester());
+            assertEquals(application.getUniqueId(), contract.getApplication().getUniqueId());
+            assertEquals(user, contract.getAdministrator());
+            assertNotNull(contract.getCreationDate());
+            assertNull(contract.getStudentSignature());
+            assertNull(contract.getEmployerSignature());
+            assertNull(contract.getAdministratorSignature());
+            assertEquals(application.getStudent().getUniqueId(), contract.getCurrentUserUniqueId());
 
-           return null;
+            return null;
 
         });
 
@@ -124,7 +122,7 @@ public class ContractServiceTest {
     }
 
     @Test
-    public void awaitSignature(){
+    public void awaitSignature() {
 
         //ARRANGE
 
@@ -181,7 +179,7 @@ public class ContractServiceTest {
 
         ContractService contractService = new ContractService(internshipApplicationRepository, userRepository, null, contractRepository, settingsService, null);
 
-        when (contractRepository.findAllBySemesterAndCurrentUserUniqueId(settingsService.getSemester(), c.getCurrentUserUniqueId())).thenReturn(List.of(c));
+        when(contractRepository.findAllBySemesterAndCurrentUserUniqueId(settingsService.getSemester(), c.getCurrentUserUniqueId())).thenReturn(List.of(c));
 
 
         // ACT
@@ -208,8 +206,7 @@ public class ContractServiceTest {
     }
 
     @Test
-    public void sign_student(){
-
+    public void sign_student() {
 
 
         // Arrange
@@ -269,9 +266,7 @@ public class ContractServiceTest {
         when(userRepository.findById(user.getUniqueId())).thenReturn(Optional.of(user));
 
 
-
         // ACT
-
 
 
         when(contractRepository.save(any())).then(inv -> {
@@ -292,8 +287,7 @@ public class ContractServiceTest {
     }
 
     @Test
-    public void sign_employer(){
-
+    public void sign_employer() {
 
 
         // Arrange
@@ -354,9 +348,7 @@ public class ContractServiceTest {
         when(userRepository.findById(user.getUniqueId())).thenReturn(Optional.of(user));
 
 
-
         // ACT
-
 
 
         when(contractRepository.save(any())).then(inv -> {
@@ -378,7 +370,7 @@ public class ContractServiceTest {
 
 
     @Test
-    public void sign_admin(){
+    public void sign_admin() {
 
 
         // Arrange
@@ -404,7 +396,6 @@ public class ContractServiceTest {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
 
-
         Contract contract = new Contract();
 
         contract.setUniqueId(UUID.randomUUID());
@@ -418,9 +409,7 @@ public class ContractServiceTest {
         when(userRepository.findById(user.getUniqueId())).thenReturn(Optional.of(user));
 
 
-
         // ACT
-
 
 
         when(contractRepository.save(any())).then(inv -> {
@@ -479,7 +468,7 @@ public class ContractServiceTest {
     }
 
     @Test
-    public void generate_validRequest(){
+    public void generate_validRequest() {
 
         // Arrange
 
@@ -552,7 +541,7 @@ public class ContractServiceTest {
     }
 
     @Test
-    public void signedSignature_validRequest(){
+    public void signedSignature_validRequest() {
 
         //ARRANGE
         Signature signature = new Signature();
@@ -613,9 +602,9 @@ public class ContractServiceTest {
         c.setAdministratorSignedDate(new Date());
         c.setCurrentUserUniqueId(application.getStudent().getUniqueId());
 
-        ContractService contractService = new ContractService(internshipApplicationRepository, userRepository, null, contractRepository, settingsService,null );
+        ContractService contractService = new ContractService(internshipApplicationRepository, userRepository, null, contractRepository, settingsService, null);
 
-        when (contractRepository.findAllBySemester(settingsService.getSemester())).thenReturn(List.of(c));
+        when(contractRepository.findAllBySemester(settingsService.getSemester())).thenReturn(List.of(c));
         when(userRepository.findById(any())).thenReturn(Optional.of(user));
 
         // ACT
@@ -642,7 +631,7 @@ public class ContractServiceTest {
     }
 
     @Test
-    public void signedSignature_invalidRequest(){
+    public void signedSignature_invalidRequest() {
 
         //ARRANGE
         Signature signature = new Signature();
@@ -703,9 +692,9 @@ public class ContractServiceTest {
         c.setAdministratorSignedDate(new Date());
         c.setCurrentUserUniqueId(application.getStudent().getUniqueId());
 
-        ContractService contractService = new ContractService(internshipApplicationRepository, userRepository, null, contractRepository, settingsService, null );
+        ContractService contractService = new ContractService(internshipApplicationRepository, userRepository, null, contractRepository, settingsService, null);
 
-        when (contractRepository.findAllBySemester(settingsService.getSemester())).thenReturn(List.of(c));
+        when(contractRepository.findAllBySemester(settingsService.getSemester())).thenReturn(List.of(c));
         when(userRepository.findById(any())).thenReturn(Optional.of(user));
 
         // ACT
@@ -718,7 +707,7 @@ public class ContractServiceTest {
     }
 
     @Test
-    public void allSignatureAdmin_invalidRequest(){
+    public void allSignatureAdmin_invalidRequest() {
 
         //ARRANGE
 
@@ -773,9 +762,9 @@ public class ContractServiceTest {
         c.setAdministratorSignedDate(new Date());
         c.setCurrentUserUniqueId(application.getStudent().getUniqueId());
 
-        ContractService contractService = new ContractService(internshipApplicationRepository, userRepository, null, contractRepository, settingsService, null );
+        ContractService contractService = new ContractService(internshipApplicationRepository, userRepository, null, contractRepository, settingsService, null);
 
-        when (contractRepository.findAllBySemesterAndAdministrator_UniqueId(settingsService.getSemester(),user.getUniqueId())).thenReturn(List.of(c));
+        when(contractRepository.findAllBySemesterAndAdministrator_UniqueId(settingsService.getSemester(), user.getUniqueId())).thenReturn(List.of(c));
         when(userRepository.findById(any())).thenReturn(Optional.of(user));
 
         // ACT
@@ -802,7 +791,7 @@ public class ContractServiceTest {
     }
 
     @Test
-    public void allSignatureEmployer_invalidRequest(){
+    public void allSignatureEmployer_invalidRequest() {
 
         //ARRANGE
 
@@ -857,9 +846,9 @@ public class ContractServiceTest {
         c.setAdministratorSignedDate(new Date());
         c.setCurrentUserUniqueId(application.getStudent().getUniqueId());
 
-        ContractService contractService = new ContractService(internshipApplicationRepository, userRepository, null, contractRepository, settingsService, null );
+        ContractService contractService = new ContractService(internshipApplicationRepository, userRepository, null, contractRepository, settingsService, null);
 
-        when(contractRepository.findAllBySemesterAndApplication_Offer_Employer(settingsService.getSemester(),employer.getUniqueId())).thenReturn(List.of(c));
+        when(contractRepository.findAllBySemesterAndApplication_Offer_Employer(settingsService.getSemester(), employer.getUniqueId())).thenReturn(List.of(c));
         when(userRepository.findById(any())).thenReturn(Optional.of(employer));
 
         // ACT
@@ -886,7 +875,7 @@ public class ContractServiceTest {
     }
 
     @Test
-    public void allSignatureStudent_invalidRequest(){
+    public void allSignatureStudent_invalidRequest() {
 
         //ARRANGE
 
@@ -941,9 +930,9 @@ public class ContractServiceTest {
         c.setAdministratorSignedDate(new Date());
         c.setCurrentUserUniqueId(application.getStudent().getUniqueId());
 
-        ContractService contractService = new ContractService(internshipApplicationRepository, userRepository, null, contractRepository, settingsService, null );
+        ContractService contractService = new ContractService(internshipApplicationRepository, userRepository, null, contractRepository, settingsService, null);
 
-        when (contractRepository.findAllBySemesterAndApplication_Student_UniqueId(settingsService.getSemester(),student.getUniqueId())).thenReturn(List.of(c));
+        when(contractRepository.findAllBySemesterAndApplication_Student_UniqueId(settingsService.getSemester(), student.getUniqueId())).thenReturn(List.of(c));
         when(userRepository.findById(any())).thenReturn(Optional.of(student));
 
         // ACT

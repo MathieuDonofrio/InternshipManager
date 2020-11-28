@@ -480,7 +480,7 @@ public class InternshipOfferServiceTest {
     }
 
     @Test
-    public void findAll_validRequest(){
+    public void findAll_validRequest() {
 
         // Arrange
 
@@ -509,20 +509,20 @@ public class InternshipOfferServiceTest {
                 settingsService, internshipOfferRepository, userRepository);
 
         when(internshipOfferRepository.findAllByEmployerAndStatusAndSemester(
-                internshipOffer.getEmployer(),InternshipOffer.Status.APPROVED, settingsService.getSemester()))
+                internshipOffer.getEmployer(), InternshipOffer.Status.APPROVED, settingsService.getSemester()))
                 .thenReturn(List.of(internshipOffer));
 
         // Act
 
-        InternshipOfferListResponse responseToExpect =  internshipOfferService.findAllByEmployer(internshipOffer.getEmployer());
+        InternshipOfferListResponse responseToExpect = internshipOfferService.findAllByEmployer(internshipOffer.getEmployer());
 
         // Assert
 
-        assertEquals(response,responseToExpect);
+        assertEquals(response, responseToExpect);
     }
 
     @Test
-    public void accessible_validRequest(){
+    public void accessible_validRequest() {
 
         // Arrange
 
