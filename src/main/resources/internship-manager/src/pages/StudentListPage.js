@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
-import StudentListTable from "../components/StudentListTable";
+import StudentList from "../components/StudentList";
 
 
 export default class StudentListPage extends Component {
@@ -25,7 +25,7 @@ export default class StudentListPage extends Component {
                 <CssBaseline />
                 <Container>
                     <Paper elevation={3}>
-                        <StudentListTable />
+                        <StudentList />
                     </Paper>
                 </Container>
             </div>

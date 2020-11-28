@@ -1,7 +1,9 @@
 package cal.internshipmanager.service;
 
+
 import cal.internshipmanager.model.Contract;
 import cal.internshipmanager.model.InternshipApplication;
+import cal.internshipmanager.model.Signature;
 import cal.internshipmanager.model.User;
 import cal.internshipmanager.repository.ContractRepository;
 import cal.internshipmanager.repository.InternshipApplicationRepository;
@@ -19,7 +21,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -66,7 +70,7 @@ public class ContractService {
     // Services
     //
 
-    public ContractListResponse.Contract find(UUID uniqueId){
+    public ContractListResponse.Contract find(UUID uniqueId) {
         return ContractListResponse.map(contractRepository.findById(uniqueId).get());
     }
 
@@ -111,6 +115,32 @@ public class ContractService {
         contractRepository.save(contract);
     }
 
+    public ContractListResponse allContracts(UUID userUniqueId) {
+
+        ContractListResponse response = new ContractListResponse();
+
+        List<Contract> responseContractList = new ArrayList<>();
+
+        User user = userRepository.findById(userUniqueId).get();
+
+        switch (user.getType()) {
+            case STUDENT:
+                responseContractList = contractRepository.findAllBySemesterAndApplication_Student_UniqueId(settingsService.getSemester(), userUniqueId);
+                break;
+            case EMPLOYER:
+                responseContractList = contractRepository.findAllBySemesterAndApplication_Offer_Employer(settingsService.getSemester(), userUniqueId);
+                break;
+            case ADMINISTRATOR:
+                responseContractList = contractRepository.findAllBySemesterAndAdministrator_UniqueId(settingsService.getSemester(), userUniqueId);
+                break;
+        }
+
+        response.setContracts(responseContractList.stream()
+                .map(ContractListResponse::map).collect(Collectors.toList()));
+
+        return response;
+    }
+
     public ContractListResponse awaitingSignature(UUID userUniqueId) {
 
         ContractListResponse response = new ContractListResponse();
@@ -120,6 +150,44 @@ public class ContractService {
                 .map(ContractListResponse::map).collect(Collectors.toList()));
 
         return response;
+    }
+
+    public ContractListResponse signedContracts(UUID userUniqueId) {
+
+        ContractListResponse response = new ContractListResponse();
+
+        User user = userRepository.findById(userUniqueId).get();
+
+        if (user.getSignature() != null) {
+
+            UUID signatureUUID = user.getSignature().getUniqueId();
+
+            response.setContracts(contractRepository
+                    .findAllBySemester(settingsService.getSemester())
+                    .stream()
+                    .filter(contract -> isSignaturePresent(contract, signatureUUID,user.getType()))
+                    .map(ContractListResponse::map)
+                    .collect(Collectors.toList()));
+        }else{
+            response.setContracts(new ArrayList<>());
+        }
+
+        return response;
+    }
+
+    private boolean isSignaturePresent(Contract contract, UUID signatureID, User.Type type) {
+        Signature adminSignature = contract.getAdministratorSignature();
+        Signature employerSignature = contract.getEmployerSignature();
+        Signature studentSignature = contract.getStudentSignature();
+
+        if (adminSignature != null && type.equals(User.Type.ADMINISTRATOR))
+            return adminSignature.getUniqueId().equals(signatureID);
+        else if (employerSignature != null && type.equals(User.Type.EMPLOYER))
+            return employerSignature.getUniqueId().equals(signatureID);
+        else if (studentSignature != null && type.equals(User.Type.STUDENT))
+            return studentSignature.getUniqueId().equals(signatureID);
+
+        return false;
     }
 
     // TODO add preauthorize for admin
@@ -174,4 +242,5 @@ public class ContractService {
         return response;
     }
 
-   }
+}
+
