@@ -14,6 +14,9 @@ public class InternshipOfferCreationRequest implements Serializable {
     @NotBlank(message = "Company is mandatory")
     private String company;
 
+    @NotBlank(message = "phone is mandatory")
+    private String phone;
+
     @NotBlank(message = "Job title is mandatory")
     private String jobTitle;
 
@@ -25,6 +28,9 @@ public class InternshipOfferCreationRequest implements Serializable {
 
     @NotNull(message = "End date is mandatory")
     private Long endDate;
+
+    @NotBlank(message = "Schedule is mandatory")
+    private String schedule;
 
     @NotBlank(message = "Location is mandatory")
     private String location;

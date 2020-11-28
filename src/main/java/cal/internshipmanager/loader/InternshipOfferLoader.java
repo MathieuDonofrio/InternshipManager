@@ -58,13 +58,13 @@ public class InternshipOfferLoader implements CommandLineRunner {
     @Override
     public void run(String... args) {
 
-        if(userRepository.findAllByType(User.Type.EMPLOYER).isEmpty())
+        if (userRepository.findAllByType(User.Type.EMPLOYER).isEmpty())
             return;
 
         final int needed = MIN_INTERNSHIP_OFFER_AMOUNT - internshipOfferRepository
                 .findAllBySemester(settingsService.getSemester()).size();
 
-        for(int i = 0; i < needed; i++){
+        for (int i = 0; i < needed; i++) {
             final InternshipOffer internshipOffer = generate();
             internshipOfferRepository.save(internshipOffer);
         }
@@ -94,11 +94,13 @@ public class InternshipOfferLoader implements CommandLineRunner {
         internshipOffer.setEmployer(employer.getUniqueId());
         internshipOffer.setStatus(InternshipOffer.Status.PENDING_APPROVAL);
         internshipOffer.setCompany(faker.company().name());
+        internshipOffer.setPhone(faker.phoneNumber().cellPhone() + "");
         internshipOffer.setJobTitle(faker.job().title());
         internshipOffer.setJobScope(jobScope);
         internshipOffer.setStartDate(new Date());
         internshipOffer.setEndDate(new Date());
-        internshipOffer.setLocation(faker.address().streetName());
+        internshipOffer.setSchedule("Lundi-Vendredi (8h00-17h00)");
+        internshipOffer.setLocation(faker.address().streetName() + "," + faker.address().city() + "," + faker.address().zipCode() + "," + faker.country().name() + "," + faker.address().state());
         internshipOffer.setSalary(14 + ThreadLocalRandom.current().nextFloat() * 10);
         internshipOffer.setHours(ThreadLocalRandom.current().nextInt(30, 45));
         internshipOffer.setUsers(new ArrayList<>());

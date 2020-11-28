@@ -32,8 +32,10 @@ public class User implements Serializable {
 
     private String company;
 
+    private String phone;
+
     private Signature signature;
-    
+
     private List<Notification> notifications;
 
     //
