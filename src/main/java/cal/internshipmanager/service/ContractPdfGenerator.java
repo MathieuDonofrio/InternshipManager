@@ -16,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Locale;
 
 @Component
@@ -65,7 +64,7 @@ public class ContractPdfGenerator {
 
         Image image = Image.getInstance("src/main/resources/logo.png");
 
-        SimpleDateFormat DateFor = new SimpleDateFormat("dd MMMM yyyy", Locale.FRANCE);
+        SimpleDateFormat dateFor = new SimpleDateFormat("dd MMMM yyyy", Locale.FRANCE);
         Font font = FontFactory.getFont(FontFactory.COURIER, 16, BaseColor.BLACK);
         Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 18, Font.BOLD);
         Font bold = new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD);
@@ -154,8 +153,8 @@ public class ContractPdfGenerator {
         table3.addCell(table5);
         table3.addCell(setTitleCell("DUREE DU STAGE : "));
         PdfPTable table6 = new PdfPTable(2);
-        table6.addCell(cellWithoutBorder("Date de debut : " + DateFor.format(offer.getStartDate())));
-        table6.addCell(cellWithoutBorder("Date de fin : " + DateFor.format(offer.getEndDate())));
+        table6.addCell(cellWithoutBorder("Date de debut : " + dateFor.format(offer.getStartDate())));
+        table6.addCell(cellWithoutBorder("Date de fin : " + dateFor.format(offer.getEndDate())));
         table6.addCell("Nombre total d'heures par semaine : ");
         table3.addCell(table6);
         table3.addCell(setTitleCell("HORAIRE DE TRAVAIL"));
@@ -254,7 +253,7 @@ public class ContractPdfGenerator {
         t3.addCell(tmpCell);
         if (contract.getStudentSignature() != null) {
             PdfPCell tmpCell2 = assignBorder(new PdfPCell(), 0, 0, 2);
-            Paragraph p6 = new Paragraph(new Phrase("" + DateFor.format(new Date())));
+            Paragraph p6 = new Paragraph(new Phrase("" + dateFor.format(contract.getStudentSignedDate())));
             p6.setSpacingBefore(20);
             p6.setAlignment(Paragraph.ALIGN_BASELINE + Paragraph.ALIGN_CENTER);
             //p6.setAlignment(Paragraph.ALIGN_BOTTOM);
@@ -284,7 +283,7 @@ public class ContractPdfGenerator {
         t3.addCell(tmpCell);
         if (contract.getEmployerSignature() != null) {
             PdfPCell tmpCell2 = assignBorder(new PdfPCell(), 0, 0, 2);
-            Paragraph p6 = new Paragraph(new Phrase("" + DateFor.format(new Date())));
+            Paragraph p6 = new Paragraph(new Phrase("" + dateFor.format(contract.getEmployerSignedDate())));
             p6.setAlignment(Paragraph.ALIGN_BOTTOM);
             tmpCell2.addElement(setNewEmptyParagraph(5));
             tmpCell2.addElement(p6);
@@ -312,7 +311,7 @@ public class ContractPdfGenerator {
         t3.addCell(tmpCell);
         if (contract.getAdministratorSignature() != null) {
             PdfPCell tmpCell2 = assignBorder(new PdfPCell(), 0, 0, 2);
-            Paragraph p6 = new Paragraph(new Phrase("" + DateFor.format(new Date())));
+            Paragraph p6 = new Paragraph(new Phrase("" + dateFor.format(contract.getAdministratorSignedDate())));
             p6.setAlignment(Paragraph.ALIGN_MIDDLE + Paragraph.ALIGN_BOTTOM);
             tmpCell2.addElement(setNewEmptyParagraph(2));
             tmpCell2.addElement(p6);
