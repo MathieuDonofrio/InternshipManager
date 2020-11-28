@@ -38,7 +38,7 @@ export default function Contract() {
             setContract(response.data);
             setApplication(response.data.application);
 
-            if (localStorage.getItem("UserUniqueId") == contract.currentUserUniqueId) setCanSign(true);
+            if (localStorage.getItem("UserUniqueId") == response.data.currentUserUniqueId) setCanSign(true);
         });
 
         ContractService.generate(uuid).then(response => {
@@ -165,27 +165,26 @@ export default function Contract() {
                     <LinearProgress variant="determinate" value={progress()} />
                 </Box>
                 
+                <Box
+                    margin={2}
+                    textAlign="center"
+                >
+                    {
+                        canSign && <Button
+                            variant="contained" color="secondary"
+                            size="small"
+                            onClick={sign}
+                        >
+                            Signer
+                        </Button>
+                    }
+                </Box>
 
                 <Box
                     marginTop={2}
                     border="1px solid black">
                     <iframe src={url} width="100%" height="800px">
                     </iframe>
-                </Box>
-
-                <Box
-                    margin={2}
-                    paddingBottom={2}
-                >
-                    {
-                        canSign && <Button
-                            variant="contained" color="secondary"
-                            size="small"
-                            onClick={sign()}
-                        >
-                            Signer
-                        </Button>
-                    }
                 </Box>
 
             </Container>
