@@ -13,10 +13,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { Box, Paper, Tab, Tabs } from "@material-ui/core";
-import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 import ContractService from '../services/ContractService';
-import CreateIcon from '@material-ui/icons/Create';
-import { saveAs } from 'file-saver';
 
 const useStyles = makeStyles({
     table: {
@@ -36,38 +33,7 @@ export default function ContractList() {
     const history = useHistory();
     const classes2 = useStyles2();
     const [value, setValue] = React.useState(0);
-
-    const { enqueueSnackbar } = useSnackbar();
-
     const [rows, setRows] = useState([]);
-
-    const generateContract = (contractId) => {
-        ContractService.generate(contractId).then(response => {
-            saveAs(new Blob([response.data], { type: response.headers['content-type'] }), 'contrat.pdf');
-            enqueueSnackbar("Contrat téléchargé", { variant: 'info' });
-        });
-    }
-
-    const signContract = (contractId) => {
-        let uuid = localStorage.getItem("UserUniqueId");
-
-        SignatureService.find(uuid).then(data => {
-
-            if (data.data) {
-
-                ContractService.sign(contractId).then(() => {
-                    fetchAllAwaitingSignature();
-                    enqueueSnackbar("Contrat Signé", { variant: 'success' });
-                })
-
-            } else {
-                enqueueSnackbar("Vous n'avez pas de signature!", { variant: 'error' });
-            }
-
-        });
-
-    }
-
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -120,44 +86,27 @@ export default function ContractList() {
                     <TableHead>
                         <TableRow>
                             <TableCell align="center"><strong>Étudiant</strong></TableCell>
-                            <TableCell align="center"><strong>Détails</strong></TableCell>
+                            <TableCell align="center"><strong>Compagnie</strong></TableCell>
+                            <TableCell align="center"><strong>Titre de poste</strong></TableCell>
                             <TableCell align="center"><strong>Actions</strong></TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {rows.map((contract, index) => (
-                            <TableRow
-                                key={index}
-                                onClick={() => history.push(`/contract/${contract.uniqueId}`)}>
+                            <TableRow key={index}>
 
-                                <TableCell style={{ verticalAlign: 'top' }} align="center">{contract.application.studentFirstName + " " + contract.application.studentLastName} </TableCell>
-                                <TableCell component="th" scope="row" style={{ verticalAlign: 'top' }} align="left">
-                                    <p><strong>Compagnie: </strong>{contract.application.company}</p>
-                                    <p><strong>Titre de poste: </strong>{contract.application.jobTitle}</p>
-                                    <p><strong>Date: </strong>{new Date(contract.creationDate).toDateString()}</p>
-                                </TableCell>
-                                <TableCell align="center" style={{ verticalAlign: 'top' }}>
-                                    <div style={{ marginBottom: '10px' }}>
+                                <TableCell align="center">{contract.application.studentFirstName + " " + contract.application.studentLastName} </TableCell>
+                                <TableCell align="center">{contract.application.company} </TableCell>
+                                <TableCell align="center">{contract.application.jobTitle} </TableCell>
+                                
+                                <TableCell align="center">
                                         <Button
                                             variant="contained" color="secondary"
-                                            size="small"
-                                            startIcon={<CreateIcon />}
-                                            onClick={() => signContract(contract.uniqueId)}
+                                            size="large"
+                                            onClick={() => history.push(`/contract/${contract.uniqueId}`)}
                                         >
-                                            Signer
+                                            Voir
                                         </Button>
-                                    </div>
-                                    <div>
-
-                                        <Button
-                                            variant="contained" color="secondary"
-                                            size="small"
-                                            startIcon={<CloudDownloadIcon />}
-                                            onClick={() => generateContract(contract.uniqueId)}
-                                        >
-                                            Télécharger
-                                        </Button>
-                                    </div>
                                 </TableCell>
                             </TableRow>
                         ))}
