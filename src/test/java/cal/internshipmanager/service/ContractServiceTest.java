@@ -3,6 +3,7 @@ package cal.internshipmanager.service;
 import cal.internshipmanager.model.*;
 import cal.internshipmanager.repository.ContractRepository;
 import cal.internshipmanager.repository.InternshipApplicationRepository;
+import cal.internshipmanager.repository.InternshipOfferRepository;
 import cal.internshipmanager.repository.UserRepository;
 import cal.internshipmanager.response.ContractListResponse;
 import cal.internshipmanager.response.DownloadFileResponse;
@@ -17,9 +18,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.*;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest
 public class ContractServiceTest {
@@ -34,13 +35,17 @@ public class ContractServiceTest {
     private InternshipApplicationRepository internshipApplicationRepository;
 
     @Mock
+    private InternshipOfferRepository internshipOfferRepository;
+
+    @Mock
     SettingsService settingsService;
 
     @Mock
-    private  ContractGenerationService contractGenerationService;
+    ContractPdfGenerator contractGenerationService;
 
     @Autowired
     private JwtProvider jwtProvider;
+    private DownloadFileResponse response;
 
 
     @Test
@@ -496,6 +501,7 @@ public class ContractServiceTest {
         employer.setType(User.Type.EMPLOYER);
         employer.setEmail("employer@employer.com");
         employer.setFirstName("Employer");
+        employer.setPhone("514");
         employer.setLastName("Employer");
 
         User admin = new User();
@@ -512,6 +518,8 @@ public class ContractServiceTest {
         internshipOffer.setEmployer(employer.getUniqueId());
         internshipOffer.setStartDate(new Date());
         internshipOffer.setEndDate(new Date());
+        internshipOffer.setLocation("a,b,c,d,e");
+        internshipOffer.setPhone("514");
         internshipOffer.setJobScope(new ArrayList<>());
 
         InternshipApplication application = new InternshipApplication();

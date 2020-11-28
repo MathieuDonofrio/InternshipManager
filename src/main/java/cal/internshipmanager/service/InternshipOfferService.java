@@ -66,6 +66,7 @@ public class InternshipOfferService {
         internshipOffer.setStartDate(new Date(request.getStartDate()));
         internshipOffer.setEndDate(new Date(request.getEndDate()));
         internshipOffer.setLocation(request.getLocation());
+        internshipOffer.setPhone(request.getPhone());
         internshipOffer.setUsers(new ArrayList<>());
 
         internshipOfferRepository.save(internshipOffer);

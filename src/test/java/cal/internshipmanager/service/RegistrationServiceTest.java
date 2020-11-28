@@ -67,6 +67,7 @@ public class RegistrationServiceTest {
         request.setEmail("test@test.com");
         request.setFirstName("test");
         request.setLastName("test");
+        request.setPhone("514");
         request.setPassword("123456789");
         request.setCompany("TestCorp");
 
@@ -79,6 +80,7 @@ public class RegistrationServiceTest {
             assertEquals(request.getEmail(), user.getEmail());
             assertEquals(request.getFirstName(), user.getFirstName());
             assertEquals(request.getLastName(), user.getLastName());
+            assertEquals(request.getPhone(), user.getPhone());
             assertEquals(User.Type.EMPLOYER, user.getType());
             assertEquals(request.getCompany(), user.getCompany());
             assertTrue(passwordEncoder.matches(request.getPassword(), user.getPasswordHash()));

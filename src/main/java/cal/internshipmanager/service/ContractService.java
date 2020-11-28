@@ -41,7 +41,7 @@ public class ContractService {
 
     private final SettingsService settingsService;
 
-    private final ContractGenerationService contractGenerationService;
+    private final ContractPdfGenerator contractPdfGenerator;
 
     //
     // Constructors
@@ -53,13 +53,13 @@ public class ContractService {
                            InternshipOfferRepository internshipOfferRepository,
                            ContractRepository contractRepository,
                            SettingsService settingsService,
-                           ContractGenerationService contractGenerationService) {
+                           ContractPdfGenerator contractPdfGenerator) {
         this.internshipApplicationRepository = internshipApplicationRepository;
         this.userRepository = userRepository;
         this.internshipOfferRepository = internshipOfferRepository;
         this.contractRepository = contractRepository;
         this.settingsService = settingsService;
-        this.contractGenerationService = contractGenerationService;
+        this.contractPdfGenerator = contractPdfGenerator;
     }
 
     //
@@ -160,7 +160,7 @@ public class ContractService {
 
         document.open();
 
-        contractGenerationService.write(contract, document);
+        contractPdfGenerator.write(contract, document);
 
         document.close();
         byte[] data = stream.toByteArray();

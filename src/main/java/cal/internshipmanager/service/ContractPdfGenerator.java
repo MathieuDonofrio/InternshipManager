@@ -20,7 +20,7 @@ import java.util.Date;
 import java.util.Locale;
 
 @Component
-public class ContractGenerationService {
+public class ContractPdfGenerator {
 
     private final InternshipApplicationRepository internshipApplicationRepository;
 
@@ -33,11 +33,11 @@ public class ContractGenerationService {
     private final SettingsService settingsService;
 
     @Autowired
-    public ContractGenerationService(InternshipApplicationRepository internshipApplicationRepository,
-                           UserRepository userRepository,
-                           InternshipOfferRepository internshipOfferRepository,
-                           ContractRepository contractRepository,
-                           SettingsService settingsService) {
+    public ContractPdfGenerator(InternshipApplicationRepository internshipApplicationRepository,
+                                UserRepository userRepository,
+                                InternshipOfferRepository internshipOfferRepository,
+                                ContractRepository contractRepository,
+                                SettingsService settingsService) {
         this.internshipApplicationRepository = internshipApplicationRepository;
         this.userRepository = userRepository;
         this.internshipOfferRepository = internshipOfferRepository;
