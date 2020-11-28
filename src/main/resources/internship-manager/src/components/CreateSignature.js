@@ -55,7 +55,7 @@ export default function CreateSignature() {
 
                 setImageURL(signature.toDataURL("image/png"));
 
-                enqueueSnackbar("Signature changé",  { variant: 'success' });
+                enqueueSnackbar("Signature changé", { variant: 'success' });
             });
         });
 
@@ -116,12 +116,6 @@ export default function CreateSignature() {
 
             </Box>
 
-            <Box
-                margin={1}>
-
-                <Typography color="contained" variant="h7">Votre signature sera seulement utiliser<br/> à l'intention de signer le contrat de stage.</Typography>
-
-            </Box>
 
             <Dialog
                 open={open}
@@ -210,6 +204,7 @@ export default function CreateSignature() {
                         </Box>
 
                     </Box>
+
                 </Box>
             ) : <Box
                 mb={2}
@@ -217,6 +212,12 @@ export default function CreateSignature() {
                 textAlign="center">
                     <Typography color="primary" variant="h6">Aucune Signature</Typography>
                 </Box>}
+            <Box
+                margin={1}>
+
+                <Typography color="contained" variant="h7"><em>*Votre signature sera seulement utiliser à l'intention de signer le contrat de stage*</em></Typography>
+
+            </Box>
         </div>
     );
 }
