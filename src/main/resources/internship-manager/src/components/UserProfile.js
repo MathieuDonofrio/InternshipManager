@@ -31,8 +31,6 @@ export default function UserProfile() {
 
             setUser(response.data);
 
-            console.log(response);
-
         });
     }
 
@@ -91,7 +89,7 @@ export default function UserProfile() {
                         {
                             isEmployer() &&
                             <TableRow>
-                                <TableCell align="left"><strong>Company</strong></TableCell>
+                                <TableCell align="left"><strong>Compagnie</strong></TableCell>
                                 <TableCell align="right">{ }</TableCell>
                             </TableRow>
                         }
