@@ -23,8 +23,7 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     backgroundColor: 'lightgray',
     maxWidth: 400,
-    // position: 'relative',
-      overflow: 'auto',
+    overflow: 'auto',
     maxHeight: 400,
   },
   nested: {

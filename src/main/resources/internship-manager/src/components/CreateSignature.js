@@ -73,7 +73,6 @@ export default function CreateSignature() {
 
             if (data.data) {
                 SignatureService.download(uuid).then((response) => {
-
                     let signature = new Blob([response.data], { type: response.headers['content-type'] }, "image.png");
                     setImageURL(URL.createObjectURL(signature))
                 });
