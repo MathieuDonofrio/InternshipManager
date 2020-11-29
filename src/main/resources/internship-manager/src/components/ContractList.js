@@ -68,7 +68,7 @@ export default function ContractList() {
                 >
                     <Tab label="tous" onClick={() => fetchAllContracts()} />
                     <Tab label="avec signature" onClick={() => fetchAllSignedContracts()} />
-                    <Tab label="sans signature" onClick={() => fetchAllAwaitingSignature()} />
+                    <Tab label="à signer" onClick={() => fetchAllAwaitingSignature()} />
                 </Tabs>
             </Paper>
             <Container>

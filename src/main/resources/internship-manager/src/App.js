@@ -11,8 +11,6 @@ import LoginPage from './pages/LoginPage';
 import RegistrationPage from './pages/RegistrationPage';
 import InternshipOfferCreationPage from './pages/InternshipOfferCreationPage';
 import HomePage from './pages/HomePage';
-import StudentInternshipOfferValidationPage from './pages/StudentInternshipOfferValidationPage';
-import PendingApprovalPage from './pages/PendingApprovalPage';
 import PortfolioPage from './pages/PortfolioPage';
 import PortfolioDocumentPage from './pages/PortfolioDocumentPage';
 import StudentInternshipApplicationPage from './pages/StudentInternshipApplicationPage';
@@ -28,6 +26,7 @@ import EmployerListPage from './pages/EmployerListPage';
 import ContractListPage from './pages/ContractListPage';
 import ContractPage from './pages/ContractPage';
 import CreateSignaturePage from './pages/CreateSignaturePage';
+import InternshipOfferListPage from './pages/InternshipOfferListPage';
 
 function App() {
 
@@ -56,8 +55,7 @@ function App() {
 
                 <Route exact path="/internship-offer-creation" component={InternshipOfferCreationPage}></Route>
 
-                <Route exact path="/student-offer-validation" component={StudentInternshipOfferValidationPage}></Route>
-                <Route exact path="/pending-approval" component={PendingApprovalPage}></Route>
+                <Route exact path="/internship-offer-list" component={InternshipOfferListPage}></Route>
 
                 <Route exact path="/internship-application-creation" component={StudentInternshipApplicationPage}></Route>
 
