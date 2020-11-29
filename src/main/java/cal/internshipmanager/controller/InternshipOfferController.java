@@ -89,9 +89,14 @@ public class InternshipOfferController {
         return internshipOfferService.users(uniqueId);
     }
 
-    @GetMapping("employer/{uniqueId}")
-    public InternshipOfferListResponse findAllByEmployer(@Valid @ExistingUser @PathVariable UUID uniqueId){
-        return internshipOfferService.findAllByEmployer(uniqueId);
+    @GetMapping("employer/{userUniqueId}")
+    public InternshipOfferListResponse findAllByEmployer(@Valid @ExistingUser @PathVariable UUID userUniqueId){
+        return internshipOfferService.findAllByEmployer(userUniqueId);
+    }
+
+    @GetMapping("{uniqueId}")
+    public InternshipOfferListResponse.InternshipOffer find(@Valid @ExistingInternshipOffer @PathVariable UUID uniqueId){
+        return internshipOfferService.find(uniqueId);
     }
 
 }
