@@ -27,6 +27,7 @@ import ContractListPage from './pages/ContractListPage';
 import ContractPage from './pages/ContractPage';
 import CreateSignaturePage from './pages/CreateSignaturePage';
 import InternshipOfferListPage from './pages/InternshipOfferListPage';
+import InternshipOfferPage from './pages/InternshipOfferPage';
 
 function App() {
 
@@ -69,6 +70,11 @@ function App() {
                 
                 <Route exact path="/select-action/:uuid" component={SelectActionPage}></Route>
                 <Route exact path="/create-signature" component={CreateSignaturePage}></Route>
+
+                <Route exact path="/internship-offer-creation" component={InternshipOfferCreationPage}></Route>
+                <Route exact path="/student-offer-validation" component={StudentInternshipOfferValidationPage}></Route>
+                <Route exact path="/pending-approval" component={PendingApprovalPage}></Route>
+                <Route exact path="/internship-offer/:uuid" component={InternshipOfferPage}></Route>
 
                 <Route exact path="/student-list-page" component={StudentListPage}></Route>
                 <Route exact path="/employer-list-page" component={EmployerListPage}></Route>
