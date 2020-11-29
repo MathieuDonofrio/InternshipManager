@@ -132,7 +132,7 @@ export default function PortfolioDocument() {
                             size="small"
                             onClick={approve}
                         >
-                            Apprové
+                            Approuvé
                         </Button>
                     }
                 </Box>
