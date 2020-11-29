@@ -116,7 +116,7 @@ export default function InternshipOffer() {
                                 offer.schedule && <TableCell align="right">{offer.schedule}</TableCell>
                             }
                             {
-                                !offer.schedule && <TableCell align="right">Aucune horaire specifié</TableCell>
+                                !offer.schedule && <TableCell align="right">Aucun horaire specifié</TableCell>
                             }
                             
                         </TableRow>
@@ -170,7 +170,7 @@ export default function InternshipOffer() {
                             variant="contained" color="secondary"
                             size="small"
                             onClick={() => history.push(`/manage-access/${offer.uniqueId}`)}>
-                            Apprové
+                            Approuvé
                         </Button>
                     }
                     {
