@@ -182,6 +182,7 @@ export default function Contract() {
 
                 <Box
                     marginTop={2}
+                    marginBottom={2}
                     border="1px solid black">
                     <iframe src={url} width="100%" height="800px">
                     </iframe>

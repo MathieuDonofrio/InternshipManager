@@ -109,7 +109,7 @@ class Portfolio extends Component {
 
     PortfolioService.delete(request).then(() => {
       this.onUpdatePortfolio();
-      this.props.enqueueSnackbar(document.fileName + " supprimé",  { variant: 'success' });
+      this.props.enqueueSnackbar(document.fileName + " supprimé", { variant: 'success' });
     })
 
   }
@@ -123,23 +123,15 @@ class Portfolio extends Component {
 
     PortfolioService.upload(request).then(() => {
       this.onUpdatePortfolio();
-      this.props.enqueueSnackbar(request.file.name + " téléversé",  { variant: 'success' });
+      this.props.enqueueSnackbar(request.file.name + " téléversé", { variant: 'success' });
     })
 
     this.onDialogClose();
 
   }
 
-  onApprove = (uniqueId) => {
-
-    PortfolioService.approve(uniqueId).then(() => {
-      this.onUpdatePortfolio();
-    })
-
-  }
-
   translateType = (type) => {
-    switch(type){
+    switch (type) {
       case "Resume": return "Curriculum Vitae";
       case "Cover Letter": return "Lettre de motivation";
       case "Grades": return "Bulletin";
@@ -189,7 +181,7 @@ class Portfolio extends Component {
                 <TableCell align="center"><strong>Type</strong></TableCell>
                 <TableCell align="center"><strong>Fichier</strong></TableCell>
                 <TableCell align="center"><strong>Date de téléversement</strong></TableCell>
-                {!this.props.studentId && <TableCell align="center"><strong>Supprimer</strong></TableCell>}
+                <TableCell align="center"><strong>Supprimer</strong></TableCell>
                 <TableCell align="center"><strong>Visualizer</strong></TableCell>
                 <TableCell align="center"><strong>Status</strong></TableCell>
               </TableRow>
@@ -202,7 +194,7 @@ class Portfolio extends Component {
                       <TableCell component="th" scope="row" align="center">{this.translateType(document.type)}</TableCell>
                       <TableCell component="th" scope="row" align="center">{document.fileName}</TableCell>
                       <TableCell component="th" scope="row" align="center">{new Date(document.uploadDate).toLocaleDateString()}</TableCell>
-                      {!this.props.studentId && <TableCell component="th" scope="row" align="center" >
+                      <TableCell component="th" scope="row" align="center" >
                         <Box margin={1}>
                           <IconButton edge="end" aria-label="delete">
                             <DeleteIcon
@@ -210,7 +202,7 @@ class Portfolio extends Component {
                             />
                           </IconButton>
                         </Box>
-                      </TableCell>}
+                      </TableCell>
                       <TableCell component="th" scope="row" align="center" >
 
                         <Box margin={1}>
@@ -226,37 +218,11 @@ class Portfolio extends Component {
                       </TableCell>
                       <TableCell component="th" scope="row" align="center">
                         {
-                          this.props.studentId &&
-                          <div>
-                            {
-                              document.approved && <CheckIcon />
-                            }
-
-                            {
-                              !document.approved &&
-                              <Box margin={1}>
-                                <Button
-                                  variant="contained" color="secondary"
-                                  size="small"
-                                  onClick={() => this.onApprove(document.uniqueId)}
-                                >
-                                  Approve
-                              </Button>
-                              </Box>
-                            }
-                          </div>
+                          document.approved && <CheckIcon />
                         }
-                        {
-                          !this.props.studentId &&
-                          <div>
-                            {
-                              document.approved && <CheckIcon />
-                            }
 
-                            {
-                              !document.approved && <ClearIcon />
-                            }
-                          </div>
+                        {
+                          !document.approved && <ClearIcon />
                         }
                       </TableCell>
                     </TableRow>

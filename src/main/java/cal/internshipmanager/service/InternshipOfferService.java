@@ -192,4 +192,8 @@ public class InternshipOfferService {
         return response;
     }
 
+    public InternshipOfferListResponse.InternshipOffer find(UUID uniqueId){
+        return InternshipOfferListResponse.map(internshipOfferRepository.findById(uniqueId).get());
+    }
+
 }
