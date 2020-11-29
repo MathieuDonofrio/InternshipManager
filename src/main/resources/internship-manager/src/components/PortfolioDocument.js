@@ -62,7 +62,7 @@ export default function PortfolioDocument() {
     }
 
     const formattedStatus = () => {
-        if (document.approved) return "Le document est apprové!";
+        if (document.approved) return "Le document est approuvé!";
         else return "En attente d'approbation"
     }
 
