@@ -23,19 +23,19 @@ class InternshipOfferService {
         return axios.post(Config.target + '/internship-offer/create', request, headers());
     }
 
-    approve(request){
-        return axios.post(Config.target + '/internship-offer/approve', request ,headers());
+    approve(request) {
+        return axios.post(Config.target + '/internship-offer/approve', request, headers());
     }
 
-    reject(request){
+    reject(request) {
         return axios.post(Config.target + '/internship-offer/reject', request, headers());
     }
 
-    addUser(request){
+    addUser(request) {
         return axios.post(Config.target + '/internship-offer/add-user', request, headers());
     }
 
-    removeUser(request){
+    removeUser(request) {
         return axios.post(Config.target + '/internship-offer/remove-user', request, headers());
     }
 
@@ -43,28 +43,32 @@ class InternshipOfferService {
     // Get
     //
 
-    pendingApproval(){
+    find(request) {
+        return axios.get(Config.target + `/internship-offer/${request}`, headers());
+    }
+
+    pendingApproval() {
         return axios.get(Config.target + '/internship-offer/pending-approval', headers());
     }
 
-    approved(){
+    approved() {
         return axios.get(Config.target + '/internship-offer/approved', headers());
     }
 
-    rejected(){
+    rejected() {
         return axios.get(Config.target + '/internship-offer/rejected', headers());
     }
 
-    accessible(request){
+    accessible(request) {
         return axios.get(Config.target + `/internship-offer/accessible/${request}`, headers());
     }
 
-    users(request){
+    users(request) {
         return axios.get(Config.target + `/internship-offer/users/${request}`, headers())
     }
-    
-    findAllByEmployer(request){
-        return axios.get(Config.target + '/internship-offer/employer/'+request, headers());
+
+    findAllByEmployer(request) {
+        return axios.get(Config.target + '/internship-offer/employer/' + request, headers());
     }
 
 }

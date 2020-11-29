@@ -102,7 +102,7 @@ export default function ContractList() {
                                 <TableCell align="center">
                                         <Button
                                             variant="contained" color="secondary"
-                                            size="large"
+                                            size="small"
                                             onClick={() => history.push(`/contract/${contract.uniqueId}`)}
                                         >
                                             Voir
