@@ -207,11 +207,6 @@ class LoginForm extends Component {
 
             <Box mt={2}>
               <Grid container mt={4}>
-                <Grid item xs>
-                  <Link>
-                    Mot de passe oublié?
-                  </Link>
-                </Grid>
                 <Grid item>
                   <Link to="/registration">
                     Vous n'avez pas de compte? S'inscrire

@@ -90,9 +90,18 @@ export default function UserProfile() {
                             isEmployer() &&
                             <TableRow>
                                 <TableCell align="left"><strong>Compagnie</strong></TableCell>
-                                <TableCell align="right">{ }</TableCell>
+                                <TableCell align="right">{user.company}</TableCell>
                             </TableRow>
                         }
+
+                        {
+                            isEmployer() &&
+                            <TableRow>
+                                <TableCell align="left"><strong>Téléphone</strong></TableCell>
+                                <TableCell align="right">{user.phone}</TableCell>
+                            </TableRow>
+                        }
+
 
                     </Table>
 

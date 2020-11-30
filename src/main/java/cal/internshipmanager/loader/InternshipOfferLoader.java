@@ -93,7 +93,7 @@ public class InternshipOfferLoader implements CommandLineRunner {
         internshipOffer.setSemester(settingsService.getSemester());
         internshipOffer.setEmployer(employer.getUniqueId());
         internshipOffer.setStatus(InternshipOffer.Status.PENDING_APPROVAL);
-        internshipOffer.setCompany(faker.company().name());
+        internshipOffer.setCompany(employer.getCompany());
         internshipOffer.setPhone(faker.phoneNumber().cellPhone() + "");
         internshipOffer.setJobTitle(faker.job().title());
         internshipOffer.setJobScope(jobScope);
