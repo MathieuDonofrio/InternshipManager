@@ -19,6 +19,10 @@ class InternshipApplicationService {
     // Get
     //
 
+    find(request) {
+        return axios.get(Config.target + `/internship-application/${request}`, headers());
+    }
+
     internshipApplications(request){
         return axios.get(Config.target + `/internship-application/internship-applications/${request}`, headers());
     }

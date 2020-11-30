@@ -212,7 +212,8 @@ export default function CreateSignature() {
                     <Typography color="primary" variant="h6">Aucune Signature</Typography>
                 </Box>}
             <Box
-                margin={1}>
+                margin={2}
+                paddingTop={4}>
 
                 <Typography color="contained" variant="h7"><em>*Votre signature sera seulement utiliser à l'intention de signer le contrat de stage*</em></Typography>
 
