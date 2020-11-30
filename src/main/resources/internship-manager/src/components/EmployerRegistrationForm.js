@@ -37,6 +37,7 @@ const errors = {
   firstName: '',
   lastName: '',
   password: '',
+  phone: '',
   company: '',
   confirm: ''
 }
@@ -89,6 +90,8 @@ class EmployerRegistrationForm extends Component {
 
   onChange = event => this.setState({ [event.target.name]: event.target.value });
 
+  onPhoneChange = value => this.setState({ phone: value });
+
   //
   // Validation
   //
@@ -101,6 +104,7 @@ class EmployerRegistrationForm extends Component {
     this.errors.firstName = Validator.notBlank(this.state.firstName, "Le prénom est obligatoire");
     this.errors.lastName = Validator.notBlank(this.state.lastName, "Le nom est obligatoire");
     this.errors.password = Validator.size(this.state.password, 6, 18, "La taille du mot de passe doit être entre 6 et 18 caractères");
+    this.errors.phone = Validator.notBlank(this.state.phone, "Le téléphone est obligatoire");
     this.errors.company = Validator.notBlank(this.state.company, "La compagnie est obligatoire")
     this.errors.confirm = Validator.match(this.state.password, this.state.confirm, "Le mot de passe ne correspond pas");
 
@@ -203,17 +207,19 @@ class EmployerRegistrationForm extends Component {
               autoComplete="company"
             />
 
-
             <MuiPhoneNumber
               defaultCountry={'ca'}
+              error={this.errors.phone}
+              helperText={this.errors.phone}
+              onChange={this.onPhoneChange}
+              required
               id="phone"
               name="phone"
               fullWidth
-              value={this.state.phone}
               variant="outlined"
               margin="normal"
               label="Telephone"
-              onChange={this.handleOnChange}
+              autoComplete="phone"
             />
 
             <TextField
