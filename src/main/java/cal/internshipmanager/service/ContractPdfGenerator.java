@@ -59,6 +59,7 @@ public class ContractPdfGenerator {
         User admin = contract.getAdministrator();
         InternshipOffer offer = application.getOffer();
         String[] location = offer.getLocation().split(",");
+        String[] session = settingsService.getSemester().split("-");
         User employer = userRepository.findById(offer.getEmployer()).orElse(null);
 
 
@@ -85,7 +86,7 @@ public class ContractPdfGenerator {
         addEmptyLine(p2, 1);
         p2.add(setNewMIddleParagraph("Technique informatique", boldMid));
         addEmptyLine(p2, 19);
-        p2.add(setNewMIddleParagraph("Hiver 2021", null));//+application.getSemester(),null));
+        p2.add(setNewMIddleParagraph(getSeasonF(session[0])+" "+session[1], null));//+application.getSemester(),null));
         p2.setAlignment(Paragraph.ALIGN_CENTER);
 
         document.setMargins(5, 5, 5, 5);
@@ -351,13 +352,13 @@ public class ContractPdfGenerator {
     }
 
     private String getSeasonF(String season){
-        if(season == "SUMMER")
+        if(season.equals("SUMMER"))
             return "ETE";
-        else if(season == "WINTER")
+        else if(season.equals("WINTER"))
             return "HIVER";
-        else if(season == "AUTUMN")
+        else if(season.equals("AUTUMN"))
             return "AUTOMNE";
-        else if(season == "SPRING")
+        else if(season.equals("SPRING"))
             return "PRINTEMPS";
         else
             return null;
