@@ -22,13 +22,13 @@ import StudentInternshipApplicationStatusPage from './pages/StudentInternshipApp
 import ManageAccessPage from './pages/ManageAccessPage';
 import SemesterSelectionPage from './pages/SemesterSelectionPage';
 import StudentListPage from './pages/StudentListPage';
-import StudentProfilePage from './pages/StudentProfilePage';
 import SelectActionPage from './pages/SelectActionPage';
-import EmployerProfilePage from './pages/EmployerProfilePage';
+import UserProfilePage from './pages/UserProfilePage';
 import EmployerListPage from './pages/EmployerListPage';
 import ContractListPage from './pages/ContractListPage';
 import ContractPage from './pages/ContractPage';
 import CreateSignaturePage from './pages/CreateSignaturePage';
+import InternshipOfferPage from './pages/InternshipOfferPage';
 
 function App() {
 
@@ -43,13 +43,9 @@ function App() {
               <Route
                 exact
                 path="/"
-                render={() => {
-                  return (
-                    AuthenticationService.authenticationRequired() ?
-                      <Redirect to="/login" /> :
-                      <Redirect to="/home" />
-                  )
-                }}
+                render={() => (
+                  AuthenticationService.authenticationRequired() ? <Redirect to="/login" /> : <Redirect to="/home" />
+                )}
               />
 
               <Route exact path="/login" component={LoginPage}></Route>
@@ -59,27 +55,27 @@ function App() {
 
                 <Route exact path="/home" component={HomePage}></Route>
 
-                <Route exact path="/internship-offer-creation" component={InternshipOfferCreationPage}></Route>
-
-                <Route exact path="/student-offer-validation" component={StudentInternshipOfferValidationPage}></Route>
-                <Route exact path="/pending-approval" component={PendingApprovalPage}></Route>
-
                 <Route exact path="/internship-application-creation" component={StudentInternshipApplicationPage}></Route>
 
                 <Route exact path="/internship-application-validation" component={StudentInternshipApplicationValidationPage}></Route>
                 <Route exact path="/internship-application-status" component={StudentInternshipApplicationStatusPage}></Route>
                 <Route exact path="/student-selection-page" component={StudentSelectionPage}></Route>
-                <Route exact path="/student-list-page" component={StudentListPage}></Route>
-                <Route exact path="/employer-list-page" component={EmployerListPage}></Route>
 
                 <Route exact path="/manage-access/:uuid" component={ManageAccessPage}></Route>
 
                 <Route exact path="/semester-selection" component={SemesterSelectionPage}></Route>
-                <Route exact path="/student-profile-page/:uuid/:fullName" component={StudentProfilePage}></Route>
-                <Route exact path="/employer-profile-page/:uuid/:fullName" component={EmployerProfilePage}></Route>
                 
                 <Route exact path="/select-action/:uuid" component={SelectActionPage}></Route>
                 <Route exact path="/create-signature" component={CreateSignaturePage}></Route>
+
+                <Route exact path="/internship-offer-creation" component={InternshipOfferCreationPage}></Route>
+                <Route exact path="/student-offer-validation" component={StudentInternshipOfferValidationPage}></Route>
+                <Route exact path="/pending-approval" component={PendingApprovalPage}></Route>
+                <Route exact path="/internship-offer/:uuid" component={InternshipOfferPage}></Route>
+
+                <Route exact path="/student-list-page" component={StudentListPage}></Route>
+                <Route exact path="/employer-list-page" component={EmployerListPage}></Route>
+                <Route exact path="/user/:uuid" component={UserProfilePage}></Route>
 
                 <Route exact path="/contracts" component={ContractListPage}></Route>
                 <Route exact path="/contract/:uuid" component={ContractPage}></Route>

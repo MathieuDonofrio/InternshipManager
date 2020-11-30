@@ -20,6 +20,11 @@ class UserService {
   // Get
   //
 
+  
+  find(request) {
+    return axios.get(Config.target + `/user/${request}`, headers());
+  }
+
   students() {
     return axios.get(Config.target + '/user/students', headers());
   }

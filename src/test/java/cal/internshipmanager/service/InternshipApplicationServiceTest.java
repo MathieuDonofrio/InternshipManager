@@ -164,6 +164,8 @@ public class InternshipApplicationServiceTest {
         offer.setUniqueId(UUID.randomUUID());
         offer.setSemester(settingsService.getSemester());
         offer.setCompany("TestCompany");
+        offer.setPhone("514");
+        offer.setLocation("TestLocation");
         offer.setJobTitle("TestJobTitle");
 
         PortfolioDocument document = new PortfolioDocument();
@@ -227,6 +229,8 @@ public class InternshipApplicationServiceTest {
         offer.setSemester(settingsService.getSemester());
         offer.setCompany("TestCompany");
         offer.setJobTitle("TestJobTitle");
+        offer.setPhone("514");
+        offer.setLocation("TestLocation");
 
         PortfolioDocument document = new PortfolioDocument();
 
@@ -288,6 +292,8 @@ public class InternshipApplicationServiceTest {
         internshipOffer.setUniqueId(UUID.randomUUID());
         internshipOffer.setSemester(settingsService.getSemester());
         internshipOffer.setCompany("TestCompany");
+        internshipOffer.setLocation("TestLocation");
+        internshipOffer.setPhone("514");
         internshipOffer.setJobTitle("TestJobTitle");
 
 

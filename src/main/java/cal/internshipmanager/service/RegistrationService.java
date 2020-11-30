@@ -59,6 +59,7 @@ public class RegistrationService {
         user.setPasswordHash(passwordEncoder.encode(request.getPassword()));
         user.setFirstName(request.getFirstName());
         user.setLastName(request.getLastName());
+        user.setPhone(request.getPhone());
         user.setCompany(request.getCompany());
 
         userRepository.save(user);

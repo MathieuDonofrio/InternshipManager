@@ -31,6 +31,10 @@ public class InternshipOfferListResponse implements Serializable {
 
         private String company;
 
+        private String phone;
+
+        private String offer;
+
         private String jobTitle;
 
         private List<String> jobScope;
@@ -38,6 +42,8 @@ public class InternshipOfferListResponse implements Serializable {
         private Long startDate;
 
         private Long endDate;
+
+        private String schedule;
 
         private String location;
 
@@ -59,10 +65,12 @@ public class InternshipOfferListResponse implements Serializable {
         internshipOffer.employer = from.getEmployer();
         internshipOffer.status = from.getStatus().toString();
         internshipOffer.company = from.getCompany();
+        internshipOffer.phone = from.getPhone();
         internshipOffer.jobTitle = from.getJobTitle();
         internshipOffer.jobScope = from.getJobScope();
         internshipOffer.startDate = from.getStartDate().getTime();
         internshipOffer.endDate = from.getEndDate().getTime();
+        internshipOffer.schedule = from.getSchedule();
         internshipOffer.location = from.getLocation();
         internshipOffer.salary = from.getSalary();
         internshipOffer.hours = from.getHours();

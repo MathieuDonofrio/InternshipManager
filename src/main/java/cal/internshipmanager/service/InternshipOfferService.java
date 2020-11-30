@@ -66,6 +66,8 @@ public class InternshipOfferService {
         internshipOffer.setStartDate(new Date(request.getStartDate()));
         internshipOffer.setEndDate(new Date(request.getEndDate()));
         internshipOffer.setLocation(request.getLocation());
+        internshipOffer.setPhone(request.getPhone());
+        internshipOffer.setSchedule(request.getSchedule());
         internshipOffer.setUsers(new ArrayList<>());
 
         internshipOfferRepository.save(internshipOffer);
@@ -177,7 +179,7 @@ public class InternshipOfferService {
         internshipOfferRepository.save(internshipOffer);
     }
 
-    public InternshipOfferListResponse findAllByEmployer(UUID uniqueId){
+    public InternshipOfferListResponse findAllByEmployer(UUID uniqueId) {
 
         List<InternshipOffer> internshipOffers = internshipOfferRepository.findAllByEmployerAndStatusAndSemester(
                 uniqueId, InternshipOffer.Status.APPROVED, settingsService.getSemester());
@@ -188,6 +190,10 @@ public class InternshipOfferService {
                 .collect(Collectors.toList()));
 
         return response;
+    }
+
+    public InternshipOfferListResponse.InternshipOffer find(UUID uniqueId){
+        return InternshipOfferListResponse.map(internshipOfferRepository.findById(uniqueId).get());
     }
 
 }

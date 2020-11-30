@@ -47,6 +47,16 @@ public class ContractController {
         return contractService.awaitingSignature(userUniqueId);
     }
 
+    @GetMapping("signed-contracts/{userUniqueId}")
+    public ContractListResponse signedContracts(@Valid @PathVariable @ExistingUser UUID userUniqueId){
+        return contractService.signedContracts(userUniqueId);
+    }
+
+    @GetMapping("all-contracts/{userUniqueId}")
+    public ContractListResponse allContracts(@Valid @PathVariable @ExistingUser UUID userUniqueId){
+        return contractService.allContracts(userUniqueId);
+    }
+
     @GetMapping("generate/{uniqueId}") // TODO replace internship-application by generate
     public ResponseEntity<Resource> generate(@Valid @PathVariable @ExistingContract UUID uniqueId) {
         return DownloadFileResponse.responseEntity(contractService.generate(uniqueId));
