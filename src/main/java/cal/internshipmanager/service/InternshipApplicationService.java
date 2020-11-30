@@ -75,8 +75,6 @@ public class InternshipApplicationService {
         internshipApplication.setSemester(settingsService.getSemester());
         internshipApplication.setStudent(student);
         internshipApplication.setOffer(offer);
-        //internshipApplication.setStudentUniqueId(student.getUniqueId());
-        //internshipApplication.setOfferUniqueId(offer.getUniqueId());
         internshipApplication.setDate(new Date());
         internshipApplication.setInterviewDate(new Date(0));
         internshipApplication.setDocuments(documents);
@@ -173,5 +171,9 @@ public class InternshipApplicationService {
         application.setInterviewDate(new Date(request.getInterviewDate()));
 
         internshipApplicationRepository.save(application);
+    }
+
+    public InternshipApplicationListResponse.InternshipApplication find(UUID uniqueId){
+        return InternshipApplicationListResponse.map(internshipApplicationRepository.findById(uniqueId).orElse(null));
     }
 }

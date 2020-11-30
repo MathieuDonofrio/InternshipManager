@@ -5,9 +5,11 @@ import cal.internshipmanager.request.InternshipApplicationCreationRequest;
 import cal.internshipmanager.request.InternshipApplicationInterviewDateRequest;
 import cal.internshipmanager.response.InternshipApplicationListResponse;
 import cal.internshipmanager.response.PortfolioDocumentListResponse;
+import cal.internshipmanager.response.UserListReponse;
 import cal.internshipmanager.service.InternshipApplicationService;
 import cal.internshipmanager.validator.ExistingInternshipApplication;
 import cal.internshipmanager.validator.ExistingInternshipOffer;
+import cal.internshipmanager.validator.ExistingUser;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -78,7 +80,12 @@ public class InternshipApplicationController {
     @PutMapping("interview/{applicationId}")
     public void addInterview(@Valid @ExistingInternshipApplication @PathVariable UUID applicationId,
                              @RequestBody InternshipApplicationInterviewDateRequest request) {
-        internshipApplicationService.addInterview(applicationId,request);
+        internshipApplicationService.addInterview(applicationId, request);
+    }
+
+    @GetMapping("{uniqueId}")
+    public InternshipApplicationListResponse.InternshipApplication find(@Valid @ExistingInternshipApplication @PathVariable UUID uniqueId) {
+        return internshipApplicationService.find(uniqueId);
     }
 
     //
