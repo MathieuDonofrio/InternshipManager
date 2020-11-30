@@ -227,6 +227,13 @@ public class ContractPdfGenerator {
         document.add(tinyTextParagraph("• référer rapidement au responsable des stages au cégep toute situation problématique affectant le bon déroulement du stage;"));
         document.add(tinyTextParagraph("• rédiger un rapport de stage et le soumettre au responsable des stages au cégep."));
         document.add(setNewEmptyParagraph(1));
+
+        //----------------------------------------
+
+
+        document.setMargins(36, 36, 36, 0);
+        document.newPage();
+        PdfPTable tableSignatures = new PdfPTable(1);
         PdfPTable t = new PdfPTable(1);
         t.setWidthPercentage(100);
         t.addCell(setTitleCell("SIGNATURES"));
@@ -237,8 +244,9 @@ public class ContractPdfGenerator {
         cell8.setBorder(0);
         PdfPTable t2 = new PdfPTable(1);
         PdfPTable t3 = new PdfPTable(new float[]{3, 1});
-        PdfPCell tmpCell;
-        PdfPCell tmpCell2 = new PdfPCell();
+        PdfPCell tmpCell = new PdfPCell();
+        tmpCell.setBorder(PdfPCell.NO_BORDER+PdfPCell.BOTTOM);
+        PdfPCell tmpCell2;
 
         t2.setWidthPercentage(100);
         t3.setWidthPercentage(100);
@@ -246,27 +254,26 @@ public class ContractPdfGenerator {
             image = Image.getInstance(contract.getStudentSignature().getData());
             image.scaleAbsolute(120, 40);
             image.setAlignment(Element.ALIGN_MIDDLE);
+        } else {
+            tmpCell.addElement(setNewEmptyParagraph(3));
         }
-        tmpCell = assignBorder(new PdfPCell(new Phrase("", new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD))), 0, 0, 2);
         if (contract.getStudentSignature() != null)
             tmpCell.addElement(image);
         tmpCell.addElement(new Phrase("L’étudiant : ", new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD)));
-        tmpCell.setPadding(20);
+        tmpCell.setPadding(10);
         t3.addCell(tmpCell);
         if (contract.getStudentSignature() != null) {
             tmpCell2 = assignBorder(new PdfPCell(), 0, 0, 2);
             Paragraph p6 = new Paragraph(new Phrase("" + dateFor.format(contract.getStudentSignedDate())));
-            p6.setSpacingBefore(20);
+            p6.setSpacingBefore(10);
             p6.setAlignment(Paragraph.ALIGN_BASELINE + Paragraph.ALIGN_CENTER);
             //p6.setAlignment(Paragraph.ALIGN_BOTTOM);
-            tmpCell2.setFixedHeight(200);
+
             tmpCell2.addElement(setNewEmptyParagraph(2));
             tmpCell2.addElement(p6);
             t3.addCell(tmpCell2);
         } else {
-            tmpCell2 = new PdfPCell();
-            tmpCell2.setFixedHeight(200);
-            t3.addCell(assignBorder(tmpCell2, 0, 0, 2));
+            t3.addCell(assignBorder(new PdfPCell(), 0, 0, 2));
         }
         PdfPCell tmpCell3 = assignBorder(new PdfPCell(), 0, 0, 0);
         Paragraph p7 = new Paragraph(new Phrase(student.getFirstName() + " " + student.getLastName()));
@@ -290,14 +297,11 @@ public class ContractPdfGenerator {
             tmpCell2 = assignBorder(new PdfPCell(), 0, 0, 2);
             Paragraph p6 = new Paragraph(new Phrase("" + dateFor.format(contract.getEmployerSignedDate())));
             p6.setAlignment(Paragraph.ALIGN_BOTTOM);
-            tmpCell2.setFixedHeight(200);
             tmpCell2.addElement(setNewEmptyParagraph(5));
             tmpCell2.addElement(p6);
             t3.addCell(tmpCell2);
         } else {
-            tmpCell2 = new PdfPCell();
-            tmpCell2.setFixedHeight(200);
-            t3.addCell(assignBorder(tmpCell2, 0, 0, 2));
+            t3.addCell(assignBorder(new PdfPCell(), 0, 0, 2));
         }
         tmpCell3 = assignBorder(new PdfPCell(), 0, 0, 0);
         p7 = new Paragraph(new Phrase(employer.getFirstName() + " " + employer.getLastName()));
@@ -321,14 +325,12 @@ public class ContractPdfGenerator {
             tmpCell2 = assignBorder(new PdfPCell(), 0, 0, 2);
             Paragraph p6 = new Paragraph(new Phrase("" + dateFor.format(contract.getAdministratorSignedDate())));
             p6.setAlignment(Paragraph.ALIGN_MIDDLE + Paragraph.ALIGN_BOTTOM);
-            tmpCell2.setFixedHeight(200);
             tmpCell2.addElement(setNewEmptyParagraph(2));
             tmpCell2.addElement(p6);
             t3.addCell(tmpCell2);
         } else {
-            tmpCell2 = new PdfPCell();
-            tmpCell2.setFixedHeight(200);
-            t3.addCell(assignBorder(tmpCell2, 0, 0, 2));
+
+            t3.addCell(assignBorder(new PdfPCell(), 0, 0, 2));
         }
         tmpCell3 = assignBorder(new PdfPCell(), 0, 0, 0);
         p7 = new Paragraph(new Phrase(admin.getFirstName() + " " + admin.getLastName()));
@@ -338,9 +340,27 @@ public class ContractPdfGenerator {
         t3.addCell(removeBorders(new Phrase("Date")));
         cell8.addElement(t3);
         t2.addCell(cell8);
-        document.add(t2);
+        tmpCell2 = new PdfPCell();
+        tmpCell2.addElement(t2);
+        tmpCell2.setBorder(PdfPCell.NO_BORDER);
+        tableSignatures.addCell(tmpCell2);
+        tableSignatures.setWidthPercentage(100);
+        document.add(tableSignatures);
 
 
+    }
+
+    private String getSeasonF(String season){
+        if(season == "SUMMER")
+            return "ETE";
+        else if(season == "WINTER")
+            return "HIVER";
+        else if(season == "AUTUMN")
+            return "AUTOMNE";
+        else if(season == "SPRING")
+            return "PRINTEMPS";
+        else
+            return null;
     }
 
     private PdfPCell removeBorders(Phrase p) {
