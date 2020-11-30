@@ -84,7 +84,6 @@ export default function InteractiveList() {
   }
 
   const fetchStudents = async () => {
-
     const r1 = await InternshipOfferService.users(uuid);
     const r2 = await UserService.students();
 
@@ -116,8 +115,7 @@ export default function InteractiveList() {
         spacing={8}
         justify="center"
         mt={4}
-        paddingBottom={4}
-        textAlign="center">
+        pb={4}>
 
         <Grid item>
           <List

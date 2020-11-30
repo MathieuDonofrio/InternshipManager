@@ -14,6 +14,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
+import { TableBody } from "@material-ui/core";
 
 export default function InternshipOffer() {
 
@@ -40,7 +41,7 @@ export default function InternshipOffer() {
     }
 
     const translateStatus = (status) => {
-        switch(status){
+        switch (status) {
             case "PENDING_APPROVAL": return "En attente d'approbation";
             case "APPROVED": return "Approuvé";
             case "REJECTED": return "Rejeté";
@@ -72,55 +73,53 @@ export default function InternshipOffer() {
 
                     <Table size="small">
 
-                        <TableHead>
-                            <TableCell width="30%"></TableCell>
-                            <TableCell width="70%"></TableCell>
-                        </TableHead>
-
-                        <TableRow>
-                            <TableCell align="left"><strong>Compagnie</strong></TableCell>
-                            <TableCell align="right">{offer.company}</TableCell>
-                        </TableRow>
-
-                        <TableRow>
-                            <TableCell align="left"><strong>Poste</strong></TableCell>
-                            <TableCell align="right">{offer.jobTitle}</TableCell>
-                        </TableRow>
-
-                        <TableRow>
-                            <TableCell align="left"><strong>Date Début</strong></TableCell>
-                            <TableCell align="right">{new Date(offer.startDate).toLocaleDateString()}</TableCell>
-                        </TableRow>
-
-                        <TableRow>
-                            <TableCell align="left"><strong>Date Fin</strong></TableCell>
-                            <TableCell align="right">{new Date(offer.endDate).toLocaleDateString()}</TableCell>
-                        </TableRow>
-
-                        {
-                            offer.salary &&
-                            <TableRow>
-                                <TableCell align="left"><strong>Salaire</strong></TableCell>
-                                <TableCell align="right">{offer.salary.toFixed(2) + '$'} </TableCell>
+                       
+                        <TableBody>
+                            <TableRow key="company">
+                                <TableCell align="left"><strong>Compagnie</strong></TableCell>
+                                <TableCell align="right">{offer.company}</TableCell>
                             </TableRow>
-                        }
 
-                        <TableRow>
-                            <TableCell align="left"><strong>Heures Par Semaine</strong></TableCell>
-                            <TableCell align="right">{offer.hours} </TableCell>
-                        </TableRow>
+                            <TableRow key="poste">
+                                <TableCell align="left"><strong>Poste</strong></TableCell>
+                                <TableCell align="right">{offer.jobTitle}</TableCell>
+                            </TableRow>
 
-                        <TableRow>
-                            <TableCell align="left"><strong>Horaire</strong></TableCell>
+                            <TableRow key="datedebut">
+                                <TableCell align="left"><strong>Date Début</strong></TableCell>
+                                <TableCell align="right">{new Date(offer.startDate).toLocaleDateString()}</TableCell>
+                            </TableRow>
+
+                            <TableRow key="datefin">
+                                <TableCell align="left"><strong>Date Fin</strong></TableCell>
+                                <TableCell align="right">{new Date(offer.endDate).toLocaleDateString()}</TableCell>
+                            </TableRow>
+
                             {
-                                offer.schedule && <TableCell align="right">{offer.schedule}</TableCell>
+                                offer.salary &&
+                                <TableRow key="salaire">
+                                    <TableCell align="left"><strong>Salaire</strong></TableCell>
+                                    <TableCell align="right">{offer.salary.toFixed(2) + '$'} </TableCell>
+                                </TableRow>
                             }
-                            {
-                                !offer.schedule && <TableCell align="right">Aucun horaire specifié</TableCell>
-                            }
-                            
-                        </TableRow>
 
+                            <TableRow key="heure">
+                                <TableCell align="left"><strong>Heures Par Semaine</strong></TableCell>
+                                <TableCell align="right">{offer.hours} </TableCell>
+                            </TableRow>
+
+                            <TableRow key="horaire">
+                                <TableCell align="left"><strong>Horaire</strong></TableCell>
+                                {
+                                    offer.schedule && <TableCell align="right">{offer.schedule}</TableCell>
+                                }
+                                {
+                                    !offer.schedule && <TableCell align="right">Aucun horaire specifié</TableCell>
+                                }
+
+                            </TableRow>
+
+                        </TableBody>
                     </Table>
 
                     {
@@ -135,7 +134,7 @@ export default function InternshipOffer() {
                                     <Typography>Portée De Travail</Typography>
                                 </Box>
                             </Box>
-                            <ul>{offer.jobScope.map(scope => (<li style={{}}>{scope}</li>))}</ul>
+                            <ul>{offer.jobScope.map((scope,index) => (<li key={index} style={{}}>{scope}</li>))}</ul>
                         </Box>
                     }
 
@@ -161,7 +160,7 @@ export default function InternshipOffer() {
                             variant="contained" color="secondary"
                             size="small"
                             onClick={() => history.push(`/manage-access/${offer.uniqueId}`)}>
-                            Gérer l'accès 
+                            Gérer l'accès
                         </Button>
                     }
                     {

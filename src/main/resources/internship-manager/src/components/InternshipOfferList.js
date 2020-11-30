@@ -11,6 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { makeStyles } from "@material-ui/core";
 import { Box, Paper, Tab, Tabs } from "@material-ui/core";
+import { useHistory } from "react-router-dom";
 
 //
 // Data
@@ -25,6 +26,7 @@ const useStyles2 = makeStyles({
 export default function InternshipOfferList() {
     const [rows, setRows] = useState([]);
     const [value, setValue] = useState(0);
+    const history = useHistory();
     const classes2 = useStyles2();
 
     //
@@ -80,9 +82,9 @@ export default function InternshipOfferList() {
                 <Table size="small" aria-label="a dense table">
                     <TableHead>
                         <TableRow>
-                            <TableCell align="center"><strong>Compagnie</strong></TableCell>
-                            <TableCell align="center"><strong>Titre de poste</strong></TableCell>
-                            <TableCell align="center"><strong>Action</strong></TableCell>
+                            <TableCell width="30%" align="center"><strong>Compagnie</strong></TableCell>
+                            <TableCell width="30%" align="center"><strong>Titre de poste</strong></TableCell>
+                            <TableCell width="30%" align="center"><strong>Action</strong></TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -91,7 +93,12 @@ export default function InternshipOfferList() {
                                 <TableCell component="th" scope="row" align="center">{offer.company}</TableCell>
                                 <TableCell component="th" scope="row" align="center">{offer.jobTitle}</TableCell>
                                 <TableCell component="th" scope="row" align="center">
-                                    <Button variant="contained" color="secondary" size="small">voir</Button>
+                                    <Button 
+                                    variant="contained"
+                                     color="secondary" 
+                                     size="small"
+                                     onClick={() => history.push(`/internship-offer/${offer.uniqueId}`)}
+                                     >voir</Button>
                                 </TableCell>
                             </TableRow>
                         ))}

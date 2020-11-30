@@ -72,8 +72,6 @@ function App() {
                 <Route exact path="/create-signature" component={CreateSignaturePage}></Route>
 
                 <Route exact path="/internship-offer-creation" component={InternshipOfferCreationPage}></Route>
-                <Route exact path="/student-offer-validation" component={StudentInternshipOfferValidationPage}></Route>
-                <Route exact path="/pending-approval" component={PendingApprovalPage}></Route>
                 <Route exact path="/internship-offer/:uuid" component={InternshipOfferPage}></Route>
 
                 <Route exact path="/student-list-page" component={StudentListPage}></Route>
