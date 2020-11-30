@@ -49,7 +49,7 @@ public class UserServiceTest {
         user.setLastName("Tata");
         user.setCompany("Test");
 
-        UserService userService = new UserService(userRepository, internshipApplicationRepository,internshipOfferRepository, new SettingsService(settingsRepository));
+        UserService userService = new UserService(userRepository, internshipApplicationRepository, internshipOfferRepository, new SettingsService(settingsRepository));
 
         when(userRepository.findAllByType(User.Type.STUDENT))
                 .thenReturn(List.of(user));
@@ -95,7 +95,7 @@ public class UserServiceTest {
         internshipApplication.setDate(new Date());
         internshipApplication.setStatus(InternshipApplication.Status.SELECTED);
 
-        UserService userService = new UserService(userRepository, internshipApplicationRepository,internshipOfferRepository, new SettingsService(settingsRepository));
+        UserService userService = new UserService(userRepository, internshipApplicationRepository, internshipOfferRepository, new SettingsService(settingsRepository));
 
         when(userRepository.findAllByType(User.Type.STUDENT))
                 .thenReturn(List.of(user));
@@ -146,7 +146,7 @@ public class UserServiceTest {
         internshipApplication.setDate(new Date());
         internshipApplication.setStatus(InternshipApplication.Status.SELECTED);
 
-        UserService userService = new UserService(userRepository, internshipApplicationRepository,internshipOfferRepository, new SettingsService(settingsRepository));
+        UserService userService = new UserService(userRepository, internshipApplicationRepository, internshipOfferRepository, new SettingsService(settingsRepository));
 
         when(userRepository.findAllByType(User.Type.STUDENT))
                 .thenReturn(List.of(user));
@@ -188,7 +188,7 @@ public class UserServiceTest {
         user.setLastName("Tata");
         user.setCompany("Test");
 
-        UserService userService = new UserService(userRepository, internshipApplicationRepository,internshipOfferRepository, new SettingsService(settingsRepository));
+        UserService userService = new UserService(userRepository, internshipApplicationRepository, internshipOfferRepository, new SettingsService(settingsRepository));
 
         when(userRepository.findAllByType(Mockito.any()))
                 .thenReturn(List.of(user));
@@ -242,12 +242,12 @@ public class UserServiceTest {
         internshipOffer.setHours(40);
         internshipOffer.setUsers(new ArrayList<>());
 
-        UserService userService = new UserService(userRepository, internshipApplicationRepository,internshipOfferRepository, new SettingsService(settingsRepository));
+        UserService userService = new UserService(userRepository, internshipApplicationRepository, internshipOfferRepository, new SettingsService(settingsRepository));
 
         when(userRepository.findAllByType(Mockito.any()))
                 .thenReturn(List.of(user));
 
-        when(internshipOfferRepository.findAllByEmployerAndStatusAndSemester(Mockito.any(),Mockito.any(), Mockito.any()))
+        when(internshipOfferRepository.findAllByEmployerAndStatusAndSemester(Mockito.any(), Mockito.any(), Mockito.any()))
                 .thenReturn(List.of(internshipOffer));
 
         when(settingsRepository.findAll()).thenReturn(List.of(settings));
@@ -301,12 +301,12 @@ public class UserServiceTest {
         internshipOffer.setHours(40);
         internshipOffer.setUsers(new ArrayList<>());
 
-        UserService userService = new UserService(userRepository, internshipApplicationRepository,internshipOfferRepository, new SettingsService(settingsRepository));
+        UserService userService = new UserService(userRepository, internshipApplicationRepository, internshipOfferRepository, new SettingsService(settingsRepository));
 
         when(userRepository.findAllByType(Mockito.any()))
                 .thenReturn(List.of(user));
 
-        when(internshipOfferRepository.findAllByEmployerAndStatusAndSemester(Mockito.any(),Mockito.any(), Mockito.any()))
+        when(internshipOfferRepository.findAllByEmployerAndStatusAndSemester(Mockito.any(), Mockito.any(), Mockito.any()))
                 .thenReturn(List.of(internshipOffer));
 
         when(settingsRepository.findAll()).thenReturn(List.of(settings));
@@ -344,7 +344,7 @@ public class UserServiceTest {
 
         UserListReponse.User userToFind = UserListReponse.map(user);
 
-        UserService userService = new UserService(userRepository, internshipApplicationRepository,internshipOfferRepository, new SettingsService(settingsRepository));
+        UserService userService = new UserService(userRepository, internshipApplicationRepository, internshipOfferRepository, new SettingsService(settingsRepository));
 
         // Act
         when(userRepository.findById(any())).thenReturn(Optional.of(user));

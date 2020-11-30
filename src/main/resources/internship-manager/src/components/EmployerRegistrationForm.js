@@ -7,7 +7,7 @@ import RegistrationService from '../services/RegistrationService';
 import Validator from '../utils/Validator';
 import Lock from '../utils/Lock'
 import Copyright from './Copyright';
-
+import MuiPhoneNumber from "material-ui-phone-number";
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -27,6 +27,7 @@ const state = {
   firstName: '',
   lastName: '',
   password: '',
+  phone: '',
   company: '',
   confirm: ''
 }
@@ -73,13 +74,14 @@ class EmployerRegistrationForm extends Component {
       password: this.state.password,
       firstName: this.state.firstName,
       lastName: this.state.lastName,
-      company: this.state.company
+      company: this.state.company,
+      phone: this.state.phone
     }
 
     RegistrationService.employer(request)
       .then(() => {
         this.props.history.push('/login');
-        this.props.enqueueSnackbar("Enregistré avec succes! Vous pouvez maintenant vous loggé",  { variant: 'success' });
+        this.props.enqueueSnackbar("Enregistré avec succes! Vous pouvez maintenant vous loggé", { variant: 'success' });
       })
       .catch(error => this.backendValidation(error))
       .finally(() => { this.submitLock.unlock(); this.forceUpdate() });
@@ -199,6 +201,19 @@ class EmployerRegistrationForm extends Component {
               label="Compagnie"
               name="company"
               autoComplete="company"
+            />
+
+
+            <MuiPhoneNumber
+              defaultCountry={'ca'}
+              id="phone"
+              name="phone"
+              fullWidth
+              value={this.state.phone}
+              variant="outlined"
+              margin="normal"
+              label="Telephone"
+              onChange={this.handleOnChange}
             />
 
             <TextField

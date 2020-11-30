@@ -42,6 +42,14 @@ class ContractService {
     awaitingSignature(request) {
         return axios.get(Config.target + `/contract/awaiting-signature/${request}`, headers());
     }
+    
+    allContracts(request) {
+        return axios.get(Config.target + `/contract/all-contracts/${request}`, headers());
+    }
+    
+    signedContracts(request) {
+        return axios.get(Config.target + `/contract/signed-contracts/${request}`, headers());
+    }
 
     //
     // Put

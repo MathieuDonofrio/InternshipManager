@@ -5,7 +5,7 @@ import Validator from '../utils/Validator';
 import Lock from '../utils/Lock'
 import DateFnsUtils from '@date-io/date-fns';
 import { withSnackbar } from 'notistack';
-
+import { CountryDropdown, RegionDropdown, CountryRegionData } from 'react-country-region-selector';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
@@ -21,6 +21,7 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
+import MuiPhoneNumber from "material-ui-phone-number";
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
 
 //
@@ -29,11 +30,18 @@ import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOut
 
 const state = {
   company: '',
+  phone: '',
   jobTitle: '',
   jobScope: new Array(),
+  schedule: '',
   startDate: new Date(),
   endDate: new Date(),
   location: '',
+  address: '',
+  city: '',
+  postal: '',
+  country: '',
+  region: '',
   duration: 0,
   salary: 0,
   hours: 0,
@@ -42,11 +50,18 @@ const state = {
 
 const errors = {
   company: '',
+  phone: '',
   jobTitle: '',
   jobScope: '',
   startDate: '',
   endDate: '',
+  schedule: '',
   location: '',
+  address: '',
+  city: '',
+  postal: '',
+  country: '',
+  region: '',
   duration: '',
   salary: '',
   hours: ''
@@ -84,11 +99,13 @@ class InternshipOfferCreationForm extends Component {
 
     const request = {
       company: this.state.company,
+      phone: this.state.phone,
       jobTitle: this.state.jobTitle,
       jobScope: this.state.jobScope,
       startDate: this.state.startDate.getTime(),
       endDate: this.state.endDate.getTime(),
-      location: this.state.location,
+      schedule: this.state.schedule,
+      location: this.state.address + "," + this.state.city + "," + this.state.postal + "," + this.state.country + "," + this.state.region,
       salary: this.state.salary,
       hours: this.state.hours
     }
@@ -119,6 +136,13 @@ class InternshipOfferCreationForm extends Component {
 
   onChange = event => this.setState({ [event.target.name]: event.target.value });
 
+  handleOnChange = value => {
+    this.setState({
+      phone: value
+    });
+  }
+
+
   //
   // Validation
   //
@@ -129,7 +153,12 @@ class InternshipOfferCreationForm extends Component {
 
     this.errors.company = Validator.notBlank(this.state.company, "La compagnie est obligatoire");
     this.errors.jobTitle = Validator.notBlank(this.state.jobTitle, "Titre du poste est obligatoire");
-    this.errors.location = Validator.notBlank(this.state.location, "L'emplacement est obligatoire")
+    this.errors.phone = Validator.notBlank(this.state.phone, "Titre du poste est obligatoire");
+    this.errors.address = Validator.notBlank(this.state.address, "Obligatoire");
+    this.errors.city = Validator.notBlank(this.state.city, "Obligatoire");
+    this.errors.postal = Validator.notBlank(this.state.postal, "Obligatoire");
+    this.errors.country = Validator.notBlank(this.state.country, "Obligatoire");
+    this.errors.schedule = Validator.notBlank(this.state.schedule, "Obligatoire");
     this.errors.salary = Validator.positive(this.state.salary, "Le salaire ne peut pas être négative");
     this.errors.hours = Validator.min(this.state.hours, 1, "L'heure doit être au moins à 1");
     this.errors.startDate = Validator.after(this.state.startDate, new Date(), "Impossible de définir une date de début dans le passé");
@@ -202,19 +231,80 @@ class InternshipOfferCreationForm extends Component {
               autoComplete="jobTitle"
             />
 
-            <TextField
-              error={this.errors.location}
-              helperText={this.errors.location}
-              onChange={this.onChange}
+            <MuiPhoneNumber
+              defaultCountry={'ca'}
+              id="phone"
+              name="phone"
+              value={this.state.phone}
               variant="outlined"
               margin="normal"
-              required
-              fullWidth
-              id="location"
-              label="Emplacement"
-              name="location"
-              autoComplete="location"
+              label="Telephone"
+              helperText="*Le telephone est seulement utilise pour le contrat"
+              onChange={this.handleOnChange}
             />
+<TextField
+                  error={this.errors.address}
+                  label="Address"
+                  id="address"
+                  name="address"
+                  helperText="Exemple: 39 Saint-Catherine"
+                  fullWidth
+                  onChange={this.onChange}
+                  variant="outlined"
+                  margin="normal"
+                  required />
+            <Grid container spacing={2}>
+             
+              <Grid item xs={12} sm={3}>
+                <TextField
+                  error={this.errors.city}
+                  label="Ville"
+                  id="city"
+                  name="city"
+                  helperText="Exemple: Toronto"
+                  onChange={this.onChange}
+                  variant="outlined"
+                  margin="normal"
+
+                  required />
+              </Grid>
+              <Grid item xs={12} sm={3}>
+                <TextField
+                  error={this.errors.postal}
+                  label="Zip / Code postal"
+                  id="postal"
+                  name="postal"
+                  helperText="Exemple: H5W 1F3"
+                  onChange={this.onChange}
+                  variant="outlined"
+                  margin="normal"
+                  required />
+              </Grid>
+              <Grid item xs={12} sm={3}>
+                <TextField
+                  error={this.errors.country}
+                  onChange={this.onChange}
+                  label="Pays"
+                  id="country"
+                  name="country"
+                  helperText="Exemple: Usa"
+                  variant="outlined"
+                  margin="normal"
+                  required />
+              </Grid>
+              <Grid item xs={12} sm={3}>
+                <TextField
+                  error={this.errors.region}
+                  onChange={this.onChange}
+                  label="Region/Province/Etat"
+                  id="region"
+                  name="region"
+                  helperText="Si applicatiif. Exemple: Alberta ou Florida"
+                  variant="outlined"
+                  margin="normal"
+                  />
+              </Grid>
+            </Grid>
 
             <Box mt={2} textAlign="left">
               <Typography component="h2">Rémunération</Typography>
@@ -314,6 +404,19 @@ class InternshipOfferCreationForm extends Component {
             <Box mt={2} textAlign="left">
               <Typography component="h2">Temps</Typography>
             </Box>
+            <TextField
+              onChange={this.onChange}
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="schedule"
+              label="Horaire"
+              name="schedule"
+              helperText="Exemple: Lundi-Vendredi 8h30-5h"
+              autoComplete="schedule"
+            />
+
 
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
               <Grid container justify="space-evenly">
@@ -347,24 +450,9 @@ class InternshipOfferCreationForm extends Component {
                     'aria-label': 'end date',
                   }}
                 />
-                {/*
-                <TextField
-                  error={this.errors.duration}
-                  helperText={this.errors.duration}
-                  onChange={this.onChange}
-                  id="duration"
-                  label="Duration (Weeks)"
-                  type="number"
-                  margin="normal"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  variant="standard"
-                  name="duration"
-                />
-                */}
               </Grid>
             </MuiPickersUtilsProvider>
+
 
             <Box mt={2}>
               <Button

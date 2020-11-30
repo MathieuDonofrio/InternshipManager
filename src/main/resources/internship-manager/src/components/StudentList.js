@@ -25,7 +25,7 @@ const useStyles2 = makeStyles({
   },
 });
 
-export default function StudentListTable() {
+export default function StudentList() {
 
   const history = useHistory();
   const classes = useStyles();
@@ -100,7 +100,7 @@ export default function StudentListTable() {
                   <Button
                     variant="contained" color="secondary"
                     size="small"
-                    onClick={() => history.push(`/student-profile-page/${student.uniqueId}/${student.firstName + " " + student.lastName}`)}
+                    onClick={() => history.push(`/user/${student.uniqueId}`)}
                   >
                     Voir profil
                     </Button>

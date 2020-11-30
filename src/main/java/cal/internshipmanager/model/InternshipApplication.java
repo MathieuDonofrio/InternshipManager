@@ -26,10 +26,6 @@ public class InternshipApplication implements Serializable {
 
     private InternshipOffer offer;
 
-    //private UUID studentUniqueId;
-
-    //private UUID offerUniqueId;
-
     private Date date;
 
     private Date interviewDate;

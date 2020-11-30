@@ -40,17 +40,29 @@ export default function PortfolioDocument() {
         });
     }
 
+    const approve = () => {
+
+        PortfolioService.approve(uuid).then(() => {
+            fetch()
+            enqueueSnackbar(`Document de portfolio apprové`,  { variant: 'success' });
+        });
+    }
+
+    const canApprove = () => {
+        return !document.approved && localStorage.getItem('UserType') === "ADMINISTRATOR";
+    }
+
     const translateType = (type) => {
-        switch(type){
-          case "Resume": return "Curriculum Vitae";
-          case "Cover Letter": return "Lettre de motivation";
-          case "Grades": return "Bulletin";
-          case "Other": return "Autre";
+        switch (type) {
+            case "Resume": return "Curriculum Vitae";
+            case "Cover Letter": return "Lettre de motivation";
+            case "Grades": return "Bulletin";
+            case "Other": return "Autre";
         }
     }
 
     const formattedStatus = () => {
-        if(document.approved) return "Le document est apprové!";
+        if (document.approved) return "Le document est approuvé!";
         else return "En attente d'approbation"
     }
 
@@ -71,7 +83,7 @@ export default function PortfolioDocument() {
 
                     <Typography variant="h3">Document de Portfolio</Typography>
                     <Typography
-                        style={{color: "gray"}}
+                        style={{ color: "gray" }}
                         variant="subtitle1">{document.uniqueId}</Typography>
                 </Box>
 
@@ -105,11 +117,26 @@ export default function PortfolioDocument() {
                     textAlign="center">
                     <Box
                         marginBottom={1}
-                        style={{backgroundColor: "lightsteelblue"}}>
+                        style={{ backgroundColor: "lightsteelblue" }}>
                         <Typography>{formattedStatus()}</Typography>
                     </Box>
                 </Box>
-                
+
+                <Box
+                    margin={2}
+                    textAlign="center"
+                >
+                    {
+                        canApprove() && <Button
+                            variant="contained" color="secondary"
+                            size="small"
+                            onClick={approve}
+                        >
+                            Approuvé
+                        </Button>
+                    }
+                </Box>
+
                 <Box
                     marginTop={2}
                     border="1px solid black">

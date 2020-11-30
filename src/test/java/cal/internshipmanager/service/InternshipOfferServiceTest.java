@@ -63,6 +63,8 @@ public class InternshipOfferServiceTest {
         internshipOfferCreationRequest.setJobScope(Arrays.asList("test", "test", "test", "test"));
         internshipOfferCreationRequest.setJobTitle("test");
         internshipOfferCreationRequest.setSalary(69.25f);
+        internshipOfferCreationRequest.setPhone("514");
+        internshipOfferCreationRequest.setSchedule("Lundi-V");
         internshipOfferCreationRequest.setStartDate(new Date().getTime());
         internshipOfferCreationRequest.setEndDate(new Date().getTime());
 
@@ -84,6 +86,9 @@ public class InternshipOfferServiceTest {
             assertEquals(internshipOfferCreationRequest.getStartDate(), internshipOffer.getStartDate().getTime());
             assertEquals(internshipOfferCreationRequest.getEndDate(), internshipOffer.getEndDate().getTime());
             assertEquals(internshipOfferCreationRequest.getLocation(), internshipOffer.getLocation());
+            assertEquals(internshipOfferCreationRequest.getPhone(), internshipOffer.getPhone());
+            assertEquals(internshipOfferCreationRequest.getSchedule(), internshipOffer.getSchedule());
+            
 
             return null;
         });
@@ -480,7 +485,7 @@ public class InternshipOfferServiceTest {
     }
 
     @Test
-    public void findAll_validRequest(){
+    public void findAll_validRequest() {
 
         // Arrange
 
@@ -509,20 +514,20 @@ public class InternshipOfferServiceTest {
                 settingsService, internshipOfferRepository, userRepository);
 
         when(internshipOfferRepository.findAllByEmployerAndStatusAndSemester(
-                internshipOffer.getEmployer(),InternshipOffer.Status.APPROVED, settingsService.getSemester()))
+                internshipOffer.getEmployer(), InternshipOffer.Status.APPROVED, settingsService.getSemester()))
                 .thenReturn(List.of(internshipOffer));
 
         // Act
 
-        InternshipOfferListResponse responseToExpect =  internshipOfferService.findAllByEmployer(internshipOffer.getEmployer());
+        InternshipOfferListResponse responseToExpect = internshipOfferService.findAllByEmployer(internshipOffer.getEmployer());
 
         // Assert
 
-        assertEquals(response,responseToExpect);
+        assertEquals(response, responseToExpect);
     }
 
     @Test
-    public void accessible_validRequest(){
+    public void accessible_validRequest() {
 
         // Arrange
 
@@ -562,6 +567,44 @@ public class InternshipOfferServiceTest {
 
         assertEquals(internshipOffer.getUniqueId(), internshipOfferResponse.getUniqueId());
         assertEquals(internshipOffer.getStatus().toString(), internshipOfferResponse.getStatus());
+    }
+
+    @Test
+    public void find_validRequest() {
+
+        // Arrange
+
+        User user = new User();
+
+        user.setUniqueId(UUID.randomUUID());
+
+        InternshipOffer internshipOffer = new InternshipOffer();
+
+        internshipOffer.setUniqueId(UUID.randomUUID());
+        internshipOffer.setEmployer(UUID.randomUUID());
+        internshipOffer.setStatus(InternshipOffer.Status.APPROVED);
+        internshipOffer.setCompany("Test Company");
+        internshipOffer.setJobTitle("Test Job Title");
+        internshipOffer.setStartDate(new Date());
+        internshipOffer.setEndDate(new Date());
+        internshipOffer.setLocation("test");
+        internshipOffer.setSalary(20);
+        internshipOffer.setHours(40);
+        internshipOffer.setUsers(List.of(user));
+
+        InternshipOfferService internshipOfferService = new InternshipOfferService(
+                settingsService, internshipOfferRepository, userRepository);
+
+        when(internshipOfferRepository.findById(internshipOffer.getUniqueId()))
+                .thenReturn(Optional.of(internshipOffer));
+
+        // Act
+
+        InternshipOfferListResponse.InternshipOffer response = internshipOfferService.find(internshipOffer.getUniqueId());
+
+        // Assert
+
+        assertEquals(internshipOffer.getUniqueId(), response.getUniqueId());
     }
 
 }

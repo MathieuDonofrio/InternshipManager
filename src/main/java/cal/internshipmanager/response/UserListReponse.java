@@ -37,6 +37,8 @@ public class UserListReponse implements Serializable {
 
         private String company;
 
+        private String phone;
+
     }
 
     //
@@ -56,6 +58,7 @@ public class UserListReponse implements Serializable {
         user.firstName = from.getFirstName();
         user.lastName = from.getLastName();
         user.company = from.getCompany();
+        user.phone = from.getPhone();
 
         return user;
     }

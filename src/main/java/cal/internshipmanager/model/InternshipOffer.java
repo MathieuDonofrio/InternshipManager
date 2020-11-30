@@ -28,9 +28,13 @@ public class InternshipOffer implements Serializable {
 
     private String company;
 
+    private String phone;
+
     private String jobTitle;
 
     private List<String> jobScope;
+
+    private String schedule;
 
     private Date startDate;
 
