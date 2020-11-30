@@ -104,7 +104,7 @@ class EmployerRegistrationForm extends Component {
     this.errors.firstName = Validator.notBlank(this.state.firstName, "Le prénom est obligatoire");
     this.errors.lastName = Validator.notBlank(this.state.lastName, "Le nom est obligatoire");
     this.errors.password = Validator.size(this.state.password, 6, 18, "La taille du mot de passe doit être entre 6 et 18 caractères");
-    this.errors.phone = Validator.notBlank(this.state.phone, "Le téléphone est obligatoire");
+    this.errors.phone = Validator.notBlank(this.state.phone, "Le numéro téléphone est obligatoire");
     this.errors.company = Validator.notBlank(this.state.company, "La compagnie est obligatoire")
     this.errors.confirm = Validator.match(this.state.password, this.state.confirm, "Le mot de passe ne correspond pas");
 
