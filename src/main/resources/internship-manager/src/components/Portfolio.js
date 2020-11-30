@@ -182,7 +182,7 @@ class Portfolio extends Component {
                 <TableCell align="center"><strong>Fichier</strong></TableCell>
                 <TableCell align="center"><strong>Date de téléversement</strong></TableCell>
                 <TableCell align="center"><strong>Supprimer</strong></TableCell>
-                <TableCell align="center"><strong>Visualizer</strong></TableCell>
+                <TableCell align="center"><strong>Visionner</strong></TableCell>
                 <TableCell align="center"><strong>Status</strong></TableCell>
               </TableRow>
             </TableHead>
