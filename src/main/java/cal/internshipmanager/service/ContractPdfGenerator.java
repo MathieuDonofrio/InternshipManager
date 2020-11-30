@@ -260,22 +260,22 @@ public class ContractPdfGenerator {
         Paragraph signatureTmp = new Paragraph();
         t2.setWidthPercentage(100);
         t3.setWidthPercentage(100);
-        signatureTmp.add(new Phrase("L’étudiant : ", new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD)));
+
+
         if (contract.getStudentSignature() != null) {
+            t3.setPaddingTop(5);
             image = Image.getInstance(contract.getStudentSignature().getData());
             image.setPaddingTop(15);
             image.scaleAbsolute(120, 40);
-            image.setAlignment(Element.ALIGN_RIGHT);
-            signatureTmp.add(image);
-            //tmpCell.addElement(image);
-
-        }
-        else {
+            signatureTmp.add(new Chunk("L’étudiant : ", new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD)));
+            signatureTmp.add(new Chunk(image, 90, 0, true));
+            tmpCell.addElement(signatureTmp);
+            tmpCell.setPaddingTop(23);
+        } else {
             tmpCell.addElement(setNewEmptyParagraph(2));
+            tmpCell.setPadding(10);
+            tmpCell.addElement(new Phrase("L’étudiant : ", new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD)));
         }
-        //tmpCell.addElement(new Phrase("L’étudiant : ", new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD)));
-        //tmpCell.setPadding(10);
-        tmpCell.addElement(signatureTmp);
         t3.addCell(tmpCell);
         if (contract.getStudentSignature() != null) {
             tmpCell2 = assignBorder(new PdfPCell(), 0, 0, 2);
@@ -297,19 +297,22 @@ public class ContractPdfGenerator {
         t3.addCell(removeBorders(new Phrase("Date")));
 
 
+        signatureTmp = new Paragraph();
         tmpCell = new PdfPCell();
         tmpCell.setBorder(PdfPCell.NO_BORDER + PdfPCell.BOTTOM);
         if (contract.getEmployerSignature() != null) {
             image = Image.getInstance(contract.getEmployerSignature().getData());
+            image.setPaddingTop(15);
             image.scaleAbsolute(120, 40);
-            image.setAlignment(Element.ALIGN_MIDDLE);
-            tmpCell.addElement(image);
-        }
-        else {
+            signatureTmp.add(new Chunk("Pour l’entreprise : ", new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD)));
+            signatureTmp.add(new Chunk(image, 50, 0, true));
+            tmpCell.addElement(signatureTmp);
+            tmpCell.setPaddingTop(23);
+        } else {
             tmpCell.addElement(setNewEmptyParagraph(2));
+            tmpCell.setPadding(10);
+            tmpCell.addElement(new Phrase("Pour l’entreprise : ", new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD)));
         }
-        tmpCell.addElement(new Phrase("Pour l’entreprise : ", new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD)));
-        tmpCell.setPadding(10);
         t3.addCell(tmpCell);
         if (contract.getEmployerSignature() != null) {
             tmpCell2 = assignBorder(new PdfPCell(), 0, 0, 2);
@@ -329,20 +332,24 @@ public class ContractPdfGenerator {
         t3.addCell(tmpCell3);
         t3.addCell(removeBorders(new Phrase("Date")));
 
-
+        signatureTmp = new Paragraph();
         tmpCell = new PdfPCell();
         tmpCell.setBorder(PdfPCell.NO_BORDER + PdfPCell.BOTTOM);
         if (contract.getAdministratorSignature() != null) {
             image = Image.getInstance(contract.getAdministratorSignature().getData());
+            image.setPaddingTop(15);
             image.scaleAbsolute(120, 40);
-            image.setAlignment(Element.ALIGN_MIDDLE);
-            tmpCell.addElement(image);
-        }
-        else {
+            signatureTmp.add(new Chunk("Pour le Collège : ", new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD)));
+            signatureTmp.add(new Chunk(image, 60, 0, true));
+            tmpCell.addElement(signatureTmp);
+            tmpCell.setPaddingTop(23);
+        } else {
             tmpCell.addElement(setNewEmptyParagraph(2));
+            tmpCell.addElement(new Phrase("Pour le Collège : ", new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD)));
+            tmpCell.setPadding(10);
         }
-        tmpCell.addElement(new Phrase("Pour le Collège : ", new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD)));
-        tmpCell.setPadding(10);
+        //tmpCell.addElement(new Phrase("Pour le Collège : ", new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD)));
+
         t3.addCell(tmpCell);
         if (contract.getAdministratorSignature() != null) {
             tmpCell2 = assignBorder(new PdfPCell(), 0, 0, 2);
