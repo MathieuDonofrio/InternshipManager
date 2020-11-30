@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import { useSnackbar } from 'notistack';
-import SignatureService from "../services/SignatureService";
+//import { useSnackbar } from 'notistack';
+//import SignatureService from "../services/SignatureService";
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
