@@ -186,7 +186,7 @@ export default function SemesterSelectionForm() {
               color="primary"
             />
           }
-          label="Approbation D'Application Obligatoire"
+          label="Approbation d'Application obligatoire"
         />
         <Box paddingBottom={2} />
       </div>

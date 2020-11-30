@@ -66,8 +66,8 @@ export default function StudentList() {
           centered
         >
           <Tab label="tous" onClick={() => fetchAllUsers()}/>
-          <Tab label="sans application" onClick={() => fetchAllWithoutApplication()} />
-          <Tab label="avec application" onClick={() => fetchAllWithApplication()} />
+          <Tab label="sans applications" onClick={() => fetchAllWithoutApplication()} />
+          <Tab label="avec applications" onClick={() => fetchAllWithApplication()} />
         </Tabs>
       </Paper>
       <Container>

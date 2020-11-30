@@ -129,7 +129,7 @@ export default function InteractiveList() {
             aria-labelledby="nested-list-subheader"
             subheader={
               <ListSubheader component="div" id="nested-list-subheader">
-                Avec accès ({visible.length})
+                Étudiants avec accès ({visible.length})
                 <Divider/>
               </ListSubheader>
             }
@@ -157,7 +157,7 @@ export default function InteractiveList() {
             aria-labelledby="nested-list-subheader"
             subheader={
               <ListSubheader component="div" id="nested-list-subheader">
-                Sans accès ({invisible.length})
+                Étudiants sans accès ({invisible.length})
                 <Divider/>
             </ListSubheader>
             }

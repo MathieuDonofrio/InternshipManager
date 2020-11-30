@@ -69,8 +69,8 @@ export default function EmployerList() {
           centered
         >
           <Tab label="tous" onClick={() => fetchAllUsers()}/>
-          <Tab label="sans offre" onClick={() => fetchAllWithoutOffer()} />
-          <Tab label="avec offre" onClick={() => fetchAllWithOffer()} />
+          <Tab label="sans offres" onClick={() => fetchAllWithoutOffer()} />
+          <Tab label="avec offres" onClick={() => fetchAllWithOffer()} />
         </Tabs>
       </Paper>
       <Container>

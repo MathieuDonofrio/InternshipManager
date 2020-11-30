@@ -146,7 +146,7 @@ class StudentRegistrationForm extends Component {
               required
               fullWidth
               id="email"
-              label="Adresse email"
+              label="Adresse e-mail"
               name="email"
               autoComplete="email"
               autoFocus
