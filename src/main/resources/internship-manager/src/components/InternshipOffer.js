@@ -36,6 +36,8 @@ export default function InternshipOffer() {
 
     const [offer, setOffer] = useState({});
 
+    const [canApply, setCanApply] = useState(false);
+
     const [applicationDialogOpen, setApplicationDialogOpen] = React.useState(false);
     const [applicationDocuments, setApplicationDocuments] = React.useState([]);
     const [applicationDocumentsChecked, setApplicationDocumentsChecked] = React.useState([]);
@@ -46,6 +48,22 @@ export default function InternshipOffer() {
 
             setOffer(response.data);
 
+            if (offer.status == "APPROVED" && localStorage.getItem('UserType') == "STUDENT") {
+                let userUniqueId = localStorage.getItem("UserUniqueId");
+
+                InternshipOfferService.accessible(userUniqueId).then(response1 => {
+
+                    if (response1.data.internshipOffers.filter(o => o.uniqueId == offer.uniqueId).size() >= 1) {
+                        InternshipApplicationService.internshipApplications(userUniqueId).then(response2 => {
+
+                            if (response2.data.applications.filter(a => a.offerUniqueId == offer.uniqueId).size() == 0) {
+                                setCanApply(true);
+                            }
+                        })
+                    }
+
+                })
+            }
         })
     }
 
@@ -109,23 +127,6 @@ export default function InternshipOffer() {
         });
     }
 
-    const canApply = async () => {
-
-        if(offer.status != "APPROVED" || localStorage.getItem('UserType') != "STUDENT") return false;
-
-        let userUniqueId = localStorage.getItem("UserUniqueId");
-
-        const response1 = await InternshipOfferService.accessible(userUniqueId);
-
-        if(response1.data.internshipOffers.filter(o => o.uniqueId == offer.uniqueId).size() < 1) return false;
-
-        const response2 = await InternshipApplicationService.internshipApplications(userUniqueId);
-
-        if(response2.data.applications.filter(a => a.offerUniqueId == offer.uniqueId).size() > 0) return false;
-
-        return true;
-    }
-
     const canApprove = () => {
         return offer.status == "PENDING_APPROVAL" && localStorage.getItem('UserType') === "ADMINISTRATOR";
     }
@@ -176,40 +177,40 @@ export default function InternshipOffer() {
                             <TableCell width="70%"></TableCell>
                         </TableHead>
 
-                        <TableRow>
+                        <TableRow key="Company">
                             <TableCell align="left"><strong>Compagnie</strong></TableCell>
                             <TableCell align="right">{offer.company}</TableCell>
                         </TableRow>
 
-                        <TableRow>
+                        <TableRow key="JobTitle">
                             <TableCell align="left"><strong>Poste</strong></TableCell>
                             <TableCell align="right">{offer.jobTitle}</TableCell>
                         </TableRow>
 
-                        <TableRow>
+                        <TableRow key="StartDate">
                             <TableCell align="left"><strong>Date Début</strong></TableCell>
                             <TableCell align="right">{new Date(offer.startDate).toLocaleDateString()}</TableCell>
                         </TableRow>
 
-                        <TableRow>
+                        <TableRow key="EndDate">
                             <TableCell align="left"><strong>Date Fin</strong></TableCell>
                             <TableCell align="right">{new Date(offer.endDate).toLocaleDateString()}</TableCell>
                         </TableRow>
 
                         {
                             offer.salary &&
-                            <TableRow>
+                            <TableRow key="Salary">
                                 <TableCell align="left"><strong>Salaire</strong></TableCell>
                                 <TableCell align="right">{offer.salary.toFixed(2) + '$'} </TableCell>
                             </TableRow>
                         }
 
-                        <TableRow>
+                        <TableRow key="Hours">
                             <TableCell align="left"><strong>Heures Par Semaine</strong></TableCell>
                             <TableCell align="right">{offer.hours} </TableCell>
                         </TableRow>
 
-                        <TableRow>
+                        <TableRow key="Schedule">
                             <TableCell align="left"><strong>Horaire</strong></TableCell>
                             {
                                 offer.schedule && <TableCell align="right">{offer.schedule}</TableCell>
@@ -255,8 +256,9 @@ export default function InternshipOffer() {
                     textAlign="center"
                 >
                     {
-                        canApply() &&
+                        canApply &&
                         <Button
+                            style={{ margin: '4px' }}
                             variant="contained" color="secondary"
                             size="small"
                             onClick={openApplicationDialog}>
@@ -266,6 +268,7 @@ export default function InternshipOffer() {
                     {
                         canManageAccess() &&
                         <Button
+                            style={{ margin: '4px' }}
                             variant="contained" color="secondary"
                             size="small"
                             onClick={() => history.push(`/manage-access/${offer.uniqueId}`)}>
@@ -275,6 +278,7 @@ export default function InternshipOffer() {
                     {
                         canApprove() &&
                         <Button
+                            style={{ margin: '4px' }}
                             variant="contained" color="secondary"
                             size="small"
                             onClick={approve}>
@@ -284,6 +288,7 @@ export default function InternshipOffer() {
                     {
                         canReject() &&
                         <Button
+                            style={{ margin: '4px' }}
                             variant="contained" color="secondary"
                             size="small"
                             onClick={reject}>

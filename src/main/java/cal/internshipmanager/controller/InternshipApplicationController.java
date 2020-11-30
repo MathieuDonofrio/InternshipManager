@@ -38,12 +38,17 @@ public class InternshipApplicationController {
     // Get
     //
 
+    @GetMapping("{uniqueId}")
+    public InternshipApplicationListResponse.InternshipApplication find(@Valid @ExistingInternshipApplication @PathVariable UUID uniqueId) {
+        return internshipApplicationService.find(uniqueId);
+    }
+
     @GetMapping("internship-applications/{userUniqueId}")
     public InternshipApplicationListResponse internshipApplications(@PathVariable UUID userUniqueId) {
         return internshipApplicationService.internshipApplications(userUniqueId);
     }
 
-    @GetMapping("{status}")
+    @GetMapping("status/{status}")
     public InternshipApplicationListResponse findByStatus(@Valid @NotNull @PathVariable InternshipApplication.Status status) {
         return internshipApplicationService.findByStatus(status);
     }
@@ -81,11 +86,6 @@ public class InternshipApplicationController {
     public void addInterview(@Valid @ExistingInternshipApplication @PathVariable UUID applicationId,
                              @RequestBody InternshipApplicationInterviewDateRequest request) {
         internshipApplicationService.addInterview(applicationId, request);
-    }
-
-    @GetMapping("{uniqueId}")
-    public InternshipApplicationListResponse.InternshipApplication find(@Valid @ExistingInternshipApplication @PathVariable UUID uniqueId) {
-        return internshipApplicationService.find(uniqueId);
     }
 
     //

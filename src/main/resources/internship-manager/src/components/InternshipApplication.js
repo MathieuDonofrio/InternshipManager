@@ -133,21 +133,23 @@ export default function InternshipApplication() {
                 </Box>
 
                 <Box
-                    margin={2}
+                    margin={1}
                     textAlign="center"
                 >
                     {
                         canSelect() &&
                         <Button
+                            style={{ margin: '4px' }}
                             variant="contained" color="secondary"
                             size="small"
                             onClick={select}>
                             Selectionné
-                        </Button>
+                            </Button>
                     }
                     {
                         canApprove() &&
                         <Button
+                            style={{ margin: '4px' }}
                             variant="contained" color="secondary"
                             size="small"
                             onClick={approve}>
@@ -157,6 +159,7 @@ export default function InternshipApplication() {
                     {
                         canReject() &&
                         <Button
+                            style={{ margin: '4px' }}
                             variant="contained" color="secondary"
                             size="small"
                             onClick={reject}>
