@@ -22,9 +22,11 @@ const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
     backgroundColor: 'lightgray',
-    maxWidth: 400,
+    minWidth: 300,
+    maxWidth: 300,
     overflow: 'auto',
-    maxHeight: 400,
+    minHeight: 400,
+    maxHeight: 400
   },
   nested: {
     paddingLeft: theme.spacing(4),

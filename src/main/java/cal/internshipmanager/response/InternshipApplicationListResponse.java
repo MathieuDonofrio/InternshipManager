@@ -26,6 +26,8 @@ public class InternshipApplicationListResponse implements Serializable {
 
         private UUID studentUniqueId;
 
+        private UUID employerUniqueId;
+
         private String studentFirstName;
 
         private String studentLastName;
@@ -57,6 +59,7 @@ public class InternshipApplicationListResponse implements Serializable {
 
         application.uniqueId = from.getUniqueId();
         application.studentUniqueId = from.getStudent().getUniqueId();
+        application.employerUniqueId = from.getOffer().getEmployer();
         application.studentFirstName = from.getStudent().getFirstName();
         application.studentLastName = from.getStudent().getLastName();
         application.offerUniqueId = from.getOffer().getUniqueId();
