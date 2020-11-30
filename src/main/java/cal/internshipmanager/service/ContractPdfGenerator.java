@@ -257,30 +257,33 @@ public class ContractPdfGenerator {
         PdfPCell tmpCell = new PdfPCell();
         tmpCell.setBorder(PdfPCell.NO_BORDER + PdfPCell.BOTTOM);
         PdfPCell tmpCell2;
-
+        Paragraph signatureTmp = new Paragraph();
         t2.setWidthPercentage(100);
         t3.setWidthPercentage(100);
+        signatureTmp.add(new Phrase("L’étudiant : ", new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD)));
         if (contract.getStudentSignature() != null) {
             image = Image.getInstance(contract.getStudentSignature().getData());
+            image.setPaddingTop(15);
             image.scaleAbsolute(120, 40);
-            image.setAlignment(Element.ALIGN_MIDDLE);
+            image.setAlignment(Element.ALIGN_RIGHT);
+            signatureTmp.add(image);
+            //tmpCell.addElement(image);
+
         }
-        if (contract.getStudentSignature() != null)
-            tmpCell.addElement(image);
         else {
-            tmpCell = new PdfPCell();
-            tmpCell.setBorder(PdfPCell.NO_BORDER + PdfPCell.BOTTOM);
             tmpCell.addElement(setNewEmptyParagraph(2));
         }
-        tmpCell.addElement(new Phrase("L’étudiant : ", new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD)));
-        tmpCell.setPadding(10);
+        //tmpCell.addElement(new Phrase("L’étudiant : ", new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD)));
+        //tmpCell.setPadding(10);
+        tmpCell.addElement(signatureTmp);
         t3.addCell(tmpCell);
         if (contract.getStudentSignature() != null) {
             tmpCell2 = assignBorder(new PdfPCell(), 0, 0, 2);
             Paragraph p6 = new Paragraph(new Phrase("" + dateFor.format(contract.getStudentSignedDate())));
-            p6.setSpacingBefore(10);
+            p6.setSpacingBefore(18);
             p6.setAlignment(Paragraph.ALIGN_BASELINE + Paragraph.ALIGN_CENTER);
             tmpCell2.addElement(setNewEmptyParagraph(2));
+            tmpCell2.setHorizontalAlignment(PdfPCell.ALIGN_RIGHT);
             tmpCell2.addElement(p6);
             t3.addCell(tmpCell2);
         } else {
@@ -294,26 +297,26 @@ public class ContractPdfGenerator {
         t3.addCell(removeBorders(new Phrase("Date")));
 
 
+        tmpCell = new PdfPCell();
+        tmpCell.setBorder(PdfPCell.NO_BORDER + PdfPCell.BOTTOM);
         if (contract.getEmployerSignature() != null) {
             image = Image.getInstance(contract.getEmployerSignature().getData());
             image.scaleAbsolute(120, 40);
             image.setAlignment(Element.ALIGN_MIDDLE);
-        }
-        tmpCell.addElement(new Phrase("Pour l’entreprise : ", new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD)));
-        if (contract.getEmployerSignature() != null)
             tmpCell.addElement(image);
+        }
         else {
-            tmpCell = new PdfPCell();
-            tmpCell.setBorder(PdfPCell.NO_BORDER + PdfPCell.BOTTOM);
             tmpCell.addElement(setNewEmptyParagraph(2));
         }
+        tmpCell.addElement(new Phrase("Pour l’entreprise : ", new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD)));
         tmpCell.setPadding(10);
         t3.addCell(tmpCell);
         if (contract.getEmployerSignature() != null) {
             tmpCell2 = assignBorder(new PdfPCell(), 0, 0, 2);
             Paragraph p6 = new Paragraph(new Phrase("" + dateFor.format(contract.getEmployerSignedDate())));
-            p6.setAlignment(Paragraph.ALIGN_BOTTOM);
-            tmpCell2.addElement(setNewEmptyParagraph(5));
+            p6.setAlignment(Paragraph.ALIGN_BASELINE + Paragraph.ALIGN_CENTER);
+            p6.setSpacingBefore(18);
+            tmpCell2.addElement(setNewEmptyParagraph(2));
             tmpCell2.addElement(p6);
             t3.addCell(tmpCell2);
         } else {
@@ -326,30 +329,30 @@ public class ContractPdfGenerator {
         t3.addCell(tmpCell3);
         t3.addCell(removeBorders(new Phrase("Date")));
 
+
+        tmpCell = new PdfPCell();
+        tmpCell.setBorder(PdfPCell.NO_BORDER + PdfPCell.BOTTOM);
         if (contract.getAdministratorSignature() != null) {
             image = Image.getInstance(contract.getAdministratorSignature().getData());
             image.scaleAbsolute(120, 40);
             image.setAlignment(Element.ALIGN_MIDDLE);
-        }
-        tmpCell.addElement(new Phrase("Pour le Collège : ", new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD)));
-        if (contract.getAdministratorSignature() != null)
             tmpCell.addElement(image);
+        }
         else {
-            tmpCell = new PdfPCell();
-            tmpCell.setBorder(PdfPCell.NO_BORDER + PdfPCell.BOTTOM);
             tmpCell.addElement(setNewEmptyParagraph(2));
         }
+        tmpCell.addElement(new Phrase("Pour le Collège : ", new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD)));
         tmpCell.setPadding(10);
         t3.addCell(tmpCell);
         if (contract.getAdministratorSignature() != null) {
             tmpCell2 = assignBorder(new PdfPCell(), 0, 0, 2);
             Paragraph p6 = new Paragraph(new Phrase("" + dateFor.format(contract.getAdministratorSignedDate())));
-            p6.setAlignment(Paragraph.ALIGN_MIDDLE + Paragraph.ALIGN_BOTTOM);
+            p6.setAlignment(Paragraph.ALIGN_BASELINE + Paragraph.ALIGN_CENTER);
+            p6.setSpacingBefore(18);
             tmpCell2.addElement(setNewEmptyParagraph(2));
             tmpCell2.addElement(p6);
             t3.addCell(tmpCell2);
         } else {
-
             t3.addCell(assignBorder(new PdfPCell(), 0, 0, 2));
         }
         tmpCell3 = assignBorder(new PdfPCell(), 0, 0, 0);
