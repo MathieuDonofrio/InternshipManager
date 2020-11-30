@@ -65,8 +65,8 @@ public class UserController {
         return userService.employersWithoutOffers();
     }
 
-    @GetMapping("{userId}")
-    public UserListReponse.User find(@Valid @ExistingUser @PathVariable UUID userId) {
-        return userService.find(userId);
+    @GetMapping("{uniqueId}")
+    public UserListReponse.User find(@Valid @ExistingUser @PathVariable UUID uniqueId) {
+        return userService.find(uniqueId);
     }
 }
