@@ -6,6 +6,7 @@ import InternshipOfferService from '../services/InternshipOfferService';
 import UserService from '../services/UserService';
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 import List from '@material-ui/core/List';
+import { FixedSizeList } from 'react-window';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import IconButton from '@material-ui/core/IconButton';
@@ -19,8 +20,11 @@ import { Container, Divider } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: 300,
+    width: '100%',
     backgroundColor: 'lightgray',
+    maxWidth: 400,
+    overflow: 'auto',
+    maxHeight: 400,
   },
   nested: {
     paddingLeft: theme.spacing(4),
