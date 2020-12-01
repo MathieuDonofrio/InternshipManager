@@ -19,14 +19,16 @@ class InternshipApplicationService {
     // Get
     //
 
+    find(request) {
+        return axios.get(Config.target + `/internship-application/${request}`, headers());
+    }
+
     internshipApplications(request){
         return axios.get(Config.target + `/internship-application/internship-applications/${request}`, headers());
     }
 
     pendingApproval(){
-        //to change
-        const request="PENDING_APPROVAL";
-        return axios.get(Config.target + `/internship-application/${request}`, headers());
+        return axios.get(Config.target + `/internship-application/status/PENDING_APPROVAL`, headers());
     }
 
     findByOffer(request){

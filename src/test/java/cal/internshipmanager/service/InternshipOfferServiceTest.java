@@ -569,4 +569,42 @@ public class InternshipOfferServiceTest {
         assertEquals(internshipOffer.getStatus().toString(), internshipOfferResponse.getStatus());
     }
 
+    @Test
+    public void find_validRequest() {
+
+        // Arrange
+
+        User user = new User();
+
+        user.setUniqueId(UUID.randomUUID());
+
+        InternshipOffer internshipOffer = new InternshipOffer();
+
+        internshipOffer.setUniqueId(UUID.randomUUID());
+        internshipOffer.setEmployer(UUID.randomUUID());
+        internshipOffer.setStatus(InternshipOffer.Status.APPROVED);
+        internshipOffer.setCompany("Test Company");
+        internshipOffer.setJobTitle("Test Job Title");
+        internshipOffer.setStartDate(new Date());
+        internshipOffer.setEndDate(new Date());
+        internshipOffer.setLocation("test");
+        internshipOffer.setSalary(20);
+        internshipOffer.setHours(40);
+        internshipOffer.setUsers(List.of(user));
+
+        InternshipOfferService internshipOfferService = new InternshipOfferService(
+                settingsService, internshipOfferRepository, userRepository);
+
+        when(internshipOfferRepository.findById(internshipOffer.getUniqueId()))
+                .thenReturn(Optional.of(internshipOffer));
+
+        // Act
+
+        InternshipOfferListResponse.InternshipOffer response = internshipOfferService.find(internshipOffer.getUniqueId());
+
+        // Assert
+
+        assertEquals(internshipOffer.getUniqueId(), response.getUniqueId());
+    }
+
 }

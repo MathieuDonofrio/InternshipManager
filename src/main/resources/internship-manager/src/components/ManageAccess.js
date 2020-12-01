@@ -6,6 +6,7 @@ import InternshipOfferService from '../services/InternshipOfferService';
 import UserService from '../services/UserService';
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 import List from '@material-ui/core/List';
+//import { FixedSizeList } from 'react-window';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import IconButton from '@material-ui/core/IconButton';
@@ -19,8 +20,13 @@ import { Container, Divider } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: 300,
+    width: '100%',
     backgroundColor: 'lightgray',
+    minWidth: 300,
+    maxWidth: 300,
+    overflow: 'auto',
+    minHeight: 400,
+    maxHeight: 400
   },
   nested: {
     paddingLeft: theme.spacing(4),
@@ -84,7 +90,6 @@ export default function InteractiveList() {
   }
 
   const fetchStudents = async () => {
-
     const r1 = await InternshipOfferService.users(uuid);
     const r2 = await UserService.students();
 
@@ -116,8 +121,7 @@ export default function InteractiveList() {
         spacing={8}
         justify="center"
         mt={4}
-        paddingBottom={4}
-        textAlign="center">
+        pb={4}>
 
         <Grid item>
           <List

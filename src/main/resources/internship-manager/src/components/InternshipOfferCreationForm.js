@@ -57,6 +57,7 @@ const errors = {
   schedule: '',
   location: '',
   address: '',
+  phone: '',
   city: '',
   postal: '',
   country: '',
@@ -135,11 +136,7 @@ class InternshipOfferCreationForm extends Component {
 
   onChange = event => this.setState({ [event.target.name]: event.target.value });
 
-  handleOnChange = value => {
-    this.setState({
-      phone: value
-    });
-  }
+  onPhoneChange = value => this.setState({ phone: value });
 
 
   //
@@ -153,11 +150,12 @@ class InternshipOfferCreationForm extends Component {
     this.errors.company = Validator.notBlank(this.state.company, "La compagnie est obligatoire");
     this.errors.jobTitle = Validator.notBlank(this.state.jobTitle, "Titre du poste est obligatoire");
     this.errors.phone = Validator.notBlank(this.state.phone, "Titre du poste est obligatoire");
-    this.errors.address = Validator.notBlank(this.state.address, "Obligatoire");
-    this.errors.city = Validator.notBlank(this.state.city, "Obligatoire");
-    this.errors.postal = Validator.notBlank(this.state.postal, "Obligatoire");
-    this.errors.country = Validator.notBlank(this.state.country, "Obligatoire");
-    this.errors.schedule = Validator.notBlank(this.state.schedule, "Obligatoire");
+    this.errors.address = Validator.notBlank(this.state.address, "L'adresse est obligatoire");
+    this.errors.city = Validator.notBlank(this.state.city, "La ville est obligatoire");
+    this.errors.postal = Validator.notBlank(this.state.postal, "Le code postal est obligatoire");
+    this.errors.country = Validator.notBlank(this.state.country, "Le pays est obligatoire");
+    this.errors.phone = Validator.notBlank(this.state.phone, "Le numéro de téléphone est obligatoire");
+    this.errors.schedule = Validator.notBlank(this.state.schedule, "L'horaire est obligatoire");
     this.errors.salary = Validator.positive(this.state.salary, "Le salaire ne peut pas être négative");
     this.errors.hours = Validator.min(this.state.hours, 1, "L'heure doit être au moins à 1");
     this.errors.startDate = Validator.after(this.state.startDate, new Date(), "Impossible de définir une date de début dans le passé");
@@ -239,21 +237,21 @@ class InternshipOfferCreationForm extends Component {
               margin="normal"
               label="Telephone"
               helperText="*Le telephone est seulement utilise pour le contrat"
-              onChange={this.handleOnChange}
+              onChange={this.onPhoneChange}
             />
-<TextField
-                  error={this.errors.address}
-                  label="Address"
-                  id="address"
-                  name="address"
-                  helperText="Exemple: 39 Saint-Catherine"
-                  fullWidth
-                  onChange={this.onChange}
-                  variant="outlined"
-                  margin="normal"
-                  required />
+            <TextField
+              error={this.errors.address}
+              label="Address"
+              id="address"
+              name="address"
+              helperText="Exemple: 39 Saint-Catherine"
+              fullWidth
+              onChange={this.onChange}
+              variant="outlined"
+              margin="normal"
+              required />
             <Grid container spacing={2}>
-             
+
               <Grid item xs={12} sm={3}>
                 <TextField
                   error={this.errors.city}
@@ -301,7 +299,7 @@ class InternshipOfferCreationForm extends Component {
                   helperText="Si applicatiif. Exemple: Alberta ou Florida"
                   variant="outlined"
                   margin="normal"
-                  />
+                />
               </Grid>
             </Grid>
 
