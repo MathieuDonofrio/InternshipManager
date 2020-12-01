@@ -27,7 +27,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function SemesterSelectionForm() {
+export default function Settings() {
 
   const classes = useStyles();
   const [session, setSession] = useState("");

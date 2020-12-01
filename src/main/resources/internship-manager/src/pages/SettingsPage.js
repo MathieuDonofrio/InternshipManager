@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 
+import Settings from '../components/Settings'
+
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
-import SelectAction from '../components/SelectAction';
 
-export default class SelectActionPage extends Component {
+export default class SettingsPage extends Component {
 
   //
   // Constructors
@@ -23,11 +24,17 @@ export default class SelectActionPage extends Component {
     return (
       <div>
         <CssBaseline />
+
         <Container>
+
           <Paper elevation={3}>
-            <SelectAction />
+
+            <Settings/>
+
           </Paper>
+
         </Container>
+
       </div>
     )
   }
