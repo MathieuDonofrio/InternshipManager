@@ -7,6 +7,7 @@ import cal.internshipmanager.service.InternshipOfferService;
 import cal.internshipmanager.validator.ExistingInternshipOffer;
 import cal.internshipmanager.validator.ExistingUser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -44,21 +45,22 @@ public class InternshipOfferController {
     // Put
     //
 
+    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     @PutMapping("approve/{uniqueId}")
     public void approve(@Valid @ExistingInternshipOffer @PathVariable UUID uniqueId) {
         internshipOfferService.approve(uniqueId);
     }
-
+    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     @PutMapping("reject/{uniqueId}")
     public void reject(@Valid @ExistingInternshipOffer @PathVariable UUID uniqueId) {
         internshipOfferService.reject(uniqueId);
     }
-
+    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     @PutMapping("add-user")
     public void addUser(@Valid @RequestBody InternshipOfferAddUserRequest request) {
         internshipOfferService.addUser(request);
     }
-
+    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     @PutMapping("remove-user")
     public void removeUser(@Valid @RequestBody InternshipOfferRemoveUserRequest request) {
         internshipOfferService.removeUser(request);
@@ -67,7 +69,6 @@ public class InternshipOfferController {
     //
     // Get
     //
-
     @GetMapping("pending-approval")
     public InternshipOfferListResponse pendingApproval() {
         return internshipOfferService.pendingApproval();
