@@ -23,11 +23,11 @@ import ContractService from "../services/ContractService";
 import { saveAs } from 'file-saver';
 import PageviewIcon from '@material-ui/icons/Pageview';
 
-const useStyles = makeStyles({
+/*const useStyles = makeStyles({
   table: {
     minWidth: 800,
   },
-});
+});*/
 
 function StudentPortfolioDetailsDialogProps(props) {
 

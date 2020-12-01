@@ -6,7 +6,7 @@ import InternshipOfferService from '../services/InternshipOfferService';
 import UserService from '../services/UserService';
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 import List from '@material-ui/core/List';
-import { FixedSizeList } from 'react-window';
+//import { FixedSizeList } from 'react-window';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import IconButton from '@material-ui/core/IconButton';

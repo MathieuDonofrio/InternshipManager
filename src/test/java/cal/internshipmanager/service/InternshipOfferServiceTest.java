@@ -88,7 +88,7 @@ public class InternshipOfferServiceTest {
             assertEquals(internshipOfferCreationRequest.getLocation(), internshipOffer.getLocation());
             assertEquals(internshipOfferCreationRequest.getPhone(), internshipOffer.getPhone());
             assertEquals(internshipOfferCreationRequest.getSchedule(), internshipOffer.getSchedule());
-            
+
 
             return null;
         });
