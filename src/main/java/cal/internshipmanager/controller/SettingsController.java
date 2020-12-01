@@ -2,6 +2,7 @@ package cal.internshipmanager.controller;
 
 import cal.internshipmanager.service.SettingsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -44,12 +45,12 @@ public class SettingsController {
     //
     // Put
     //
-
+    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     @PutMapping("semester/{semester}")
     public void semester(@Valid @NotBlank @PathVariable String semester) {
         settingsService.setSemester(semester);
     }
-
+    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     @PutMapping("require-approval/{requireApproval}")
     public void requireApproval(@Valid @NotNull @PathVariable Boolean requireApproval) {
         settingsService.setRequireApproval(requireApproval);
