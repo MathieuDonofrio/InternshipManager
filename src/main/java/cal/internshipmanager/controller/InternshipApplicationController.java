@@ -10,6 +10,7 @@ import cal.internshipmanager.service.InternshipApplicationService;
 import cal.internshipmanager.validator.ExistingInternshipApplication;
 import cal.internshipmanager.validator.ExistingInternshipOffer;
 import cal.internshipmanager.validator.ExistingUser;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -66,17 +67,18 @@ public class InternshipApplicationController {
     //
     // Put
     //
-
+    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     @PutMapping("approve/{applicationId}")
     public void approve(@Valid @ExistingInternshipApplication @PathVariable UUID applicationId) {
         internshipApplicationService.approve(applicationId);
     }
-
+    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     @PutMapping("reject/{applicationId}")
     public void reject(@Valid @ExistingInternshipApplication @PathVariable UUID applicationId) {
         internshipApplicationService.reject(applicationId);
     }
 
+    @PreAuthorize("hasAuthority('EMPLOYER')")
     @PutMapping("select/{applicationId}")
     public void select(@Valid @ExistingInternshipApplication @PathVariable UUID applicationId) {
         internshipApplicationService.select(applicationId);
@@ -91,7 +93,7 @@ public class InternshipApplicationController {
     //
     // Post
     //
-
+    @PreAuthorize("hasAuthority('STUDENT')")
     @PostMapping("create")
     public UUID create(@Valid @RequestBody InternshipApplicationCreationRequest request) {
         return internshipApplicationService.create(request);
