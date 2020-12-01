@@ -51,20 +51,16 @@ export default function InternshipOffer() {
 
             setOffer(response.data);
 
-            if (offer.status == "APPROVED" && localStorage.getItem('UserType') == "STUDENT") {
+            if (response.data.status == "APPROVED" && localStorage.getItem('UserType') == "STUDENT") {
+
                 let userUniqueId = localStorage.getItem("UserUniqueId");
 
-                InternshipOfferService.accessible(userUniqueId).then(response1 => {
+                // Verify is has not applied before
+                InternshipApplicationService.internshipApplications(userUniqueId).then(response2 => {
 
-                    if (response1.data.internshipOffers.filter(o => o.uniqueId == offer.uniqueId).size() >= 1) {
-                        InternshipApplicationService.internshipApplications(userUniqueId).then(response2 => {
-
-                            if (response2.data.applications.filter(a => a.offerUniqueId == offer.uniqueId).size() == 0) {
-                                setCanApply(true);
-                            }
-                        })
+                    if (response2.data.applications.filter(a => a.offerUniqueId == uuid).length == 0) {
+                        setCanApply(true);
                     }
-
                 })
             }
 
@@ -113,6 +109,7 @@ export default function InternshipOffer() {
         }
 
         InternshipApplicationService.createInternshipApplication(request).then(response => {
+            setCanApply(false);
             fetch();
             enqueueSnackbar("Application envoyée", { variant: 'success' });
         })
