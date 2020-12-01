@@ -31,19 +31,13 @@ export default function InternshipApplication() {
     const [offer, setOffer] = useState({});
 
     const fetch = () => {
-        console.log('voici ma reponse');
-
         InternshipApplicationService.find(uuid).then(response => {
 
             setApplication(response.data);
 
             InternshipOfferService.find(response.data.offerUniqueId).then(response1 => {
-
                 setOffer(response1.data);
             })
-
-            console.log('voici ma reponse');
-            console.log(response);
 
         })
     }
