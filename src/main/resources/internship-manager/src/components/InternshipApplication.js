@@ -98,7 +98,8 @@ export default function InternshipApplication() {
     }
 
     const canSelect = () => {
-        return application.status == "APPROVED" && localStorage.getItem('UserUniqueId') === offer.employerUniqueId;
+
+        return application.status == "APPROVED" && localStorage.getItem('UserUniqueId') === offer.employer;
     }
 
     const translateStatus = (status) => {
