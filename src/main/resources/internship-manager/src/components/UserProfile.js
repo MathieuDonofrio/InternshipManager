@@ -68,6 +68,8 @@ export default function UserProfile() {
 
     const isEmployer = () => { return user.type == "EMPLOYER"; };
 
+    const isCurrentUser = () => { return uuid === localStorage.getItem("UserUniqueId"); };
+
     const translateType = (type) => {
         switch (type) {
             case "STUDENT": return "Étudiant";
@@ -80,11 +82,20 @@ export default function UserProfile() {
 
     return (
         <div>
-            <IconButton
-                onClick={() => history.goBack()}>
-                <KeyboardBackspaceIcon />
-                <Typography>Retour</Typography>
-            </IconButton>
+
+            {
+                !isCurrentUser() &&
+                <IconButton
+                    onClick={() => history.goBack()}>
+                    <KeyboardBackspaceIcon />
+                    <Typography>Retour</Typography>
+                </IconButton>
+            }
+
+            {
+                isCurrentUser() &&
+                <Box paddingTop={2}></Box>
+            }
 
             <Container>
                 <Box
