@@ -523,6 +523,90 @@ public class InternshipOfferServiceTest {
     }
 
     @Test
+    public void findAllPending_validRequest() {
+
+        // Arrange
+
+        InternshipOffer internshipOffer = new InternshipOffer();
+
+        internshipOffer.setUniqueId(UUID.randomUUID());
+        internshipOffer.setSemester(settingsService.getSemester());
+        internshipOffer.setEmployer(UUID.randomUUID());
+        internshipOffer.setStatus(InternshipOffer.Status.PENDING_APPROVAL);
+        internshipOffer.setCompany("Test Company");
+        internshipOffer.setJobTitle("Test Job Title");
+        internshipOffer.setStartDate(new Date());
+        internshipOffer.setEndDate(new Date());
+        internshipOffer.setLocation("test");
+        internshipOffer.setSalary(20);
+        internshipOffer.setHours(40);
+        internshipOffer.setUsers(new ArrayList<>());
+
+        InternshipOfferListResponse response = new InternshipOfferListResponse();
+
+        response.setInternshipOffers(List.of(internshipOffer).stream().map(InternshipOfferListResponse::map)
+                .collect(Collectors.toList()));
+
+
+        InternshipOfferService internshipOfferService = new InternshipOfferService(
+                settingsService, internshipOfferRepository, userRepository);
+
+        when(internshipOfferRepository.findAllByEmployerAndStatusAndSemester(
+                internshipOffer.getEmployer(), InternshipOffer.Status.PENDING_APPROVAL, settingsService.getSemester()))
+                .thenReturn(List.of(internshipOffer));
+
+        // Act
+
+        InternshipOfferListResponse responseToExpect = internshipOfferService.findAllPendingByEmployer(internshipOffer.getEmployer());
+
+        // Assert
+
+        assertEquals(response, responseToExpect);
+    }
+
+    @Test
+    public void findAllRejected_validRequest() {
+
+        // Arrange
+
+        InternshipOffer internshipOffer = new InternshipOffer();
+
+        internshipOffer.setUniqueId(UUID.randomUUID());
+        internshipOffer.setSemester(settingsService.getSemester());
+        internshipOffer.setEmployer(UUID.randomUUID());
+        internshipOffer.setStatus(InternshipOffer.Status.REJECTED);
+        internshipOffer.setCompany("Test Company");
+        internshipOffer.setJobTitle("Test Job Title");
+        internshipOffer.setStartDate(new Date());
+        internshipOffer.setEndDate(new Date());
+        internshipOffer.setLocation("test");
+        internshipOffer.setSalary(20);
+        internshipOffer.setHours(40);
+        internshipOffer.setUsers(new ArrayList<>());
+
+        InternshipOfferListResponse response = new InternshipOfferListResponse();
+
+        response.setInternshipOffers(List.of(internshipOffer).stream().map(InternshipOfferListResponse::map)
+                .collect(Collectors.toList()));
+
+
+        InternshipOfferService internshipOfferService = new InternshipOfferService(
+                settingsService, internshipOfferRepository, userRepository);
+
+        when(internshipOfferRepository.findAllByEmployerAndStatusAndSemester(
+                internshipOffer.getEmployer(), InternshipOffer.Status.REJECTED, settingsService.getSemester()))
+                .thenReturn(List.of(internshipOffer));
+
+        // Act
+
+        InternshipOfferListResponse responseToExpect = internshipOfferService.findAllRejectedByEmployer(internshipOffer.getEmployer());
+
+        // Assert
+
+        assertEquals(response, responseToExpect);
+    }
+
+    @Test
     public void accessible_validRequest() {
 
         // Arrange
