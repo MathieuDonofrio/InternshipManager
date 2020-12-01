@@ -31,6 +31,18 @@ class InternshipApplicationService {
         return axios.get(Config.target + `/internship-application/status/PENDING_APPROVAL`, headers());
     }
 
+    approved(){
+        return axios.get(Config.target + `/internship-application/status/APPROVED`, headers());
+    }
+
+    rejected(){
+        return axios.get(Config.target + `/internship-application/status/REJECTED`, headers());
+    }
+
+    selected(){
+        return axios.get(Config.target + `/internship-application/status/SELECTED`, headers());
+    }
+
     findByOffer(request){
         return axios.get(Config.target + `/internship-application/offer/${request}`, headers());
     }
