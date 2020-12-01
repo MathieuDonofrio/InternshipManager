@@ -93,7 +93,9 @@ public class InternshipOfferServiceTest {
             return null;
         });
 
-        internshipOfferService.create(internshipOfferCreationRequest);
+        UUID response = internshipOfferService.create(internshipOfferCreationRequest);
+
+        assertNotNull(response);
     }
 
     @Test
@@ -101,12 +103,9 @@ public class InternshipOfferServiceTest {
 
         // Arrange
 
-        InternshipOfferApproveRequest internshipOfferApproveRequest = new InternshipOfferApproveRequest();
-
-        internshipOfferApproveRequest.setUniqueId(UUID.randomUUID());
-
         InternshipOffer internshipOffer = new InternshipOffer();
 
+        internshipOffer.setUniqueId(UUID.randomUUID());
         internshipOffer.setStatus(InternshipOffer.Status.PENDING_APPROVAL);
 
         InternshipOfferService internshipOfferService = new InternshipOfferService(
@@ -125,7 +124,7 @@ public class InternshipOfferServiceTest {
             return null;
         });
 
-        internshipOfferService.approve(internshipOfferApproveRequest);
+        internshipOfferService.approve(internshipOffer.getUniqueId());
     }
 
     @Test
@@ -133,12 +132,9 @@ public class InternshipOfferServiceTest {
 
         // Arrange
 
-        InternshipOfferRejectRequest internshipOfferRejectRequest = new InternshipOfferRejectRequest();
-
-        internshipOfferRejectRequest.setUniqueId(UUID.randomUUID());
-
         InternshipOffer internshipOffer = new InternshipOffer();
 
+        internshipOffer.setUniqueId(UUID.randomUUID());
         internshipOffer.setStatus(InternshipOffer.Status.PENDING_APPROVAL);
 
         InternshipOfferService internshipOfferService = new InternshipOfferService(
@@ -157,7 +153,7 @@ public class InternshipOfferServiceTest {
             return null;
         });
 
-        internshipOfferService.reject(internshipOfferRejectRequest);
+        internshipOfferService.reject(internshipOffer.getUniqueId());
     }
 
     @Test

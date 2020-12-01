@@ -93,8 +93,8 @@ public class InternshipApplicationController {
     //
 
     @PostMapping("create")
-    public void create(@Valid @RequestBody InternshipApplicationCreationRequest request) {
-        internshipApplicationService.create(request);
+    public UUID create(@Valid @RequestBody InternshipApplicationCreationRequest request) {
+        return internshipApplicationService.create(request);
     }
 
 }

@@ -36,26 +36,30 @@ public class InternshipOfferController {
     //
 
     @PostMapping("create")
-    public void create(@Valid @RequestBody InternshipOfferCreationRequest request) {
-        internshipOfferService.create(request);
+    public UUID create(@Valid @RequestBody InternshipOfferCreationRequest request) {
+        return internshipOfferService.create(request);
     }
 
-    @PostMapping("approve")
-    public void approve(@Valid @RequestBody InternshipOfferApproveRequest request) {
-        internshipOfferService.approve(request);
+    //
+    // Put
+    //
+
+    @PutMapping("approve/{uniqueId}")
+    public void approve(@Valid @ExistingInternshipOffer @PathVariable UUID uniqueId) {
+        internshipOfferService.approve(uniqueId);
     }
 
-    @PostMapping("reject")
-    public void reject(@Valid @RequestBody InternshipOfferRejectRequest request) {
-        internshipOfferService.reject(request);
+    @PutMapping("reject/{uniqueId}")
+    public void reject(@Valid @ExistingInternshipOffer @PathVariable UUID uniqueId) {
+        internshipOfferService.reject(uniqueId);
     }
 
-    @PostMapping("add-user")
+    @PutMapping("add-user")
     public void addUser(@Valid @RequestBody InternshipOfferAddUserRequest request) {
         internshipOfferService.addUser(request);
     }
 
-    @PostMapping("remove-user")
+    @PutMapping("remove-user")
     public void removeUser(@Valid @RequestBody InternshipOfferRemoveUserRequest request) {
         internshipOfferService.removeUser(request);
     }

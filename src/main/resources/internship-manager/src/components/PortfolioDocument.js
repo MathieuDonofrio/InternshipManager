@@ -44,7 +44,7 @@ export default function PortfolioDocument() {
 
         PortfolioService.approve(uuid).then(() => {
             fetch()
-            enqueueSnackbar(`Document de portfolio apprové`,  { variant: 'success' });
+            enqueueSnackbar(`Document de portfolio apprové`, { variant: 'success' });
         });
     }
 
@@ -87,6 +87,38 @@ export default function PortfolioDocument() {
                         variant="subtitle1">{document.uniqueId}</Typography>
                 </Box>
 
+                <Box
+                    marginTop={2}
+                    textAlign="center">
+                    <Box
+                        marginBottom={1}
+                        style={{ backgroundColor: "lightsteelblue" }}>
+                        <Typography>{formattedStatus()}</Typography>
+                    </Box>
+                </Box>
+
+                <Box
+                    margin={2}
+                    textAlign="center"
+                >
+                    {
+                        canApprove() && <Button
+                            variant="contained" color="secondary"
+                            size="small"
+                            onClick={approve}
+                        >
+                            Approuvé
+                        </Button>
+                    }
+                </Box>
+
+                <Box
+                    marginTop={2}
+                    textAlign="center"
+                    style={{ backgroundColor: "lightgray" }}>
+                    <Typography>Informations Générale</Typography>
+                </Box>
+
                 <Box>
 
                     <Table size="small">
@@ -114,27 +146,9 @@ export default function PortfolioDocument() {
 
                 <Box
                     marginTop={2}
-                    textAlign="center">
-                    <Box
-                        marginBottom={1}
-                        style={{ backgroundColor: "lightsteelblue" }}>
-                        <Typography>{formattedStatus()}</Typography>
-                    </Box>
-                </Box>
-
-                <Box
-                    margin={2}
                     textAlign="center"
-                >
-                    {
-                        canApprove() && <Button
-                            variant="contained" color="secondary"
-                            size="small"
-                            onClick={approve}
-                        >
-                            Approuvé
-                        </Button>
-                    }
+                    style={{ backgroundColor: "lightgray" }}>
+                    <Typography>Visualization</Typography>
                 </Box>
 
                 <Box

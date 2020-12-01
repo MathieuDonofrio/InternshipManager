@@ -53,7 +53,7 @@ public class InternshipApplicationService {
     // Services
     //
 
-    public void create(InternshipApplicationCreationRequest request) {
+    public UUID create(InternshipApplicationCreationRequest request) {
 
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
@@ -83,6 +83,8 @@ public class InternshipApplicationService {
                 : InternshipApplication.Status.APPROVED);
 
         internshipApplicationRepository.save(internshipApplication);
+
+        return internshipApplication.getUniqueId();
     }
 
     public InternshipApplicationListResponse internshipApplications(UUID userUniqueId) {
@@ -139,10 +141,10 @@ public class InternshipApplicationService {
         internshipApplicationRepository.save(application);
     }
 
-    public InternshipApplicationListResponse findByOffer(UUID uniqueId) {
+    public InternshipApplicationListResponse findByOffer(UUID offerUniqueId) {
 
         List<InternshipApplication> applications = internshipApplicationRepository.findAllByOfferUniqueIdAndStatusAndSemester(
-                uniqueId, InternshipApplication.Status.APPROVED, settingsService.getSemester());
+                offerUniqueId, InternshipApplication.Status.APPROVED, settingsService.getSemester());
 
         InternshipApplicationListResponse response = new InternshipApplicationListResponse();
 

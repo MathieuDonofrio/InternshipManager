@@ -5,6 +5,7 @@ import { useSnackbar } from 'notistack';
 import InternshipOfferService from "../services/InternshipOfferService";
 import InternshipApplicationService from '../services/InternshipApplicationService';
 import PortfolioService from '../services/PortfolioService';
+import UserService from '../services/UserService';
 
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
@@ -24,6 +25,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
+import Link from '@material-ui/core/Link';
 
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 
@@ -35,6 +37,7 @@ export default function InternshipOffer() {
     const { enqueueSnackbar } = useSnackbar();
 
     const [offer, setOffer] = useState({});
+    const [employer, setEmployer] = useState();
 
     const [canApply, setCanApply] = useState(false);
 
@@ -64,6 +67,10 @@ export default function InternshipOffer() {
 
                 })
             }
+
+            UserService.find(response.data.employer).then(response2 => {
+                setEmployer(response2.data);
+            })
         })
     }
 
@@ -114,6 +121,7 @@ export default function InternshipOffer() {
     }
 
     const approve = () => {
+
         InternshipOfferService.approve(uuid).then(response => {
             fetch();
             enqueueSnackbar(`Offre approuvé`, { variant: 'success' });
@@ -142,7 +150,7 @@ export default function InternshipOffer() {
     const translateStatus = (status) => {
         switch (status) {
             case "PENDING_APPROVAL": return "En attente d'approbation";
-            case "APPROVED": return "En progres";
+            case "APPROVED": return "En progrès";
             case "REJECTED": return "Rejeté";
         }
     }
@@ -168,79 +176,6 @@ export default function InternshipOffer() {
                         variant="subtitle1">{uuid}</Typography>
                 </Box>
 
-                <Box>
-
-                    <Table size="small">
-
-                        <TableHead>
-                            <TableCell width="30%"></TableCell>
-                            <TableCell width="70%"></TableCell>
-                        </TableHead>
-
-                        <TableRow key="Company">
-                            <TableCell align="left"><strong>Compagnie</strong></TableCell>
-                            <TableCell align="right">{offer.company}</TableCell>
-                        </TableRow>
-
-                        <TableRow key="JobTitle">
-                            <TableCell align="left"><strong>Poste</strong></TableCell>
-                            <TableCell align="right">{offer.jobTitle}</TableCell>
-                        </TableRow>
-
-                        <TableRow key="StartDate">
-                            <TableCell align="left"><strong>Date Début</strong></TableCell>
-                            <TableCell align="right">{new Date(offer.startDate).toLocaleDateString()}</TableCell>
-                        </TableRow>
-
-                        <TableRow key="EndDate">
-                            <TableCell align="left"><strong>Date Fin</strong></TableCell>
-                            <TableCell align="right">{new Date(offer.endDate).toLocaleDateString()}</TableCell>
-                        </TableRow>
-
-                        {
-                            offer.salary &&
-                            <TableRow key="Salary">
-                                <TableCell align="left"><strong>Salaire</strong></TableCell>
-                                <TableCell align="right">{offer.salary.toFixed(2) + '$'} </TableCell>
-                            </TableRow>
-                        }
-
-                        <TableRow key="Hours">
-                            <TableCell align="left"><strong>Heures Par Semaine</strong></TableCell>
-                            <TableCell align="right">{offer.hours} </TableCell>
-                        </TableRow>
-
-                        <TableRow key="Schedule">
-                            <TableCell align="left"><strong>Horaire</strong></TableCell>
-                            {
-                                offer.schedule && <TableCell align="right">{offer.schedule}</TableCell>
-                            }
-                            {
-                                !offer.schedule && <TableCell align="right">Aucun horaire specifié</TableCell>
-                            }
-
-                        </TableRow>
-
-                    </Table>
-
-                    {
-                        offer.jobScope &&
-                        <Box
-                            marginTop={2}>
-                            <Box
-                                textAlign="center">
-                                <Box
-                                    marginBottom={1}
-                                    style={{ backgroundColor: "lightgray" }}>
-                                    <Typography>Portée De Travail</Typography>
-                                </Box>
-                            </Box>
-                            <ul>{offer.jobScope.map(scope => (<li style={{}}>{scope}</li>))}</ul>
-                        </Box>
-                    }
-
-                </Box>
-
                 <Box
                     marginTop={2}
                     textAlign="center">
@@ -250,6 +185,7 @@ export default function InternshipOffer() {
                         <Typography>{translateStatus(offer.status)}</Typography>
                     </Box>
                 </Box>
+
 
                 <Box
                     margin={2}
@@ -298,17 +234,114 @@ export default function InternshipOffer() {
                 </Box>
 
                 <Box
-                    marginTop={2}>
+                    marginTop={2}
+                    textAlign="center"
+                    style={{ backgroundColor: "lightgray" }}>
+                    <Typography>Informations Générale</Typography>
+                </Box>
+
+                <Box>
+
+                    <Table size="small">
+
+                        <TableHead>
+                            <TableCell width="30%"></TableCell>
+                            <TableCell width="70%"></TableCell>
+                        </TableHead>
+
+                        <TableRow key="Company">
+                            <TableCell align="left"><strong>Compagnie</strong></TableCell>
+                            <TableCell align="right">{offer.company}</TableCell>
+                        </TableRow>
+
+                        <TableRow key="JobTitle">
+                            <TableCell align="left"><strong>Poste</strong></TableCell>
+                            <TableCell align="right">{offer.jobTitle}</TableCell>
+                        </TableRow>
+                        
+                        
+                        <TableRow key="JobTitle">
+                            <TableCell align="left"><strong>Employeur</strong></TableCell>
+                            <TableCell align="right">
+                                {
+                                    employer &&
+
+                                    <Link 
+                                    onClick={() => history.push(`/user/${employer.uniqueId}`)}>
+                                        {employer.firstName + " " + employer.lastName}
+                                    </Link>
+                                }
+                            </TableCell>
+                        </TableRow>
+
+                        <TableRow key="JobTitle">
+                            <TableCell align="left"><strong>Téléphone</strong></TableCell>
+                            <TableCell align="right">{offer.phone}</TableCell>
+                        </TableRow>
+
+                        <TableRow key="StartDate">
+                            <TableCell align="left"><strong>Date Début</strong></TableCell>
+                            <TableCell align="right">{new Date(offer.startDate).toLocaleDateString()}</TableCell>
+                        </TableRow>
+
+                        <TableRow key="EndDate">
+                            <TableCell align="left"><strong>Date Fin</strong></TableCell>
+                            <TableCell align="right">{new Date(offer.endDate).toLocaleDateString()}</TableCell>
+                        </TableRow>
+
+                        {
+                            offer.salary &&
+                            <TableRow key="Salary">
+                                <TableCell align="left"><strong>Salaire</strong></TableCell>
+                                <TableCell align="right">{offer.salary.toFixed(2) + '$'} </TableCell>
+                            </TableRow>
+                        }
+
+                        <TableRow key="Hours">
+                            <TableCell align="left"><strong>Heures Par Semaine</strong></TableCell>
+                            <TableCell align="right">{offer.hours} </TableCell>
+                        </TableRow>
+
+                        <TableRow key="Schedule">
+                            <TableCell align="left"><strong>Horaire</strong></TableCell>
+                            {
+                                offer.schedule && <TableCell align="right">{offer.schedule}</TableCell>
+                            }
+                            {
+                                !offer.schedule && <TableCell align="right">Aucun horaire specifié</TableCell>
+                            }
+                        </TableRow>
+
+                    </Table>
 
                     {
-                        <Box
-                            mt={2}
-                        >
+                        offer.jobScope &&
+                        <Box>
+                            <Box
+                                marginTop={2}
+                                textAlign="center"
+                                style={{ backgroundColor: "lightgray" }}>
+                                <Typography>Portée De Travail</Typography>
+                            </Box>
+
+                            <Box
+                                marginTop={2}>
+                                <ul>{offer.jobScope.map(scope => (<li style={{}}>{scope}</li>))}</ul>
+                            </Box>
 
                         </Box>
                     }
 
                 </Box>
+
+                <Box
+                    marginTop={2}
+                    textAlign="center"
+                    style={{ backgroundColor: "lightgray" }}>
+                    <Typography>Applications</Typography>
+                </Box>
+
+                <Box paddingTop={2}></Box>
 
             </Container>
 

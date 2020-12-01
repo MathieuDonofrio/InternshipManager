@@ -23,20 +23,24 @@ class InternshipOfferService {
         return axios.post(Config.target + '/internship-offer/create', request, headers());
     }
 
+    //
+    // Put
+    //
+
     approve(request) {
-        return axios.post(Config.target + '/internship-offer/approve', request, headers());
+        return axios.put(Config.target + `/internship-offer/approve/${request}`, {}, headers());
     }
 
     reject(request) {
-        return axios.post(Config.target + '/internship-offer/reject', request, headers());
+        return axios.put(Config.target + `/internship-offer/reject/${request}`, {}, headers());
     }
 
     addUser(request) {
-        return axios.post(Config.target + '/internship-offer/add-user', request, headers());
+        return axios.put(Config.target + '/internship-offer/add-user', request, headers());
     }
 
     removeUser(request) {
-        return axios.post(Config.target + '/internship-offer/remove-user', request, headers());
+        return axios.put(Config.target + '/internship-offer/remove-user', request, headers());
     }
 
     //

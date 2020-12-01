@@ -299,7 +299,7 @@ export default function AppDrawer(props) {
             <ListItem
               button
               key={"All offers"}
-              onClick={() => history.push("/internship-offer-list")}>
+              onClick={() => history.push("/internship-offers")}>
               <ListItemIcon><VisibilityIcon /> </ListItemIcon>
               <ListItemText primary={"Visualisation des offres"} />
             </ListItem>
@@ -313,14 +313,14 @@ export default function AppDrawer(props) {
             <ListItem
               button
               key={"Liste des étudiants"}
-              onClick={() => history.push("/student-list-page")}>
+              onClick={() => history.push("/students")}>
               <ListItemIcon><PeopleIcon /> </ListItemIcon>
               <ListItemText primary={"Liste des étudiants"} />
             </ListItem>
             <ListItem
               button
               key={"Liste des employés"}
-              onClick={() => history.push("/employer-list-page")}>
+              onClick={() => history.push("/employers")}>
               <ListItemIcon><PeopleIcon /> </ListItemIcon>
               <ListItemText primary={"Liste des employés"} />
             </ListItem>

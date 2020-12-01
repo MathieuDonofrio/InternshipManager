@@ -25,6 +25,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.when;
 
@@ -272,7 +273,9 @@ public class InternshipApplicationServiceTest {
             return null;
         });
 
-        internshipApplicationService.create(request);
+        UUID response = internshipApplicationService.create(request);
+
+        assertNotNull(response);
     }
 
     @Test

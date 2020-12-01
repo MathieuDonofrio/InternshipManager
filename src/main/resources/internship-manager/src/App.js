@@ -67,12 +67,12 @@ function App() {
                 <Route exact path="/internship-application/:uuid" component={InternshipApplicationPage}></Route>
 
                 <Route exact path="/internship-offer-creation" component={InternshipOfferCreationPage}></Route>
-                <Route exact path="/internship-offer-list" component={InternshipOfferListPage}></Route>
+                <Route exact path="/internship-offers" component={InternshipOfferListPage}></Route>
                 <Route exact path="/manage-access/:uuid" component={ManageAccessPage}></Route>
                 <Route exact path="/internship-offer/:uuid" component={InternshipOfferPage}></Route>
 
-                <Route exact path="/student-list-page" component={StudentListPage}></Route>
-                <Route exact path="/employer-list-page" component={EmployerListPage}></Route>
+                <Route exact path="/students" component={StudentListPage}></Route>
+                <Route exact path="/employers" component={EmployerListPage}></Route>
                 <Route exact path="/user/:uuid" component={UserProfilePage}></Route>
 
                 <Route exact path="/contracts" component={ContractListPage}></Route>
