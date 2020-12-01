@@ -6,6 +6,7 @@ import DateFnsUtils from '@date-io/date-fns';
 
 import InternshipApplicationService from "../services/InternshipApplicationService";
 import InternshipOfferService from "../services/InternshipOfferService";
+import ContractService from "../services/ContractService";
 
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
@@ -13,6 +14,8 @@ import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 import IconButton from '@material-ui/core/IconButton';
 import Table from '@material-ui/core/Table';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
@@ -30,6 +33,8 @@ export default function InternshipApplication() {
     const [application, setApplication] = useState({});
     const [offer, setOffer] = useState({});
 
+    const [contracts, setContracts] = useState([]);
+
     const fetch = () => {
         InternshipApplicationService.find(uuid).then(response => {
 
@@ -39,6 +44,10 @@ export default function InternshipApplication() {
                 setOffer(response1.data);
             })
 
+            ContractService.allContracts(response.data.studentUniqueId).then(response1 => {
+                setContracts(response1.data.contracts);
+            })
+
         })
     }
 
@@ -46,6 +55,13 @@ export default function InternshipApplication() {
         InternshipApplicationService.addInterview(uuid, date.getTime()).then(response => {
             fetch();
         })
+    }
+
+    const generateContract = () => {
+        ContractService.create(uuid).then(response => {
+            fetch();
+            enqueueSnackbar(`Nouveau contrat généré`, { variant: 'success' });
+        });
     }
 
     const approve = () => {
@@ -69,6 +85,10 @@ export default function InternshipApplication() {
         });
     }
 
+    const canGenerateContract = () => {
+        return application.status == "SELECTED" && localStorage.getItem('UserType') === "ADMINISTRATOR";
+    }
+
     const canApprove = () => {
         return application.status == "PENDING_APPROVAL" && localStorage.getItem('UserType') === "ADMINISTRATOR";
     }
@@ -78,7 +98,7 @@ export default function InternshipApplication() {
     }
 
     const canSelect = () => {
-        return application.status == "PENDING_APPROVAL" && localStorage.getItem('UniqueId') == offer.employerUniqueId;
+        return application.status == "APPROVED" && localStorage.getItem('UserUniqueId') === offer.employerUniqueId;
     }
 
     const translateStatus = (status) => {
@@ -125,6 +145,16 @@ export default function InternshipApplication() {
                     margin={1}
                     textAlign="center"
                 >
+                    {
+                        canGenerateContract() &&
+                        <Button
+                            style={{ margin: '4px' }}
+                            variant="contained" color="secondary"
+                            size="small"
+                            onClick={generateContract}>
+                            Généré Contrat
+                        </Button>
+                    }
                     {
                         canSelect() &&
                         <Button
@@ -254,6 +284,58 @@ export default function InternshipApplication() {
                             </MuiPickersUtilsProvider>
 
                         </Box>
+                    }
+
+                    {
+                        application.status == "SELECTED" &&
+                        <div>
+                            <Box
+                                marginTop={2}
+                                textAlign="center"
+                                style={{ backgroundColor: "lightgray" }}>
+                                <Typography>Contrats</Typography>
+                            </Box>
+
+                            <div>
+                                {
+                                    contracts.length > 0 &&
+                                    <TableContainer>
+                                        <Table size="small" aria-label="a dense table">
+                                            <TableHead>
+                                                <TableRow>
+                                                    <TableCell width="60%" align="center"><strong>Date de Génération</strong></TableCell>
+                                                    <TableCell width="30%" align="center"><strong>Action</strong></TableCell>
+                                                </TableRow>
+                                            </TableHead>
+                                            <TableBody>
+                                                {contracts.map((contract, index) => (
+                                                    <TableRow key={index}>
+                                                        <TableCell component="th" scope="row" align="center">{new Date(contract.creationDate).toLocaleDateString()}</TableCell>
+                                                        <TableCell component="th" scope="row" align="center">
+                                                            <Button
+                                                                variant="contained"
+                                                                color="secondary"
+                                                                size="small"
+                                                                onClick={() => history.push(`/contract/${contract.uniqueId}`)}
+                                                            >
+                                                                voir
+                                                        </Button>
+                                                        </TableCell>
+                                                    </TableRow>
+                                                ))}
+                                            </TableBody>
+                                        </Table>
+                                    </TableContainer>
+                                }
+                                {
+                                    contracts.length == 0 &&
+                                    <Box
+                                        margin={2}>
+                                        <Typography>Aucun contrat!</Typography>
+                                    </Box>
+                                }
+                            </div>
+                        </div>
                     }
 
                 </Box>

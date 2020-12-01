@@ -338,42 +338,59 @@ export default function InternshipOffer() {
 
                 </Box>
 
-                <Box
-                    marginTop={2}
-                    textAlign="center"
-                    style={{ backgroundColor: "lightgray" }}>
-                    <Typography>Applications</Typography>
-                </Box>
+                {
+                    offer.status != "PENDING_APPROVAL" &&
+                    <div>
+                        <Box
+                            marginTop={2}
+                            textAlign="center"
+                            style={{ backgroundColor: "lightgray" }}>
+                            <Typography>Applications</Typography>
+                        </Box>
 
-                <TableContainer>
-                    <Table size="small" aria-label="a dense table">
-                        <TableHead>
-                            <TableRow>
-                                <TableCell width="30%" align="center"><strong>Étudiant</strong></TableCell>
-                                <TableCell width="30%" align="center"><strong>Date</strong></TableCell>
-                                <TableCell width="30%" align="center"><strong>Action</strong></TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {applications.map((application, index) => (
-                                <TableRow key={index}>
-                                    <TableCell component="th" scope="row" align="center">{application.studentFirstName + " " + application.studentLastName}</TableCell>
-                                    <TableCell component="th" scope="row" align="center">{new Date(application.date).toLocaleDateString()}</TableCell>
-                                    <TableCell component="th" scope="row" align="center">
-                                        <Button
-                                            variant="contained"
-                                            color="secondary"
-                                            size="small"
-                                            onClick={() => history.push(`/internship-application/${application.uniqueId}`)}
-                                        >
-                                            voir
-                                    </Button>
-                                    </TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
+                        <div>
+                            {
+                                applications.length > 0 &&
+                                <TableContainer>
+                                    <Table size="small" aria-label="a dense table">
+                                        <TableHead>
+                                            <TableRow>
+                                                <TableCell width="30%" align="center"><strong>Étudiant</strong></TableCell>
+                                                <TableCell width="30%" align="center"><strong>Date</strong></TableCell>
+                                                <TableCell width="30%" align="center"><strong>Action</strong></TableCell>
+                                            </TableRow>
+                                        </TableHead>
+                                        <TableBody>
+                                            {applications.map((application, index) => (
+                                                <TableRow key={index}>
+                                                    <TableCell component="th" scope="row" align="center">{application.studentFirstName + " " + application.studentLastName}</TableCell>
+                                                    <TableCell component="th" scope="row" align="center">{new Date(application.date).toLocaleDateString()}</TableCell>
+                                                    <TableCell component="th" scope="row" align="center">
+                                                        <Button
+                                                            variant="contained"
+                                                            color="secondary"
+                                                            size="small"
+                                                            onClick={() => history.push(`/internship-application/${application.uniqueId}`)}
+                                                        >
+                                                            voir
+                                                        </Button>
+                                                    </TableCell>
+                                                </TableRow>
+                                            ))}
+                                        </TableBody>
+                                    </Table>
+                                </TableContainer>
+                            }
+                            {
+                                applications.length == 0 &&
+                                <Box
+                                    margin={2}>
+                                    <Typography>Aucun application!</Typography>
+                                </Box>
+                            }
+                        </div>
+                    </div>
+                }
 
                 <Box paddingTop={2}></Box>
 
