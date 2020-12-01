@@ -321,6 +321,13 @@ export default function AppDrawer(props) {
               </ListItem>
               <ListItem
                 button
+                key={"Applications"}
+                onClick={() => history.push("/internship-applications")}>
+                <ListItemIcon><AssignmentIndSharpIcon /> </ListItemIcon>
+                <ListItemText primary={"Applications"} />
+              </ListItem>
+              <ListItem
+                button
                 key={"Contracts"}
                 onClick={() => history.push("/contracts")}>
                 <ListItemIcon><AssignmentLateSharpIcon /> </ListItemIcon>
@@ -346,7 +353,6 @@ export default function AppDrawer(props) {
                 <ListItemIcon><AssignmentIndSharpIcon /> </ListItemIcon>
                 <ListItemText primary={"Applications"} />
               </ListItem>
-
               <ListItem
                 button
                 key={"Contracts"}
