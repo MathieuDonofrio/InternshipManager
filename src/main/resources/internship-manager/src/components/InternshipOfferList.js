@@ -129,19 +129,29 @@ export default function InternshipOfferList() {
 
         setTitle('Offres applicables');
     }
-    
+
     const fetchStudentAppliedInternshipOffers = async () => {
-        
+
         let uuid = localStorage.getItem("UserUniqueId");
-        
+
         const response = await InternshipApplicationService.internshipApplications(uuid);
-        
+
         setRows(response.data.applications);
-        
+
         setTitle('Offres appliqué');
     }
 
-    useEffect(() => { fetchApproved(); }, [])
+    const fetchOfferList = () => {
+
+        if (isAdministrator())
+            fetchApproved();
+        else if (isEmployer())
+            findAllApprovedByEmployer();
+        else
+            fetchStudentAppliableInternshipOffers();
+    }
+
+    useEffect(() => { fetchOfferList() }, [])
 
     //
     // Rendering
