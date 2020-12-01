@@ -151,6 +151,10 @@ export default function InternshipOffer() {
         return localStorage.getItem('UserType') === "ADMINISTRATOR";
     }
 
+    const canSeeApplications = () => {
+        return localStorage.getItem('UserType') !== "STUDENT";
+    }
+
     const translateStatus = (status) => {
         switch (status) {
             case "PENDING_APPROVAL": return "En attente d'approbation";
@@ -339,7 +343,7 @@ export default function InternshipOffer() {
                 </Box>
 
                 {
-                    offer.status != "PENDING_APPROVAL" &&
+                    offer.status != "PENDING_APPROVAL" && canSeeApplications() &&
                     <div>
                         <Box
                             marginTop={2}

@@ -8,7 +8,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import { Box, makeStyles, Paper, Tab, Tabs } from "@material-ui/core";
+import { AppBar, Box, makeStyles, Paper, Tab, Tabs } from "@material-ui/core";
 import InternshipApplicationService from '../services/InternshipApplicationService';
 import { useHistory } from "react-router-dom";
 
@@ -111,7 +111,7 @@ export default function InternshipApplicationList() {
 
     return (
         <div>
-               <Paper className={classes2.root}>
+            <AppBar position="static" color="default">
                 {isAdministrator() &&
                     <Tabs
                         value={value}
@@ -138,7 +138,7 @@ export default function InternshipApplicationList() {
                         <Tab label="mes applications" onClick={() => fetchStudentApplications()} />
                     </Tabs>
                 }
-            </Paper>
+            </AppBar>
             <Container>
                 <Box
                     mb={2}

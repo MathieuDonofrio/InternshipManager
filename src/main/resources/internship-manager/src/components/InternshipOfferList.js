@@ -9,7 +9,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
-import { makeStyles } from "@material-ui/core";
+import { AppBar, Divider, makeStyles } from "@material-ui/core";
 import { Box, Paper, Tab, Tabs } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import InternshipApplicationService from "../services/InternshipApplicationService";
@@ -163,7 +163,7 @@ export default function InternshipOfferList() {
 
     return (
         <div>
-            <Paper className={classes2.root}>
+            <AppBar position="static" color="default">
                 {isAdministrator() &&
                     <Tabs
                         value={value}
@@ -203,7 +203,10 @@ export default function InternshipOfferList() {
                         <Tab label="appliquées" onClick={() => fetchStudentAppliedInternshipOffers()} />
                     </Tabs>
                 }
-            </Paper>
+            </AppBar>
+
+            <Divider/>
+
             <Container>
                 <Box
                     mb={2}

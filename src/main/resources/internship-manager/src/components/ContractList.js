@@ -12,7 +12,7 @@ import Button from '@material-ui/core/Button';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import { Box, Paper, Tab, Tabs } from "@material-ui/core";
+import { AppBar, Box, Paper, Tab, Tabs } from "@material-ui/core";
 import ContractService from '../services/ContractService';
 
 const useStyles = makeStyles({
@@ -62,7 +62,7 @@ export default function ContractList() {
 
     return (
         <div>
-            <Paper className={classes2.root}>
+            <AppBar position="static" color="default">
                 <Tabs
                     value={value}
                     onChange={handleChange}
@@ -74,7 +74,7 @@ export default function ContractList() {
                     <Tab label="avec signature" onClick={() => fetchAllSignedContracts()} />
                     <Tab label="à signer" onClick={() => fetchAllAwaitingSignature()} />
                 </Tabs>
-            </Paper>
+            </AppBar>
             <Container>
                 <Box
                     mb={2}
