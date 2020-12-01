@@ -1,4 +1,4 @@
-import React, {useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import InternshipOfferService from "../services/InternshipOfferService";
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -12,6 +12,7 @@ import Container from '@material-ui/core/Container';
 import { makeStyles } from "@material-ui/core";
 import { Box, Paper, Tab, Tabs } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
+import InternshipApplicationService from "../services/InternshipApplicationService";
 
 //
 // Data
@@ -26,6 +27,7 @@ const useStyles2 = makeStyles({
 export default function InternshipOfferList() {
     const [rows, setRows] = useState([]);
     const [value, setValue] = useState(0);
+    const [title, setTitle] = useState('');
     const history = useHistory();
     const classes2 = useStyles2();
 
@@ -33,18 +35,110 @@ export default function InternshipOfferList() {
     // Event Handlers
     //
 
+    const isStudent = () => {
+        return localStorage.getItem('UserType') === "STUDENT";
+    }
+
+    const isEmployer = () => {
+        return localStorage.getItem('UserType') === "EMPLOYER";
+    }
+
+    const isAdministrator = () => {
+        return localStorage.getItem('UserType') === "ADMINISTRATOR";
+    }
+
+
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
 
+    //
+    // Admin Services 
+    //
+
     const fetchPendingApproval = async () => {
+
         const response = await InternshipOfferService.pendingApproval();
+
         setRows(response.data.internshipOffers);
+
+        setTitle('Offres en attente');
     }
 
     const fetchApproved = async () => {
+
         const response = await InternshipOfferService.approved();
+
         setRows(response.data.internshipOffers);
+
+        setTitle('Offres approuvé');
+    }
+
+    //
+    // Employer Services
+    //
+
+    const findAllApprovedByEmployer = async () => {
+
+        let uuid = localStorage.getItem("UserUniqueId");
+
+        const response = await InternshipOfferService.findAllByEmployer(uuid);
+
+        setRows(response.data.internshipOffers);
+
+        setTitle('Offres approuvé');
+    }
+
+    const findAllPendingByEmployer = async () => {
+
+        let uuid = localStorage.getItem("UserUniqueId");
+
+        const response = await InternshipOfferService.findAllPendingByEmployer(uuid);
+
+        setRows(response.data.internshipOffers);
+
+        setTitle('Offres en attentes');
+    }
+
+    const findAllRejectedByEmployer = async () => {
+
+        let uuid = localStorage.getItem("UserUniqueId");
+
+        const response = await InternshipOfferService.findAllRejectedByEmployer(uuid);
+
+        setRows(response.data.internshipOffers);
+
+        setTitle('Offres rejeté');
+    }
+
+    //
+    // Student Services
+    //
+
+    const fetchStudentAppliableInternshipOffers = async () => {
+
+        let uuid = localStorage.getItem("UserUniqueId");
+
+        const response1 = await InternshipOfferService.accessible(uuid);
+        const response2 = await InternshipApplicationService.internshipApplications(uuid);
+
+        const offers = response1.data.internshipOffers.filter(offer =>
+            !response2.data.applications.some(app => app.offerUniqueId == offer.uniqueId));
+
+        setRows(offers);
+
+        setTitle('Offres applicables');
+    }
+    
+    const fetchStudentAppliedInternshipOffers = async () => {
+        
+        let uuid = localStorage.getItem("UserUniqueId");
+        
+        const response = await InternshipApplicationService.internshipApplications(uuid);
+        
+        setRows(response.data.applications);
+        
+        setTitle('Offres appliqué');
     }
 
     useEffect(() => { fetchApproved(); }, [])
@@ -56,17 +150,45 @@ export default function InternshipOfferList() {
     return (
         <div>
             <Paper className={classes2.root}>
-                <Tabs
-                    value={value}
-                    onChange={handleChange}
-                    indicatorColor="primary"
-                    textColor="primary"
-                    centered
-                >
-                    <Tab label="tous" onClick={() =>{console.log("im not yet implemented");}} />
-                    <Tab label="approuvé" onClick={() => fetchApproved()} />
-                    <Tab label="en Attente" onClick={() => fetchPendingApproval()} />
-                </Tabs>
+                {isAdministrator() &&
+                    <Tabs
+                        value={value}
+                        onChange={handleChange}
+                        indicatorColor="primary"
+                        textColor="primary"
+                        centered
+                    >
+                        <Tab label="approuvé" onClick={() => fetchApproved()} />
+                        <Tab label="en attente" onClick={() => fetchPendingApproval()} />
+                    </Tabs>
+                }
+
+                {isEmployer() &&
+                    <Tabs
+                        value={value}
+                        onChange={handleChange}
+                        indicatorColor="primary"
+                        textColor="primary"
+                        centered
+                    >
+                        <Tab label="approuvé" onClick={() => findAllApprovedByEmployer()} />
+                        <Tab label="en attente" onClick={() => findAllPendingByEmployer()} />
+                        <Tab label="rejeté" onClick={() => findAllRejectedByEmployer()} />
+                    </Tabs>
+                }
+
+                {isStudent() &&
+                    <Tabs
+                        value={value}
+                        onChange={handleChange}
+                        indicatorColor="primary"
+                        textColor="primary"
+                        centered
+                    >
+                        <Tab label="applicable" onClick={() => fetchStudentAppliableInternshipOffers()} />
+                        <Tab label="appliqué" onClick={() => fetchStudentAppliedInternshipOffers()} />
+                    </Tabs>
+                }
             </Paper>
             <Container>
                 <Box
@@ -74,7 +196,10 @@ export default function InternshipOfferList() {
                     paddingTop={2}
                     textAlign="left"
                 >
-                    <Typography component="h1" variant="h4" align="center">Offres en attentes</Typography>
+                    <Typography component="h1" variant="h4" align="center">
+                        {title}
+
+                    </Typography>
                 </Box>
             </Container>
 
@@ -93,12 +218,12 @@ export default function InternshipOfferList() {
                                 <TableCell component="th" scope="row" align="center">{offer.company}</TableCell>
                                 <TableCell component="th" scope="row" align="center">{offer.jobTitle}</TableCell>
                                 <TableCell component="th" scope="row" align="center">
-                                    <Button 
-                                    variant="contained"
-                                     color="secondary" 
-                                     size="small"
-                                     onClick={() => history.push(`/internship-offer/${offer.uniqueId}`)}
-                                     >voir</Button>
+                                    <Button
+                                        variant="contained"
+                                        color="secondary"
+                                        size="small"
+                                        onClick={() => history.push(`/internship-offer/${offer.uniqueId}`)}
+                                    >voir</Button>
                                 </TableCell>
                             </TableRow>
                         ))}

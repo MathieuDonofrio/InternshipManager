@@ -71,6 +71,16 @@ class InternshipOfferService {
         return axios.get(Config.target + '/internship-offer/employer/' + request, headers());
     }
 
+    findAllPendingByEmployer(request){
+        return axios.get(Config.target + '/internship-offer/employer/pending/' + request, headers());
+    }
+    
+    findAllRejectedByEmployer(request){
+        return axios.get(Config.target + '/internship-offer/employer/rejected/' + request, headers());
+    }
+
+
+
 }
 
 export default new InternshipOfferService();

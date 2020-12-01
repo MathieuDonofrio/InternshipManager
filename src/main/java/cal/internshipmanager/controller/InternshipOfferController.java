@@ -94,6 +94,16 @@ public class InternshipOfferController {
         return internshipOfferService.findAllByEmployer(userUniqueId);
     }
 
+    @GetMapping("employer/pending/{userUniqueId}")
+    public InternshipOfferListResponse findAllPendingByEmployer(@Valid @ExistingUser @PathVariable UUID userUniqueId){
+        return internshipOfferService.findAllPendingByEmployer(userUniqueId);
+    }
+
+    @GetMapping("employer/rejected/{userUniqueId}")
+    public InternshipOfferListResponse findAllRejectedByEmployer(@Valid @ExistingUser @PathVariable UUID userUniqueId){
+        return internshipOfferService.findAllRejectedByEmployer(userUniqueId);
+    }
+
     @GetMapping("{uniqueId}")
     public InternshipOfferListResponse.InternshipOffer find(@Valid @ExistingInternshipOffer @PathVariable UUID uniqueId){
         return internshipOfferService.find(uniqueId);

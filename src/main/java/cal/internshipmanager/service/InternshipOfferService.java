@@ -192,6 +192,32 @@ public class InternshipOfferService {
         return response;
     }
 
+    public InternshipOfferListResponse findAllPendingByEmployer(UUID uniqueId) {
+
+        List<InternshipOffer> internshipOffers = internshipOfferRepository.findAllByEmployerAndStatusAndSemester(
+                uniqueId, InternshipOffer.Status.PENDING_APPROVAL, settingsService.getSemester());
+
+        InternshipOfferListResponse response = new InternshipOfferListResponse();
+
+        response.setInternshipOffers(internshipOffers.stream().map(InternshipOfferListResponse::map)
+                .collect(Collectors.toList()));
+
+        return response;
+    }
+
+    public InternshipOfferListResponse findAllRejectedByEmployer(UUID uniqueId) {
+
+        List<InternshipOffer> internshipOffers = internshipOfferRepository.findAllByEmployerAndStatusAndSemester(
+                uniqueId, InternshipOffer.Status.REJECTED, settingsService.getSemester());
+
+        InternshipOfferListResponse response = new InternshipOfferListResponse();
+
+        response.setInternshipOffers(internshipOffers.stream().map(InternshipOfferListResponse::map)
+                .collect(Collectors.toList()));
+
+        return response;
+    }
+
     public InternshipOfferListResponse.InternshipOffer find(UUID uniqueId){
         return InternshipOfferListResponse.map(internshipOfferRepository.findById(uniqueId).get());
     }
