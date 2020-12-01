@@ -34,6 +34,7 @@ export default function ContractList() {
     const classes2 = useStyles2();
     const [value, setValue] = React.useState(0);
     const [rows, setRows] = useState([]);
+    const [title, setTitle] = useState('');
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -42,16 +43,19 @@ export default function ContractList() {
     const fetchAllContracts = async () => {
         const response = await ContractService.allContracts(localStorage.getItem('UserUniqueId'));
         setRows(response.data.contracts);
+        setTitle('Contrats');
     }
     
     const fetchAllSignedContracts = async () => {
         const response = await ContractService.signedContracts(localStorage.getItem('UserUniqueId'));
         setRows(response.data.contracts);
+        setTitle('Contrats signés');
     }
-
+    
     const fetchAllAwaitingSignature = async () => {
         const response = await ContractService.awaitingSignature(localStorage.getItem('UserUniqueId'));
         setRows(response.data.contracts);
+        setTitle('Contrats à signer');
     }
 
     useEffect(() => { fetchAllContracts(); }, [])
@@ -77,7 +81,7 @@ export default function ContractList() {
                     paddingTop={2}
                     textAlign="center">
 
-                    <Typography component="h1" variant="h4">Contrats</Typography>
+                    <Typography component="h1" variant="h4">{title}</Typography>
                 </Box>
             </Container>
 
@@ -88,7 +92,7 @@ export default function ContractList() {
                             <TableCell align="center"><strong>Étudiant</strong></TableCell>
                             <TableCell align="center"><strong>Compagnie</strong></TableCell>
                             <TableCell align="center"><strong>Titre de poste</strong></TableCell>
-                            <TableCell align="center"><strong>Actions</strong></TableCell>
+                            <TableCell align="center"><strong>Action</strong></TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>

@@ -35,6 +35,7 @@ export default function EmployerList() {
 
   const [rows, setRows] = useState([]);
   const [value, setValue] = React.useState(0);
+  const [title, setTitle] = useState('');
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -43,16 +44,19 @@ export default function EmployerList() {
   const fetchAllUsers = async () => {
     const response = await UserService.employers();
     setRows(response.data.users);
+    setTitle('Employés');
   }
   
   const fetchAllWithOffer = async () =>{
     const response = await UserService.employersWithOffer();
     setRows(response.data.users);
+    setTitle('Employés avec offre');
   }
-
+  
   const fetchAllWithoutOffer = async () =>{
     const response = await UserService.employersWithoutOffer();
     setRows(response.data.users);
+    setTitle('Employés sans offre');
   }
  
 
@@ -69,8 +73,8 @@ export default function EmployerList() {
           centered
         >
           <Tab label="tous" onClick={() => fetchAllUsers()}/>
-          <Tab label="sans offre" onClick={() => fetchAllWithoutOffer()} />
           <Tab label="avec offre" onClick={() => fetchAllWithOffer()} />
+          <Tab label="sans offre" onClick={() => fetchAllWithoutOffer()} />
         </Tabs>
       </Paper>
       <Container>
@@ -79,7 +83,7 @@ export default function EmployerList() {
           paddingTop={2}
           textAlign="center">
 
-          <Typography component="h1" variant="h4">Employés</Typography>
+          <Typography component="h1" variant="h4">{title}</Typography>
         </Box>
       </Container>
 

@@ -33,6 +33,7 @@ export default function StudentList() {
 
   const [rows, setRows] = useState([]);
   const [value, setValue] = React.useState(0);
+  const [title, setTitle] = useState('');
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -41,16 +42,19 @@ export default function StudentList() {
   const fetchAllUsers = async () => {
     const response = await UserService.students();
     setRows(response.data.users);
+    setTitle('Étudiants');
   }
   
   const fetchAllWithApplication = async () =>{
     const response = await UserService.studentsWithApplication();
     setRows(response.data.users);
+    setTitle('Étudiants avec application');
   }
-
+  
   const fetchAllWithoutApplication = async () =>{
     const response = await UserService.studentsWithoutApplication();
     setRows(response.data.users);
+    setTitle('Étudiants sans application');
   }
 
   useEffect(() => { fetchAllUsers(); }, [])
@@ -76,7 +80,7 @@ export default function StudentList() {
           paddingTop={2}
           textAlign="center">
 
-          <Typography component="h1" variant="h4">Étudiants</Typography>
+          <Typography component="h1" variant="h4">{title}</Typography>
         </Box>
       </Container>
 

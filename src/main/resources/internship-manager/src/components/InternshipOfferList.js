@@ -62,7 +62,7 @@ export default function InternshipOfferList() {
 
         setRows(response.data.internshipOffers);
 
-        setTitle('Offres en attente');
+        setTitle('Offres en attentes');
     }
 
     const fetchApproved = async () => {
@@ -71,7 +71,7 @@ export default function InternshipOfferList() {
 
         setRows(response.data.internshipOffers);
 
-        setTitle('Offres approuvé');
+        setTitle('Offres approuvées');
     }
 
     //
@@ -86,7 +86,7 @@ export default function InternshipOfferList() {
 
         setRows(response.data.internshipOffers);
 
-        setTitle('Offres approuvé');
+        setTitle('Offres approuvées');
     }
 
     const findAllPendingByEmployer = async () => {
@@ -108,7 +108,7 @@ export default function InternshipOfferList() {
 
         setRows(response.data.internshipOffers);
 
-        setTitle('Offres rejeté');
+        setTitle('Offres rejetées');
     }
 
     //
@@ -172,8 +172,8 @@ export default function InternshipOfferList() {
                         textColor="primary"
                         centered
                     >
-                        <Tab label="approuvée" onClick={() => fetchApproved()} />
-                        <Tab label="en attente" onClick={() => fetchPendingApproval()} />
+                        <Tab label="approuvées" onClick={() => fetchApproved()} />
+                        <Tab label="en attentes" onClick={() => fetchPendingApproval()} />
                     </Tabs>
                 }
 
@@ -185,9 +185,9 @@ export default function InternshipOfferList() {
                         textColor="primary"
                         centered
                     >
-                        <Tab label="approuvée" onClick={() => findAllApprovedByEmployer()} />
-                        <Tab label="en attente" onClick={() => findAllPendingByEmployer()} />
-                        <Tab label="rejeté" onClick={() => findAllRejectedByEmployer()} />
+                        <Tab label="approuvées" onClick={() => findAllApprovedByEmployer()} />
+                        <Tab label="en attentes" onClick={() => findAllPendingByEmployer()} />
+                        <Tab label="rejetées" onClick={() => findAllRejectedByEmployer()} />
                     </Tabs>
                 }
 
@@ -199,8 +199,8 @@ export default function InternshipOfferList() {
                         textColor="primary"
                         centered
                     >
-                        <Tab label="applicable" onClick={() => fetchStudentAppliableInternshipOffers()} />
-                        <Tab label="appliquée" onClick={() => fetchStudentAppliedInternshipOffers()} />
+                        <Tab label="applicables" onClick={() => fetchStudentAppliableInternshipOffers()} />
+                        <Tab label="appliquées" onClick={() => fetchStudentAppliedInternshipOffers()} />
                     </Tabs>
                 }
             </Paper>
