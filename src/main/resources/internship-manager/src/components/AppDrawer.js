@@ -223,9 +223,10 @@ export default function AppDrawer(props) {
           </IconButton>
         </div>
 
-        <Divider />
-
         <List>
+
+          <Divider />
+
           <ListItem
             button
             key={"Home"}
@@ -233,157 +234,155 @@ export default function AppDrawer(props) {
             <ListItemIcon><HomeIcon /> </ListItemIcon>
             <ListItemText primary={"Accueil"} />
           </ListItem>
+
+          <Divider />
+
+
+          <ListItem
+            button
+            key={"Signature"}
+            onClick={() => history.push("/create-signature")}>
+            <ListItemIcon><CreateIcon /> </ListItemIcon>
+            <ListItemText primary={"Signature"} />
+          </ListItem>
+
+
+          {
+            isStudent() &&
+            <ListItem
+              button
+              key={"Portfolio"}
+              onClick={() => history.push("/portfolio")}>
+              <ListItemIcon><FolderOpenSharpIcon /> </ListItemIcon>
+              <ListItemText primary={"Portfolio"} />
+            </ListItem>
+          }
+
+          {
+            isEmployer() &&
+            <ListItem
+              button
+              key={"Offer Creation"}
+              onClick={() => history.push("/internship-offer-creation")}>
+              <ListItemIcon><PostAddSharpIcon /> </ListItemIcon>
+              <ListItemText primary={"Création d'offre"} />
+            </ListItem>
+          }
+
+          {
+            isAdministrator() &&
+            <ListItem
+              button
+              key={"Paramètres"}
+              onClick={() => history.push("/settings")}>
+              <ListItemIcon><SettingsIcon /> </ListItemIcon>
+              <ListItemText primary={"Paramètres"} />
+            </ListItem>
+          }
+
+          <Divider />
+
+          {
+            isStudent() &&
+            <div>
+              <ListItem
+                button
+                key={"All offers"}
+                onClick={() => history.push("/internship-offers")}>
+                <ListItemIcon><AssignmentSharpIcon /> </ListItemIcon>
+                <ListItemText primary={"Offres"} />
+              </ListItem>
+              <ListItem
+                button
+                key={"Applications"}
+                onClick={() => history.push("/internship-applications")}>
+                <ListItemIcon><AssignmentIndSharpIcon /> </ListItemIcon>
+                <ListItemText primary={"Applications"} />
+              </ListItem>
+              <ListItem
+                button
+                key={"Contracts"}
+                onClick={() => history.push("/contracts")}>
+                <ListItemIcon><AssignmentLateSharpIcon /> </ListItemIcon>
+                <ListItemText primary={"Contrats"} />
+              </ListItem>
+            </div>
+          }
+
+          {
+            isEmployer() &&
+            <div>
+              <ListItem
+                button
+                key={"All offers"}
+                onClick={() => history.push("/internship-offers")}>
+                <ListItemIcon><AssignmentSharpIcon /> </ListItemIcon>
+                <ListItemText primary={"Offres"} />
+              </ListItem>
+              <ListItem
+                button
+                key={"Contracts"}
+                onClick={() => history.push("/contracts")}>
+                <ListItemIcon><AssignmentLateSharpIcon /> </ListItemIcon>
+                <ListItemText primary={"Contrats"} />
+              </ListItem>
+            </div>
+          }
+
+          {
+            isAdministrator() &&
+            <div>
+              <ListItem
+                button
+                key={"All offers"}
+                onClick={() => history.push("/internship-offers")}>
+                <ListItemIcon><AssignmentSharpIcon /> </ListItemIcon>
+                <ListItemText primary={"Offres"} />
+              </ListItem>
+              <ListItem
+                button
+                key={"Applications"}
+                onClick={() => history.push("/internship-applications")}>
+                <ListItemIcon><AssignmentIndSharpIcon /> </ListItemIcon>
+                <ListItemText primary={"Applications"} />
+              </ListItem>
+
+              <ListItem
+                button
+                key={"Contracts"}
+                onClick={() => history.push("/contracts")}>
+                <ListItemIcon><AssignmentLateSharpIcon /> </ListItemIcon>
+                <ListItemText primary={"Contrats"} />
+              </ListItem>
+
+              <ListItem
+                button
+                key={"Liste des étudiants"}
+                onClick={() => history.push("/students")}>
+                <ListItemIcon><PeopleIcon /> </ListItemIcon>
+                <ListItemText primary={"Étudiants"} />
+              </ListItem>
+
+              <ListItem
+                button
+                key={"Liste des employés"}
+                onClick={() => history.push("/employers")}>
+                <ListItemIcon><SupervisorAccountSharpIcon /> </ListItemIcon>
+                <ListItemText primary={"Employés"} />
+              </ListItem>
+
+            </div>
+          }
+
         </List>
 
-        <Divider />
-
-
-        <ListItem
-          button
-          key={"Signature"}
-          onClick={() => history.push("/create-signature")}>
-          <ListItemIcon><CreateIcon /> </ListItemIcon>
-          <ListItemText primary={"Signature"} />
-        </ListItem>
-        
-
-        {
-          isStudent() &&
-          <ListItem
-            button
-            key={"Portfolio"}
-            onClick={() => history.push("/portfolio")}>
-            <ListItemIcon><FolderOpenSharpIcon /> </ListItemIcon>
-            <ListItemText primary={"Portfolio"} />
-          </ListItem>
-        }
-
-        {
-          isEmployer() &&
-          <ListItem
-            button
-            key={"Offer Creation"}
-            onClick={() => history.push("/internship-offer-creation")}>
-            <ListItemIcon><PostAddSharpIcon /> </ListItemIcon>
-            <ListItemText primary={"Création d'offre"} />
-          </ListItem>
-        }
-
-        {
-          isAdministrator() &&
-          <ListItem
-            button
-            key={"Paramètres"}
-            onClick={() => history.push("/settings")}>
-            <ListItemIcon><SettingsIcon /> </ListItemIcon>
-            <ListItemText primary={"Paramètres"} />
-          </ListItem>
-        }
-
-        <Divider />
-
-        {
-          isStudent() &&
-          <List>
-            <ListItem
-              button
-              key={"All offers"}
-              onClick={() => history.push("/internship-offers")}>
-              <ListItemIcon><AssignmentSharpIcon /> </ListItemIcon>
-              <ListItemText primary={"Offres"} />
-            </ListItem>
-            <ListItem
-              button
-              key={"Applications"}
-              onClick={() => history.push("/internship-applications")}>
-              <ListItemIcon><AssignmentIndSharpIcon /> </ListItemIcon>
-              <ListItemText primary={"Applications"} />
-            </ListItem>
-            <List>
-              <ListItem
-                button
-                key={"Contracts"}
-                onClick={() => history.push("/contracts")}>
-                <ListItemIcon><AssignmentLateSharpIcon /> </ListItemIcon>
-                <ListItemText primary={"Contrats"} />
-              </ListItem>
-            </List>
-          </List>
-        }
-
-        {
-          isEmployer() &&
-          <List>
-            <ListItem
-              button
-              key={"All offers"}
-              onClick={() => history.push("/internship-offers")}>
-              <ListItemIcon><AssignmentSharpIcon /> </ListItemIcon>
-              <ListItemText primary={"Offres"} />
-            </ListItem>
-            <List>
-              <ListItem
-                button
-                key={"Contracts"}
-                onClick={() => history.push("/contracts")}>
-                <ListItemIcon><AssignmentLateSharpIcon /> </ListItemIcon>
-                <ListItemText primary={"Contrats"} />
-              </ListItem>
-            </List>
-          </List>
-        }
-
-        {
-          isAdministrator() &&
-          <List>
-            <ListItem
-              button
-              key={"All offers"}
-              onClick={() => history.push("/internship-offers")}>
-              <ListItemIcon><AssignmentSharpIcon /> </ListItemIcon>
-              <ListItemText primary={"Offres"} />
-            </ListItem>
-            <ListItem
-              button
-              key={"Applications"}
-              onClick={() => history.push("/internship-applications")}>
-              <ListItemIcon><AssignmentIndSharpIcon /> </ListItemIcon>
-              <ListItemText primary={"Applications"} />
-            </ListItem>
-            <List>
-              <ListItem
-                button
-                key={"Contracts"}
-                onClick={() => history.push("/contracts")}>
-                <ListItemIcon><AssignmentLateSharpIcon /> </ListItemIcon>
-                <ListItemText primary={"Contrats"} />
-              </ListItem>
-            </List>
-
-            <ListItem
-              button
-              key={"Liste des étudiants"}
-              onClick={() => history.push("/students")}>
-              <ListItemIcon><PeopleIcon /> </ListItemIcon>
-              <ListItemText primary={"Étudiants"} />
-            </ListItem>
-
-            <ListItem
-              button
-              key={"Liste des employés"}
-              onClick={() => history.push("/employers")}>
-              <ListItemIcon><SupervisorAccountSharpIcon /> </ListItemIcon>
-              <ListItemText primary={"Employés"} />
-            </ListItem>
-
-          </List>
-        }
-
       </Drawer>
+
       <main className={classes.content}>
         <div className={classes.toolbar} />
         {props.children}
       </main>
+
     </div>
   );
 }
