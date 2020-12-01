@@ -80,9 +80,7 @@ export default function StudentInternshipApplicationValidationTable(props) {
     setRows(response.data.applications);
   }
 
-  useEffect(() => {
-    fetchApplications();
-  }, [])
+  useEffect(() => {fetchApplications();}, [])
 
   return (
     <div>
@@ -149,15 +147,15 @@ export default function StudentInternshipApplicationValidationTable(props) {
                     </Box>
 
                     <Box margin={1}>
-                    <Button
-                      variant="contained" color="secondary"
-                      size="small"
-                      onClick={() => handleClickOpen(application.uniqueId)}
-                      startIcon={<AttachmentIcon />}
-                    >
-                      Documents
+                      <Button
+                        variant="contained" color="secondary"
+                        size="small"
+                        onClick={() => handleClickOpen(application.uniqueId)}
+                        startIcon={<AttachmentIcon />}
+                      >
+                        Documents
                     </Button>
-                  </Box>
+                    </Box>
                   </TableCell>
                 </TableRow>
               ))}

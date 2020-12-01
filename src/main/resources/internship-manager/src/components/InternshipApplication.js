@@ -31,6 +31,7 @@ export default function InternshipApplication() {
     const [offer, setOffer] = useState({});
 
     const fetch = () => {
+        console.log('voici ma reponse');
 
         InternshipApplicationService.find(uuid).then(response => {
 
@@ -40,6 +41,9 @@ export default function InternshipApplication() {
 
                 setOffer(response1.data);
             })
+
+            console.log('voici ma reponse');
+            console.log(response);
 
         })
     }

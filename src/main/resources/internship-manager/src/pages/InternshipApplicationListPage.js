@@ -1,12 +1,10 @@
 import React, { Component } from "react";
-
 import CssBaseline from '@material-ui/core/CssBaseline';
-
 import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
-import InternshipOfferList from "../components/InternshipOfferList";
+import InternshipApplicationList from "../components/InternshipApplicationList";
 
-export default class InternshipOfferListPage extends Component {
+export default class InternshipApplicationListPage extends Component {
 
   //
   // Constructors
@@ -29,7 +27,7 @@ export default class InternshipOfferListPage extends Component {
 
           <Paper elevation={3}>
 
-              <InternshipOfferList/>
+              <InternshipApplicationList/>
 
           </Paper>
 
