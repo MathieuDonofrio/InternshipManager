@@ -134,10 +134,14 @@ export default function InternshipOfferList() {
 
         let uuid = localStorage.getItem("UserUniqueId");
 
-        const response = await InternshipApplicationService.internshipApplications(uuid);
+        const response1 = await InternshipOfferService.accessible(uuid);
+        const response2 = await InternshipApplicationService.internshipApplications(uuid);
 
-        setRows(response.data.applications);
+        const offers = response1.data.internshipOffers.filter(offer =>
+            response2.data.applications.some(app => app.offerUniqueId == offer.uniqueId));
 
+        setRows(offers);
+        
         setTitle('Offres appliqué');
     }
 
@@ -233,7 +237,9 @@ export default function InternshipOfferList() {
                                         color="secondary"
                                         size="small"
                                         onClick={() => history.push(`/internship-offer/${offer.uniqueId}`)}
-                                    >voir</Button>
+                                    >
+                                        voir
+                                    </Button>
                                 </TableCell>
                             </TableRow>
                         ))}
