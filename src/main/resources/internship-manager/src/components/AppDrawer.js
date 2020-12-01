@@ -257,6 +257,13 @@ export default function AppDrawer(props) {
             </ListItem>
             <ListItem
               button
+              key={"Applications"}
+              onClick={() => history.push("/internship-applications")}>
+              <ListItemIcon><AssignmentLateIcon /> </ListItemIcon>
+              <ListItemText primary={"Visualisation des offres"} />
+            </ListItem>
+            <ListItem
+              button
               key={"Application Status"}
               onClick={() => history.push("/internship-application-status")}>
               <ListItemIcon><VisibilityIcon /> </ListItemIcon>
@@ -322,6 +329,13 @@ export default function AppDrawer(props) {
               onClick={() => history.push("/internship-application-validation")}>
               <ListItemIcon><AssignmentLateIcon /> </ListItemIcon>
               <ListItemText primary={"Applications en attentes"} />
+            </ListItem>
+            <ListItem
+              button
+              key={"Applications"}
+              onClick={() => history.push("/internship-applications")}>
+              <ListItemIcon><AssignmentLateIcon /> </ListItemIcon>
+              <ListItemText primary={"Visualisation des offres"} />
             </ListItem>
             <ListItem
               button

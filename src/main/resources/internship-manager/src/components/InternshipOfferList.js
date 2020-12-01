@@ -142,7 +142,7 @@ export default function InternshipOfferList() {
 
         setRows(offers);
         
-        setTitle('Offres appliqué');
+        setTitle('Offres appliquées');
     }
 
     const fetchOfferList = () => {
@@ -172,7 +172,7 @@ export default function InternshipOfferList() {
                         textColor="primary"
                         centered
                     >
-                        <Tab label="approuvé" onClick={() => fetchApproved()} />
+                        <Tab label="approuvée" onClick={() => fetchApproved()} />
                         <Tab label="en attente" onClick={() => fetchPendingApproval()} />
                     </Tabs>
                 }
@@ -185,7 +185,7 @@ export default function InternshipOfferList() {
                         textColor="primary"
                         centered
                     >
-                        <Tab label="approuvé" onClick={() => findAllApprovedByEmployer()} />
+                        <Tab label="approuvée" onClick={() => findAllApprovedByEmployer()} />
                         <Tab label="en attente" onClick={() => findAllPendingByEmployer()} />
                         <Tab label="rejeté" onClick={() => findAllRejectedByEmployer()} />
                     </Tabs>
@@ -200,7 +200,7 @@ export default function InternshipOfferList() {
                         centered
                     >
                         <Tab label="applicable" onClick={() => fetchStudentAppliableInternshipOffers()} />
-                        <Tab label="appliqué" onClick={() => fetchStudentAppliedInternshipOffers()} />
+                        <Tab label="appliquée" onClick={() => fetchStudentAppliedInternshipOffers()} />
                     </Tabs>
                 }
             </Paper>
@@ -212,7 +212,6 @@ export default function InternshipOfferList() {
                 >
                     <Typography component="h1" variant="h4" align="center">
                         {title}
-
                     </Typography>
                 </Box>
             </Container>

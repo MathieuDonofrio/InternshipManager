@@ -29,6 +29,7 @@ import CreateSignaturePage from './pages/CreateSignaturePage';
 import InternshipOfferListPage from './pages/InternshipOfferListPage';
 import InternshipOfferPage from './pages/InternshipOfferPage';
 import InternshipApplicationPage from './pages/InternshipApplicationPage';
+import InternshipApplicationListPage from './pages/InternshipApplicationListPage';
 
 function App() {
 
@@ -63,6 +64,7 @@ function App() {
                 <Route exact path="/internship-application-creation" component={StudentInternshipApplicationPage}></Route>
                 <Route exact path="/internship-application-validation" component={StudentInternshipApplicationValidationPage}></Route>
                 <Route exact path="/internship-application-status" component={StudentInternshipApplicationStatusPage}></Route>
+                <Route exact path="/internship-applications" component={InternshipApplicationListPage}></Route>
                 <Route exact path="/student-selection-page" component={StudentSelectionPage}></Route>
                 <Route exact path="/internship-application/:uuid" component={InternshipApplicationPage}></Route>
 

@@ -27,11 +27,15 @@ export default function InternshipApplication() {
     const [offer, setOffer] = useState({});
 
     const fetch = () => {
+        console.log('voici ma reponse');
 
         InternshipApplicationService.find(uuid).then(response => {
 
             setApplication(response.data);
             setOffer(response.data.offer);
+
+            console.log('voici ma reponse');
+            console.log(response);
 
         })
     }
