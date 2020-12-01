@@ -32,10 +32,12 @@ public class SettingsController {
     // Get
     //
 
+
     @GetMapping("semester")
     public String semester() {
         return settingsService.getSemester();
     }
+
 
     @GetMapping("require-approval")
     public boolean requireApproval() {
