@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
+import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
 
 import InternshipApplicationService from "../services/InternshipApplicationService";
+import InternshipOfferService from "../services/InternshipOfferService";
 
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
@@ -13,6 +16,7 @@ import Table from '@material-ui/core/Table';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import Link from '@material-ui/core/Link';
 
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 
@@ -32,11 +36,21 @@ export default function InternshipApplication() {
         InternshipApplicationService.find(uuid).then(response => {
 
             setApplication(response.data);
-            setOffer(response.data.offer);
+
+            InternshipOfferService.find(response.data.offerUniqueId).then(response1 => {
+
+                setOffer(response1.data);
+            })
 
             console.log('voici ma reponse');
             console.log(response);
 
+        })
+    }
+
+    const onInterviewDateChange = date => {
+        InternshipApplicationService.addInterview(uuid, date.getTime()).then(response => {
+            fetch();
         })
     }
 
@@ -103,29 +117,6 @@ export default function InternshipApplication() {
                         variant="subtitle1">{uuid}</Typography>
                 </Box>
 
-                <Box>
-
-                    <Table size="small">
-
-                        <TableHead>
-                            <TableCell width="30%"></TableCell>
-                            <TableCell width="70%"></TableCell>
-                        </TableHead>
-
-                        <TableRow>
-                            <TableCell align="left"><strong>Offre de stage</strong></TableCell>
-                            <TableCell align="right">{offer.company + " | " + offer.jobTitle}</TableCell>
-                        </TableRow>
-
-                        <TableRow>
-                            <TableCell align="left"><strong>Étudiant</strong></TableCell>
-                            <TableCell align="right">{application.studentFirstName + " " + application.studentLastName}</TableCell>
-                        </TableRow>
-
-                    </Table>
-
-                </Box>
-
                 <Box
                     marginTop={2}
                     textAlign="center">
@@ -148,7 +139,7 @@ export default function InternshipApplication() {
                             size="small"
                             onClick={select}>
                             Selectionné
-                            </Button>
+                        </Button>
                     }
                     {
                         canApprove() &&
@@ -172,18 +163,108 @@ export default function InternshipApplication() {
                     }
                 </Box>
 
-                <Box
-                    marginTop={2}>
+                <Box>
+
+                    <Box
+                        marginTop={2}
+                        textAlign="center"
+                        style={{ backgroundColor: "lightgray" }}>
+                        <Typography>Informations Générale</Typography>
+                    </Box>
+
+                    <Table size="small">
+
+                        <TableHead>
+                            <TableCell width="30%"></TableCell>
+                            <TableCell width="70%"></TableCell>
+                        </TableHead>
+
+                        <TableRow>
+                            <TableCell align="left"><strong>Offre de stage</strong></TableCell>
+                            <TableCell align="right">
+                                {
+                                    offer.company &&
+
+                                    <Link
+                                        onClick={() => history.push(`/internship-offer/${offer.uniqueId}`)}>
+                                        {offer.company + " | " + offer.jobTitle}
+                                    </Link>
+                                }
+                            </TableCell>
+                        </TableRow>
+
+                        <TableRow>
+                            <TableCell align="left"><strong>Étudiant</strong></TableCell>
+                            <TableCell align="right">
+                                {
+                                    application.studentFirstName &&
+
+                                    <Link
+                                        onClick={() => history.push(`/user/${application.studentUniqueId}`)}>
+                                        {application.studentFirstName + " " + application.studentLastName}
+                                    </Link>
+                                }
+                            </TableCell>
+                        </TableRow>
+
+                        <TableRow>
+                            <TableCell align="left"><strong>Date</strong></TableCell>
+                            <TableCell align="right">{new Date(application.date).toLocaleDateString()}</TableCell>
+                        </TableRow>
+
+                    </Table>
 
                     {
-                        <Box
-                            mt={2}
-                        >
+                        application.status == "SELECTED" &&
+
+                        <Box>
+
+                            <Box
+                                marginTop={2}
+                                textAlign="center"
+                                style={{ backgroundColor: "lightgray" }}>
+                                <Typography>Entrevue</Typography>
+                            </Box>
+
+                            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                {application.interviewDate == 0 &&
+                                    <KeyboardDatePicker
+                                        disableToolbar
+                                        variant="inline"
+                                        format="MM/dd/yyyy"
+                                        margin="normal"
+                                        label="Date intervu"
+                                        autoOk={true}
+                                        value={null}
+                                        onChange={onInterviewDateChange}
+                                        KeyboardButtonProps={{
+                                            'aria-label': 'change date',
+                                        }}
+                                    />
+                                }
+                                {application.interviewDate > 0 &&
+                                    <KeyboardDatePicker
+                                        disableToolbar
+                                        variant="inline"
+                                        format="MM/dd/yyyy"
+                                        margin="normal"
+                                        label="Date intervu"
+                                        autoOk={true}
+                                        value={new Date(application.interviewDate)}
+                                        onChange={onInterviewDateChange}
+                                        KeyboardButtonProps={{
+                                            'aria-label': 'change date',
+                                        }}
+                                    />
+                                }
+                            </MuiPickersUtilsProvider>
 
                         </Box>
                     }
 
                 </Box>
+
+                <Box paddingTop={2}></Box>
 
             </Container>
         </div>

@@ -13,6 +13,8 @@ import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 import IconButton from '@material-ui/core/IconButton';
 import Table from '@material-ui/core/Table';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
@@ -38,6 +40,7 @@ export default function InternshipOffer() {
 
     const [offer, setOffer] = useState({});
     const [employer, setEmployer] = useState();
+    const [applications, setApplications] = useState([]);
 
     const [canApply, setCanApply] = useState(false);
 
@@ -56,16 +59,20 @@ export default function InternshipOffer() {
                 let userUniqueId = localStorage.getItem("UserUniqueId");
 
                 // Verify is has not applied before
-                InternshipApplicationService.internshipApplications(userUniqueId).then(response2 => {
+                InternshipApplicationService.internshipApplications(userUniqueId).then(response1 => {
 
-                    if (response2.data.applications.filter(a => a.offerUniqueId == uuid).length == 0) {
+                    if (response1.data.applications.filter(a => a.offerUniqueId == uuid).length == 0) {
                         setCanApply(true);
                     }
                 })
             }
 
-            UserService.find(response.data.employer).then(response2 => {
-                setEmployer(response2.data);
+            UserService.find(response.data.employer).then(response1 => {
+                setEmployer(response1.data);
+            })
+
+            InternshipApplicationService.findByOffer(response.data.uniqueId).then(response1 => {
+                setApplications(response1.data.applications);
             })
         })
     }
@@ -255,16 +262,16 @@ export default function InternshipOffer() {
                             <TableCell align="left"><strong>Poste</strong></TableCell>
                             <TableCell align="right">{offer.jobTitle}</TableCell>
                         </TableRow>
-                        
-                        
+
+
                         <TableRow key="JobTitle">
                             <TableCell align="left"><strong>Employeur</strong></TableCell>
                             <TableCell align="right">
                                 {
                                     employer &&
 
-                                    <Link 
-                                    onClick={() => history.push(`/user/${employer.uniqueId}`)}>
+                                    <Link
+                                        onClick={() => history.push(`/user/${employer.uniqueId}`)}>
                                         {employer.firstName + " " + employer.lastName}
                                     </Link>
                                 }
@@ -337,6 +344,36 @@ export default function InternshipOffer() {
                     style={{ backgroundColor: "lightgray" }}>
                     <Typography>Applications</Typography>
                 </Box>
+
+                <TableContainer>
+                    <Table size="small" aria-label="a dense table">
+                        <TableHead>
+                            <TableRow>
+                                <TableCell width="30%" align="center"><strong>Étudiant</strong></TableCell>
+                                <TableCell width="30%" align="center"><strong>Date</strong></TableCell>
+                                <TableCell width="30%" align="center"><strong>Action</strong></TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {applications.map((application, index) => (
+                                <TableRow key={index}>
+                                    <TableCell component="th" scope="row" align="center">{application.studentFirstName + " " + application.studentLastName}</TableCell>
+                                    <TableCell component="th" scope="row" align="center">{new Date(application.date).toLocaleDateString()}</TableCell>
+                                    <TableCell component="th" scope="row" align="center">
+                                        <Button
+                                            variant="contained"
+                                            color="secondary"
+                                            size="small"
+                                            onClick={() => history.push(`/internship-application/${application.uniqueId}`)}
+                                        >
+                                            voir
+                                    </Button>
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
 
                 <Box paddingTop={2}></Box>
 
