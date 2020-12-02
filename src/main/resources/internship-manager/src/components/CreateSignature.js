@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useSnackbar } from 'notistack';
+import "../App.css";
+
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
@@ -8,7 +10,6 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import SignaturePad from "react-signature-canvas";
-import "./signCanvas.css";
 import SignatureService from "../services/SignatureService";
 
 

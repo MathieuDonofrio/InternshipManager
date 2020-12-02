@@ -5,18 +5,17 @@ import { useSnackbar } from 'notistack';
 import ContractService from '../services/ContractService'
 import SignatureService from "../services/SignatureService";
 
+import BackButton from "./BackButton";
+
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Table from '@material-ui/core/Table';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-
-import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 
 export default function Contract() {
 
@@ -30,6 +29,7 @@ export default function Contract() {
 
     const [canSign, setCanSign] = useState(false);
 
+    const [iframeKey, setIframeKey] = useState("" + new Date().getTime());
     const [url, setUrl] = useState(null);
 
     const fetch = () => {
@@ -41,13 +41,14 @@ export default function Contract() {
             setContract(response.data);
             setApplication(response.data.application);
 
-            if (localStorage.getItem("UserUniqueId") == response.data.currentUserUniqueId) setCanSign(true);
+            setCanSign(localStorage.getItem("UserUniqueId") === response.data.currentUserUniqueId);
         });
 
         ContractService.generate(uuid).then(response => {
 
             let blob = new Blob([response.data], { type: response.headers['content-type'] });
 
+            setIframeKey("" + new Date().getTime());
             setUrl(URL.createObjectURL(blob));
         });
     }
@@ -98,7 +99,7 @@ export default function Contract() {
             case "STUDENT": return "En attente de la signature de l'étudiant";
             case "EMPLOYER": return "En attente de la signature de l'employeur";
             case "ADMINISTRATOR": return "En attente de la signature du gestionaire de stage";
-            case "COMPLEATED": return "Contrat complet!";
+            case "COMPLETED": return "Contrat complet!";
         }
     }
 
@@ -111,15 +112,13 @@ export default function Contract() {
         }
     }
 
+    const iframe = <iframe key={iframeKey} src={url} width="100%" height="800px"></iframe>
+
     useEffect(() => { fetch(); }, [])
 
     return (
         <div>
-            <IconButton
-                onClick={() => history.goBack()}>
-                <KeyboardBackspaceIcon />
-                <Typography>Retour</Typography>
-            </IconButton>
+            <BackButton/>
 
             <Container>
                 <Box
@@ -151,7 +150,7 @@ export default function Contract() {
                         canSign && <Button
                             variant="contained" color="secondary"
                             size="small"
-                            onClick={sign}
+                            onClick={() => sign()}
                         >
                             Signer
                         </Button>
@@ -201,8 +200,7 @@ export default function Contract() {
                     marginTop={2}
                     marginBottom={2}
                     border="1px solid black">
-                    <iframe src={url} width="100%" height="800px">
-                    </iframe>
+                        {iframe}
                 </Box>
 
                 <Box paddingTop={2}></Box>

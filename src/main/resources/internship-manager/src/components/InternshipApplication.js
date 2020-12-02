@@ -8,6 +8,8 @@ import InternshipApplicationService from "../services/InternshipApplicationServi
 import InternshipOfferService from "../services/InternshipOfferService";
 import ContractService from "../services/ContractService";
 
+import BackButton from "./BackButton";
+
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
@@ -115,11 +117,7 @@ export default function InternshipApplication() {
 
     return (
         <div>
-            <IconButton
-                onClick={() => history.goBack()}>
-                <KeyboardBackspaceIcon />
-                <Typography>Retour</Typography>
-            </IconButton>
+            <BackButton />
 
             <Container>
                 <Box
@@ -152,7 +150,7 @@ export default function InternshipApplication() {
                             style={{ margin: '4px' }}
                             variant="contained" color="secondary"
                             size="small"
-                            onClick={generateContract}>
+                            onClick={() => generateContract()}>
                             Généré Contrat
                         </Button>
                     }
@@ -162,7 +160,7 @@ export default function InternshipApplication() {
                             style={{ margin: '4px' }}
                             variant="contained" color="secondary"
                             size="small"
-                            onClick={select}>
+                            onClick={() => select()}>
                             Selectionné
                         </Button>
                     }
@@ -172,7 +170,7 @@ export default function InternshipApplication() {
                             style={{ margin: '4px' }}
                             variant="contained" color="secondary"
                             size="small"
-                            onClick={approve}>
+                            onClick={() => approve()}>
                             Approuvé
                         </Button>
                     }
@@ -182,7 +180,7 @@ export default function InternshipApplication() {
                             style={{ margin: '4px' }}
                             variant="contained" color="secondary"
                             size="small"
-                            onClick={reject}>
+                            onClick={() => reject()}>
                             Rejeté
                         </Button>
                     }
