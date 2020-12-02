@@ -265,10 +265,10 @@ class Portfolio extends Component {
           </DialogContent>
           <DialogActions>
             <Button onClick={this.onDialogClose} color="primary">
-              Annulez
+              Annuler
           </Button>
             <Button onClick={this.onSend} color="primary">
-              Ajoutez
+              Ajouter
           </Button>
           </DialogActions>
         </Dialog>

@@ -74,7 +74,7 @@ export default function UserProfile() {
         switch (type) {
             case "STUDENT": return "Étudiant";
             case "EMPLOYER": return "Employé";
-            case "ADMINISTRATOR": return "Administrator";
+            case "ADMINISTRATOR": return "Administrateur";
         }
     }
 
@@ -241,7 +241,7 @@ export default function UserProfile() {
                                     <Table size="small" aria-label="a dense table">
                                         <TableHead>
                                             <TableRow>
-                                                <TableCell width="30%" align="center"><strong>Company</strong></TableCell>
+                                                <TableCell width="30%" align="center"><strong>Compagnie</strong></TableCell>
                                                 <TableCell width="30%" align="center"><strong>Titre du poste</strong></TableCell>
                                                 <TableCell width="30%" align="center"><strong>Action</strong></TableCell>
                                             </TableRow>
@@ -295,7 +295,7 @@ export default function UserProfile() {
                                     <Table size="small" aria-label="a dense table">
                                         <TableHead>
                                             <TableRow>
-                                                <TableCell width="30%" align="center"><strong>Company</strong></TableCell>
+                                                <TableCell width="30%" align="center"><strong>Compagnie</strong></TableCell>
                                                 <TableCell width="30%" align="center"><strong>Titre du poste</strong></TableCell>
                                                 <TableCell width="30%" align="center"><strong>Action</strong></TableCell>
                                             </TableRow>

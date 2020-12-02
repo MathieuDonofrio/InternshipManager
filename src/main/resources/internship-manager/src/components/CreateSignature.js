@@ -124,7 +124,7 @@ export default function CreateSignature() {
                 <DialogContent
                     style={{ backgroundColor: 'lightGray' }}
                 >
-                    <Typography>Veuillez signez sur la ligne noir</Typography>
+                    <Typography>Veuillez signer sur la ligne noir</Typography>
                     <Divider></Divider>
                     <Box
                         style={{
@@ -142,13 +142,13 @@ export default function CreateSignature() {
 
                 <DialogActions>
                     <Button onClick={handleClose} color="primary">
-                        Close
+                        Fermer
                         </Button>
                     <Button onClick={save} color="primary">
-                        Save
+                        Sauvegarder
                         </Button>
                     <Button onClick={clear} color="primary">
-                        Clear
+                        Enlever
                         </Button>
                 </DialogActions>
 
@@ -215,7 +215,7 @@ export default function CreateSignature() {
                 margin={2}
                 paddingTop={4}>
 
-                <Typography color="contained" variant="h7"><em>*Votre signature sera seulement utiliser à l'intention de signer le contrat de stage*</em></Typography>
+                <Typography color="contained" variant="h7"><em>*Votre signature sera seulement utilisé à l'intention de signer le contrat de stage*</em></Typography>
 
             </Box>
         </div>

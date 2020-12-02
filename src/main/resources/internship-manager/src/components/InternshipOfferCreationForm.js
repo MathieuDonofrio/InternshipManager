@@ -241,8 +241,8 @@ class InternshipOfferCreationForm extends Component {
               variant="outlined"
               required
               margin="normal"
-              label="Telephone"
-              helperText="*Le telephone est seulement utilise pour le contrat"
+              label="Téléphone"
+              helperText="*Le telephone est seulement utilisé pour le contrat"
               onChange={this.onPhoneChange}
             />
             <TextField
@@ -302,7 +302,7 @@ class InternshipOfferCreationForm extends Component {
                   label="Region/Province/Etat"
                   id="region"
                   name="region"
-                  helperText="Si applicatiif. Exemple: Alberta ou Florida"
+                  helperText="Si applicatif. Exemple: Alberta ou Florida"
                   variant="outlined"
                   margin="normal"
                 />

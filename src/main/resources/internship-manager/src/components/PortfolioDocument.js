@@ -44,7 +44,7 @@ export default function PortfolioDocument() {
 
         PortfolioService.approve(uuid).then(() => {
             fetch()
-            enqueueSnackbar(`Document de portfolio apprové`, { variant: 'success' });
+            enqueueSnackbar(`Documents de portfolio approuvés`, { variant: 'success' });
         });
     }
 
@@ -107,7 +107,7 @@ export default function PortfolioDocument() {
                             size="small"
                             onClick={approve}
                         >
-                            Approuvé
+                            Approuver
                         </Button>
                     }
                 </Box>
@@ -116,7 +116,7 @@ export default function PortfolioDocument() {
                     marginTop={2}
                     textAlign="center"
                     style={{ backgroundColor: "lightgray" }}>
-                    <Typography>Informations Générale</Typography>
+                    <Typography>Informations Générales</Typography>
                 </Box>
 
                 <Box>
@@ -148,7 +148,7 @@ export default function PortfolioDocument() {
                     marginTop={2}
                     textAlign="center"
                     style={{ backgroundColor: "lightgray" }}>
-                    <Typography>Visualization</Typography>
+                    <Typography>Visualisation</Typography>
                 </Box>
 
                 <Box

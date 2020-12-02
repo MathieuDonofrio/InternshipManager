@@ -67,21 +67,21 @@ export default function InternshipApplication() {
     const approve = () => {
         InternshipApplicationService.approve(uuid).then(response => {
             fetch();
-            enqueueSnackbar(`Application approuvé`, { variant: 'success' });
+            enqueueSnackbar(`Application approuvée`, { variant: 'success' });
         });
     }
 
     const reject = () => {
         InternshipApplicationService.reject(uuid).then(response => {
             fetch();
-            enqueueSnackbar(`Application rejeté`, { variant: 'success' });
+            enqueueSnackbar(`Application rejetée`, { variant: 'success' });
         });
     }
 
     const select = () => {
         InternshipApplicationService.select(uuid).then(response => {
             fetch();
-            enqueueSnackbar(`Application selectionné`, { variant: 'success' });
+            enqueueSnackbar(`Application selectionnée`, { variant: 'success' });
         });
     }
 
@@ -105,9 +105,9 @@ export default function InternshipApplication() {
     const translateStatus = (status) => {
         switch (status) {
             case "PENDING_APPROVAL": return "En attente d'approbation";
-            case "APPROVED": return "En attente de selection";
+            case "APPROVED": return "En attente de sélection";
             case "REJECTED": return "Rejeté";
-            case "SELECTED": return "Application selectionné!";
+            case "SELECTED": return "Application selectionnée!";
         }
     }
 
@@ -153,7 +153,7 @@ export default function InternshipApplication() {
                             variant="contained" color="secondary"
                             size="small"
                             onClick={generateContract}>
-                            Généré Contrat
+                            Générer Contrat
                         </Button>
                     }
                     {
@@ -173,7 +173,7 @@ export default function InternshipApplication() {
                             variant="contained" color="secondary"
                             size="small"
                             onClick={approve}>
-                            Approuvé
+                            Approuver
                         </Button>
                     }
                     {
@@ -183,7 +183,7 @@ export default function InternshipApplication() {
                             variant="contained" color="secondary"
                             size="small"
                             onClick={reject}>
-                            Rejeté
+                            Rejeter
                         </Button>
                     }
                 </Box>
@@ -194,7 +194,7 @@ export default function InternshipApplication() {
                         marginTop={2}
                         textAlign="center"
                         style={{ backgroundColor: "lightgray" }}>
-                        <Typography>Informations Générale</Typography>
+                        <Typography>Informations Générales</Typography>
                     </Box>
 
                     <Table size="small">

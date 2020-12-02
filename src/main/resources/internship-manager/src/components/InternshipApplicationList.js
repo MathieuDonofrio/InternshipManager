@@ -166,9 +166,9 @@ export default function InternshipApplicationList() {
                     <Table className={classes.table} aria-label="simple table">
                         <TableHead>
                             <TableRow>
-                                <TableCell align="center"><strong>Student Name</strong></TableCell>
+                                <TableCell align="center"><strong>Nom d'étudiant</strong></TableCell>
                                 <TableCell align="center"><strong>Compagnie</strong></TableCell>
-                                <TableCell align="center"><strong>Job Title</strong></TableCell>
+                                <TableCell align="center"><strong>Poste</strong></TableCell>
                                 <TableCell align="center"><strong>Action</strong></TableCell>
                             </TableRow>
                         </TableHead>

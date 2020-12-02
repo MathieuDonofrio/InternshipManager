@@ -128,14 +128,14 @@ export default function InternshipOffer() {
 
         InternshipOfferService.approve(uuid).then(response => {
             fetch();
-            enqueueSnackbar(`Offre approuvé`, { variant: 'success' });
+            enqueueSnackbar(`Offre approuvée`, { variant: 'success' });
         });
     }
 
     const reject = () => {
         InternshipOfferService.reject(uuid).then(response => {
             fetch();
-            enqueueSnackbar(`Offre rejeté`, { variant: 'success' });
+            enqueueSnackbar(`Offre rejetée`, { variant: 'success' });
         });
     }
 
@@ -389,7 +389,7 @@ export default function InternshipOffer() {
                                 applications.length == 0 &&
                                 <Box
                                     margin={2}>
-                                    <Typography>Aucun application!</Typography>
+                                    <Typography>Aucune application!</Typography>
                                 </Box>
                             }
                         </div>
@@ -405,7 +405,7 @@ export default function InternshipOffer() {
                 onClose={closeApplicationDialog}
             >
                 <DialogTitle>
-                    Selectionné les documents a envoyée
+                    Sélectionnez les documents à envoyer
                 </DialogTitle>
                 <DialogContent>
                     <List>
@@ -437,10 +437,10 @@ export default function InternshipOffer() {
                 </DialogContent>
                 <DialogActions>
                     <Button autoFocus onClick={closeApplicationDialog} color="primary">
-                        Cancel
+                        Annuler
                     </Button>
                     <Button onClick={apply} color="primary">
-                        Apply
+                        Appliquer
                     </Button>
                 </DialogActions>
             </Dialog>
