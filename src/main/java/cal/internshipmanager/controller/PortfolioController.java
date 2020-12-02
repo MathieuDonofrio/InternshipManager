@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.data.repository.cdi.Eager;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -40,7 +41,7 @@ public class PortfolioController {
     //
     // Post
     //
-
+    @PreAuthorize("hasAuthority('STUDENT')")
     @PostMapping("upload")
     public void upload(@Valid @NotBlank @RequestParam("type") String type,
                        @Valid @NotNull @RequestParam("file") MultipartFile file) {
@@ -55,7 +56,7 @@ public class PortfolioController {
     //
     // Put
     //
-
+    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     @PutMapping("approve/{uniqueId}")
     public void approve(@Valid @ExistingPortfolioDocument @PathVariable UUID uniqueId) {
         portfolioService.approve(uniqueId);
