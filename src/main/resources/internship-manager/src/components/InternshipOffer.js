@@ -245,7 +245,7 @@ export default function InternshipOffer() {
                     marginTop={2}
                     textAlign="center"
                     style={{ backgroundColor: "lightgray" }}>
-                    <Typography>Informations Générale</Typography>
+                    <Typography>Informations Générales</Typography>
                 </Box>
 
                 <Box>
