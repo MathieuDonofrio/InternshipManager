@@ -1,4 +1,5 @@
 
 export const Config={
-    target: 'https://internshipmanager-backend.azurewebsites.net'
+    target: 'http://localhost:8080'
+    //target: 'https://internshipmanager-backend.azurewebsites.net'
 }
