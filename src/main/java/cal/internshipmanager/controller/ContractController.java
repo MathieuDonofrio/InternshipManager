@@ -9,6 +9,7 @@ import cal.internshipmanager.validator.ExistingUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -74,7 +75,7 @@ public class ContractController {
     //
     // Post
     //
-
+    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     @PostMapping("create/{applicationUniqueId}") // TODO replace internship-application by generate
     public void create(@Valid @PathVariable @ExistingInternshipApplication UUID applicationUniqueId) {
         contractService.create(applicationUniqueId);
