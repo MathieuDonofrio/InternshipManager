@@ -11,8 +11,7 @@ This project is created with:
 * React JS
 * MongoDB
 
-## Setup
-To run this project, follow the steps below:
-```
-$ 
-```
+## Modifications
+To modifie this project make sure to change:
+* database url in application.properties
+* front-end url in cors configuration
