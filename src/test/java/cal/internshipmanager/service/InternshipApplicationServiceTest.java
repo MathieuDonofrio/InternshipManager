@@ -338,6 +338,124 @@ public class InternshipApplicationServiceTest {
     }
 
     @Test
+    public void findAllSelectedByAllOffers_validRequest() {
+
+        // Arrange
+
+        User student = new User();
+
+        student.setUniqueId(UUID.randomUUID());
+        student.setFirstName("TestFirstName");
+        student.setLastName("TestLastName");
+        student.setType(User.Type.STUDENT);
+
+        User employer = new User();
+
+        employer.setUniqueId(UUID.randomUUID());
+        employer.setFirstName("TestFirstName");
+        employer.setLastName("TestLastName");
+        employer.setType(User.Type.EMPLOYER);
+
+        InternshipOffer internshipOffer = new InternshipOffer();
+
+        internshipOffer.setUniqueId(UUID.randomUUID());
+        internshipOffer.setSemester(settingsService.getSemester());
+        internshipOffer.setCompany("TestCompany");
+        internshipOffer.setJobTitle("TestJobTitle");
+        internshipOffer.setEmployer(employer.getUniqueId());
+
+        InternshipApplication internshipApplication = new InternshipApplication();
+
+        internshipApplication.setUniqueId(UUID.randomUUID());
+        internshipApplication.setSemester(settingsService.getSemester());
+        internshipApplication.setOffer(internshipOffer);
+        internshipApplication.setStudent(student);
+        internshipApplication.setDate(new Date());
+        internshipApplication.setInterviewDate(new Date());
+        internshipApplication.setStatus(InternshipApplication.Status.SELECTED);
+
+        InternshipApplicationListResponse response = new InternshipApplicationListResponse();
+
+        InternshipApplicationService internshipApplicationService = new InternshipApplicationService(
+                settingsService, internshipApplicationRepository, portfolioDocumentRepository, userRepository, internshipOfferRepository);
+
+        response.setApplications(List.of(internshipApplication).stream()
+                .map(InternshipApplicationListResponse::map)
+                .collect(Collectors.toList()));
+
+        when(internshipApplicationRepository.findAllByStatusAndSemesterAndOffer_EmployerAndOffer_Status(
+                InternshipApplication.Status.SELECTED,settingsService.getSemester(),employer.getUniqueId(), InternshipOffer.Status.APPROVED))
+                .thenReturn(List.of(internshipApplication));
+
+        // Act
+
+        InternshipApplicationListResponse responseToExpect = internshipApplicationService.findAllSelectedByAllOffers(employer.getUniqueId());
+
+        // Assert
+
+        assertEquals(responseToExpect, response);
+    }
+
+    @Test
+    public void findAllApprovedByAllOffers_validRequest() {
+
+        // Arrange
+
+        User student = new User();
+
+        student.setUniqueId(UUID.randomUUID());
+        student.setFirstName("TestFirstName");
+        student.setLastName("TestLastName");
+        student.setType(User.Type.STUDENT);
+
+        User employer = new User();
+
+        employer.setUniqueId(UUID.randomUUID());
+        employer.setFirstName("TestFirstName");
+        employer.setLastName("TestLastName");
+        employer.setType(User.Type.EMPLOYER);
+
+        InternshipOffer internshipOffer = new InternshipOffer();
+
+        internshipOffer.setUniqueId(UUID.randomUUID());
+        internshipOffer.setSemester(settingsService.getSemester());
+        internshipOffer.setCompany("TestCompany");
+        internshipOffer.setJobTitle("TestJobTitle");
+        internshipOffer.setEmployer(employer.getUniqueId());
+
+        InternshipApplication internshipApplication = new InternshipApplication();
+
+        internshipApplication.setUniqueId(UUID.randomUUID());
+        internshipApplication.setSemester(settingsService.getSemester());
+        internshipApplication.setOffer(internshipOffer);
+        internshipApplication.setStudent(student);
+        internshipApplication.setDate(new Date());
+        internshipApplication.setInterviewDate(new Date());
+        internshipApplication.setStatus(InternshipApplication.Status.APPROVED);
+
+        InternshipApplicationListResponse response = new InternshipApplicationListResponse();
+
+        InternshipApplicationService internshipApplicationService = new InternshipApplicationService(
+                settingsService, internshipApplicationRepository, portfolioDocumentRepository, userRepository, internshipOfferRepository);
+
+        response.setApplications(List.of(internshipApplication).stream()
+                .map(InternshipApplicationListResponse::map)
+                .collect(Collectors.toList()));
+
+        when(internshipApplicationRepository.findAllByStatusAndSemesterAndOffer_EmployerAndOffer_Status(
+                InternshipApplication.Status.APPROVED,settingsService.getSemester(),employer.getUniqueId(), InternshipOffer.Status.APPROVED))
+                .thenReturn(List.of(internshipApplication));
+
+        // Act
+
+        InternshipApplicationListResponse responseToExpect = internshipApplicationService.findAllApprovedByAllOffers(employer.getUniqueId());
+
+        // Assert
+
+        assertEquals(responseToExpect, response);
+    }
+
+    @Test
     public void findByOffer_validRequest() {
 
         // Arrange
@@ -388,8 +506,10 @@ public class InternshipApplicationServiceTest {
 
         // Assert
 
-        assertEquals(response, responseToExpect);
+        assertEquals(responseToExpect, response);
     }
+
+
 
     @Test
     public void approve_validRequest() {

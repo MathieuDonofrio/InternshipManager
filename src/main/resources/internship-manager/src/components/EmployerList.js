@@ -21,17 +21,10 @@ const useStyles = makeStyles({
   },
 });
 
-const useStyles2 = makeStyles({
-  root: {
-    flexGrow: 1,
-  },
-});
-
 export default function EmployerList() {
 
   const history = useHistory();
   const classes = useStyles();
-  const classes2 = useStyles2();
 
   const [rows, setRows] = useState([]);
   const [value, setValue] = React.useState(0);
@@ -44,19 +37,19 @@ export default function EmployerList() {
   const fetchAllUsers = async () => {
     const response = await UserService.employers();
     setRows(response.data.users);
-    setTitle('Employés');
+    setTitle('Employeurs');
   }
   
   const fetchAllWithOffer = async () =>{
     const response = await UserService.employersWithOffer();
     setRows(response.data.users);
-    setTitle('Employés avec offre');
+    setTitle('Employeurs avec offre');
   }
   
   const fetchAllWithoutOffer = async () =>{
     const response = await UserService.employersWithoutOffer();
     setRows(response.data.users);
-    setTitle('Employés sans offre');
+    setTitle('Employeurs sans offre');
   }
  
 

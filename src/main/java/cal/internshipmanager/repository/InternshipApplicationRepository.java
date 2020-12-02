@@ -1,6 +1,7 @@
 package cal.internshipmanager.repository;
 
 import cal.internshipmanager.model.InternshipApplication;
+import cal.internshipmanager.model.InternshipOffer;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
@@ -17,4 +18,7 @@ public interface InternshipApplicationRepository extends MongoRepository<Interns
     List<InternshipApplication> findAllByStatusAndSemester(InternshipApplication.Status status, String semester);
 
     List<InternshipApplication> findAllByOfferUniqueIdAndStatusAndSemester(UUID offerUniqueId, InternshipApplication.Status status, String semester);
+
+    List<InternshipApplication> findAllByStatusAndSemesterAndOffer_EmployerAndOffer_Status(InternshipApplication.Status status, String semester, UUID employer, InternshipOffer.Status offerStatus);
+
 }

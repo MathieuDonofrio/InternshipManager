@@ -15,5 +15,4 @@ public interface InternshipOfferRepository extends MongoRepository<InternshipOff
     List<InternshipOffer> findAllByStatusAndSemester(InternshipOffer.Status status, String semester);
 
     List<InternshipOffer> findAllByEmployerAndStatusAndSemester(UUID uniqueId, InternshipOffer.Status status, String semester);
-
 }

@@ -50,7 +50,7 @@ export default function InternshipOfferList() {
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
-    };
+    }
 
     //
     // Admin Services 

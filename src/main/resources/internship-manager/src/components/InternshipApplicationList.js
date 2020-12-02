@@ -22,19 +22,12 @@ const useStyles = makeStyles({
     },
 });
 
-const useStyles2 = makeStyles({
-    root: {
-        flexGrow: 1,
-    },
-});
-
 export default function InternshipApplicationList() {
     const [rows, setRows] = useState([]);
     const [value, setValue] = useState(0);
     const [title, setTitle] = useState('');
     const history = useHistory();
     const classes = useStyles();
-    const classes2 = useStyles2();
 
     //
     // Event Handlers
@@ -42,7 +35,11 @@ export default function InternshipApplicationList() {
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
-    };
+    }
+
+    const isEmployer = () => {
+        return localStorage.getItem('UserType') === "EMPLOYER";
+    }
 
     const isStudent = () => {
         return localStorage.getItem('UserType') === "STUDENT";
@@ -51,6 +48,10 @@ export default function InternshipApplicationList() {
     const isAdministrator = () => {
         return localStorage.getItem('UserType') === "ADMINISTRATOR";
     }
+
+    //
+    // Student
+    //
 
     const fetchStudentApplications = async () => {
 
@@ -62,7 +63,37 @@ export default function InternshipApplicationList() {
 
         setTitle('Applications');
     }
+
+    //
+    // Employer
+    //
     
+    const fetchAllSelectedByAllOffers = async () => {
+
+        let userId = localStorage.getItem("UserUniqueId");
+
+        const response = await InternshipApplicationService.findAllSelectedByAllOffers(userId);
+
+        setRows(response.data.applications);
+
+        setTitle('Applications approuvées');
+    }
+
+    const fetchAllApprovedByAllOffers = async () => {
+
+        let userId = localStorage.getItem("UserUniqueId");
+
+        const response = await InternshipApplicationService.findAllApprovedByAllOffers(userId);
+
+        setRows(response.data.applications);
+
+        setTitle('Applications en attentes');
+    }
+
+    //
+    // Administrator
+    //
+
     const fetchApprovedApplications = async () => {
 
         const response = await InternshipApplicationService.approved();
@@ -71,7 +102,7 @@ export default function InternshipApplicationList() {
 
         setTitle('Applications approuvées');
     }
-    
+
     const fetchPendingApplications = async () => {
 
         const response = await InternshipApplicationService.pendingApproval();
@@ -80,7 +111,7 @@ export default function InternshipApplicationList() {
 
         setTitle('Applications en attentes');
     }
-    
+
     const fetchRejectedApplications = async () => {
 
         const response = await InternshipApplicationService.rejected();
@@ -89,13 +120,13 @@ export default function InternshipApplicationList() {
 
         setTitle('Applications rejetées');
     }
-    
+
     const fetchSelectedApplications = async () => {
 
         const response = await InternshipApplicationService.selected();
 
         setRows(response.data.applications);
-        
+
         setTitle('Applications sélectionnées');
     }
 
@@ -103,6 +134,8 @@ export default function InternshipApplicationList() {
 
         if (isAdministrator())
             fetchPendingApplications();
+        else if (isEmployer())
+            fetchAllApprovedByAllOffers();
         else
             fetchStudentApplications();
     }
@@ -120,11 +153,25 @@ export default function InternshipApplicationList() {
                         textColor="primary"
                         centered
                     >
-                        <Tab label="en attente" onClick={() => fetchPendingApplications() } />
-                        <Tab label="approuvé" onClick={() => fetchApprovedApplications()} />
-                        <Tab label="sélectionner" onClick={() => fetchSelectedApplications() } />
-                        <Tab label="rejeté" onClick={() => fetchRejectedApplications() } />
+                        <Tab label="en attentes" onClick={() => fetchPendingApplications()} />
+                        <Tab label="approuvées" onClick={() => fetchApprovedApplications()} />
+                        <Tab label="sélectionnées" onClick={() => fetchSelectedApplications()} />
+                        <Tab label="rejetées" onClick={() => fetchRejectedApplications()} />
                     </Tabs>
+                }
+
+                {isEmployer() &&
+                    <Tabs
+                        value={value}
+                        onChange={handleChange}
+                        indicatorColor="primary"
+                        textColor="primary"
+                        centered
+                    >
+                        <Tab label="applications en attentes" onClick={() => fetchAllApprovedByAllOffers()} />
+                        <Tab label="applications approuvées" onClick={() => fetchAllSelectedByAllOffers()} />
+                    </Tabs>
+
                 }
 
                 {isStudent() &&
