@@ -83,15 +83,15 @@ public class ContractPdfGenerator {
         r.setBorder(Rectangle.BOX);
         r.setBorderWidth(2);
         r.setBorderColor(BaseColor.BLACK);
-        Paragraph p = new Paragraph(new Phrase("Cegep Andre-Laurendeau", boldMid));
+        Paragraph p = new Paragraph(new Phrase("Cégep André-Laurendeau", boldMid));
         p.setExtraParagraphSpace(5);
         Paragraph p2 = new Paragraph();
 
         p.setAlignment(Paragraph.ALIGN_MIDDLE);
         addEmptyLine(p2, 14);
-        p2.add(setNewMIddleParagraph("Entente de stage cooperatif", boldFrontPage));
+        p2.add(setNewMIddleParagraph("Entente de stage coopératif", boldFrontPage));
         addEmptyLine(p2, 1);
-        p2.add(setNewMIddleParagraph("Technique informatique", boldMid));
+        p2.add(setNewMIddleParagraph("Téchnique informatique", boldMid));
         addEmptyLine(p2, 19);
         p2.add(setNewMIddleParagraph(getSeasonF(session[0]) + " " + session[1], null));//+application.getSemester(),null));
         p2.setAlignment(Paragraph.ALIGN_CENTER);
