@@ -163,7 +163,7 @@ export default function InternshipApplication() {
                             variant="contained" color="secondary"
                             size="small"
                             onClick={select}>
-                            Selectionné
+                            Selectionner
                         </Button>
                     }
                     {
