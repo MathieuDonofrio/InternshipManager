@@ -4,6 +4,7 @@ import { useSnackbar } from 'notistack';
 
 import ContractService from '../services/ContractService'
 import SignatureService from "../services/SignatureService";
+import UserService from "../services/UserService";
 
 import BackButton from "./BackButton";
 
@@ -16,6 +17,7 @@ import Table from '@material-ui/core/Table';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import Link from '@material-ui/core/Link';
 
 export default function Contract() {
 
@@ -25,11 +27,13 @@ export default function Contract() {
     const { enqueueSnackbar } = useSnackbar();
 
     const [contract, setContract] = useState({});
-    const [application, setApplication] = useState({});
+    const [application, setApplication] = useState();
+    const [student, setStudent] = useState();
+    const [employer, setEmployer] = useState();
+    const [administrator, setAdministrator] = useState();
 
     const [canSign, setCanSign] = useState(false);
 
-    const [iframeKey, setIframeKey] = useState("" + new Date().getTime());
     const [url, setUrl] = useState(null);
 
     const fetch = () => {
@@ -42,13 +46,25 @@ export default function Contract() {
             setApplication(response.data.application);
 
             setCanSign(localStorage.getItem("UserUniqueId") === response.data.currentUserUniqueId);
+
+            UserService.find(response.data.application.studentUniqueId).then(response1 => {
+                setStudent(response1.data);
+            })
+
+            UserService.find(response.data.application.employerUniqueId).then(response1 => {
+                setEmployer(response1.data);
+            })
+
+            UserService.find(response.data.administrator.uniqueId).then(response1 => {
+                setAdministrator(response1.data);
+            })
+
         });
 
         ContractService.generate(uuid).then(response => {
 
             let blob = new Blob([response.data], { type: response.headers['content-type'] });
 
-            setIframeKey("" + new Date().getTime());
             setUrl(URL.createObjectURL(blob));
         });
     }
@@ -112,8 +128,6 @@ export default function Contract() {
         }
     }
 
-    const iframe = <iframe key={iframeKey} src={url} width="100%" height="800px"></iframe>
-
     useEffect(() => { fetch(); }, [])
 
     return (
@@ -173,17 +187,65 @@ export default function Contract() {
                             <TableCell width="70%"></TableCell>
                         </TableHead>
 
-                        <TableRow>
+                        <TableRow key="session">
                             <TableCell align="left"><strong>Session</strong></TableCell>
                             <TableCell align="right">{translateSession(contract.semester)}</TableCell>
                         </TableRow>
-                        <TableRow>
-                            <TableCell align="left"><strong>Compagnie</strong></TableCell>
-                            <TableCell align="right">{application.company}</TableCell>
+
+                        <TableRow key="application">
+                            <TableCell align="left"><strong>Application</strong></TableCell>
+                            <TableCell align="right">
+                                {
+                                    application &&
+
+                                    <Link
+                                        onClick={() => history.push(`/internship-application/${application.uniqueId}`)}>
+                                        {application.company + " | " + application.jobTitle}
+                                    </Link>
+                                }
+                            </TableCell>
                         </TableRow>
-                        <TableRow>
-                            <TableCell align="left"><strong>Titre de poste</strong></TableCell>
-                            <TableCell align="right">{application.jobTitle}</TableCell>
+
+                        <TableRow key="student">
+                            <TableCell align="left"><strong>Étudiant</strong></TableCell>
+                            <TableCell align="right">
+                                {
+                                    student &&
+
+                                    <Link
+                                        onClick={() => history.push(`/user/${student.uniqueId}`)}>
+                                        {student.firstName + " " + student.lastName}
+                                    </Link>
+                                }
+                            </TableCell>
+                        </TableRow>
+
+                        <TableRow key="employer">
+                            <TableCell align="left"><strong>Employeur</strong></TableCell>
+                            <TableCell align="right">
+                                {
+                                    employer &&
+
+                                    <Link
+                                        onClick={() => history.push(`/user/${employer.uniqueId}`)}>
+                                        {employer.firstName + " " + employer.lastName}
+                                    </Link>
+                                }
+                            </TableCell>
+                        </TableRow>
+
+                        <TableRow key="administrator">
+                            <TableCell align="left"><strong>Administrateur</strong></TableCell>
+                            <TableCell align="right">
+                                {
+                                    administrator &&
+
+                                    <Link
+                                        onClick={() => history.push(`/user/${administrator.uniqueId}`)}>
+                                        {administrator.firstName + " " + administrator.lastName}
+                                    </Link>
+                                }
+                            </TableCell>
                         </TableRow>
                     </Table>
 
@@ -200,7 +262,7 @@ export default function Contract() {
                     marginTop={2}
                     marginBottom={2}
                     border="1px solid black">
-                        {iframe}
+                        <iframe src={url} width="100%" height="800px"></iframe>
                 </Box>
 
                 <Box paddingTop={2}></Box>
