@@ -271,7 +271,7 @@ export default function UserProfile() {
                                 applications.length == 0 &&
                                 <Box
                                     margin={2}>
-                                    <Typography>Aucun application!</Typography>
+                                    <Typography>Aucune application!</Typography>
                                 </Box>
                             }
                         </div>
@@ -325,7 +325,7 @@ export default function UserProfile() {
                                 offers.length == 0 &&
                                 <Box
                                     margin={2}>
-                                    <Typography>Aucun offre!</Typography>
+                                    <Typography>Aucune offre!</Typography>
                                 </Box>
                             }
                         </div>

@@ -206,7 +206,7 @@ export default function InternshipOffer() {
                             variant="contained" color="secondary"
                             size="small"
                             onClick={openApplicationDialog}>
-                            Appliqué
+                            Appliquer
                         </Button>
                     }
                     {
