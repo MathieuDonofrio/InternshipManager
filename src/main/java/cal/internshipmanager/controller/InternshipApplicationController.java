@@ -5,9 +5,12 @@ import cal.internshipmanager.request.InternshipApplicationCreationRequest;
 import cal.internshipmanager.request.InternshipApplicationInterviewDateRequest;
 import cal.internshipmanager.response.InternshipApplicationListResponse;
 import cal.internshipmanager.response.PortfolioDocumentListResponse;
+import cal.internshipmanager.response.UserListReponse;
 import cal.internshipmanager.service.InternshipApplicationService;
 import cal.internshipmanager.validator.ExistingInternshipApplication;
 import cal.internshipmanager.validator.ExistingInternshipOffer;
+import cal.internshipmanager.validator.ExistingUser;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -36,12 +39,17 @@ public class InternshipApplicationController {
     // Get
     //
 
+    @GetMapping("{uniqueId}")
+    public InternshipApplicationListResponse.InternshipApplication find(@Valid @ExistingInternshipApplication @PathVariable UUID uniqueId) {
+        return internshipApplicationService.find(uniqueId);
+    }
+
     @GetMapping("internship-applications/{userUniqueId}")
     public InternshipApplicationListResponse internshipApplications(@PathVariable UUID userUniqueId) {
         return internshipApplicationService.internshipApplications(userUniqueId);
     }
 
-    @GetMapping("{status}")
+    @GetMapping("status/{status}")
     public InternshipApplicationListResponse findByStatus(@Valid @NotNull @PathVariable InternshipApplication.Status status) {
         return internshipApplicationService.findByStatus(status);
     }
@@ -59,17 +67,18 @@ public class InternshipApplicationController {
     //
     // Put
     //
-
+    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     @PutMapping("approve/{applicationId}")
     public void approve(@Valid @ExistingInternshipApplication @PathVariable UUID applicationId) {
         internshipApplicationService.approve(applicationId);
     }
-
+    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     @PutMapping("reject/{applicationId}")
     public void reject(@Valid @ExistingInternshipApplication @PathVariable UUID applicationId) {
         internshipApplicationService.reject(applicationId);
     }
 
+    @PreAuthorize("hasAuthority('EMPLOYER')")
     @PutMapping("select/{applicationId}")
     public void select(@Valid @ExistingInternshipApplication @PathVariable UUID applicationId) {
         internshipApplicationService.select(applicationId);
@@ -78,16 +87,16 @@ public class InternshipApplicationController {
     @PutMapping("interview/{applicationId}")
     public void addInterview(@Valid @ExistingInternshipApplication @PathVariable UUID applicationId,
                              @RequestBody InternshipApplicationInterviewDateRequest request) {
-        internshipApplicationService.addInterview(applicationId,request);
+        internshipApplicationService.addInterview(applicationId, request);
     }
 
     //
     // Post
     //
-
+    @PreAuthorize("hasAuthority('STUDENT')")
     @PostMapping("create")
-    public void create(@Valid @RequestBody InternshipApplicationCreationRequest request) {
-        internshipApplicationService.create(request);
+    public UUID create(@Valid @RequestBody InternshipApplicationCreationRequest request) {
+        return internshipApplicationService.create(request);
     }
 
 }

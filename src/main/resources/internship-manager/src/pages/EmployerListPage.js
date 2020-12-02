@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
-import EmployerListTable from "../components/EmployerListTable";
+import EmployerList from "../components/EmployerList";
 
 
 export default class EmployerListPage extends Component {
@@ -25,7 +25,7 @@ export default class EmployerListPage extends Component {
                 <CssBaseline />
                 <Container>
                     <Paper elevation={3}>
-                        <EmployerListTable />
+                        <EmployerList />
                     </Paper>
                 </Container>
             </div>

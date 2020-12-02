@@ -10,7 +10,7 @@ import Button from '@material-ui/core/Button';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import { Box, Paper, Tab, Tabs } from "@material-ui/core";
+import { AppBar, Box, Paper, Tab, Tabs } from "@material-ui/core";
 import UserService from '../services/UserService'
 
 const useStyles = makeStyles({
@@ -57,7 +57,7 @@ export default function StudentList() {
 
   return (
     <div>
-      <Paper className={classes2.root}>
+      <AppBar position="static" color="default">
         <Tabs
           value={value}
           onChange={handleChange}
@@ -69,7 +69,7 @@ export default function StudentList() {
           <Tab label="sans applications" onClick={() => fetchAllWithoutApplication()} />
           <Tab label="avec applications" onClick={() => fetchAllWithApplication()} />
         </Tabs>
-      </Paper>
+      </AppBar>
       <Container>
         <Box
           mb={2}

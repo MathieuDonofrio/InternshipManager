@@ -1,15 +1,12 @@
 import React, { Component } from "react";
 
-import SemesterSelectionForm from '../components/SemesterSelectionForm'
-
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
+
 import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
-import Divider from '@material-ui/core/Divider';
+import InternshipOfferList from "../components/InternshipOfferList";
 
-export default class SemesterSelectionPage extends Component {
+export default class InternshipOfferListPage extends Component {
 
   //
   // Constructors
@@ -32,7 +29,7 @@ export default class SemesterSelectionPage extends Component {
 
           <Paper elevation={3}>
 
-            <SemesterSelectionForm/>
+              <InternshipOfferList/>
 
           </Paper>
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import { useSnackbar } from 'notistack';
-import SignatureService from "../services/SignatureService";
+//import { useSnackbar } from 'notistack';
+//import SignatureService from "../services/SignatureService";
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
@@ -12,7 +12,7 @@ import Button from '@material-ui/core/Button';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import { Box, Paper, Tab, Tabs } from "@material-ui/core";
+import { AppBar, Box, Paper, Tab, Tabs } from "@material-ui/core";
 import ContractService from '../services/ContractService';
 
 const useStyles = makeStyles({
@@ -58,7 +58,7 @@ export default function ContractList() {
 
     return (
         <div>
-            <Paper className={classes2.root}>
+            <AppBar position="static" color="default">
                 <Tabs
                     value={value}
                     onChange={handleChange}
@@ -68,9 +68,9 @@ export default function ContractList() {
                 >
                     <Tab label="tous" onClick={() => fetchAllContracts()} />
                     <Tab label="avec signature" onClick={() => fetchAllSignedContracts()} />
-                    <Tab label="sans signature" onClick={() => fetchAllAwaitingSignature()} />
+                    <Tab label="à signer" onClick={() => fetchAllAwaitingSignature()} />
                 </Tabs>
-            </Paper>
+            </AppBar>
             <Container>
                 <Box
                     mb={2}

@@ -53,7 +53,7 @@ public class InternshipApplicationService {
     // Services
     //
 
-    public void create(InternshipApplicationCreationRequest request) {
+    public UUID create(InternshipApplicationCreationRequest request) {
 
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
@@ -75,8 +75,6 @@ public class InternshipApplicationService {
         internshipApplication.setSemester(settingsService.getSemester());
         internshipApplication.setStudent(student);
         internshipApplication.setOffer(offer);
-        //internshipApplication.setStudentUniqueId(student.getUniqueId());
-        //internshipApplication.setOfferUniqueId(offer.getUniqueId());
         internshipApplication.setDate(new Date());
         internshipApplication.setInterviewDate(new Date(0));
         internshipApplication.setDocuments(documents);
@@ -85,6 +83,8 @@ public class InternshipApplicationService {
                 : InternshipApplication.Status.APPROVED);
 
         internshipApplicationRepository.save(internshipApplication);
+
+        return internshipApplication.getUniqueId();
     }
 
     public InternshipApplicationListResponse internshipApplications(UUID userUniqueId) {
@@ -141,10 +141,10 @@ public class InternshipApplicationService {
         internshipApplicationRepository.save(application);
     }
 
-    public InternshipApplicationListResponse findByOffer(UUID uniqueId) {
+    public InternshipApplicationListResponse findByOffer(UUID offerUniqueId) {
 
         List<InternshipApplication> applications = internshipApplicationRepository.findAllByOfferUniqueIdAndStatusAndSemester(
-                uniqueId, InternshipApplication.Status.APPROVED, settingsService.getSemester());
+                offerUniqueId, InternshipApplication.Status.APPROVED, settingsService.getSemester());
 
         InternshipApplicationListResponse response = new InternshipApplicationListResponse();
 
@@ -173,5 +173,9 @@ public class InternshipApplicationService {
         application.setInterviewDate(new Date(request.getInterviewDate()));
 
         internshipApplicationRepository.save(application);
+    }
+
+    public InternshipApplicationListResponse.InternshipApplication find(UUID uniqueId){
+        return InternshipApplicationListResponse.map(internshipApplicationRepository.findById(uniqueId).orElse(null));
     }
 }

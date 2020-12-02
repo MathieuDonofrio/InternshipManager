@@ -1,11 +1,13 @@
 import React, { Component } from "react";
+import { withRouter } from 'react-router';
+import { withSnackbar } from 'notistack';
 
 import InternshipOfferService from '../services/InternshipOfferService';
 import Validator from '../utils/Validator';
 import Lock from '../utils/Lock'
 import DateFnsUtils from '@date-io/date-fns';
-import { withSnackbar } from 'notistack';
-import { CountryDropdown, RegionDropdown, CountryRegionData } from 'react-country-region-selector';
+import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
+
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
@@ -14,7 +16,6 @@ import Typography from '@material-ui/core/Typography';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Container from '@material-ui/core/Container';
 import Divider from '@material-ui/core/Divider';
-import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
@@ -113,6 +114,7 @@ class InternshipOfferCreationForm extends Component {
 
     InternshipOfferService.create(request)
       .then(response => {
+        this.props.history.push(`/internship-offer/${response.data}`)
         this.props.enqueueSnackbar("Offre de stage crée", { variant: 'success' });
       })
       .catch(error => this.backendValidation(error))
@@ -481,4 +483,4 @@ class InternshipOfferCreationForm extends Component {
   }
 }
 
-export default withSnackbar(InternshipOfferCreationForm);
+export default withSnackbar(withRouter(InternshipOfferCreationForm));

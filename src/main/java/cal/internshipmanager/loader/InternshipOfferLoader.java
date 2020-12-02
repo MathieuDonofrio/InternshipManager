@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -98,7 +99,7 @@ public class InternshipOfferLoader implements CommandLineRunner {
         internshipOffer.setJobTitle(faker.job().title());
         internshipOffer.setJobScope(jobScope);
         internshipOffer.setStartDate(new Date());
-        internshipOffer.setEndDate(new Date());
+        internshipOffer.setEndDate(new Date(System.currentTimeMillis() + TimeUnit.DAYS.toMillis(7 * ThreadLocalRandom.current().nextInt(8, 15))));
         internshipOffer.setSchedule("Lundi-Vendredi (8h00-17h00)");
         internshipOffer.setLocation(faker.address().streetName() + "," + faker.address().city() + "," + faker.address().zipCode() + "," + faker.country().name() + "," + faker.address().state());
         internshipOffer.setSalary(14 + ThreadLocalRandom.current().nextFloat() * 10);

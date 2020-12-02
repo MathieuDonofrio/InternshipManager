@@ -9,6 +9,9 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
+import IconButton from '@material-ui/core/IconButton';
+
+import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 
 //
 // Data
@@ -52,16 +55,16 @@ export default class RegistrationPage extends Component {
 
         {
           (this.state.employer || this.state.student) &&
-          <Box
-            mt={4}
-            textAlign="center">
-            <Button
-              variant="outlined"
-              color="secondary"
+          <Container
+            component="main"
+            maxWidth="xs"
+          >
+            <IconButton
               onClick={this.onBack}>
-              Retourner
-          </Button>
-          </Box>
+              <KeyboardBackspaceIcon />
+              <Typography>Retour</Typography>
+            </IconButton>
+          </Container>
         }
 
         {

@@ -1,14 +1,14 @@
 import React, { Component } from "react";
+
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
-import InternshipApplicationCreationForm from "../components/InternshipApplicationCreationForm";
+import InternshipApplication from "../components/InternshipApplication";
 
+export default class InternshipApplicationPage extends Component {
 
-export default class StudentInternshipApplicationPage extends Component {
-  
   //
-  // Constructor
+  // Constructors
   //
 
   constructor(props) {
@@ -23,11 +23,17 @@ export default class StudentInternshipApplicationPage extends Component {
     return (
       <div>
         <CssBaseline />
+
         <Container>
+
           <Paper elevation={3}>
-            <InternshipApplicationCreationForm />
+              
+              <InternshipApplication/>
+
           </Paper>
+
         </Container>
+
       </div>
     )
   }

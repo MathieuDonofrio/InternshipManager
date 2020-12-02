@@ -7,6 +7,7 @@ import cal.internshipmanager.service.InternshipOfferService;
 import cal.internshipmanager.validator.ExistingInternshipOffer;
 import cal.internshipmanager.validator.ExistingUser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -36,26 +37,31 @@ public class InternshipOfferController {
     //
 
     @PostMapping("create")
-    public void create(@Valid @RequestBody InternshipOfferCreationRequest request) {
-        internshipOfferService.create(request);
+    public UUID create(@Valid @RequestBody InternshipOfferCreationRequest request) {
+        return internshipOfferService.create(request);
     }
 
-    @PostMapping("approve")
-    public void approve(@Valid @RequestBody InternshipOfferApproveRequest request) {
-        internshipOfferService.approve(request);
-    }
+    //
+    // Put
+    //
 
-    @PostMapping("reject")
-    public void reject(@Valid @RequestBody InternshipOfferRejectRequest request) {
-        internshipOfferService.reject(request);
+    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
+    @PutMapping("approve/{uniqueId}")
+    public void approve(@Valid @ExistingInternshipOffer @PathVariable UUID uniqueId) {
+        internshipOfferService.approve(uniqueId);
     }
-
-    @PostMapping("add-user")
+    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
+    @PutMapping("reject/{uniqueId}")
+    public void reject(@Valid @ExistingInternshipOffer @PathVariable UUID uniqueId) {
+        internshipOfferService.reject(uniqueId);
+    }
+    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
+    @PutMapping("add-user")
     public void addUser(@Valid @RequestBody InternshipOfferAddUserRequest request) {
         internshipOfferService.addUser(request);
     }
-
-    @PostMapping("remove-user")
+    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
+    @PutMapping("remove-user")
     public void removeUser(@Valid @RequestBody InternshipOfferRemoveUserRequest request) {
         internshipOfferService.removeUser(request);
     }
@@ -63,7 +69,6 @@ public class InternshipOfferController {
     //
     // Get
     //
-
     @GetMapping("pending-approval")
     public InternshipOfferListResponse pendingApproval() {
         return internshipOfferService.pendingApproval();
@@ -92,6 +97,16 @@ public class InternshipOfferController {
     @GetMapping("employer/{userUniqueId}")
     public InternshipOfferListResponse findAllByEmployer(@Valid @ExistingUser @PathVariable UUID userUniqueId){
         return internshipOfferService.findAllByEmployer(userUniqueId);
+    }
+
+    @GetMapping("employer/pending/{userUniqueId}")
+    public InternshipOfferListResponse findAllPendingByEmployer(@Valid @ExistingUser @PathVariable UUID userUniqueId){
+        return internshipOfferService.findAllPendingByEmployer(userUniqueId);
+    }
+
+    @GetMapping("employer/rejected/{userUniqueId}")
+    public InternshipOfferListResponse findAllRejectedByEmployer(@Valid @ExistingUser @PathVariable UUID userUniqueId){
+        return internshipOfferService.findAllRejectedByEmployer(userUniqueId);
     }
 
     @GetMapping("{uniqueId}")

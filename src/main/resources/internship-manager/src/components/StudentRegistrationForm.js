@@ -124,7 +124,7 @@ class StudentRegistrationForm extends Component {
         <div>
 
           <Box
-            mt={12}
+            mt={2}
             mb={2}
             textAlign="center">
 

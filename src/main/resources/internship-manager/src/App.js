@@ -11,24 +11,20 @@ import LoginPage from './pages/LoginPage';
 import RegistrationPage from './pages/RegistrationPage';
 import InternshipOfferCreationPage from './pages/InternshipOfferCreationPage';
 import HomePage from './pages/HomePage';
-import StudentInternshipOfferValidationPage from './pages/StudentInternshipOfferValidationPage';
-import PendingApprovalPage from './pages/PendingApprovalPage';
 import PortfolioPage from './pages/PortfolioPage';
 import PortfolioDocumentPage from './pages/PortfolioDocumentPage';
-import StudentInternshipApplicationPage from './pages/StudentInternshipApplicationPage';
-import StudentInternshipApplicationValidationPage from './pages/StudentInternshipApplicationValidationPage';
-import StudentSelectionPage from './pages/StudentSelectionPage';
-import StudentInternshipApplicationStatusPage from './pages/StudentInternshipApplicationStatusPage';
 import ManageAccessPage from './pages/ManageAccessPage';
-import SemesterSelectionPage from './pages/SemesterSelectionPage';
+import SettingsPage from './pages/SettingsPage';
 import StudentListPage from './pages/StudentListPage';
-import SelectActionPage from './pages/SelectActionPage';
 import UserProfilePage from './pages/UserProfilePage';
 import EmployerListPage from './pages/EmployerListPage';
 import ContractListPage from './pages/ContractListPage';
 import ContractPage from './pages/ContractPage';
 import CreateSignaturePage from './pages/CreateSignaturePage';
+import InternshipOfferListPage from './pages/InternshipOfferListPage';
 import InternshipOfferPage from './pages/InternshipOfferPage';
+import InternshipApplicationPage from './pages/InternshipApplicationPage';
+import InternshipApplicationListPage from './pages/InternshipApplicationListPage';
 
 function App() {
 
@@ -55,26 +51,18 @@ function App() {
 
                 <Route exact path="/home" component={HomePage}></Route>
 
-                <Route exact path="/internship-application-creation" component={StudentInternshipApplicationPage}></Route>
-
-                <Route exact path="/internship-application-validation" component={StudentInternshipApplicationValidationPage}></Route>
-                <Route exact path="/internship-application-status" component={StudentInternshipApplicationStatusPage}></Route>
-                <Route exact path="/student-selection-page" component={StudentSelectionPage}></Route>
-
-                <Route exact path="/manage-access/:uuid" component={ManageAccessPage}></Route>
-
-                <Route exact path="/semester-selection" component={SemesterSelectionPage}></Route>
-                
-                <Route exact path="/select-action/:uuid" component={SelectActionPage}></Route>
                 <Route exact path="/create-signature" component={CreateSignaturePage}></Route>
 
+                <Route exact path="/internship-applications" component={InternshipApplicationListPage}></Route>
+                <Route exact path="/internship-application/:uuid" component={InternshipApplicationPage}></Route>
+
                 <Route exact path="/internship-offer-creation" component={InternshipOfferCreationPage}></Route>
-                <Route exact path="/student-offer-validation" component={StudentInternshipOfferValidationPage}></Route>
-                <Route exact path="/pending-approval" component={PendingApprovalPage}></Route>
+                <Route exact path="/internship-offers" component={InternshipOfferListPage}></Route>
+                <Route exact path="/manage-access/:uuid" component={ManageAccessPage}></Route>
                 <Route exact path="/internship-offer/:uuid" component={InternshipOfferPage}></Route>
 
-                <Route exact path="/student-list-page" component={StudentListPage}></Route>
-                <Route exact path="/employer-list-page" component={EmployerListPage}></Route>
+                <Route exact path="/students" component={StudentListPage}></Route>
+                <Route exact path="/employers" component={EmployerListPage}></Route>
                 <Route exact path="/user/:uuid" component={UserProfilePage}></Route>
 
                 <Route exact path="/contracts" component={ContractListPage}></Route>
@@ -82,6 +70,8 @@ function App() {
 
                 <Route exact path="/portfolio" component={PortfolioPage}></Route>
                 <Route exact path="/portfolio-document/:uuid" component={PortfolioDocumentPage}></Route>
+
+                <Route exact path="/settings" component={SettingsPage}></Route>
 
               </AppDrawer>
 

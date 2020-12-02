@@ -9,11 +9,11 @@ import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
-import LinearProgress from '@material-ui/core/LinearProgress';
+//import LinearProgress from '@material-ui/core/LinearProgress';
 import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
+//import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
+//import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
@@ -44,7 +44,7 @@ export default function PortfolioDocument() {
 
         PortfolioService.approve(uuid).then(() => {
             fetch()
-            enqueueSnackbar(`Document de portfolio apprové`,  { variant: 'success' });
+            enqueueSnackbar(`Document de portfolio apprové`, { variant: 'success' });
         });
     }
 
@@ -87,6 +87,38 @@ export default function PortfolioDocument() {
                         variant="subtitle1">{document.uniqueId}</Typography>
                 </Box>
 
+                <Box
+                    marginTop={2}
+                    textAlign="center">
+                    <Box
+                        marginBottom={1}
+                        style={{ backgroundColor: "lightsteelblue" }}>
+                        <Typography>{formattedStatus()}</Typography>
+                    </Box>
+                </Box>
+
+                <Box
+                    margin={2}
+                    textAlign="center"
+                >
+                    {
+                        canApprove() && <Button
+                            variant="contained" color="secondary"
+                            size="small"
+                            onClick={approve}
+                        >
+                            Approuvé
+                        </Button>
+                    }
+                </Box>
+
+                <Box
+                    marginTop={2}
+                    textAlign="center"
+                    style={{ backgroundColor: "lightgray" }}>
+                    <Typography>Informations Générale</Typography>
+                </Box>
+
                 <Box>
 
                     <Table size="small">
@@ -114,27 +146,9 @@ export default function PortfolioDocument() {
 
                 <Box
                     marginTop={2}
-                    textAlign="center">
-                    <Box
-                        marginBottom={1}
-                        style={{ backgroundColor: "lightsteelblue" }}>
-                        <Typography>{formattedStatus()}</Typography>
-                    </Box>
-                </Box>
-
-                <Box
-                    margin={2}
                     textAlign="center"
-                >
-                    {
-                        canApprove() && <Button
-                            variant="contained" color="secondary"
-                            size="small"
-                            onClick={approve}
-                        >
-                            Approuvé
-                        </Button>
-                    }
+                    style={{ backgroundColor: "lightgray" }}>
+                    <Typography>Visualization</Typography>
                 </Box>
 
                 <Box

@@ -33,6 +33,9 @@ export default function Contract() {
     const [url, setUrl] = useState(null);
 
     const fetch = () => {
+
+        setUrl(null);
+        
         ContractService.find(uuid).then(response => {
 
             setContract(response.data);
@@ -129,6 +132,39 @@ export default function Contract() {
                         variant="subtitle1">{contract.uniqueId}</Typography>
                 </Box>
 
+                <Box
+                    marginTop={2}
+                    textAlign="center">
+                    <Box
+                        marginBottom={1}
+                        style={{backgroundColor: "lightsteelblue"}}>
+                        <Typography>{formattedStatus()}</Typography>
+                    </Box>
+                    <LinearProgress variant="determinate" value={progress()} />
+                </Box>
+
+                <Box
+                    margin={2}
+                    textAlign="center"
+                >
+                    {
+                        canSign && <Button
+                            variant="contained" color="secondary"
+                            size="small"
+                            onClick={sign}
+                        >
+                            Signer
+                        </Button>
+                    }
+                </Box>
+
+                <Box
+                    marginTop={2}
+                    textAlign="center"
+                    style={{ backgroundColor: "lightgray" }}>
+                    <Typography>Informations Générale</Typography>
+                </Box>
+
                 <Box>
 
                     <Table size="small">
@@ -156,28 +192,9 @@ export default function Contract() {
 
                 <Box
                     marginTop={2}
-                    textAlign="center">
-                    <Box
-                        marginBottom={1}
-                        style={{backgroundColor: "lightsteelblue"}}>
-                        <Typography>{formattedStatus()}</Typography>
-                    </Box>
-                    <LinearProgress variant="determinate" value={progress()} />
-                </Box>
-                
-                <Box
-                    margin={2}
                     textAlign="center"
-                >
-                    {
-                        canSign && <Button
-                            variant="contained" color="secondary"
-                            size="small"
-                            onClick={sign}
-                        >
-                            Signer
-                        </Button>
-                    }
+                    style={{ backgroundColor: "lightgray" }}>
+                    <Typography>Visualisation</Typography>
                 </Box>
 
                 <Box
@@ -187,6 +204,8 @@ export default function Contract() {
                     <iframe src={url} width="100%" height="800px">
                     </iframe>
                 </Box>
+
+                <Box paddingTop={2}></Box>
 
             </Container>
         </div>

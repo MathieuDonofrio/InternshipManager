@@ -46,7 +46,7 @@ public class InternshipOfferService {
     // Services
     //
 
-    public void create(InternshipOfferCreationRequest request) {
+    public UUID create(InternshipOfferCreationRequest request) {
 
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
@@ -71,20 +71,22 @@ public class InternshipOfferService {
         internshipOffer.setUsers(new ArrayList<>());
 
         internshipOfferRepository.save(internshipOffer);
+
+        return internshipOffer.getUniqueId();
     }
 
-    public void approve(InternshipOfferApproveRequest request) {
+    public void approve(UUID uniqueId) {
 
-        InternshipOffer internshipOffer = internshipOfferRepository.findById(request.getUniqueId()).orElse(null);
+        InternshipOffer internshipOffer = internshipOfferRepository.findById(uniqueId).orElse(null);
 
         internshipOffer.setStatus(InternshipOffer.Status.APPROVED);
 
         internshipOfferRepository.save(internshipOffer);
     }
 
-    public void reject(InternshipOfferRejectRequest request) {
+    public void reject(UUID uniqueId) {
 
-        InternshipOffer internshipOffer = internshipOfferRepository.findById(request.getUniqueId()).orElse(null);
+        InternshipOffer internshipOffer = internshipOfferRepository.findById(uniqueId).orElse(null);
 
         internshipOffer.setStatus(InternshipOffer.Status.REJECTED);
 
@@ -183,6 +185,32 @@ public class InternshipOfferService {
 
         List<InternshipOffer> internshipOffers = internshipOfferRepository.findAllByEmployerAndStatusAndSemester(
                 uniqueId, InternshipOffer.Status.APPROVED, settingsService.getSemester());
+
+        InternshipOfferListResponse response = new InternshipOfferListResponse();
+
+        response.setInternshipOffers(internshipOffers.stream().map(InternshipOfferListResponse::map)
+                .collect(Collectors.toList()));
+
+        return response;
+    }
+
+    public InternshipOfferListResponse findAllPendingByEmployer(UUID uniqueId) {
+
+        List<InternshipOffer> internshipOffers = internshipOfferRepository.findAllByEmployerAndStatusAndSemester(
+                uniqueId, InternshipOffer.Status.PENDING_APPROVAL, settingsService.getSemester());
+
+        InternshipOfferListResponse response = new InternshipOfferListResponse();
+
+        response.setInternshipOffers(internshipOffers.stream().map(InternshipOfferListResponse::map)
+                .collect(Collectors.toList()));
+
+        return response;
+    }
+
+    public InternshipOfferListResponse findAllRejectedByEmployer(UUID uniqueId) {
+
+        List<InternshipOffer> internshipOffers = internshipOfferRepository.findAllByEmployerAndStatusAndSemester(
+                uniqueId, InternshipOffer.Status.REJECTED, settingsService.getSemester());
 
         InternshipOfferListResponse response = new InternshipOfferListResponse();
 
