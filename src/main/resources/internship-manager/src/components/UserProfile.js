@@ -69,6 +69,8 @@ export default function UserProfile() {
 
     const isCurrentUser = () => { return uuid === localStorage.getItem("UserUniqueId"); };
 
+    const canSeeOffers = () => { return isEmployer() && localStorage.getItem("UserType") != "STUDENT"; };
+
     const translateType = (type) => {
         switch (type) {
             case "STUDENT": return "Étudiant";
@@ -274,7 +276,7 @@ export default function UserProfile() {
                 }
 
                 {
-                    isEmployer() &&
+                    canSeeOffers() &&
                     <div>
                         <Box
                             marginTop={2}

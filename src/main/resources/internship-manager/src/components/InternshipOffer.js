@@ -31,8 +31,6 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import Link from '@material-ui/core/Link';
 
-import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
-
 export default function InternshipOffer() {
 
     const { uuid } = useParams();
@@ -271,7 +269,6 @@ export default function InternshipOffer() {
                             <TableCell align="right">
                                 {
                                     employer &&
-
                                     <Link
                                         onClick={() => history.push(`/user/${employer.uniqueId}`)}>
                                         {employer.firstName + " " + employer.lastName}
