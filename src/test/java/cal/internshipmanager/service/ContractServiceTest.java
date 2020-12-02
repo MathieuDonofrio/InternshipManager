@@ -49,6 +49,8 @@ public class ContractServiceTest {
 
         // Arrange
 
+        when(settingsService.getSemester()).thenReturn("Winter-2050");
+
         User user = new User();
 
         user.setUniqueId(UUID.randomUUID());
@@ -124,7 +126,9 @@ public class ContractServiceTest {
     @Test
     public void awaitSignature() {
 
-        //ARRANGE
+        // Arrange
+
+        when(settingsService.getSemester()).thenReturn("Winter-2050");
 
         User user = new User();
         user.setUniqueId(UUID.randomUUID());
@@ -211,6 +215,7 @@ public class ContractServiceTest {
 
         // Arrange
 
+        when(settingsService.getSemester()).thenReturn("Winter-2050");
 
         Signature signature = new Signature();
 
@@ -292,6 +297,7 @@ public class ContractServiceTest {
 
         // Arrange
 
+        when(settingsService.getSemester()).thenReturn("Winter-2050");
 
         Signature signature = new Signature();
 
@@ -375,6 +381,7 @@ public class ContractServiceTest {
 
         // Arrange
 
+        when(settingsService.getSemester()).thenReturn("Winter-2050");
 
         Signature signature = new Signature();
 
@@ -409,8 +416,7 @@ public class ContractServiceTest {
         when(userRepository.findById(user.getUniqueId())).thenReturn(Optional.of(user));
 
 
-        // ACT
-
+        // Act
 
         when(contractRepository.save(any())).then(inv -> {
 
@@ -433,6 +439,8 @@ public class ContractServiceTest {
     public void findUserById_validRequest() {
 
         // Arrange
+
+        when(settingsService.getSemester()).thenReturn("Winter-2050");
 
         Signature signature = new Signature();
 
@@ -471,6 +479,8 @@ public class ContractServiceTest {
     public void generate_validRequest() {
 
         // Arrange
+
+        when(settingsService.getSemester()).thenReturn("Winter-2050");
 
         User student = new User();
 
@@ -543,7 +553,10 @@ public class ContractServiceTest {
     @Test
     public void signedSignature_validRequest() {
 
-        //ARRANGE
+        // Arrange
+
+        when(settingsService.getSemester()).thenReturn("Winter-2050");
+
         Signature signature = new Signature();
 
         signature.setUniqueId(UUID.randomUUID());
@@ -607,13 +620,13 @@ public class ContractServiceTest {
         when(contractRepository.findAllBySemester(settingsService.getSemester())).thenReturn(List.of(c));
         when(userRepository.findById(any())).thenReturn(Optional.of(user));
 
-        // ACT
+        // Act
 
         ContractListResponse response = contractService.signedContracts(user.getUniqueId());
 
         ContractListResponse.Contract contract = response.getContracts().get(0);
 
-        // ASSERT
+        // Assert
 
         assertEquals(c.getUniqueId(), contract.getUniqueId());
         assertEquals(c.getSemester(), contract.getSemester());
@@ -633,7 +646,10 @@ public class ContractServiceTest {
     @Test
     public void signedSignature_invalidRequest() {
 
-        //ARRANGE
+        // Arrange
+
+        when(settingsService.getSemester()).thenReturn("Winter-2050");
+
         Signature signature = new Signature();
 
         signature.setUniqueId(UUID.randomUUID());
@@ -697,11 +713,12 @@ public class ContractServiceTest {
         when(contractRepository.findAllBySemester(settingsService.getSemester())).thenReturn(List.of(c));
         when(userRepository.findById(any())).thenReturn(Optional.of(user));
 
-        // ACT
+        // Act
 
         ContractListResponse response = contractService.signedContracts(user.getUniqueId());
 
-        // ASSERT
+        // Assert
+
         assertTrue(response.getContracts().isEmpty());
 
     }
@@ -709,7 +726,9 @@ public class ContractServiceTest {
     @Test
     public void allSignatureAdmin_invalidRequest() {
 
-        //ARRANGE
+        // Arrange
+
+        when(settingsService.getSemester()).thenReturn("Winter-2050");
 
         User user = new User();
         user.setUniqueId(UUID.randomUUID());
@@ -767,13 +786,13 @@ public class ContractServiceTest {
         when(contractRepository.findAllBySemesterAndAdministrator_UniqueId(settingsService.getSemester(), user.getUniqueId())).thenReturn(List.of(c));
         when(userRepository.findById(any())).thenReturn(Optional.of(user));
 
-        // ACT
+        // Act
 
         ContractListResponse response = contractService.allContracts(user.getUniqueId());
 
         ContractListResponse.Contract contract = response.getContracts().get(0);
 
-        // ASSERT
+        // Assert
 
         assertEquals(c.getUniqueId(), contract.getUniqueId());
         assertEquals(c.getSemester(), contract.getSemester());
@@ -793,7 +812,9 @@ public class ContractServiceTest {
     @Test
     public void allSignatureEmployer_invalidRequest() {
 
-        //ARRANGE
+        // Arrange
+
+        when(settingsService.getSemester()).thenReturn("Winter-2050");
 
         User user = new User();
         user.setUniqueId(UUID.randomUUID());
@@ -851,13 +872,13 @@ public class ContractServiceTest {
         when(contractRepository.findAllBySemesterAndApplication_Offer_Employer(settingsService.getSemester(), employer.getUniqueId())).thenReturn(List.of(c));
         when(userRepository.findById(any())).thenReturn(Optional.of(employer));
 
-        // ACT
+        // Act
 
         ContractListResponse response = contractService.allContracts(employer.getUniqueId());
 
         ContractListResponse.Contract contract = response.getContracts().get(0);
 
-        // ASSERT
+        // Assert
 
         assertEquals(c.getUniqueId(), contract.getUniqueId());
         assertEquals(c.getSemester(), contract.getSemester());
@@ -877,7 +898,9 @@ public class ContractServiceTest {
     @Test
     public void allSignatureStudent_invalidRequest() {
 
-        //ARRANGE
+        // Arrange
+
+        when(settingsService.getSemester()).thenReturn("Winter-2050");
 
         User user = new User();
         user.setUniqueId(UUID.randomUUID());
@@ -935,13 +958,13 @@ public class ContractServiceTest {
         when(contractRepository.findAllBySemesterAndApplication_Student_UniqueId(settingsService.getSemester(), student.getUniqueId())).thenReturn(List.of(c));
         when(userRepository.findById(any())).thenReturn(Optional.of(student));
 
-        // ACT
+        // Act
 
         ContractListResponse response = contractService.allContracts(student.getUniqueId());
 
         ContractListResponse.Contract contract = response.getContracts().get(0);
 
-        // ASSERT
+        // Assert
 
         assertEquals(c.getUniqueId(), contract.getUniqueId());
         assertEquals(c.getSemester(), contract.getSemester());
