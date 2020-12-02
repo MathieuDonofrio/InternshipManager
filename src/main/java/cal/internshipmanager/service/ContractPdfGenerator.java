@@ -64,7 +64,7 @@ public class ContractPdfGenerator {
         User admin = contract.getAdministrator();
         InternshipOffer offer = application.getOffer();
         String[] location = offer.getLocation().split(",");
-        String[] session = settingsService.getSemester().split("-");
+        String[] session = application.getSemester().split("-");
         User employer = userRepository.findById(offer.getEmployer()).orElse(null);
         long timePassedH = (((offer.getEndDate().getTime() - offer.getStartDate().getTime()) / 1000) / 60) / 60;
         int nbWeeks = (int) (Math.ceil((double)timePassedH /168));
