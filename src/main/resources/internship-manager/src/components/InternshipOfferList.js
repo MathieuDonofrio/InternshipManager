@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
+
 import InternshipOfferService from "../services/InternshipOfferService";
+import InternshipApplicationService from "../services/InternshipApplicationService";
+
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -10,9 +14,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { AppBar, Divider, makeStyles } from "@material-ui/core";
-import { Box, Paper, Tab, Tabs } from "@material-ui/core";
-import { useHistory } from "react-router-dom";
-import InternshipApplicationService from "../services/InternshipApplicationService";
+import { Box, Tab, Tabs } from "@material-ui/core";
 
 //
 // Data
@@ -50,7 +52,7 @@ export default function InternshipOfferList() {
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
-    };
+    }
 
     //
     // Admin Services 

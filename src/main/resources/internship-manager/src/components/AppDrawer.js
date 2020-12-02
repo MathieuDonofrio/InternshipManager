@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { useHistory } from 'react-router-dom';
+
 import AuthenticationService from '../services/AuthenticationService';
 
 import Drawer from '@material-ui/core/Drawer';
@@ -21,16 +23,9 @@ import Button from '@material-ui/core/Button';
 import PeopleIcon from '@material-ui/icons/People';
 import HomeIcon from '@material-ui/icons/Home';
 import CreateIcon from '@material-ui/icons/Create';
-import { useHistory } from 'react-router-dom';
-import GavelOutlinedIcon from '@material-ui/icons/GavelOutlined';
-import AssignmentLateIcon from '@material-ui/icons/AssignmentLate';
-import VisibilityIcon from '@material-ui/icons/Visibility';
-import CloudUploadIcon from '@material-ui/icons/CloudUpload';
-import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
 import AssignmentIndSharpIcon from '@material-ui/icons/AssignmentIndSharp';
 import SettingsService from "../services/SettingsService";
 import SettingsIcon from '@material-ui/icons/Settings';
-import CheckIcon from '@material-ui/icons/Check';
 import FolderOpenSharpIcon from '@material-ui/icons/FolderOpenSharp';
 import AssignmentSharpIcon from '@material-ui/icons/AssignmentSharp';
 import AssignmentLateSharpIcon from '@material-ui/icons/AssignmentLateSharp';

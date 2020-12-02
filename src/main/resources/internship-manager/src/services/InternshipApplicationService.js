@@ -47,6 +47,14 @@ class InternshipApplicationService {
         return axios.get(Config.target + `/internship-application/offer/${request}`, headers());
     }
 
+    findAllSelectedByAllOffers(request){
+        return axios.get(Config.target + `/internship-application/offer/selected/${request}`, headers());
+    }
+
+    findAllApprovedByAllOffers(request){
+        return axios.get(Config.target + `/internship-application/offer/approved/${request}`, headers());
+    }
+
     applicationDocuments(request){
         return axios.get(Config.target + `/internship-application/documents/${request}`, headers());
     }

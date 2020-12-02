@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
-//import { useSnackbar } from 'notistack';
-//import SignatureService from "../services/SignatureService";
+import { useHistory } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
@@ -12,7 +10,7 @@ import Button from '@material-ui/core/Button';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import { AppBar, Box, Paper, Tab, Tabs } from "@material-ui/core";
+import { AppBar, Box, Tab, Tabs } from "@material-ui/core";
 import ContractService from '../services/ContractService';
 
 const useStyles = makeStyles({
@@ -34,6 +32,7 @@ export default function ContractList() {
     //const classes2 = useStyles2();
     const [value, setValue] = React.useState(0);
     const [rows, setRows] = useState([]);
+    const [title, setTitle] = useState('');
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -42,16 +41,19 @@ export default function ContractList() {
     const fetchAllContracts = async () => {
         const response = await ContractService.allContracts(localStorage.getItem('UserUniqueId'));
         setRows(response.data.contracts);
+        setTitle('Contrats');
     }
     
     const fetchAllSignedContracts = async () => {
         const response = await ContractService.signedContracts(localStorage.getItem('UserUniqueId'));
         setRows(response.data.contracts);
+        setTitle('Contrats signés');
     }
-
+    
     const fetchAllAwaitingSignature = async () => {
         const response = await ContractService.awaitingSignature(localStorage.getItem('UserUniqueId'));
         setRows(response.data.contracts);
+        setTitle('Contrats à signer');
     }
 
     useEffect(() => { fetchAllContracts(); }, [])
@@ -77,7 +79,7 @@ export default function ContractList() {
                     paddingTop={2}
                     textAlign="center">
 
-                    <Typography component="h1" variant="h4">Contrats</Typography>
+                    <Typography component="h1" variant="h4">{title}</Typography>
                 </Box>
             </Container>
 
@@ -88,7 +90,7 @@ export default function ContractList() {
                             <TableCell align="center"><strong>Étudiant</strong></TableCell>
                             <TableCell align="center"><strong>Compagnie</strong></TableCell>
                             <TableCell align="center"><strong>Titre de poste</strong></TableCell>
-                            <TableCell align="center"><strong>Actions</strong></TableCell>
+                            <TableCell align="center"><strong>Action</strong></TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>

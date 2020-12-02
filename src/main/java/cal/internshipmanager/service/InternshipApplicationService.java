@@ -134,6 +134,7 @@ public class InternshipApplicationService {
     }
 
     public void select(UUID uniqueId) {
+
         InternshipApplication application = internshipApplicationRepository.findById(uniqueId).orElse(null);
 
         application.setStatus(InternshipApplication.Status.SELECTED);
@@ -145,6 +146,34 @@ public class InternshipApplicationService {
 
         List<InternshipApplication> applications = internshipApplicationRepository.findAllByOfferUniqueIdAndStatusAndSemester(
                 offerUniqueId, InternshipApplication.Status.APPROVED, settingsService.getSemester());
+
+        InternshipApplicationListResponse response = new InternshipApplicationListResponse();
+
+        response.setApplications(applications.stream()
+                .map(InternshipApplicationListResponse::map)
+                .collect(Collectors.toList()));
+
+        return response;
+    }
+
+    public InternshipApplicationListResponse findAllSelectedByAllOffers(UUID employerUniqueId){
+
+        List<InternshipApplication> applications = internshipApplicationRepository.findAllByStatusAndSemesterAndOffer_EmployerAndOffer_Status(
+                InternshipApplication.Status.SELECTED, settingsService.getSemester(),employerUniqueId, InternshipOffer.Status.APPROVED);
+
+        InternshipApplicationListResponse response = new InternshipApplicationListResponse();
+
+        response.setApplications(applications.stream()
+                .map(InternshipApplicationListResponse::map)
+                .collect(Collectors.toList()));
+
+        return response;
+    }
+
+    public InternshipApplicationListResponse findAllApprovedByAllOffers(UUID employerUniqueId){
+
+        List<InternshipApplication> applications = internshipApplicationRepository.findAllByStatusAndSemesterAndOffer_EmployerAndOffer_Status(
+                InternshipApplication.Status.APPROVED, settingsService.getSemester(),employerUniqueId, InternshipOffer.Status.APPROVED);
 
         InternshipApplicationListResponse response = new InternshipApplicationListResponse();
 
@@ -168,6 +197,7 @@ public class InternshipApplicationService {
     }
 
     public void addInterview(UUID uniqueId,InternshipApplicationInterviewDateRequest request) {
+
         InternshipApplication application = internshipApplicationRepository.findById(uniqueId).orElse(null);
 
         application.setInterviewDate(new Date(request.getInterviewDate()));

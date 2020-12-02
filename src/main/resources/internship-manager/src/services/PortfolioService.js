@@ -1,7 +1,6 @@
 import axios from 'axios'
 import { Config } from "../environment";
 
-
 function uploadHeaders() {
 
     let token = localStorage.getItem("AccessToken");

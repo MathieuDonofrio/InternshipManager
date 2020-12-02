@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
 import { useParams } from "react-router-dom";
+
 import InternshipOfferService from '../services/InternshipOfferService';
 import UserService from '../services/UserService';
-import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
+
+import BackButton from './BackButton'
+
 import List from '@material-ui/core/List';
-//import { FixedSizeList } from 'react-window';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import IconButton from '@material-ui/core/IconButton';
@@ -16,7 +18,7 @@ import Typography from '@material-ui/core/Typography';
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
 import RemoveCircleOutlineOutlinedIcon from '@material-ui/icons/RemoveCircleOutlineOutlined';
 import Box from '@material-ui/core/Box';
-import { Container, Divider } from '@material-ui/core';
+import Divider from '@material-ui/core/Divider';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -100,13 +102,9 @@ export default function InteractiveList() {
   useEffect(() => { fetchStudents() }, [])
 
   return (
-    <Container>
+    <div>
 
-      <IconButton
-        onClick={() => history.goBack()}>
-        <KeyboardBackspaceIcon />
-        <Typography>Retour</Typography>
-      </IconButton>
+      <BackButton/>
 
       <Box
         mb={2}
@@ -181,6 +179,6 @@ export default function InteractiveList() {
 
       </Grid>
 
-    </Container>
+    </div>
   );
 }

@@ -5,11 +5,9 @@ import cal.internshipmanager.request.InternshipApplicationCreationRequest;
 import cal.internshipmanager.request.InternshipApplicationInterviewDateRequest;
 import cal.internshipmanager.response.InternshipApplicationListResponse;
 import cal.internshipmanager.response.PortfolioDocumentListResponse;
-import cal.internshipmanager.response.UserListReponse;
 import cal.internshipmanager.service.InternshipApplicationService;
 import cal.internshipmanager.validator.ExistingInternshipApplication;
 import cal.internshipmanager.validator.ExistingInternshipOffer;
-import cal.internshipmanager.validator.ExistingUser;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -57,6 +55,16 @@ public class InternshipApplicationController {
     @GetMapping("offer/{uniqueId}")
     public InternshipApplicationListResponse findByOffer(@Valid @PathVariable @ExistingInternshipOffer UUID uniqueId) {
         return internshipApplicationService.findByOffer(uniqueId);
+    }
+
+    @GetMapping("offer/selected/{uniqueId}")
+    public InternshipApplicationListResponse findAllSelectedByAllOffers(@Valid @PathVariable @ExistingInternshipOffer UUID uniqueId) {
+        return internshipApplicationService.findAllSelectedByAllOffers(uniqueId);
+    }
+
+    @GetMapping("offer/approved/{uniqueId}")
+    public InternshipApplicationListResponse findAllApprovedByAllOffers(@Valid @PathVariable @ExistingInternshipOffer UUID uniqueId) {
+        return internshipApplicationService.findAllApprovedByAllOffers(uniqueId);
     }
 
     @GetMapping("documents/{uniqueId}")

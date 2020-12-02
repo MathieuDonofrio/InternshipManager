@@ -12,7 +12,7 @@ import Button from '@material-ui/core/Button';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import { AppBar, Box, Paper, Tab, Tabs } from "@material-ui/core";
+import { AppBar, Box, Tab, Tabs } from "@material-ui/core";
 import UserService from '../services/UserService'
 
 const useStyles = makeStyles({
@@ -21,20 +21,14 @@ const useStyles = makeStyles({
   },
 });
 
-const useStyles2 = makeStyles({
-  root: {
-    flexGrow: 1,
-  },
-});
-
 export default function EmployerList() {
 
   const history = useHistory();
   const classes = useStyles();
-  const classes2 = useStyles2();
 
   const [rows, setRows] = useState([]);
   const [value, setValue] = React.useState(0);
+  const [title, setTitle] = useState('');
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -43,16 +37,19 @@ export default function EmployerList() {
   const fetchAllUsers = async () => {
     const response = await UserService.employers();
     setRows(response.data.users);
+    setTitle('Employeurs');
   }
   
   const fetchAllWithOffer = async () =>{
     const response = await UserService.employersWithOffer();
     setRows(response.data.users);
+    setTitle('Employeurs avec offre');
   }
-
+  
   const fetchAllWithoutOffer = async () =>{
     const response = await UserService.employersWithoutOffer();
     setRows(response.data.users);
+    setTitle('Employeurs sans offre');
   }
  
 
@@ -69,8 +66,8 @@ export default function EmployerList() {
           centered
         >
           <Tab label="tous" onClick={() => fetchAllUsers()}/>
-          <Tab label="sans offres" onClick={() => fetchAllWithoutOffer()} />
           <Tab label="avec offres" onClick={() => fetchAllWithOffer()} />
+          <Tab label="sans offres" onClick={() => fetchAllWithoutOffer()} />
         </Tabs>
       </AppBar>
       <Container>
@@ -79,7 +76,7 @@ export default function EmployerList() {
           paddingTop={2}
           textAlign="center">
 
-          <Typography component="h1" variant="h4">Employés</Typography>
+          <Typography component="h1" variant="h4">{title}</Typography>
         </Box>
       </Container>
 
