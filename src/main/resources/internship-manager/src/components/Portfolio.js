@@ -1,41 +1,22 @@
 import React, { Component } from "react";
-//import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
+import { withSnackbar } from 'notistack';
 
-//import AuthenticationService from '../services/AuthenticationService';
-//import Validator from '../utils/Validator';
+import { DropzoneArea } from 'material-ui-dropzone';
+
 import Lock from '../utils/Lock'
-//import Copyright from './Copyright';
-//import { useSnackbar } from 'notistack';
 
 import Button from '@material-ui/core/Button';
-///import CssBaseline from '@material-ui/core/CssBaseline';
-//import TextField from '@material-ui/core/TextField';
-//import FormControlLabel from '@material-ui/core/FormControlLabel';
-//import Checkbox from '@material-ui/core/Checkbox';
-//import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
-//import LinearProgress from '@material-ui/core/LinearProgress';
 import Container from '@material-ui/core/Container';
-//import LockOutlined from '@material-ui/icons/LockOutlined';
 import PortfolioService from "../services/PortfolioService";
-import { withSnackbar } from 'notistack';
-//import NotificationService from '../services/NotificationService';
-
-//import List from '@material-ui/core/List';
-//import ListItem from '@material-ui/core/ListItem';
-//import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-//import ListItemText from '@material-ui/core/ListItemText';
-//import * as ReactBootStrap from "react-bootstrap";
-//import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-//import Paper from '@material-ui/core/Paper';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
@@ -47,12 +28,10 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
+import Divider from '@material-ui/core/Divider';
 import MenuItem from '@material-ui/core/MenuItem';
 import CheckIcon from '@material-ui/icons/Check';
 import ClearIcon from '@material-ui/icons/Clear';
-import { DropzoneArea } from 'material-ui-dropzone';
-//import { saveAs } from 'file-saver';
-//import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 
 //
 // Data
@@ -163,6 +142,8 @@ class Portfolio extends Component {
             <Typography component="h1" variant="h4" align="center">Portfolio</Typography>
           </Box>
         </Container>
+
+        <Divider/>
 
         {!this.props.studentId && <Box margin={1}>
           <Button
