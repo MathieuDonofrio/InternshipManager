@@ -57,7 +57,7 @@ export default function InternshipApplicationCreationForm() {
 
     InternshipApplicationService.createInternshipApplication(request).then(response => {
       fetchInternshipOffers();
-      enqueueSnackbar("Application envoyée",  { variant: 'success' });
+      enqueueSnackbar("Application envoyée", { variant: 'success' });
     })
 
     setOpen(false);
@@ -157,7 +157,7 @@ export default function InternshipApplicationCreationForm() {
                 <TableCell component="th" scope="row" style={{ verticalAlign: 'top' }} align="left">
                   <p><strong>Début: </strong>{new Date(offer.startDate).toLocaleDateString()} <strong>Fin: </strong>{new Date(offer.endDate).toLocaleDateString()}</p>
                   <p><strong>Lieu du stage: </strong>{offer.location}</p>
-                  <p><strong>Salaires: </strong>{offer.salary.toFixed(2) + '$'} <strong>Heures: </strong>{offer.hours}</p>
+                  <p><strong>Salaire: </strong>{offer.salary.toFixed(2) + '$'} <strong>Heures: </strong>{offer.hours}</p>
                   <p><strong>Portée de travail: </strong>{offer.jobScope.map(scope => (<li style={{}}>{scope}</li>))}</p>
                 </TableCell>
               </TableRow>
@@ -203,10 +203,10 @@ export default function InternshipApplicationCreationForm() {
         </DialogContent>
         <DialogActions>
           <Button autoFocus onClick={handleClose} color="primary">
-            Cancel
+            Annuler
           </Button>
           <Button onClick={onApply} color="primary">
-            Apply
+            Appliquer
           </Button>
         </DialogActions>
       </Dialog>

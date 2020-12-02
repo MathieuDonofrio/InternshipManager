@@ -161,7 +161,7 @@ export default function Contract() {
                     marginTop={2}
                     textAlign="center"
                     style={{ backgroundColor: "lightgray" }}>
-                    <Typography>Informations Générale</Typography>
+                    <Typography>Informations Générales</Typography>
                 </Box>
 
                 <Box>
@@ -178,7 +178,7 @@ export default function Contract() {
                             <TableCell align="right">{translateSession(contract.semester)}</TableCell>
                         </TableRow>
                         <TableRow>
-                            <TableCell align="left"><strong>Company</strong></TableCell>
+                            <TableCell align="left"><strong>Compagnie</strong></TableCell>
                             <TableCell align="right">{application.company}</TableCell>
                         </TableRow>
                         <TableRow>

@@ -73,7 +73,7 @@ export default function UserProfile() {
         switch (type) {
             case "STUDENT": return "Étudiant";
             case "EMPLOYER": return "Employé";
-            case "ADMINISTRATOR": return "Administrator";
+            case "ADMINISTRATOR": return "Administrateur";
         }
     }
 
@@ -236,7 +236,7 @@ export default function UserProfile() {
                                     <Table size="small" aria-label="a dense table">
                                         <TableHead>
                                             <TableRow>
-                                                <TableCell width="30%" align="center"><strong>Company</strong></TableCell>
+                                                <TableCell width="30%" align="center"><strong>Compagnie</strong></TableCell>
                                                 <TableCell width="30%" align="center"><strong>Titre du poste</strong></TableCell>
                                                 <TableCell width="30%" align="center"><strong>Action</strong></TableCell>
                                             </TableRow>
@@ -266,7 +266,7 @@ export default function UserProfile() {
                                 applications.length == 0 &&
                                 <Box
                                     margin={2}>
-                                    <Typography>Aucun application!</Typography>
+                                    <Typography>Aucune application!</Typography>
                                 </Box>
                             }
                         </div>
@@ -290,7 +290,7 @@ export default function UserProfile() {
                                     <Table size="small" aria-label="a dense table">
                                         <TableHead>
                                             <TableRow>
-                                                <TableCell width="30%" align="center"><strong>Company</strong></TableCell>
+                                                <TableCell width="30%" align="center"><strong>Compagnie</strong></TableCell>
                                                 <TableCell width="30%" align="center"><strong>Titre du poste</strong></TableCell>
                                                 <TableCell width="30%" align="center"><strong>Action</strong></TableCell>
                                             </TableRow>
@@ -320,7 +320,7 @@ export default function UserProfile() {
                                 offers.length == 0 &&
                                 <Box
                                     margin={2}>
-                                    <Typography>Aucun offre!</Typography>
+                                    <Typography>Aucune offre!</Typography>
                                 </Box>
                             }
                         </div>

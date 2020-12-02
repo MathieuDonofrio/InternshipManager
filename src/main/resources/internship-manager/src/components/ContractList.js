@@ -31,7 +31,7 @@ export default function ContractList() {
 
     const classes = useStyles();
     const history = useHistory();
-    const classes2 = useStyles2();
+    //const classes2 = useStyles2();
     const [value, setValue] = React.useState(0);
     const [rows, setRows] = useState([]);
 

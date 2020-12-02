@@ -59,6 +59,10 @@ class Validator {
     return value ? '' : message;
   }
 
+  validPhone(value, message) {
+    return value.length >= 8 ? '' : message;
+  }
+
   min(value, min, message){
     return value >= min ? '' : message;
   }

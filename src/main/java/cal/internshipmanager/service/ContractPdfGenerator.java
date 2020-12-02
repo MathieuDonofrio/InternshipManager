@@ -66,8 +66,8 @@ public class ContractPdfGenerator {
         String[] location = offer.getLocation().split(",");
         String[] session = settingsService.getSemester().split("-");
         User employer = userRepository.findById(offer.getEmployer()).orElse(null);
-        long timePassedH = (((offer.getStartDate().getTime() - offer.getStartDate().getTime()) / 1000) / 60) / 60;
-        int nbWeeks = (int) Math.ceil(timePassedH / 168);
+        long timePassedH = (((offer.getEndDate().getTime() - offer.getStartDate().getTime()) / 1000) / 60) / 60;
+        int nbWeeks = (int) (Math.ceil((double)timePassedH /168));
 
 
         Image image = Image.getInstance("src/main/resources/logo.png");
@@ -160,15 +160,15 @@ public class ContractPdfGenerator {
         table3.addCell(setTitleCell("SUPERVISEUR DU STAGE"));
         PdfPTable table5 = new PdfPTable(2);
         table5.addCell(cellWithoutBorder("Nom: " + employer.getFirstName() + " " + employer.getLastName()));
-        table5.addCell(cellWithoutBorder("Telephone: " + employer.getPhone()));
+        table5.addCell(cellWithoutBorder("Téléphone : " + employer.getPhone()));
         table5.addCell(cellWithoutBorder("Courriel : " + employer.getEmail()));
         table5.addCell(cellWithoutBorder(""));
         table3.addCell(table5);
         table3.addCell(setTitleCell("DURÉE DU STAGE"));
         PdfPTable table6 = new PdfPTable(2);
         table6.addCell(cellWithoutBorder("Date de début : " + dateFor.format(offer.getStartDate())));
-        table6.addCell(cellWithoutBorder("Date de fin : " + dateFor.format(offer.getStartDate())));
-        table6.addCell(cellWithoutBorder("Nombre total d'heures par semaine : " + nbWeeks));
+        table6.addCell(cellWithoutBorder("Date de fin : " + dateFor.format(offer.getEndDate())));
+        table6.addCell(cellWithoutBorder("Nombre de semaine : " + nbWeeks));
         table6.addCell(cellWithoutBorder(""));
         table3.addCell(table6);
         table3.addCell(setTitleCell("HORAIRE DE TRAVAIL"));

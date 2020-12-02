@@ -157,7 +157,7 @@ class InternshipOfferCreationForm extends Component {
     this.errors.city = Validator.notBlank(this.state.city, "La ville est obligatoire");
     this.errors.postal = Validator.notBlank(this.state.postal, "Le code postal est obligatoire");
     this.errors.country = Validator.notBlank(this.state.country, "Le pays est obligatoire");
-    this.errors.phone = Validator.notBlank(this.state.phone, "Le numéro de téléphone est obligatoire");
+    this.errors.phone = Validator.validPhone(this.state.phone, "Entrez un numéro valide");
     this.errors.schedule = Validator.notBlank(this.state.schedule, "L'horaire est obligatoire");
     this.errors.salary = Validator.positive(this.state.salary, "Le salaire ne peut pas être négative");
     this.errors.hours = Validator.min(this.state.hours, 1, "L'heure doit être au moins à 1");
@@ -232,14 +232,17 @@ class InternshipOfferCreationForm extends Component {
             />
 
             <MuiPhoneNumber
+              error={this.errors.phone}
+              helperText={this.errors.phone}
               defaultCountry={'ca'}
               id="phone"
               name="phone"
               value={this.state.phone}
               variant="outlined"
+              required
               margin="normal"
-              label="Telephone"
-              helperText="*Le telephone est seulement utilise pour le contrat"
+              label="Téléphone"
+              helperText="*Le telephone est seulement utilisé pour le contrat"
               onChange={this.onPhoneChange}
             />
             <TextField
@@ -299,7 +302,7 @@ class InternshipOfferCreationForm extends Component {
                   label="Region/Province/Etat"
                   id="region"
                   name="region"
-                  helperText="Si applicatiif. Exemple: Alberta ou Florida"
+                  helperText="Si applicatif. Exemple: Alberta ou Florida"
                   variant="outlined"
                   margin="normal"
                 />
