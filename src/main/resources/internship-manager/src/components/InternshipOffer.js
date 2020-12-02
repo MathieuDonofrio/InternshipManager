@@ -7,6 +7,8 @@ import InternshipApplicationService from '../services/InternshipApplicationServi
 import PortfolioService from '../services/PortfolioService';
 import UserService from '../services/UserService';
 
+import BackButton from "./BackButton";
+
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
@@ -28,8 +30,6 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import Link from '@material-ui/core/Link';
-
-import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 
 export default function InternshipOffer() {
 
@@ -167,11 +167,7 @@ export default function InternshipOffer() {
 
     return (
         <div>
-            <IconButton
-                onClick={() => history.goBack()}>
-                <KeyboardBackspaceIcon />
-                <Typography>Retour</Typography>
-            </IconButton>
+            <BackButton />
 
             <Container>
                 <Box
@@ -225,7 +221,7 @@ export default function InternshipOffer() {
                             style={{ margin: '4px' }}
                             variant="contained" color="secondary"
                             size="small"
-                            onClick={approve}>
+                            onClick={() => approve()}>
                             Approuvé
                         </Button>
                     }
@@ -235,7 +231,7 @@ export default function InternshipOffer() {
                             style={{ margin: '4px' }}
                             variant="contained" color="secondary"
                             size="small"
-                            onClick={reject}>
+                            onClick={() => reject()}>
                             Rejeté
                         </Button>
                     }
@@ -273,7 +269,6 @@ export default function InternshipOffer() {
                             <TableCell align="right">
                                 {
                                     employer &&
-
                                     <Link
                                         onClick={() => history.push(`/user/${employer.uniqueId}`)}>
                                         {employer.firstName + " " + employer.lastName}

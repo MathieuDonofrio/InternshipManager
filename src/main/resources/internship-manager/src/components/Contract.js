@@ -4,19 +4,20 @@ import { useSnackbar } from 'notistack';
 
 import ContractService from '../services/ContractService'
 import SignatureService from "../services/SignatureService";
+import UserService from "../services/UserService";
+
+import BackButton from "./BackButton";
 
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Table from '@material-ui/core/Table';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-
-import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
+import Link from '@material-ui/core/Link';
 
 export default function Contract() {
 
@@ -26,7 +27,10 @@ export default function Contract() {
     const { enqueueSnackbar } = useSnackbar();
 
     const [contract, setContract] = useState({});
-    const [application, setApplication] = useState({});
+    const [application, setApplication] = useState();
+    const [student, setStudent] = useState();
+    const [employer, setEmployer] = useState();
+    const [administrator, setAdministrator] = useState();
 
     const [canSign, setCanSign] = useState(false);
 
@@ -41,7 +45,20 @@ export default function Contract() {
             setContract(response.data);
             setApplication(response.data.application);
 
-            if (localStorage.getItem("UserUniqueId") == response.data.currentUserUniqueId) setCanSign(true);
+            setCanSign(localStorage.getItem("UserUniqueId") === response.data.currentUserUniqueId);
+
+            UserService.find(response.data.application.studentUniqueId).then(response1 => {
+                setStudent(response1.data);
+            })
+
+            UserService.find(response.data.application.employerUniqueId).then(response1 => {
+                setEmployer(response1.data);
+            })
+
+            UserService.find(response.data.administrator.uniqueId).then(response1 => {
+                setAdministrator(response1.data);
+            })
+
         });
 
         ContractService.generate(uuid).then(response => {
@@ -98,7 +115,7 @@ export default function Contract() {
             case "STUDENT": return "En attente de la signature de l'étudiant";
             case "EMPLOYER": return "En attente de la signature de l'employeur";
             case "ADMINISTRATOR": return "En attente de la signature du gestionaire de stage";
-            case "COMPLEATED": return "Contrat complet!";
+            case "COMPLETED": return "Contrat complet!";
         }
     }
 
@@ -115,11 +132,7 @@ export default function Contract() {
 
     return (
         <div>
-            <IconButton
-                onClick={() => history.goBack()}>
-                <KeyboardBackspaceIcon />
-                <Typography>Retour</Typography>
-            </IconButton>
+            <BackButton/>
 
             <Container>
                 <Box
@@ -151,7 +164,7 @@ export default function Contract() {
                         canSign && <Button
                             variant="contained" color="secondary"
                             size="small"
-                            onClick={sign}
+                            onClick={() => sign()}
                         >
                             Signer
                         </Button>
@@ -174,17 +187,65 @@ export default function Contract() {
                             <TableCell width="70%"></TableCell>
                         </TableHead>
 
-                        <TableRow>
+                        <TableRow key="session">
                             <TableCell align="left"><strong>Session</strong></TableCell>
                             <TableCell align="right">{translateSession(contract.semester)}</TableCell>
                         </TableRow>
-                        <TableRow>
-                            <TableCell align="left"><strong>Compagnie</strong></TableCell>
-                            <TableCell align="right">{application.company}</TableCell>
+
+                        <TableRow key="application">
+                            <TableCell align="left"><strong>Application</strong></TableCell>
+                            <TableCell align="right">
+                                {
+                                    application &&
+
+                                    <Link
+                                        onClick={() => history.push(`/internship-application/${application.uniqueId}`)}>
+                                        {application.company + " | " + application.jobTitle}
+                                    </Link>
+                                }
+                            </TableCell>
                         </TableRow>
-                        <TableRow>
-                            <TableCell align="left"><strong>Titre de poste</strong></TableCell>
-                            <TableCell align="right">{application.jobTitle}</TableCell>
+
+                        <TableRow key="student">
+                            <TableCell align="left"><strong>Étudiant</strong></TableCell>
+                            <TableCell align="right">
+                                {
+                                    student &&
+
+                                    <Link
+                                        onClick={() => history.push(`/user/${student.uniqueId}`)}>
+                                        {student.firstName + " " + student.lastName}
+                                    </Link>
+                                }
+                            </TableCell>
+                        </TableRow>
+
+                        <TableRow key="employer">
+                            <TableCell align="left"><strong>Employeur</strong></TableCell>
+                            <TableCell align="right">
+                                {
+                                    employer &&
+
+                                    <Link
+                                        onClick={() => history.push(`/user/${employer.uniqueId}`)}>
+                                        {employer.firstName + " " + employer.lastName}
+                                    </Link>
+                                }
+                            </TableCell>
+                        </TableRow>
+
+                        <TableRow key="administrator">
+                            <TableCell align="left"><strong>Administrateur</strong></TableCell>
+                            <TableCell align="right">
+                                {
+                                    administrator &&
+
+                                    <Link
+                                        onClick={() => history.push(`/user/${administrator.uniqueId}`)}>
+                                        {administrator.firstName + " " + administrator.lastName}
+                                    </Link>
+                                }
+                            </TableCell>
                         </TableRow>
                     </Table>
 
@@ -201,8 +262,7 @@ export default function Contract() {
                     marginTop={2}
                     marginBottom={2}
                     border="1px solid black">
-                    <iframe src={url} width="100%" height="800px">
-                    </iframe>
+                        <iframe src={url} width="100%" height="800px"></iframe>
                 </Box>
 
                 <Box paddingTop={2}></Box>

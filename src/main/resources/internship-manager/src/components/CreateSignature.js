@@ -1,5 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useSnackbar } from 'notistack';
+import "../App.css";
+
+import Container from "@material-ui/core/Container";
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
@@ -8,10 +11,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import SignaturePad from "react-signature-canvas";
-import "./signCanvas.css";
 import SignatureService from "../services/SignatureService";
-
-
 
 export default function CreateSignature() {
 
@@ -40,11 +40,7 @@ export default function CreateSignature() {
 
     const save = () => {
 
-
-
         let signature = sigCanvas.current.getCanvas();
-
-
 
         signature.toBlob(function (blob) {
 
@@ -53,9 +49,13 @@ export default function CreateSignature() {
             }
             SignatureService.upload(request).then((response) => {
 
-                setImageURL(signature.toDataURL("image/png"));
+                if(imageURL){
+                    enqueueSnackbar("Signature changé", { variant: 'success' });
+                }else{
+                    enqueueSnackbar("Signature ajouté", { variant: 'success' });
+                }
 
-                enqueueSnackbar("Signature changé", { variant: 'success' });
+                setImageURL(signature.toDataURL("image/png"));
             });
         });
 
@@ -96,22 +96,41 @@ export default function CreateSignature() {
 
         <div>
 
-            <Box
-                mb={2}
-                paddingTop={2}
-                textAlign="center">
-                <Typography component="h1" variant="h5">Créer une signature</Typography>
-            </Box>
+            <Container>
+                <Box
+                    mb={2}
+                    paddingTop={2}
+                    textAlign="left"
+                >
+                    <Typography component="h1" variant="h4" align="center">Créer une signature</Typography>
+                </Box>
+            </Container>
 
             <Divider />
 
-            <Box
-                margin={1}>
+            <Box margin={1}>
 
-                <Button variant="contained" color="primary" onClick={handleClickOpen}>
-                    Signature
-                </Button>
+                {
+                    imageURL &&
+                    <Button
+                        variant="contained" color="primary"
+                        size="small"
+                        onClick={handleClickOpen}
+                    >
+                        Changer Signature
+                    </Button>
+                }
 
+                {
+                    !imageURL &&
+                    <Button
+                        variant="contained" color="primary"
+                        size="small"
+                        onClick={handleClickOpen}
+                    >
+                        Ajouté Signature
+                    </Button>
+                }
 
             </Box>
 

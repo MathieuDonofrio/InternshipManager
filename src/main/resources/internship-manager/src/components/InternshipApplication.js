@@ -8,6 +8,8 @@ import InternshipApplicationService from "../services/InternshipApplicationServi
 import InternshipOfferService from "../services/InternshipOfferService";
 import ContractService from "../services/ContractService";
 
+import BackButton from "./BackButton";
+
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
@@ -115,11 +117,7 @@ export default function InternshipApplication() {
 
     return (
         <div>
-            <IconButton
-                onClick={() => history.goBack()}>
-                <KeyboardBackspaceIcon />
-                <Typography>Retour</Typography>
-            </IconButton>
+            <BackButton />
 
             <Container>
                 <Box

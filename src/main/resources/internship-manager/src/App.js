@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
+import { MemoryRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
 import './App.css';
 import { SnackbarProvider } from 'notistack';
 

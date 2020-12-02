@@ -47,22 +47,22 @@ export default function Settings() {
   const fetchSettings = () => {
 
     SettingsService.getSemester().then(response => {
-      
+
       let split = response.data.split('-');
 
       setSession(translateSession(split[0]));
       setAnnee(split[1])
     });
 
-    SettingsService.getRequireApproval().then(response => 
+    SettingsService.getRequireApproval().then(response =>
       setRequireApproval(response.data));
   }
 
-  const translateSession = (session) =>{
-    switch (session){
-      case "AUTUMN" : return "Automne";
-      case "WINTER" : return "Hiver";
-      case "SUMMER" : return "Été";
+  const translateSession = (session) => {
+    switch (session) {
+      case "AUTUMN": return "Automne";
+      case "WINTER": return "Hiver";
+      case "SUMMER": return "Été";
       default: return "ERROR";
     }
   }
@@ -102,20 +102,22 @@ export default function Settings() {
   // Rendering
   //
   return (
-    <Container component="main" maxWidth="md">
 
-      <div>
+    <div>
 
+      <Container>
         <Box
           mb={2}
           paddingTop={2}
-          textAlign="center">
-
-          <Typography component="h1" variant="h5">Paramètres</Typography>
-
+          textAlign="left"
+        >
+          <Typography component="h1" variant="h4" align="center">Paramètres</Typography>
         </Box>
+      </Container>
 
-        <Divider />
+      <Divider />
+
+      <Container>
 
         <Box
           mb={0}
@@ -186,10 +188,12 @@ export default function Settings() {
               color="primary"
             />
           }
-          label="Approbation D'Application Obligatoire"
+          label="Approbation d'Application obligatoire"
         />
-        <Box paddingBottom={2} />
-      </div>
-    </Container>
+        
+      </Container>
+
+      <Box paddingBottom={2} />
+    </div>
   )
 }

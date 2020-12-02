@@ -4,16 +4,15 @@ import { useSnackbar } from 'notistack';
 
 import PortfolioService from "../services/PortfolioService";
 
+import BackButton from "./BackButton";
+
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
-//import LinearProgress from '@material-ui/core/LinearProgress';
 import Table from '@material-ui/core/Table';
-//import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
-//import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
@@ -70,11 +69,7 @@ export default function PortfolioDocument() {
 
     return (
         <div>
-            <IconButton
-                onClick={() => history.goBack()}>
-                <KeyboardBackspaceIcon />
-                <Typography>Retour</Typography>
-            </IconButton>
+            <BackButton />
 
             <Container>
                 <Box
@@ -105,7 +100,7 @@ export default function PortfolioDocument() {
                         canApprove() && <Button
                             variant="contained" color="secondary"
                             size="small"
-                            onClick={approve}
+                            onClick={() => approve()}
                         >
                             Approuver
                         </Button>
