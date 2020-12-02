@@ -7,6 +7,7 @@ import DateFnsUtils from '@date-io/date-fns';
 import InternshipApplicationService from "../services/InternshipApplicationService";
 import InternshipOfferService from "../services/InternshipOfferService";
 import ContractService from "../services/ContractService";
+import PortfolioService from "../services/PortfolioService";
 
 import BackButton from "./BackButton";
 
@@ -33,6 +34,7 @@ export default function InternshipApplication() {
     const [offer, setOffer] = useState({});
 
     const [contracts, setContracts] = useState([]);
+    const [documents, setDocuments] = useState([]);
 
     const fetch = () => {
         InternshipApplicationService.find(uuid).then(response => {
@@ -45,6 +47,11 @@ export default function InternshipApplication() {
 
             ContractService.allContracts(response.data.studentUniqueId).then(response1 => {
                 setContracts(response1.data.contracts);
+            })
+
+            InternshipApplicationService.applicationDocuments(uuid).then(response1 => {
+
+                setDocuments(response1.data.portfolioDocuments);
             })
 
         })
@@ -280,6 +287,60 @@ export default function InternshipApplication() {
                             </MuiPickersUtilsProvider>
 
                         </Box>
+                    }
+
+                    {
+                        <div>
+                            <Box
+                                marginTop={2}
+                                textAlign="center"
+                                style={{ backgroundColor: "lightgray" }}>
+                                <Typography>Documents</Typography>
+                            </Box>
+
+                            <div>
+                                {
+                                    documents.length > 0 &&
+                                    <TableContainer>
+                                        <Table size="small" aria-label="a dense table">
+                                            <TableHead>
+                                                <TableRow>
+                                                    <TableCell width="30%" align="center"><strong>Type</strong></TableCell>
+                                                    <TableCell width="30%" align="center"><strong>Fichier</strong></TableCell>
+                                                    <TableCell width="30%" align="center"><strong>Action</strong></TableCell>
+                                                </TableRow>
+                                            </TableHead>
+                                            <TableBody>
+                                                {documents.map((document, index) => (
+                                                    <TableRow key={index}>
+                                                        <TableCell component="th" scope="row" align="center">{document.type}</TableCell>
+                                                        <TableCell component="th" scope="row" align="center">{document.fileName}</TableCell>
+                                                        <TableCell component="th" scope="row" align="center">
+                                                            <Button
+                                                                variant="contained"
+                                                                color="secondary"
+                                                                size="small"
+                                                                onClick={() => history.push(`/portfolio-document/${document.uniqueId}`)}
+                                                            >
+                                                                voir
+                                                        </Button>
+                                                        </TableCell>
+                                                    </TableRow>
+                                                ))}
+                                            </TableBody>
+                                        </Table>
+                                    </TableContainer>
+                                }
+                                {
+                                    documents.length == 0 &&
+                                    <Box
+                                        margin={2}>
+                                        <Typography>Aucun document!</Typography>
+                                    </Box>
+                                }
+                            </div>
+
+                        </div>
                     }
 
                     {
