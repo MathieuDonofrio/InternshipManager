@@ -19,17 +19,10 @@ const useStyles = makeStyles({
     },
 });
 
-const useStyles2 = makeStyles({
-    root: {
-        flexGrow: 1,
-    },
-});
-
 export default function ContractList() {
 
     const classes = useStyles();
     const history = useHistory();
-    //const classes2 = useStyles2();
     const [value, setValue] = React.useState(0);
     const [rows, setRows] = useState([]);
     const [title, setTitle] = useState('');

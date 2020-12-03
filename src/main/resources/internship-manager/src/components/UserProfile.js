@@ -18,6 +18,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import Dashboard from "./Dashboard";
 
 export default function UserProfile() {
 
@@ -328,6 +329,8 @@ export default function UserProfile() {
                         </div>
                     </div>
                 }
+
+                <Dashboard/>
 
             </Container>
 
