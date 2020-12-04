@@ -23,7 +23,7 @@ import Dashboard from "./Dashboard";
 export default function UserProfile() {
 
     const { uuid } = useParams();
-    const history = useHistory()
+    const history = useHistory();
 
     const [user, setUser] = useState({});
 

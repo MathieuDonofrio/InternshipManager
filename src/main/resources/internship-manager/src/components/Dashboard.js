@@ -1,17 +1,19 @@
 import { Box, Button, Container, CssBaseline, Paper, Table, TableBody, TableCell, TableHead, TableRow, Typography } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import ContractService from "../services/ContractService";
 import InternshipApplicationService from "../services/InternshipApplicationService";
 import InternshipOfferService from "../services/InternshipOfferService";
 
 export default function Dashboard() {
+    const history = useHistory();
     const [adminAppCount, setAdminAppCount] = useState(0);
     const [adminOfferCount, setAdminOfferCount] = useState(0);
 
     const [employerAppCount, setEmployerAppCount] = useState(0);
     const [studentAppliableCount, setStudentAppliableCount] = useState(0);
 
-    const [ContractCount, setContractCount] = useState(0);
+    const [contractCount, setContractCount] = useState(0);
 
     const fetchAdmin = () => {
         findAdminAwaitingApplicationsCount();
@@ -47,6 +49,10 @@ export default function Dashboard() {
 
     const isAdministrator = () => {
         return localStorage.getItem('UserType') === "ADMINISTRATOR";
+    }
+
+    const isStudent = () => {
+        return localStorage.getItem('UserType') === "STUDENT";
     }
 
     //
@@ -132,18 +138,69 @@ export default function Dashboard() {
 
                         {isAdministrator() &&
                             <TableBody>
-                                <TableRow key="offers">
-                                    <TableCell align="left">Vous avez {adminOfferCount} {adminOfferCount > 1 ? 'offres' : 'offre'} en {adminOfferCount > 1 ? 'attentes' : 'attente'} d'approbation</TableCell>
+                                <TableRow key="contrats">
+                                    <TableCell align="left">Vous avez {contractCount} {contractCount > 1 ? 'contrats en attentes' : 'contrat en attente'} de signature</TableCell>
                                     <TableCell align="right">
-                                        <Button variant="contained" color="secondary" size="small">
+                                        <Button variant="contained" color="secondary" size="small" onClick={() => history.push(`/contracts/`)}>
                                             go
                                             </Button>
                                     </TableCell>
                                 </TableRow>
                                 <TableRow key="offers">
-                                    <TableCell align="left">Vous avez {adminAppCount} {adminAppCount > 1 ? 'applications' : 'application'} en {adminAppCount > 1 ? 'attentes' : 'attente'} d'approbation</TableCell>
+                                    <TableCell align="left">Vous avez {adminOfferCount} {adminOfferCount > 1 ? 'offres en attentes' : 'offre en attente'} d'approbation</TableCell>
                                     <TableCell align="right">
-                                        <Button variant="contained" color="secondary" size="small">
+                                        <Button variant="contained" color="secondary" size="small" onClick={() => history.push(`/internship-offers/`)}>
+                                            go
+                                            </Button>
+                                    </TableCell>
+                                </TableRow>
+                                <TableRow key="applications">
+                                    <TableCell align="left">Vous avez {adminAppCount} {adminAppCount > 1 ? 'applications en attentes' : 'application en attente'} d'approbation</TableCell>
+                                    <TableCell align="right">
+                                        <Button variant="contained" color="secondary" size="small" onClick={() => history.push(`/internship-applications/`)}>
+                                            go
+                                            </Button>
+                                    </TableCell>
+                                </TableRow>
+
+                            </TableBody>
+                        }
+
+                        {isEmployer() &&
+                            <TableBody>
+                                <TableRow key="contrats">
+                                    <TableCell align="left">Vous avez {contractCount} {contractCount > 1 ? 'contrats en attentes' : 'contrat en attente'} de signature</TableCell>
+                                    <TableCell align="right">
+                                        <Button variant="contained" color="secondary" size="small" onClick={() => history.push(`/contracts/`)}>
+                                            go
+                                            </Button>
+                                    </TableCell>
+                                </TableRow>
+                                <TableRow key="appliquant">
+                                    <TableCell align="left">Vous avez {employerAppCount} {employerAppCount > 1 ? 'applications en attentes' : 'application en attente'} d'approbation</TableCell>
+                                    <TableCell align="right">
+                                        <Button variant="contained" color="secondary" size="small" onClick={() => history.push(`/internship-applications/`)}>
+                                            go
+                                            </Button>
+                                    </TableCell>
+                                </TableRow>
+                            </TableBody>
+                        }
+
+                        {isStudent() &&
+                            <TableBody>
+                                <TableRow key="contrats">
+                                    <TableCell align="left">Vous avez {contractCount} {contractCount > 1 ? 'contrats en attentes' : 'contrat en attente'} de signature</TableCell>
+                                    <TableCell align="right">
+                                        <Button variant="contained" color="secondary" size="small" onClick={() => history.push(`/contracts/`)}>
+                                            go
+                                            </Button>
+                                    </TableCell>
+                                </TableRow>
+                                <TableRow key="appliquable">
+                                    <TableCell align="left">Vous avez {studentAppliableCount} {studentAppliableCount > 1 ? 'offres de stages applicables' : 'offre de stage applicable'}</TableCell>
+                                    <TableCell align="right">
+                                        <Button variant="contained" color="secondary" size="small" onClick={() => history.push(`/internship-offers/`)}>
                                             go
                                             </Button>
                                     </TableCell>

@@ -143,14 +143,14 @@ export default function InternshipOfferList() {
             response2.data.applications.some(app => app.offerUniqueId == offer.uniqueId));
 
         setRows(offers);
-        
+
         setTitle('Offres appliquées');
     }
 
     const fetchOfferList = () => {
 
         if (isAdministrator())
-            fetchApproved();
+            fetchPendingApproval();
         else if (isEmployer())
             findAllApprovedByEmployer();
         else
@@ -174,8 +174,8 @@ export default function InternshipOfferList() {
                         textColor="primary"
                         centered
                     >
-                        <Tab label="approuvées" onClick={() => fetchApproved()} />
                         <Tab label="en attentes" onClick={() => fetchPendingApproval()} />
+                        <Tab label="approuvées" onClick={() => fetchApproved()} />
                     </Tabs>
                 }
 
@@ -207,7 +207,7 @@ export default function InternshipOfferList() {
                 }
             </AppBar>
 
-            <Divider/>
+            <Divider />
 
             <Container>
                 <Box
