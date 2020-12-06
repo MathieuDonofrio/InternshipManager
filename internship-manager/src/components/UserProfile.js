@@ -70,6 +70,10 @@ export default function UserProfile() {
 
     const isCurrentUser = () => { return uuid === localStorage.getItem("UserUniqueId"); };
 
+    const canSeeDocuments = () => {return localStorage.getItem("UserType") != "EMPLOYER"; }
+
+    const canSeeApplications = () => {return localStorage.getItem("UserType") != "EMPLOYER"; }
+
     const canSeeOffers = () => { return isEmployer() && localStorage.getItem("UserType") != "STUDENT"; };
 
     const translateType = (type) => {
@@ -115,7 +119,7 @@ export default function UserProfile() {
                         <Typography>Inscrit</Typography>
                     </Box>
                 </Box>
-                
+
                 <Box
                     marginTop={2}
                     textAlign="center"
@@ -191,7 +195,7 @@ export default function UserProfile() {
 
 
                 {
-                    isStudent() &&
+                    isStudent() && canSeeDocuments() &&
                     <div>
                         <Box
                             marginTop={2}
@@ -246,7 +250,7 @@ export default function UserProfile() {
                 }
 
                 {
-                    isStudent() &&
+                    isStudent() && canSeeApplications() &&
                     <div>
                         <Box
                             marginTop={2}
