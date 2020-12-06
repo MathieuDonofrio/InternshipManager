@@ -87,7 +87,7 @@ export default function UserProfile() {
 
             {
                 !isCurrentUser() &&
-                <BackButton/>
+                <BackButton />
             }
 
             {
@@ -114,6 +114,13 @@ export default function UserProfile() {
                         style={{ backgroundColor: "lightsteelblue" }}>
                         <Typography>Inscrit</Typography>
                     </Box>
+                </Box>
+                
+                <Box
+                    marginTop={2}
+                    textAlign="center"
+                    style={{ backgroundColor: "lightgray" }}>
+                    <Typography>Informations Générales</Typography>
                 </Box>
 
                 <Box>
@@ -165,6 +172,22 @@ export default function UserProfile() {
                         <Typography>{ }</Typography>
                     </Box>
                 </Box>
+
+                {
+                    isCurrentUser() &&
+                    <div>
+
+                        <Box
+                            marginTop={2}
+                            textAlign="center"
+                            style={{ backgroundColor: "lightgray" }}>
+                            <Typography>Tableau de bord</Typography>
+                        </Box>
+
+                        <Dashboard />
+
+                    </div>
+                }
 
 
                 {
@@ -329,8 +352,6 @@ export default function UserProfile() {
                         </div>
                     </div>
                 }
-
-                <Dashboard/>
 
             </Container>
 

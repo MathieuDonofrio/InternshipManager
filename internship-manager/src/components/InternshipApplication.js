@@ -260,7 +260,7 @@ export default function InternshipApplication() {
                                         variant="inline"
                                         format="MM/dd/yyyy"
                                         margin="normal"
-                                        label="Date intervu"
+                                        label="Date entrevue"
                                         autoOk={true}
                                         value={null}
                                         onChange={onInterviewDateChange}
@@ -275,7 +275,7 @@ export default function InternshipApplication() {
                                         variant="inline"
                                         format="MM/dd/yyyy"
                                         margin="normal"
-                                        label="Date intervu"
+                                        label="Date entrevue"
                                         autoOk={true}
                                         value={new Date(application.interviewDate)}
                                         onChange={onInterviewDateChange}

@@ -120,98 +120,88 @@ export default function Dashboard() {
 
     return (
         <div>
-            <Box
-                margin={2}
-                textAlign="center">
-                <Typography variant="h3">Actualités</Typography>
-            </Box>
 
-            <Container>
-                <Paper>
-
-                    <Table size="small">
-                        <TableHead>
-                            <TableCell width="70%"></TableCell>
-                            <TableCell width="30%"></TableCell>
-                        </TableHead>
+            <Table size="small">
+                <TableHead>
+                    <TableCell width="70%"></TableCell>
+                    <TableCell width="30%"></TableCell>
+                </TableHead>
 
 
-                        {isAdministrator() &&
-                            <TableBody>
-                                <TableRow key="contrats">
-                                    <TableCell align="left">Vous avez {contractCount} {contractCount > 1 ? 'contrats en attentes' : 'contrat en attente'} de signature</TableCell>
-                                    <TableCell align="right">
-                                        <Button variant="contained" color="secondary" size="small" onClick={() => history.push(`/contracts/`)}>
-                                            go
+                {isAdministrator() &&
+                    <TableBody>
+                        <TableRow key="contrats">
+                            <TableCell align="left">Vous avez {contractCount} {contractCount > 1 ? 'contrats en attentes' : 'contrat en attente'} de signature</TableCell>
+                            <TableCell align="right">
+                                <Button variant="contained" color="secondary" size="small" onClick={() => history.push(`/contracts/`)}>
+                                    go
                                             </Button>
-                                    </TableCell>
-                                </TableRow>
-                                <TableRow key="offers">
-                                    <TableCell align="left">Vous avez {adminOfferCount} {adminOfferCount > 1 ? 'offres en attentes' : 'offre en attente'} d'approbation</TableCell>
-                                    <TableCell align="right">
-                                        <Button variant="contained" color="secondary" size="small" onClick={() => history.push(`/internship-offers/`)}>
-                                            go
+                            </TableCell>
+                        </TableRow>
+                        <TableRow key="offers">
+                            <TableCell align="left">Vous avez {adminOfferCount} {adminOfferCount > 1 ? 'offres en attentes' : 'offre en attente'} d'approbation</TableCell>
+                            <TableCell align="right">
+                                <Button variant="contained" color="secondary" size="small" onClick={() => history.push(`/internship-offers/`)}>
+                                    go
                                             </Button>
-                                    </TableCell>
-                                </TableRow>
-                                <TableRow key="applications">
-                                    <TableCell align="left">Vous avez {adminAppCount} {adminAppCount > 1 ? 'applications en attentes' : 'application en attente'} d'approbation</TableCell>
-                                    <TableCell align="right">
-                                        <Button variant="contained" color="secondary" size="small" onClick={() => history.push(`/internship-applications/`)}>
-                                            go
+                            </TableCell>
+                        </TableRow>
+                        <TableRow key="applications">
+                            <TableCell align="left">Vous avez {adminAppCount} {adminAppCount > 1 ? 'applications en attentes' : 'application en attente'} d'approbation</TableCell>
+                            <TableCell align="right">
+                                <Button variant="contained" color="secondary" size="small" onClick={() => history.push(`/internship-applications/`)}>
+                                    go
                                             </Button>
-                                    </TableCell>
-                                </TableRow>
+                            </TableCell>
+                        </TableRow>
 
-                            </TableBody>
-                        }
+                    </TableBody>
+                }
 
-                        {isEmployer() &&
-                            <TableBody>
-                                <TableRow key="contrats">
-                                    <TableCell align="left">Vous avez {contractCount} {contractCount > 1 ? 'contrats en attentes' : 'contrat en attente'} de signature</TableCell>
-                                    <TableCell align="right">
-                                        <Button variant="contained" color="secondary" size="small" onClick={() => history.push(`/contracts/`)}>
-                                            go
+                {isEmployer() &&
+                    <TableBody>
+                        <TableRow key="contrats">
+                            <TableCell align="left">Vous avez {contractCount} {contractCount > 1 ? 'contrats en attentes' : 'contrat en attente'} de signature</TableCell>
+                            <TableCell align="right">
+                                <Button variant="contained" color="secondary" size="small" onClick={() => history.push(`/contracts/`)}>
+                                    go
                                             </Button>
-                                    </TableCell>
-                                </TableRow>
-                                <TableRow key="appliquant">
-                                    <TableCell align="left">Vous avez {employerAppCount} {employerAppCount > 1 ? 'applications en attentes' : 'application en attente'} d'approbation</TableCell>
-                                    <TableCell align="right">
-                                        <Button variant="contained" color="secondary" size="small" onClick={() => history.push(`/internship-applications/`)}>
-                                            go
+                            </TableCell>
+                        </TableRow>
+                        <TableRow key="appliquant">
+                            <TableCell align="left">Vous avez {employerAppCount} {employerAppCount > 1 ? 'applications en attentes' : 'application en attente'} d'approbation</TableCell>
+                            <TableCell align="right">
+                                <Button variant="contained" color="secondary" size="small" onClick={() => history.push(`/internship-applications/`)}>
+                                    go
                                             </Button>
-                                    </TableCell>
-                                </TableRow>
-                            </TableBody>
-                        }
+                            </TableCell>
+                        </TableRow>
+                    </TableBody>
+                }
 
-                        {isStudent() &&
-                            <TableBody>
-                                <TableRow key="contrats">
-                                    <TableCell align="left">Vous avez {contractCount} {contractCount > 1 ? 'contrats en attentes' : 'contrat en attente'} de signature</TableCell>
-                                    <TableCell align="right">
-                                        <Button variant="contained" color="secondary" size="small" onClick={() => history.push(`/contracts/`)}>
-                                            go
+                {isStudent() &&
+                    <TableBody>
+                        <TableRow key="contrats">
+                            <TableCell align="left">Vous avez {contractCount} {contractCount > 1 ? 'contrats en attentes' : 'contrat en attente'} de signature</TableCell>
+                            <TableCell align="right">
+                                <Button variant="contained" color="secondary" size="small" onClick={() => history.push(`/contracts/`)}>
+                                    go
                                             </Button>
-                                    </TableCell>
-                                </TableRow>
-                                <TableRow key="appliquable">
-                                    <TableCell align="left">Vous avez {studentAppliableCount} {studentAppliableCount > 1 ? 'offres de stages applicables' : 'offre de stage applicable'}</TableCell>
-                                    <TableCell align="right">
-                                        <Button variant="contained" color="secondary" size="small" onClick={() => history.push(`/internship-offers/`)}>
-                                            go
+                            </TableCell>
+                        </TableRow>
+                        <TableRow key="appliquable">
+                            <TableCell align="left">Vous avez {studentAppliableCount} {studentAppliableCount > 1 ? 'offres de stages applicables' : 'offre de stage applicable'}</TableCell>
+                            <TableCell align="right">
+                                <Button variant="contained" color="secondary" size="small" onClick={() => history.push(`/internship-offers/`)}>
+                                    go
                                             </Button>
-                                    </TableCell>
-                                </TableRow>
-                            </TableBody>
-                        }
+                            </TableCell>
+                        </TableRow>
+                    </TableBody>
+                }
 
 
-                    </Table>
-                </Paper>
-            </Container>
+            </Table>
         </div>
     )
 }
