@@ -46,6 +46,11 @@ class ContractService {
     allContracts(request) {
         return axios.get(Config.target + `/contract/all-contracts/${request}`, headers());
     }
+
+        
+    applicationContracts(request) {
+        return axios.get(Config.target + `/contract/application-contracts/${request}`, headers());
+    }
     
     signedContracts(request) {
         return axios.get(Config.target + `/contract/signed-contracts/${request}`, headers());

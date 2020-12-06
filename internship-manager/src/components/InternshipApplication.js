@@ -45,15 +45,14 @@ export default function InternshipApplication() {
                 setOffer(response1.data);
             })
 
-            ContractService.allContracts(response.data.studentUniqueId).then(response1 => {
-                setContracts(response1.data.contracts);
-            })
-
             InternshipApplicationService.applicationDocuments(uuid).then(response1 => {
-
                 setDocuments(response1.data.portfolioDocuments);
             })
 
+        })
+
+        ContractService.applicationContracts(uuid).then(response => {
+            setContracts(response.data.contracts);
         })
     }
 

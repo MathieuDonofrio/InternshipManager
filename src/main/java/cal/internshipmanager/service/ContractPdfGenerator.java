@@ -69,8 +69,7 @@ public class ContractPdfGenerator {
         long timePassedH = (((offer.getEndDate().getTime() - offer.getStartDate().getTime()) / 1000) / 60) / 60;
         int nbWeeks = (int) (Math.ceil((double)timePassedH /168));
 
-
-        Image image = Image.getInstance("src/main/resources/logo.png");
+        Image image = Image.getInstance(getClass().getClassLoader().getResource("logo.png"));
 
         SimpleDateFormat dateFor = new SimpleDateFormat("dd MMMM yyyy", Locale.FRANCE);
         Font font = FontFactory.getFont(FontFactory.COURIER, 16, BaseColor.BLACK);

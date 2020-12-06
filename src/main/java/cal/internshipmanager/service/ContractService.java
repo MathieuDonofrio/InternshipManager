@@ -115,6 +115,18 @@ public class ContractService {
         contractRepository.save(contract);
     }
 
+    public ContractListResponse applicationContracts(UUID applicationUniqueId){
+
+        ContractListResponse response = new ContractListResponse();
+
+        List<Contract> contracts = contractRepository.findAllBySemesterAndApplicationUniqueId(settingsService.getSemester(), applicationUniqueId);
+
+        response.setContracts(contracts.stream()
+                .map(ContractListResponse::map).collect(Collectors.toList()));
+
+        return response;
+    }
+
     public ContractListResponse allContracts(UUID userUniqueId) {
 
         ContractListResponse response = new ContractListResponse();

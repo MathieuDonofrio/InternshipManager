@@ -58,6 +58,11 @@ public class ContractController {
         return contractService.allContracts(userUniqueId);
     }
 
+    @GetMapping("application-contracts/{applicationUniqueId}")
+    public ContractListResponse applicationContracts(@Valid @PathVariable @ExistingInternshipApplication UUID applicationUniqueId){
+        return contractService.applicationContracts(applicationUniqueId);
+    }
+
     @GetMapping("generate/{uniqueId}") // TODO replace internship-application by generate
     public ResponseEntity<Resource> generate(@Valid @PathVariable @ExistingContract UUID uniqueId) {
         return DownloadFileResponse.responseEntity(contractService.generate(uniqueId));
