@@ -79,9 +79,9 @@ export default function Settings() {
 
   const onFormSubmit = () => {
     let semester = sessionName() + "-" + annee;
-    SettingsService.setSemester(semester);
-
-    window.location.reload(true);
+    SettingsService.setSemester(semester).then(response => {
+      window.location.reload(true);
+    });
   }
 
   const onRequireApprovalChange = () => {
