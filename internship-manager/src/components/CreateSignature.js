@@ -128,7 +128,7 @@ export default function CreateSignature() {
                         size="small"
                         onClick={handleClickOpen}
                     >
-                        Ajouté Signature
+                        Ajouter Signature
                     </Button>
                 }
 

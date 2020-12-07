@@ -192,7 +192,7 @@ class Portfolio extends Component {
                             size="small"
                             onClick={() => this.onView(document)}
                           >
-                            View
+                            Voir
                           </Button>
                         </Box>
 
