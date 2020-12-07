@@ -1,16 +1,15 @@
 
 # docker build -f Dockerfile -t <name> .
-# docker run <port>:3000 <name>
+# docker run <port>:80 <name>
 
-FROM node:latest as node
+FROM node:latest as build
 WORKDIR /app
 COPY . .
 RUN npm install
 RUN npm run build 
 
-FROM nginx:1.16.0-alpine
-COPY --from=node /app/dist/whatAreWeCooking-app /usr/share/nginx/html
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-COPY --from=node /app/dist/whatAreWeCooking-app /etc/nginx/conf.d
+FROM nginx:stable-alpine
+COPY --from=build /app/build /usr/share/nginx/html
+COPY --from=build /app/nginx/nginx.conf /etc/nginx/conf.d/default.conf
+EXPOSE 80
 CMD ["nginx","-g","daemon off;"]
-EXPOSE 3000
