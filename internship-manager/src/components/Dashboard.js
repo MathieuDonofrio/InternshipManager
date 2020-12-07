@@ -134,7 +134,7 @@ export default function Dashboard() {
                             <TableCell align="left">Vous avez {contractCount} {contractCount > 1 ? 'contrats en attentes' : 'contrat en attente'} de signature</TableCell>
                             <TableCell align="right">
                                 <Button variant="contained" color="secondary" size="small" onClick={() => history.push(`/contracts/`)}>
-                                    go
+                                    Consulter
                                             </Button>
                             </TableCell>
                         </TableRow>
@@ -142,7 +142,7 @@ export default function Dashboard() {
                             <TableCell align="left">Vous avez {adminOfferCount} {adminOfferCount > 1 ? 'offres en attentes' : 'offre en attente'} d'approbation</TableCell>
                             <TableCell align="right">
                                 <Button variant="contained" color="secondary" size="small" onClick={() => history.push(`/internship-offers/`)}>
-                                    go
+                                    Consulter
                                             </Button>
                             </TableCell>
                         </TableRow>
@@ -150,7 +150,7 @@ export default function Dashboard() {
                             <TableCell align="left">Vous avez {adminAppCount} {adminAppCount > 1 ? 'applications en attentes' : 'application en attente'} d'approbation</TableCell>
                             <TableCell align="right">
                                 <Button variant="contained" color="secondary" size="small" onClick={() => history.push(`/internship-applications/`)}>
-                                    go
+                                    Consulter
                                             </Button>
                             </TableCell>
                         </TableRow>
@@ -164,7 +164,7 @@ export default function Dashboard() {
                             <TableCell align="left">Vous avez {contractCount} {contractCount > 1 ? 'contrats en attentes' : 'contrat en attente'} de signature</TableCell>
                             <TableCell align="right">
                                 <Button variant="contained" color="secondary" size="small" onClick={() => history.push(`/contracts/`)}>
-                                    go
+                                    Consulter
                                             </Button>
                             </TableCell>
                         </TableRow>
@@ -172,7 +172,7 @@ export default function Dashboard() {
                             <TableCell align="left">Vous avez {employerAppCount} {employerAppCount > 1 ? 'applications en attentes' : 'application en attente'} d'approbation</TableCell>
                             <TableCell align="right">
                                 <Button variant="contained" color="secondary" size="small" onClick={() => history.push(`/internship-applications/`)}>
-                                    go
+                                    Consulter
                                             </Button>
                             </TableCell>
                         </TableRow>
@@ -185,7 +185,7 @@ export default function Dashboard() {
                             <TableCell align="left">Vous avez {contractCount} {contractCount > 1 ? 'contrats en attentes' : 'contrat en attente'} de signature</TableCell>
                             <TableCell align="right">
                                 <Button variant="contained" color="secondary" size="small" onClick={() => history.push(`/contracts/`)}>
-                                    go
+                                    Consulter
                                             </Button>
                             </TableCell>
                         </TableRow>
@@ -193,7 +193,7 @@ export default function Dashboard() {
                             <TableCell align="left">Vous avez {studentAppliableCount} {studentAppliableCount > 1 ? 'offres de stages applicables' : 'offre de stage applicable'}</TableCell>
                             <TableCell align="right">
                                 <Button variant="contained" color="secondary" size="small" onClick={() => history.push(`/internship-offers/`)}>
-                                    go
+                                    Consulter
                                             </Button>
                             </TableCell>
                         </TableRow>
